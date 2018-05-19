@@ -1,2 +1,10 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: PQjuwpvrT3q2Jj+pcLx0GVGPbgx0CVqp6pEctXTi0Fc4lQLVeOwD2mozfbt6FT+UpSbbkZluU5Bd/FIZUOhqq9SN0eurrpNWlihINi3CEU/C+R0ntC9KFVREfqD3f0Qrg74uVQOeFAOkTbWlD57IPseab1/kBPgF9RPl300UpgfGTgSDai/5TFeuKWds962orBS0/TpRpKZ6cqFBkVW+YW479kM2gPyel6E4hC34Nvdg440jNDG56+HLoI7C7WnPcAiVn9Gu7Nhxk7t2QQH4L3Z0rUQUOTutfV6h2jhPf/Q5nW1uamSXoXyjRgnx/SHGwIeKbY3LqVbLySdrMMZ2WuiZL2wBWC+nRtTkdwECBkcifMNFRuzYWP2ewIZAdPfR9LH9vbcGdBBPsMl+XWocBjVD6PDP6R1Xp19rl7u47b+ZVvHJPcZnqIDaRinxYmLIZDzRI2fay31jeAZ7So8yTgmP7IaPvYYhqs8Z35jhzFFGwuLxAXlCFSRwdbLKZFC5/uyrIzw31/PeW3KHWZ+jdTrkevZK/yEsxXgavPlwkbHv9/M4ZRcUPwHKE36uODP6k2+7+Q9L+0R9gyI8ixsc9VjRdL5km5qDkPK4hPHXAxIP72ZPOJr2VX98yhEhymWxc2+jThNYT/zESFKcfoDSicozKBO2fOfZ90me+f+uS0w=
+  app: limitless-plains-67005
+
+  on:
+    repo: reinhal/JusKidin
