@@ -21,7 +21,7 @@ describe('index page', function () {
 describe('asset page', function () {
   it('should exist', function () {
     return chai.request(app)
-      .get('./assets')
+      .get('/assets')
       .then(function (res) {
         expect(res).to.have.status(200);
       });
@@ -32,6 +32,16 @@ describe('developmental page', function () {
   it('should exist', function () {
     return chai.request(app)
       .get('/developmental')
+      .then(function (res) {
+        expect(res).to.have.status(200);
+      });
+  });
+});
+
+describe('resources page', function () {
+  it('should exist', function () {
+    return chai.request(app)
+      .get('/resources')
       .then(function (res) {
         expect(res).to.have.status(200);
       });
