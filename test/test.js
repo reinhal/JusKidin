@@ -8,7 +8,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('hello world!', function () {
+describe('index page', function () {
   it('should exist', function () {
     return chai.request(app)
       .get('/')
@@ -18,7 +18,7 @@ describe('hello world!', function () {
   });
 });
 
-describe('hello world!', function () {
+describe('asset page', function () {
   it('should exist', function () {
     return chai.request(app)
       .get('/assets')
