@@ -17,3 +17,13 @@ describe('hello world!', function () {
       });
   });
 });
+
+describe('hello world!', function () {
+  it('should exist', function () {
+    return chai.request(app)
+      .get('/assets')
+      .then(function (res) {
+        expect(res).to.have.status(200);
+      });
+  });
+});
