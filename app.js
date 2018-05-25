@@ -37,7 +37,7 @@ function getUserInfo(callbackFn) {
 function displayUserInfo(data) {
     for (index in data.userInfo) {
         $('body').append(
-            '<p>' + data.userInfo[index].text + '</p>');
+            '<p>' + data.userInfo[index].name + '</p>');
     }
 }
 
@@ -91,7 +91,7 @@ function getChildInfo(callbackFn) {
 function displayChildInfo(data) {
     for (index in data.childProfile) {
         $('body').append(
-            '<p>' + data.childProfile[index].text + '</p>');
+            '<p>' + data.childProfile[index].name + '</p>');
     }
 }
 
@@ -179,7 +179,7 @@ function getNewsInfo(callbackFn) {
 function displayNewsInfo(data) {
     for (index in data.newsInfo) {
         $('body').append(
-            '<p>' + data.newsInfo[index].text + '</p>');
+            '<p>' + data.newsInfo[index].title + '</p>');
     }
 }
 
@@ -190,4 +190,3 @@ function getAndDisplayNewsInfo() {
 $(function() {
     getAndDisplayNewsInfo();
 })
-
