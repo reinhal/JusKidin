@@ -3,8 +3,14 @@
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
+const morgan = require('morgan');
+app.use(morgan('common'));
 
 let server;
+
+app.get('/','/assets', '/developmental', '/resources', (req, res) => {
+  res.sendFile(__dirname + '/views/index.html');
+});
 
 function runServer() {
   const port = process.env.PORT || 8080;
