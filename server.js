@@ -8,10 +8,6 @@ app.use(morgan('common'));
 
 let server;
 
-app.get('/','/assets', '/developmental', '/resources', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html');
-});
-
 function runServer() {
   const port = process.env.PORT || 8080;
   return new Promise((resolve, reject) => {
