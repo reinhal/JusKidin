@@ -11,6 +11,12 @@ var requester = chai.request(app).keepOpen();
 
 Promise.all([
   describe('index page', function () {
+    before(function() {
+      return runServer();
+    });
+    after(function() {
+      return closeServer();
+    });
     it('should exist', function () {
       return chai.request(app)
         requester.get('/')
@@ -20,6 +26,12 @@ Promise.all([
     });
   }),
   describe('asset page', function () {
+    before(function() {
+      return runServer();
+    });
+    after(function() {
+      return closeServer();
+    });
     it('should exist', function () {
       return chai.request(app)
         requester.get('/assets')
@@ -29,6 +41,12 @@ Promise.all([
     });
   }),
   describe('resources page', function () {
+    before(function() {
+      return runServer();
+    });
+    after(function() {
+      return closeServer();
+    });
     it('should exist', function () {
       return chai.request(app)
         requester.get('/resources')
@@ -38,6 +56,12 @@ Promise.all([
     });
   }),
   describe('developmental page', function () {
+    before(function() {
+      return runServer();
+    });
+    after(function() {
+      return closeServer();
+    });
     it('should exist', function () {
       return chai.request(app)
         requester.get('/developmental')
