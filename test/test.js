@@ -37,10 +37,10 @@ Promise.all([
         });
     });
   }),
-  describe('developmental page', function () {
+  describe('news page', function () {
     it('should exist', function () {
       return chai.request(app)
-        requester.get('/developmental')
+        requester.get('/news')
         .then(function (res) {
           expect(res).to.have.status(200);
         });
