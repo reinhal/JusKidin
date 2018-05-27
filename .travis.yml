@@ -8,6 +8,7 @@ deploy:
 
   on:
     repo: reinhal/JusKidin
+    branch: feature
 addons:
     apt:
       update: true
