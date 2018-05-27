@@ -7,3 +7,6 @@ deploy:
       app: limitless-plains-67005
     on:
       repo: reinhal/JusKidin
+addons:
+    apt:
+      update: true
