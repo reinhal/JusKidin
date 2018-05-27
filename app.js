@@ -184,9 +184,107 @@ function displayNewsInfo(data) {
 }
 
 function getAndDisplayNewsInfo() {
-    getnewsInfo(displaynewsInfo);
+    getNewsInfo(displayNewsInfo);
 }
 
 $(function() {
     getAndDisplayNewsInfo();
 })
+
+var MOCK_ASSET_INFO = {
+    "assetInfo": [
+    {
+        "title": "pic1",
+        "dateUploaded": "05/27/18", 
+        "fileLocation": "/IMG_0052.jpg"
+    },
+    {
+        "title": "pic2",
+        "dateUploaded": "05/26/18", 
+        "fileLocation": "/IMG_0009.jpg"
+    },
+    {
+        "title": "mov1",
+        "dateUploaded": "05/25/18", 
+        "fileLocation": "/IMG_0010.m4v"
+    }
+    ]
+}
+
+function getAssetInfo(callbackFn) {
+    setTimeout(function(){callbackFn(MOCK_ASSET_INFO)}, 1);
+}
+
+function displayAssetInfo(data) {
+    for (index in data.assetInfo) {
+        $('body').append(
+            '<p>' + data.assetInfo[index].title + '</p>');
+    }
+}
+
+function getAndDisplayAssetInfo() {
+    getAssetInfo(displayAssetInfo);
+}
+
+$(function() {
+    getAndDisplayAssetInfo();
+})
+
+var MOCK_RESOURCE_INFO = {
+        "resourceInfo": [
+            {
+                "channel": "movie",
+                "summary": "Description of list",
+                "url": "http://www.commonsensemedia.org/lists/url-to-recommended-list-title",
+                "uuid": "140fd905-17ff-4154-9405-c309085afb80",
+                "title": "Title of the Recommended List",
+                "created": "1409003520",
+                "author": "Common Sense Media",
+                "reviews": [
+                    {
+                    "title": "The title of this item",
+                    "id": 1234567,
+                    "url": "http://www.commonsensemedia.org/url-to-title",
+                    "summary": "A short description of the item.",
+                    "ageRating": 10
+                    }
+                ],
+                "otherPicks": [
+                    {
+                    "title": "The title of this item",
+                    "id": 1234567,
+                    "uuid": "140fd905-17ff-4154-9405-c309085afb80",
+                    "url": "http://www.commonsensemedia.org/url-to-title",
+                    "summary": "A short description of item"
+                    }
+                ],
+                "intro": "Introductory text",
+                "categories": {
+                    "23926": "Movies"
+                },
+                "ages": {
+                    "min": 5,
+                    "max": 13
+                }
+            },
+        ]
+    };
+    
+    function getResourceInfo(callbackFn) {
+        setTimeout(function(){ callbackFn(MOCK_RESOURCE_INFO)}, 100);
+    }
+    
+    function displayResourceInfo(data) {
+        for (index in data.resourceInfo) {
+            $('body').append(
+                '<p>' + data.resourceInfo[index].summary + '</p>');
+        }
+    }
+    
+    function getAndDisplayResourceInfo() {
+        getResourceInfo(displayResourceInfo);
+    }
+    
+    $(function() {
+        getAndDisplayResourceInfo();
+    })
