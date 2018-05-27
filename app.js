@@ -288,3 +288,4 @@ var MOCK_RESOURCE_INFO = {
     $(function() {
         getAndDisplayResourceInfo();
     })
+    
