@@ -3,8 +3,11 @@
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
-const morgan = require('morgan');
-app.use(morgan('common'));
+//const morgan = require('morgan');
+
+//app.use(morgan('common'));
+
+let server;
 
 function runServer() {
   const port = process.env.PORT || 8080;
