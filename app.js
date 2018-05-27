@@ -31,7 +31,7 @@ var MOCK_USER_INFO = {
 };
 
 function getUserInfo(callbackFn) {
-    setTimeout(function(){ callbackFn(MOCK_USER_INFO)}, 100);
+    setTimeout(function(){ callbackFn(MOCK_USER_INFO)}, 1);
 }
 
 function displayUserInfo(data) {
@@ -85,7 +85,7 @@ var MOCK_CHILD_PROFILE_INFO = {
 };
 
 function getChildInfo(callbackFn) {
-    setTimeout(function(){ callbackFn(MOCK_CHILD_PROFILE_INFO)}, 100);
+    setTimeout(function(){ callbackFn(MOCK_CHILD_PROFILE_INFO)}, 1);
 }
 
 function displayChildInfo(data) {
@@ -173,7 +173,7 @@ var MOCK_NEWS_INFO = {
 };
 
 function getNewsInfo(callbackFn) {
-    setTimeout(function(){callbackFn(MOCK_NEWS_INFO)}, 100);
+    setTimeout(function(){callbackFn(MOCK_NEWS_INFO)}, 1);
 }
 
 function displayNewsInfo(data) {
