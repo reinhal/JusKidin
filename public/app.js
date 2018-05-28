@@ -37,7 +37,7 @@ function getUserInfo(callbackFn) {
 function displayUserInfo(data) {
     for (index in data.userInfo) {
         $('body').append(
-            '<p> User' + data.userInfo[index].name + '</p>');
+            '<p>' + data.userInfo[index].name + '</p>');
     }
 }
 
@@ -87,7 +87,7 @@ function getChildInfo(callbackFn) {
 function displayChildInfo(data) {
     for (index in data.childProfile) {
         $('body').append(
-            '<p> Child' + data.childProfile[index].name + '</p>');
+            '<p>' + data.childProfile[index].name + '</p>');
     }
 }
 
@@ -171,7 +171,7 @@ function getNewsInfo(callbackFn) {
 function displayNewsInfo(data) {
     for (index in data.newsInfo) {
         $('body').append(
-            '<p> News' + data.newsInfo[index].title + '</p>');
+            '<p>' + data.newsInfo[index].title + '</p>');
     }
 }
 
@@ -207,7 +207,7 @@ function getAssetInfo(callbackFn) {
 function displayAssetInfo(data) {
     for (index in data.assetInfo) {
         $('body').append(
-            '<p> Asset' + data.assetInfo[index].title + '</p>');
+            '<p>' + data.assetInfo[index].title + '</p>');
     }
 }
 
@@ -262,7 +262,7 @@ var MOCK_RESOURCE_INFO = {
     function displayResourceInfo(data) {
         for (index in data.resourceInfo) {
             $('body').append(
-                '<p> resource' + data.resourceInfo[index].summary + '</p>');
+                '<p>' + data.resourceInfo[index].summary + '</p>');
         }
     }
     
