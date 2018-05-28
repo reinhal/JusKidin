@@ -179,9 +179,6 @@ function getAndDisplayNewsInfo() {
     getNewsInfo(displayNewsInfo);
 }
 
-$(function() {
-    getAndDisplayNewsInfo();
-})
 
 var MOCK_ASSET_INFO = {
     "assetInfo": [

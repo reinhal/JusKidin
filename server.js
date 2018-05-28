@@ -3,9 +3,9 @@
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
-//const morgan = require('morgan');
+const morgan = require('morgan');
 
-//app.use(morgan('common'));
+app.use(morgan('common'));
 
 let server;
 
