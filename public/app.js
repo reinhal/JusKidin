@@ -171,7 +171,7 @@ function getNewsInfo(callbackFn) {
 function displayNewsInfo(data) {
     for (index in data.newsInfo) {
         $('body').append(
-            '<p>' + data.newsInfo[index].title + '</p>');
+            '<p>' + data.newsInfo[index].articles.title + '</p>');
     }
 }
 
