@@ -275,4 +275,5 @@ var MOCK_RESOURCE_INFO = {
         getAndDisplayAssetInfo();
         getAndDisplayNewsInfo();
         getAndDisplayChildInfo();
+        getAndDisplayUserInfo();
     })
