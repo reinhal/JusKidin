@@ -1,4 +1,4 @@
-import { callbackify } from "util";
+//import { callbackify } from "util";
 
 var MOCK_USER_INFO = {
     "userInfo": [
@@ -37,17 +37,13 @@ function getUserInfo(callbackFn) {
 function displayUserInfo(data) {
     for (index in data.userInfo) {
         $('body').append(
-            '<p>' + data.userInfo[index].name + '</p>');
+            '<p> User' + data.userInfo[index].name + '</p>');
     }
 }
 
 function getAndDisplayUserInfo() {
     getUserInfo(displayUserInfo);
 }
-
-$(function() {
-    getAndDisplayUserInfo();
-})
 
 var MOCK_CHILD_PROFILE_INFO = {
     "childProfile": [
@@ -91,17 +87,13 @@ function getChildInfo(callbackFn) {
 function displayChildInfo(data) {
     for (index in data.childProfile) {
         $('body').append(
-            '<p>' + data.childProfile[index].name + '</p>');
+            '<p> Child' + data.childProfile[index].name + '</p>');
     }
 }
 
 function getAndDisplayChildInfo() {
     getChildInfo(displayChildInfo);
 }
-
-$(function() {
-    getAndDisplayChildInfo();
-})
 
 var MOCK_NEWS_INFO = {
     "newsInfo": {
@@ -179,7 +171,7 @@ function getNewsInfo(callbackFn) {
 function displayNewsInfo(data) {
     for (index in data.newsInfo) {
         $('body').append(
-            '<p>' + data.newsInfo[index].title + '</p>');
+            '<p> News' + data.newsInfo[index].title + '</p>');
     }
 }
 
@@ -218,17 +210,13 @@ function getAssetInfo(callbackFn) {
 function displayAssetInfo(data) {
     for (index in data.assetInfo) {
         $('body').append(
-            '<p>' + data.assetInfo[index].title + '</p>');
+            '<p> Asset' + data.assetInfo[index].title + '</p>');
     }
 }
 
 function getAndDisplayAssetInfo() {
     getAssetInfo(displayAssetInfo);
 }
-
-$(function() {
-    getAndDisplayAssetInfo();
-})
 
 var MOCK_RESOURCE_INFO = {
         "resourceInfo": [
@@ -277,7 +265,7 @@ var MOCK_RESOURCE_INFO = {
     function displayResourceInfo(data) {
         for (index in data.resourceInfo) {
             $('body').append(
-                '<p>' + data.resourceInfo[index].summary + '</p>');
+                '<p> resource' + data.resourceInfo[index].summary + '</p>');
         }
     }
     
@@ -287,5 +275,7 @@ var MOCK_RESOURCE_INFO = {
     
     $(function() {
         getAndDisplayResourceInfo();
+        getAndDisplayAssetInfo();
+        getAndDisplayNewsInfo();
+        getAndDisplayChildInfo();
     })
-    
