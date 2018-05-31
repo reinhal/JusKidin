@@ -28,19 +28,10 @@ Promise.all([
         });
     });
   }),
-  describe('resources page', function () {
+  describe('google search page', function () {
     it('should exist', function () {
       return chai.request(app)
-        requester.get('/resources')
-        .then(function (res) {
-          expect(res).to.have.status(200);
-        });
-    });
-  }),
-  describe('news page', function () {
-    it('should exist', function () {
-      return chai.request(app)
-        requester.get('/news')
+        requester.get('/gsearch')
         .then(function (res) {
           expect(res).to.have.status(200);
         });
