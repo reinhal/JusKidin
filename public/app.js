@@ -51,7 +51,7 @@ var MOCK_CHILD_PROFILE_INFO = {
             "id": "678678",
             "name": "Sweet Pea",
             "age": "10 months",
-            "sex": "male",
+            "sex": "male"
         },
         {
             "id": "789789",
