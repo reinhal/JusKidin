@@ -25,23 +25,26 @@ const userInfoSchema = mongoose.Schema({
     ]
 });
 
+const UserInfo = mongoose.model('UserInfo', userInfoSchema);
+const ChildProf = mongoose.model('ChildProf', userInfoSchema);
+const ChildAge = mongoose.model('ChildAge', userInfoSchema);
+const Assets = mongoose.model('Assets', userInfoSchema);
+
 userInfoSchema.virtual('userNameString').get(function() {
     return `${this.firstName} ${this.lastName}`.trim();
 });
 
-const UserInfo = mongoose.model('UserInfo', userInfoSchema);
-
-childProfSchema.virtual('childNameString').get(function() {
-    return `${this.firstName}`.trim();
+userInfoSchema.virtual('childNameString').get(function() {
+    return `${this.childProfs.firstName}`.trim();
 });
 
-const ChildProf = mongoose.model('ChildProf', childProfSchema);
+userInfoSchema.virtual('childAge').get(function() {
 
-assetsSchema.virtual('assetsString').get(function() {
-    return `${this.title}`.trim();
 });
 
-const Assets = mongoose.model('Assets', assetsSchema);
+userInfoSchema.virtual('assetsString').get(function() {
+    return `${this.asset.title}`.trim();
+});
 
 module.exports = {Assets};
 module.exports = {ChildProf};
