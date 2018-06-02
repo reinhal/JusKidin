@@ -2,8 +2,14 @@
 
 const express = require('express');
 const app = express();
+const router = express.Router();
+
 app.use(express.static('public'));
+
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
+
+const jsonParser = bodyParser.json();
 
 app.use(morgan('common'));
 

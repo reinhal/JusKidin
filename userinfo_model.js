@@ -39,7 +39,22 @@ userInfoSchema.virtual('childNameString').get(function() {
 });
 
 userInfoSchema.virtual('childAge').get(function() {
-
+    $(document).ready(function(){
+        $("#calculate").click(function(){
+            var mdate = $("#birth_date").val().toString();
+            var yearThen = parseInt(mdate.substring(0,4), 10);
+            var monthThen = parseInt(mdate.substring(5,7), 10);
+            
+            var today = new Date();
+            var birthday = new Date(yearThen, monthThen-1,);
+            
+            var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+            
+            var year_age = Math.floor(differenceInMilisecond / 31536000000);
+    
+            console.log(year_age);
+        });
+    });
 });
 
 userInfoSchema.virtual('assetsString').get(function() {
