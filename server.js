@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
 const jsonParser = bodyParser.json();
+const {userInfoSchema} = require('./userinfo_model');
 
 app.use(morgan('common'));
 
