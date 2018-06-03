@@ -1,14 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
 		<title>JusKidin</title>
+		<link rel="stylesheet" href="styles.css" />
+		<link href="https://fonts.googleapis.com/css?family=Overlock|Open+Sans:400,600" rel="stylesheet">
+		<link rel="stylesheet" href="float-grid.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
 	</head>
 <body>
-	<h1>JusKidin</h1>
-	<p>Hello World!</p>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script type="text/javascript" src="app.js"></script>
+	<div id="header">
+		<header role="banner">
+			<h1>JusKidin</h1>
+			<h2>Support your children.  Keep all the memories.</h2>
+			<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
+		</header>
+	</div>
+	<div id="body">
+		<main role="main">
+			<section role="region">
+			<div class="container">
+				<div class="grid">
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image1" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image2" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image3" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image4" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image5" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image6" class="responsive-image"></div>
+				</div>
+			</div>
+			</section>
+		</main>
+	</div>
+	<div id="navigation">
+		<nav role="main">
+			<ul>
+				<li>Account</li>
+				<li>Child/ren</li>
+				<li>New Drawer</li>
+			</ul>
+		</nav>
+	</div>
 </body>
 </html>
