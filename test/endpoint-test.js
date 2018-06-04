@@ -45,7 +45,7 @@ function generateUserInfoData() {
     return {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
-        email: fake.internet.email()
+        email: faker.internet.email()
     }
 }
 
