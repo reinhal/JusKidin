@@ -1,7 +1,7 @@
 //import { callbackify } from "util";
 
 var MOCK_USER_INFO = {
-    "userInfo": [
+    "UserInfo": [
         {
             "id": "123123",
             "firstName": "Swarming",

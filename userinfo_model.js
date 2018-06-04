@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 const userInfoSchema = mongoose.Schema({
     id: {type: Number},
@@ -25,10 +26,10 @@ const userInfoSchema = mongoose.Schema({
     ]
 });
 
-const UserInfo = mongoose.model('UserInfo', userInfoSchema);
-const ChildProf = mongoose.model('ChildProf', userInfoSchema);
+const UserInfo = mongoose.model('UserInfo', userInfoSchema, 'UserInfo');
+//const ChildProf = mongoose.model('ChildProf', userInfoSchema);
 //const ChildAge = mongoose.model('ChildAge', userInfoSchema);
-const Assets = mongoose.model('Assets', userInfoSchema);
+//const Assets = mongoose.model('Assets', userInfoSchema);
 
 userInfoSchema.virtual('userNameString').get(function() {
     return `${this.firstName} ${this.lastName}`.trim();
@@ -61,7 +62,7 @@ userInfoSchema.virtual('assetsString').get(function() {
     return `${this.asset.title}`.trim();
 });
 
-module.exports = {Assets};
-module.exports = {ChildProf};
+//module.exports = {Assets};
+//module.exports = {ChildProf};
 module.exports = {UserInfo};
 //module.exports = {childAge};
