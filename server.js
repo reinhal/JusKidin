@@ -17,11 +17,11 @@ const {UserInfo} = require('./userinfo_model');
 
 app.use(morgan('common'));
 
-UserInfo.create({
-  "firstName": "Swarming",
-  "lastName": "Hive",
-  "email": "sb@thehive.com"
-});
+//UserInfo.create({
+//  "firstName": "Swarming",
+//  "lastName": "Hive",
+//  "email": "sb@thehive.com"
+//});
 
 app.get('/user-info', (req, res) => {
   UserInfo
@@ -29,25 +29,12 @@ app.get('/user-info', (req, res) => {
     .then(userinfo => {
         res.json(userinfo);
       })
-      //console.log(userinfo);
-      //res.json(userinfo);
     .catch(err => {
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
     });
 });
 
-//UserInfo
-//    .create({
-//      firstName: req.body.firstName, 
-//      lastName: req.body.lastName,
-//      email: req.body.email
-//    })
-//    .then(restaurant => res.status(201).json(restaurant.serialize()))
-//    .catch(err => {
-//      console.error(err);
-//      res.status(500).json({ message: 'Internal server error' });
-//});
 
 let server;
 
@@ -98,7 +85,7 @@ app.post('/user-info', jsonParser, (req, res) => {
       return res.status(400).send(message);
     }
   }
-  const item = userInfoSchema.create(req.body.firstName, req.body.lastName, req.body.email);
+  const item = UserInfo.create(req.body.firstName, req.body.lastName, req.body.email);
   res.status(201).json(item);
 });
 
@@ -119,7 +106,7 @@ app.put('/user-info/:id', jsonParser, (req, res) => {
     return res.status(400).send(message);
   }
   console.log(`Updating user info \`${req.params.id}\``);
-  userInfoSchema.update({
+  UserInfo.update({
     id: req.params.id,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -129,7 +116,7 @@ app.put('/user-info/:id', jsonParser, (req, res) => {
 });
 
 app.delete('/user-info/:id', (req, res) => {
-  userInfoSchema.delete(req.params.id);
+  UserInfo.delete(req.params.id);
   console.log(`Deleted user \`${req.params.ID}\``);
   res.status(204).end();
 });
