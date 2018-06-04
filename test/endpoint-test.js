@@ -61,7 +61,7 @@ describe('UserInfo API resource', function() {
       });
     
       beforeEach(function() {
-        return seedRestaurantData();
+        return seedUserInfoData();
       });
     
       afterEach(function() {
