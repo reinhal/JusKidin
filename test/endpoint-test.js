@@ -60,7 +60,7 @@ describe('UserInfo API resource', function() {
         it('should return all existing accounts', function() {
           let res;
           return chai.request(app)
-            .get('/account')
+            .get('/api/account')
             .then(function(_res) {
               res = _res;
               expect(res).to.have.status(200);
@@ -75,7 +75,7 @@ describe('UserInfo API resource', function() {
         it('should return account info with the right fields', function() {
           let resAccount;
           return chai.request(app)
-            .get('/account')
+            .get('/api/account')
             .then(function(res) {
               expect(res).to.have.status(200);
               expect(res).to.be.json;
