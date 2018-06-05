@@ -22,24 +22,7 @@ function seedUserInfoData() {
     }
     return UserInfo.insertMany(seedData);
 }
-  
-//  function generateFirstName() {
-//    const firstName = [
-//      'Matilda', 'Kapo', 'Grace', 'Finn', 'Stella'];
-//    return firstName[Math.floor(Math.random() * firstName.length)];
-//  }
-//  
-//  function generateLastName() {
-//    const lastName = [
-//      'Carlson', 'Sabee', 'Brandenburg', 'Barclay', 'Cleary'];
-//    return lastName[Math.floor(Math.random() * lastName.length)];
-//  }
-//
-//  function generateEmail() {
-//    const email = [
-//      'queen@thehive.com', 'worker@thehive.com', 'drone@thehive.com', 'guard@thehive.com', 'keeper@thehive.com'];
-//    return email[Math.floor(Math.random() * email.length)];
-//  }
+
 
 function generateUserInfoData() {
     return {
@@ -65,7 +48,7 @@ describe('UserInfo API resource', function() {
       });
     
       afterEach(function() {
-        return tearDownDb();
+        //return tearDownDb();
       });
     
       after(function() {
@@ -79,15 +62,13 @@ describe('UserInfo API resource', function() {
           return chai.request(app)
             .get('/account')
             .then(function(_res) {
-              // so subsequent .then blocks can access response object
               res = _res;
               expect(res).to.have.status(200);
-              // otherwise our db seeding didn't work
-              expect(res.body.account).to.have.lengthOf.at.least(1);
+              expect(res.body).to.have.lengthOf.at.least(1);
               return UserInfo.count();
             })
             .then(function(count) {
-              expect(res.body.account).to.have.lengthOf(count);
+              expect(res.body).to.have.lengthOf(count);
             });
         });
 
@@ -98,18 +79,18 @@ describe('UserInfo API resource', function() {
             .then(function(res) {
               expect(res).to.have.status(200);
               expect(res).to.be.json;
-              expect(res.body.account).to.be.a('array');
-              expect(res.body.account).to.have.lengthOf.at.least(1);
+              expect(res.body).to.be.a('array');
+              expect(res.body).to.have.lengthOf.at.least(1);
 
-              res.body.account.forEach(function(userinfo) {
+              res.body.forEach(function(userinfo) {
                 expect(userinfo).to.be.a('object');
                 expect(userinfo).to.include.keys('firstName', 'lastName', 'email');
               });
-              resAccount = res.body.account[0];
-              return UserInfo.findById(resAccount.id);
+              resAccount = res.body[0];
+              return UserInfo.findById(resAccount._id);
             })
             .then(function(userinfo) {
-
+                console.log(userinfo, 'userinfo');
               expect(resAccount.firstName).to.equal(userinfo.firstName);
               expect(resAccount.lastName).to.equal(userinfo.lastName);
               expect(resAccount.email).to.equal(userinfo.email);
@@ -126,7 +107,7 @@ describe('UserInfo API resource', function() {
             .findOne()
             .then(function(_userinfo) {
               userinfo = _userinfo;
-              return chai.request(app).delete(`/account/${userinfo.id}`);
+              return chai.request(app).delete(`/account/${userinfo._id}`);
             })
             .then(function(res) {
               expect(res).to.have.status(204);
