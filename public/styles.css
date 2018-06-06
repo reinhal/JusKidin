@@ -29,6 +29,10 @@ nav {
     display: inline;
 }
 
+#mainnav {
+    display: none;
+}
+
 .grid {
     margin: 0 auto;
     max-width: 1200px;

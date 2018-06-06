@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="float-grid.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script type="text/javascript" src="app.js"></script>
+		
 	</head>
 <body>
 	<div id="header">
@@ -43,12 +44,37 @@
 			</form>
 		</section>
 	</div>
-	<div id="navigation">
-		<nav role="main" class="mainnav">
-			<a href="#account">Account</a>
-			<a href="#child/ren">Child/ren</a>
-			<a href="#newdrawer">New Drawer</a>
+	<div>
+		<div id="navigation">
+			<nav role="main" class="mainnav" aria-label="mainmenu">
+				<h2 id="mainmenu" class="visuallyhidden">Main Menu</h2>
+					<li><a href="#account" aria-current="page">Account</a></li>
+					<li><a href="#child/ren" aria-current="page">Child/ren</a></li>
+					<li><a href="#newdrawer" aria-current="page">New Drawer</a></li>	
+			</nav>
+		</div>
+	</div>
+	<div>
+		<nav aria-label="Main Navigation">
+			<ul>
+				<li><a href="#account">Account</a></li>
+				<li class="has-submenu"><a href="#child/ren" aria-haspopup="true" aria-expanded="false">Child/ren</a>
+					<ul>
+						<li><a href="#">Child1</a></li>
+						<li><a href="#">Child2</a></li>
+						<li><a href="#">Add New Child</a></li>
+					</ul>
+				</li>
+				<li class="has-submenu"><a href="#child/ren" aria-haspopup="true" aria-expanded="false">Drawer</a>
+					<ul>
+						<li><a href="#">Child1</a></li>
+						<li><a href="#">Child2</a></li>
+						<li><a href="#">Add New Child</a></li>
+					</ul>
+				</li>
+			</ul>
 		</nav>
 	</div>
+	
 </body>
 </html>

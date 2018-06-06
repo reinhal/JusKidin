@@ -32,10 +32,10 @@ function generateUserInfoData() {
     }
 }
 
-function tearDownDb() {
-    console.warn('Deleting database');
-    return mongoose.connection.dropDatabase();
-}
+// function tearDownDb() {
+//     console.warn('Deleting database');
+//     return mongoose.connection.dropDatabase();
+// }
 
 describe('UserInfo API resource', function() {
     
@@ -60,6 +60,7 @@ describe('UserInfo API resource', function() {
         it('should return all existing accounts', function() {
           let res;
           return chai.request(app)
+            //.select(res.query.select)
             .get('/api/account')
             .then(function(_res) {
               res = _res;
@@ -99,19 +100,19 @@ describe('UserInfo API resource', function() {
     });
     describe('DELETE endpoint', function() {
         
-        it('delete user info by id', function() {
+        it('should delete user info by id', function() {
     
           let userinfo;
     
           return UserInfo
-            .findOne()
+            .find()
             .then(function(_userinfo) {
               userinfo = _userinfo;
-              return chai.request(app).delete(`/account/${userinfo._id}`);
+              return chai.request(app).delete(`/api/account/${userinfo._id}`);
             })
             .then(function(res) {
               expect(res).to.have.status(204);
-              return UserInfo.findById(userinfo.id);
+              return UserInfo.findById(userinfo._id);
             })
             .then(function(_userinfo) {
               expect(_userinfo).to.be.null;
