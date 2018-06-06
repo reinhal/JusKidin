@@ -25,14 +25,6 @@ ul li {
     list-style-type: none;
 }
 
-nav {
-    display: inline;
-}
-
-#mainnav {
-    display: none;
-}
-
 .grid {
     margin: 0 auto;
     max-width: 1200px;
@@ -85,9 +77,44 @@ nav {
     }
 }
 
+/* Navigation */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li a { 
+ display: block;
+}
+
+nav li.has-submenu {
+    display: inline-block;
+}
+
+.submenu {
+    display: none;
+}
+
+nav > ul li:hover ul.submenu > li { 
+    display: block;
+    
+}
+
+ul.nav {
+    text-align: center;
+}
+
+ul.nav li {
+    display: inline;
+}
+
 #navigation {
     width: 100%;
     text-align: center;
+    display: table;
     padding: 50px;
     margin: 0 auto;
 }
@@ -108,6 +135,9 @@ nav {
     color: darkblue;
     background-color: aliceblue;
 }
+
+/* Search Drawers Button */
+
 #searchAssets {
     margin: 0 auto;
     display: flex;

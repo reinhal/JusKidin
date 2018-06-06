@@ -6,8 +6,8 @@
 		<title>JusKidin</title>
 		<link rel="stylesheet" href="styles.css" />
 		<link href="https://fonts.googleapis.com/css?family=Overlock|Open+Sans:400,600" rel="stylesheet">
-		<link rel="stylesheet" href="float-grid.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="app.js"></script>
 		
 	</head>
@@ -44,34 +44,69 @@
 			</form>
 		</section>
 	</div>
-	<div>
-		<div id="navigation">
-			<nav role="main" class="mainnav" aria-label="mainmenu">
-				<h2 id="mainmenu" class="visuallyhidden">Main Menu</h2>
-					<li><a href="#account" aria-current="page">Account</a></li>
-					<li><a href="#child/ren" aria-current="page">Child/ren</a></li>
-					<li><a href="#newdrawer" aria-current="page">New Drawer</a></li>	
-			</nav>
-		</div>
-	</div>
-	<div>
-		<nav aria-label="Main Navigation">
-			<ul>
-				<li><a href="#account">Account</a></li>
-				<li class="has-submenu"><a href="#child/ren" aria-haspopup="true" aria-expanded="false">Child/ren</a>
-					<ul>
-						<li><a href="#">Child1</a></li>
-						<li><a href="#">Child2</a></li>
-						<li><a href="#">Add New Child</a></li>
-					</ul>
+	<div id="navigation">
+		<nav aria-label="JusKidin Menu Options" class="mainnav">
+			<ul id="homenav" role="menubar" aria-label="JusKidin Menu Options">
+				<li class="has-submenu">
+					<a role="menuitem"
+					href="#" aria-haspopup="true" aria-expanded="false"
+					tabindex="0">
+					 Child/ren
+				   </a><i class="fas fa-arrow-down"></i>
 				</li>
-				<li class="has-submenu"><a href="#child/ren" aria-haspopup="true" aria-expanded="false">Drawer</a>
-					<ul>
-						<li><a href="#">Child1</a></li>
-						<li><a href="#">Child2</a></li>
-						<li><a href="#">Add New Child</a></li>
-					</ul>
+				<ul role="menu" aria-label="Child/ren" class="submenu">
+					<li role="none">
+						<a role="menuitem"
+						href="#"
+						tabindex="-1">
+						Child 1
+						</a>
+					</li>
+					<li role="none">
+						<a role="menuitem"
+						href="#"
+						tabindex="-2">
+						Child 2
+						</a>
+					</li>
+					<li role="none">
+						<a role="menuitem"
+						href="#"
+						tabindex="-3">
+						Add New Child
+						</a>
+					</li>
+				</ul>
+				<li class="has-submenu">
+					<a role="menuitem"
+					href="#" aria-haspopup="true" aria-expanded="false"
+					tabindex="0">
+					 Drawers 
+					</a><i class="fas fa-arrow-down"></i>
 				</li>
+					<ul role="menu" aria-label="Drawers" class="submenu">
+						<li role="none">
+							<a role="menuitem"
+							href="#"
+							tabindex="-1">
+							Drawer 1
+							</a>
+						</li>
+						<li role="none">
+							<a role="menuitem"
+							href="#"
+							tabindex="-2">
+							Drawer 2
+							</a>
+						</li>
+						<li role="none">
+							<a role="menuitem"
+							href="#"
+							tabindex="-3">
+							Create New Drawer
+							</a>
+						</li>
+					</ul>	
 			</ul>
 		</nav>
 	</div>
