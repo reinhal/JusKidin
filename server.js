@@ -102,19 +102,19 @@ app.delete('/api/account/:id', (req, res) => {
 // // Child Profile Info Endpoints//
 
 
-app.post('/api/childProf', jsonParser, (req, res) => {
-  const requiredFields = ['childProfs.firstName', 'childProfs.lastName', 'childProfs.birthDate', 'childProfs.sex'];
-  for (let i=0; i<requiredFields.length; i++) {
-    const field = requiredFields[i];
-    if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
-      console.error(message);
-      return res.status(400).send(message);
-    }
-  }
-  const item = UserInfo.create(req.body.childProfs.firstName, req.body.childProfs.lastName, req.body.childProfs.birthDate, req.body.childProfs.sex);
-  res.status(201).json(item);
-});
+// app.post('/api/childProf', jsonParser, (req, res) => {
+//   const requiredFields = ['childProfs.firstName', 'childProfs.lastName', 'childProfs.birthDate', 'childProfs.sex'];
+//   for (let i=0; i<requiredFields.length; i++) {
+//     const field = requiredFields[i];
+//     if (!(field in req.body)) {
+//       const message = `Missing \`${field}\` in request body`
+//       console.error(message);
+//       return res.status(400).send(message);
+//     }
+//   }
+//   const item = UserInfo.create(req.body.childProfs.firstName, req.body.childProfs.lastName, req.body.childProfs.birthDate, req.body.childProfs.sex);
+//   res.status(201).json(item);
+// });
 
 // app.put('/childProf/:_id', jsonParser, (req, res) => {
 //   const requiredFields = ['firstName', 'lastName', 'email'];
