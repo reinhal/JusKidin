@@ -205,8 +205,6 @@ function getUserInfo(callbackFn) {
 
 function displayUserInfo(data) {
     for (index in data.userInfo) {
-        $('body').append(
-            '<p>' + data.userInfo[index].firstName + '</p>');
     }
 }
 
@@ -220,8 +218,6 @@ function getChildInfo(callbackFn) {
 
 function displayChildInfo(data) {
     for (index in data.userInfo.childProfs) {
-        $('body').append(
-            '<p>' + data.userInfo.childProfs[index].birthDate + '</p>');
     }
 }
 
@@ -235,8 +231,6 @@ function getAssetInfo(callbackFn) {
 
 function displayAssetInfo(data) {
     for (index in data.userInfo) {
-        $('body').append(
-            '<p>' + data.userInfo.asset[index].title + '</p>');
     }
 }
 
@@ -385,8 +379,6 @@ function getGsearchInfo(callbackFn) {
 
 function displayGsearchInfo(data) {
     for (index in data.gsearchInfo) {
-        $('body').append(
-            '<p>' + data.gsearchInfo[index].title + '</p>');
     }
 }
 

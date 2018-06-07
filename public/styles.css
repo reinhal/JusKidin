@@ -5,6 +5,7 @@
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0 auto;
+    background-color: aliceblue;
 }
 
 h1 {
@@ -89,7 +90,9 @@ ul {
 li a { 
  display: block;
 }
-
+.fas fa-arrow-down {
+    display: inline;
+}
 nav li.has-submenu {
     display: inline-block;
 }
@@ -133,7 +136,7 @@ ul.nav li {
 
 .mainnav a:hover {
     color: darkblue;
-    background-color: aliceblue;
+    background-color: whitesmoke;
 }
 
 /* Search Drawers Button */

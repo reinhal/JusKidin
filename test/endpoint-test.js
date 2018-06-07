@@ -32,10 +32,10 @@ function generateUserInfoData() {
     }
 }
 
-// function tearDownDb() {
-//     console.warn('Deleting database');
-//     return mongoose.connection.dropDatabase();
-// }
+function tearDownDb() {
+    console.warn('Deleting database');
+    return mongoose.connection.dropDatabase();
+}
 
 describe('UserInfo API resource', function() {
     
@@ -105,7 +105,7 @@ describe('UserInfo API resource', function() {
           let userinfo;
     
           return UserInfo
-            .find()
+            .findOne()
             .then(function(_userinfo) {
               userinfo = _userinfo;
               return chai.request(app).delete(`/api/account/${userinfo._id}`);
