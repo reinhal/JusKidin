@@ -23,12 +23,46 @@ function seedUserInfoData() {
     return UserInfo.insertMany(seedData);
 }
 
+function generateBirthDate() {
+  const birthDate = [
+    '05/23/14', '08/11/11', '11/17/08', '02/18/12', '10/09/16'];
+  return birthDate[Math.floor(Math.random() * birthDate.length)];
+}
+
+function generateSex() {
+  const sex = [
+    'male', 'female'];
+  return sex[Math.floor(Math.random() * sex.length)];
+}
+
+function generateTitle() {
+  const title = [
+    'Soccer Game', 'Birthday Party', 'School Project', 'Animal Research', 'Math Test'];
+  return title[Math.floor(Math.random() * title.length)];
+}
+
+function generateDateUploaded() {
+  const dateUploaded = [
+    '04/13/16', '07/11/15', '03/27/17', '02/18/18', '01/29/14'];
+  return dateUploaded[Math.floor(Math.random() * dateUploaded.length)];
+}
 
 function generateUserInfoData() {
     return {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
-        email: faker.internet.email()
+        email: faker.internet.email(),
+        childProfs: {
+          firstName: faker.name.firstName(),
+          lastName: faker.name.lastName(),
+          birthDate: generateBirthDate(),
+          sex: generateSex()
+        },
+        asset: {
+          title: generateTitle(),
+          dateUploaded: generateDateUploaded(),
+          fileLocation: faker.image.nature()
+        }
     }
 }
 
@@ -97,6 +131,34 @@ describe('UserInfo API resource', function() {
               expect(resAccount.email).to.equal(userinfo.email);
             });
         });
+    });
+    describe('POST endpoint', function() {
+      it('should add a new user', function() {
+
+          const newUser = generateUserInfoData();
+
+          return chai.request(app)
+              .post('/api/account')
+              .send(newUser)
+              .then(function(res) {
+                  expect(res).to.have.status(201);
+                  expect(res).to.be.json;
+                  expect(res.body).to.be.a('object');
+                  expect(res.body).to.include.keys(
+                    'firstName', 'lastName', 'email');
+                  expect(res.body.id).to.not.be.null;
+                  expect(res.body.firstName).to.equal(newUser.firstName);
+                  expect(res.body.lastName).to.equal(newUser.lastName);
+                  expect(res.body.email).to.equal(newUser.email); 
+                  return res.body;
+          })
+          .then(function(UserInfo) {
+              console.log(newUser, UserInfo);
+              expect(UserInfo.title).to.equal(newUser.firstName);
+              expect(UserInfo.author).to.equal(newUser.lastName);
+              expect(UserInfo.content).to.equal(newUser.email);
+          });
+      });
     });
     describe('DELETE endpoint', function() {
         
