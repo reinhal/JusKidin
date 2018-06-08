@@ -154,9 +154,9 @@ describe('UserInfo API resource', function() {
           })
           .then(function(UserInfo) {
               console.log(newUser, UserInfo);
-              expect(UserInfo.title).to.equal(newUser.firstName);
-              expect(UserInfo.author).to.equal(newUser.lastName);
-              expect(UserInfo.content).to.equal(newUser.email);
+              expect(UserInfo.firstName).to.equal(newUser.firstName);
+              expect(UserInfo.lastName).to.equal(newUser.lastName);
+              expect(UserInfo.email).to.equal(newUser.email);
           });
       });
     });

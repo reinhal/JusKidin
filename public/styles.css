@@ -6,6 +6,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0 auto;
     background-color: aliceblue;
+    padding-top: 0px;
 }
 
 h1 {
@@ -80,64 +81,87 @@ ul li {
 
 /* Navigation */
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+a { 
+    text-decoration: none;
+    color: azure
 }
 
-li a { 
- display: block;
-}
-.fas fa-arrow-down {
+.dropbtn {
     display: inline;
-}
-nav li.has-submenu {
-    display: inline-block;
-}
-
-.submenu {
-    display: none;
-}
-
-nav > ul li:hover ul.submenu > li { 
-    display: block;
-    
+    background-color: black;
+    color: azure;
+    font-size: 24px;
+    border: 1px solid azure;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
 }
 
-ul.nav {
-    text-align: center;
-}
-
-ul.nav li {
-    display: inline;
+.dropbtn:hover {
+    border: 1px solid azure;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: azure;
+    color: black;
 }
 
 #navigation {
-    width: 100%;
-    text-align: center;
-    display: table;
-    padding: 50px;
-    margin: 0 auto;
+    background-color: black;
+    color: azure;
+    list-style: none;
+    padding: 5px 0px 5px 50px;
 }
 
-.mainnav {
-    font-family: 'Overlock', cursive;
-    font-size: 36px;
+.dropdown {
+    display: inline-block;
+    position: relative;
 }
 
-.mainnav a {
-    text-align: center;
-    text-decoration: none;
+.maintopnav {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn a:hover {
+    background-color: azure;
     color: black;
-    padding: 15px;
 }
 
-.mainnav a:hover {
-    color: darkblue;
-    background-color: whitesmoke;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    border-radius: 5px;
+    min-width: 160px;
+    z-index: 1;
 }
+
+.dropdown-content a {
+    color: azure;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    color: black;
+    background-color: azure;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    border-radius: 5px;
+}
+
+/* Form Styling */
 
 /* Search Drawers Button */
 
