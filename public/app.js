@@ -392,3 +392,5 @@ function getAndDisplayGsearchInfo() {
         getAndDisplayChildInfo();
         getAndDisplayUserInfo();
     })
+
+//  Responsive Navigation Menu

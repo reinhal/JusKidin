@@ -48,17 +48,19 @@ app.get('/api/account/:_id', (req, res) => {
 });
 
 app.post('/api/account', jsonParser, (req, res) => {
-  const requiredFields = ['firstName', 'lastName', 'email'];
-  for (let i=0; i<requiredFields.length; i++) {
-    const field = requiredFields[i];
+  const newUser = ['firstName', 'lastName', 'email'];
+  for (let i=0; i<newUser.length; i++) {
+    const field = newUser[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`
       console.error(message);
       return res.status(400).send(message);
     }
   }
-  const item = UserInfo.create(req.body.firstName, req.body.lastName, req.body.email);
-  res.status(201).json(item);
+  UserInfo.create({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
+  .then(function(newUser) {
+    res.status(201).json(newUser);
+  });
 });
 
 app.put('/api/account/:_id', jsonParser, (req, res) => {
@@ -67,9 +69,9 @@ app.put('/api/account/:_id', jsonParser, (req, res) => {
     console.error(message);
     return res.status(400).send(message);
   }
-  const requiredFields = ['firstName', 'lastName', 'email'];
-  for (let i=0; i<requiredFields.length; i++) {
-    const field = requiredFields[i];
+  const updatedUser = ['firstName', 'lastName', 'email'];
+  for (let i=0; i<updatedUser.length; i++) {
+    const field = updatedUser[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`
       console.error(message);
@@ -80,9 +82,12 @@ app.put('/api/account/:_id', jsonParser, (req, res) => {
     req.params._id,
     req.body,
     {new: true},
-    (err, requiredFields) => {
-      if(err) return res.status(500).send(err)
-      res.status(204).end();
+    (err, updatedUser) => {
+      if(err) {
+        return res.status(500).send(err)
+      } 
+      res.status(204).send(updatedUser);
+      console.log(updatedUser);
     }
   )
 });

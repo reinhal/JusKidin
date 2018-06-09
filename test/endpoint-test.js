@@ -152,12 +152,35 @@ describe('UserInfo API resource', function() {
                   expect(res.body.email).to.equal(newUser.email); 
                   return res.body;
           })
-          .then(function(UserInfo) {
-              console.log(newUser, UserInfo);
-              expect(UserInfo.firstName).to.equal(newUser.firstName);
-              expect(UserInfo.lastName).to.equal(newUser.lastName);
-              expect(UserInfo.email).to.equal(newUser.email);
-          });
+          // .then(function(UserInfo) {
+          //     console.log(newUser, UserInfo);
+          //     expect(newUser.firstName).to.equal(UserInfo.firstName);
+          //     expect(newUser.lastName).to.equal(UserInfo.lastName);
+          //     expect(newUser.email).to.equal(UserInfo.email);
+          // });
+      });
+      describe('PUT endpoint', function() {
+        it('should update the user', function() {
+          this.timeout(4000);
+          const updatedUser = generateUserInfoData();
+          return UserInfo
+            .findOne()
+            .then(function(userinfo) {
+              updatedUser._id = userinfo._id;
+              return chai.request(app)
+                .put(`/api/account/${userinfo._id}`)
+                .send(updatedUser);
+            })
+            .then(function(res) {
+              expect(res).to.have.status(204);
+              return UserInfo.findById(updatedUser._id);
+            })
+            .then(function(userinfo) {
+              expect(userinfo.firstName).to.equal(updatedUser.firstName);
+              expect(userinfo.lastName).to.equal(updatedUser.lastName);
+              expect(userinfo.email).to.equal(updatedUser.email);
+            });
+        });
       });
     });
     describe('DELETE endpoint', function() {

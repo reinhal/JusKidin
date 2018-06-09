@@ -6,7 +6,6 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0 auto;
     background-color: aliceblue;
-    padding-top: 0px;
 }
 
 h1 {
@@ -25,6 +24,10 @@ p {
 
 ul li {
     list-style-type: none;
+}
+
+.container {
+    padding-bottom: 30px;
 }
 
 .grid {
@@ -62,6 +65,151 @@ ul li {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#808080', endColorstr='#c0c0c0',GradientType=1 ); /* ie6-9 */ 
 }
 
+/* Navigation */
+
+.topnav a { 
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.dropbtn {
+    background-color: black;
+    color: aliceblue;
+    font-size: 18px;
+    border: 1px solid aliceblue;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.dropbtn:hover {
+    border: 1px solid aliceblue;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: aliceblue;
+    color: black;
+}
+
+.topnav {
+    background-color: black;
+    color: aliceblue;
+    list-style: none;
+    padding: 5px 30px 5px 30px;
+    position: relative;
+    display: flex;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    width: 100%;
+}
+
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropbtn a:hover {
+    background-color: aliceblue;
+    color: black;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    border-radius: 5px;
+    min-width: 80px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: aliceblue;
+    background-color: black;
+    padding: 8px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    color: black;
+    background-color: aliceblue;
+    padding: 8px 10px;
+    min-width: 90px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    border-radius: 5px;
+}
+
+legend, label {
+    display: none;
+}
+
+.searchnav {
+    margin-left: auto;
+}
+
+.topnav .search-container {
+    float: right;
+}
+
+.topnav input[type=text] {
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 1px solid aliceblue;
+    border-radius: 5px 0px 0px 5px; 
+    background-color: aliceblue;
+}
+
+.topnav .search-container button {
+  float: right;
+  padding: 5px;
+  margin-top: 5px;
+  margin-right: 16px;
+  color: aliceblue;
+  background: black;
+  font-size: 18px;
+  border: 1px solid aliceblue;
+  border-radius: 0px 5px 5px 0px; 
+  cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+    background: aliceblue;
+    color: black;
+    border: 1px solid aliceblue;
+    border-radius: 0px 5px 5px 0px; 
+}
+
+.topnav .icon {
+    display: none;
+}
+
+.Navbar__Link-toggle {
+    display: none;
+}
+
+/* Form Styling */
+
+/* Footer */
+
+footer {
+    background-color: black;
+    color: aliceblue;
+    text-align: center;
+    font-size: 14px;
+    margin: 0 auto;
+    padding: 3px;
+}
+
+/*  Responsive Styling */
+
 @media screen and (min-width: 600px) {
     .grid {
       display: flex;
@@ -77,120 +225,4 @@ ul li {
     .cell {
       width: 25%;
     }
-}
-
-/* Navigation */
-
-a { 
-    text-decoration: none;
-    color: azure
-}
-
-.dropbtn {
-    display: inline;
-    background-color: black;
-    color: azure;
-    font-size: 24px;
-    border: 1px solid azure;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-.dropbtn:hover {
-    border: 1px solid azure;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 5px;
-    background-color: azure;
-    color: black;
-}
-
-#navigation {
-    background-color: black;
-    color: azure;
-    list-style: none;
-    padding: 5px 0px 5px 50px;
-}
-
-.dropdown {
-    display: inline-block;
-    position: relative;
-}
-
-.maintopnav {
-    position: relative;
-    display: inline-block;
-}
-
-.dropbtn a:hover {
-    background-color: azure;
-    color: black;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: black;
-    border-radius: 5px;
-    min-width: 160px;
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: azure;
-    position: absolute;
-    background-color: black;
-    min-width: 160px;
-    border-radius: 5px;
-    padding: 5px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    color: black;
-    background-color: azure;
-    border-radius: 5px;
-    border: 1px solid black;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-    border-radius: 5px;
-}
-
-/* Form Styling */
-
-/* Search Drawers Button */
-
-#searchAssets {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    padding: 15px;
-}
-#search-drawers {
-    margin: 0 auto;
-    width: 100%;
-    padding: 15px;
-    text-align: center;
-    justify-items: center;
-    font-size: 18px;
-    border-radius: 5px;
-    border-style: 2px solid black;
-}
-
-button {
-    display: inline;
-
-}
-
-input {
-    width: 50%;
-}
-
-legend, label {
-    display: none;
 }

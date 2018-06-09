@@ -12,15 +12,19 @@
 		
 	</head>
 <body>
-	<div id="navigation">
+	<div class="topnav" id="mainnav">
 		<nav aria-label="JusKidin Menu Options" class="maintopnav" role="navigation">
+			<button class="dropbtn">Home  <i class="fas fa-home"></i></button>
+			<div class="Navbar__Link Navbar__Link-toggle">
+				<i class="fas fa-bars"></i>
+			</div>
+			<button class="dropbtn">Account  <i class="fas fa-user"></i></button>
 			<div class="dropdown">
-				<button class="dropbtn">Child/ren  <i class="fas fa-arrow-down"></i></a>
-				</button>
+				<button class="dropbtn">Child/ren  <i class="fas fa-arrow-down"></i></button>
 					<div class="dropdown-content">
 						<a href="#">Child 1</a>
 						<a href="#">Child 2</a>
-						<a href="#">New Child</a>
+						<a href="#"><i class="fas fa-plus"></i> New Child</a>
 					</div>
 			</div>
 			<div class="dropdown">
@@ -29,9 +33,19 @@
 					<div class="dropdown-content">
 						<a href="#">Drawer 1</a>
 						<a href="#">Drawer 2</a>
-						<a href="#">Upload to Drawer</a>
-						<a href="#">Create New Drawer</a>
+						<a href="#"><i class="fas fa-upload"></i> Upload</a>
+						<a href="#"><i class="fas fa-plus"></i>  New Drawer</a>
 					</div>
+			</div>
+		</nav>
+		<nav class="searchnav">
+			<div class="search-container">
+				<form action="/action_page.php">
+					<legend>Search</legend>
+					<label for="search-drawers">Search Drawers</label><i class="fas fa-search"></i>
+				  	<input type="text" placeholder="Search" name="search">
+				  	<button type="submit">Submit</button>
+				</form>
 			</div>
 		</nav>
 	</div>
@@ -57,15 +71,6 @@
 			</div>
 			</section>
 		</main>
-	</div>
-	<div id="searchAssets">
-		<section role="region">
-			<form class"search">
-				<legend>Search</legend>
-				<label for="search-drawers">Search Drawers</label>
-				<input id="search-drawers" placeholder="Search Drawers" name="search-drawers" type="text">
-			</form>
-		</section>
 	</div>
 </body>
 </html>
