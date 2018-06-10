@@ -107,124 +107,131 @@ app.delete('/api/account/:id', (req, res) => {
 // // Child Profile Info Endpoints//
 
 
-// app.post('/api/childProf', jsonParser, (req, res) => {
-//   const requiredFields = ['childProfs.firstName', 'childProfs.lastName', 'childProfs.birthDate', 'childProfs.sex'];
-//   for (let i=0; i<requiredFields.length; i++) {
-//     const field = requiredFields[i];
-//     if (!(field in req.body)) {
-//       const message = `Missing \`${field}\` in request body`
-//       console.error(message);
-//       return res.status(400).send(message);
-//     }
-//   }
-//   const item = UserInfo.create(req.body.childProfs.firstName, req.body.childProfs.lastName, req.body.childProfs.birthDate, req.body.childProfs.sex);
-//   res.status(201).json(item);
-// });
+app.post('/api/:_id/childProf', jsonParser, (req, res) => {
+  const reqChildProfs = [req.body.childProfs.firstName, req.body.childProfs.birthDate];
+  for (let i=0; i<reqChildProfs.length; i++) {
+    const field = reqChildProfs[i];
+    if (field == undefined) {
+      const message = `Missing \`${field}\` in request body`
+      return res.status(400).send(message);
+    }
+  }
+  UserInfo
+    .findOne({
+      "_id": req.params._id
+    })
+    .then(userinfo => {
+      userinfo.childProfs.push({firstName: req.body.childProfs.firstName, birthDate: req.body.childProfs.birthDate});
+      userinfo.save()
+        res.status(201);
+        res.json(userinfo);
+      })
+    .catch(err => {
+      res.status(500).json({ message: 'Internal server error' });
+    });
 
-// app.put('/childProf/:_id', jsonParser, (req, res) => {
-//   const requiredFields = ['firstName', 'lastName', 'email'];
-//   for (let i=0; i<requiredFields.length; i++) {
-//     const field = requiredFields[i];
-//     if (!(field in req.body)) {
-//       const message = `Missing \`${field}\` in request body`
-//       console.error(message);
-//       return res.status(400).send(message);
-//     }
-//   }
+});
 
-//   if (req.params._id !== req.body._id) {
-//     const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
-//     console.error(message);
-//     return res.status(400).send(message);
-//   }
-//   console.log(`Updating user info \`${req.params._id}\``);
-//   UserInfo.update({
-//     id: req.params._id,
-//     firstName: req.body.firstName,
-//     lastName: req.body.lastName,
-//     email: req.body.email, 
-//   });
-//   res.status(204).end();
-// });
+app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
 
-// app.delete('/childProf/:id', (req, res) => {
-//   UserInfo
-//   .findByIdAndRemove(req.params.id)
-//   .then(() => {
-//       res.status(204).json({message: 'Success!!'});
-//   })
-//   .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: 'There is an error'});
-//   });
-// });
+  if (req.params._id !== req.body._id) {
+    const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
+    console.error(message);
+    return res.status(400).send(message);
+  }
+
+  const updatedChild = ['firstName', 'lastName', 'birthDate', 'sex'];
+  for (let i=0; i<updatedChild.length; i++) {
+    const field = updatedChild[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+
+  UserInfo.childProfs.findByIdAndUpdate(
+    req.params._id,
+    req.body,
+    {new: true},
+    (err, updatedChild) => {
+      if(err) {
+        return res.status(500).send(err)
+      } 
+      res.status(204).send(updatedUser);
+      console.log(updatedChild);
+    }
+  )
+  //for loop to find the right ID and then update
+});
+
+app.delete('/api/:_id/childProf', (req, res) => {
+  UserInfo.childProfs
+  .findByIdAndRemove(req.params.id)
+  .then(() => {
+      res.status(204).json({message: 'Success!!'});
+  })
+  .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'There is an error'});
+  });
+});
 
 // // Digital Assets Endpoints//
 
-// app.get('/api/account?select=asset.title%20asset.dateUploaded%20asset.fileLocation', (req, res) => {
-//   UserInfo
-//     .find()
-//     .select(req.query.select)
-//     .then(userinfo => {
-//         res.json(userinfo);
-//       })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ message: 'Internal server error' });
-//     });
-// });
 
-// app.post('/api/asset', jsonParser, (req, res) => {
-//   const requiredFields = ['firstName', 'lastName', 'email'];
-//   for (let i=0; i<requiredFields.length; i++) {
-//     const field = requiredFields[i];
-//     if (!(field in req.body)) {
-//       const message = `Missing \`${field}\` in request body`
-//       console.error(message);
-//       return res.status(400).send(message);
-//     }
-//   }
-//   const item = UserInfo.create(req.body.firstName, req.body.lastName, req.body.email);
-//   res.status(201).json(item);
-// });
+app.post('/api/:_id/asset', jsonParser, (req, res) => {
+  const reqAsset = [req.body.asset.title, req.body.asset.dateUploaded, req.body.asset.fileLocation];
+  for (let i=0; i<reqAsset.length; i++) {
+    const field = reqAsset[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+  const newAsset = UserInfo.asset.create(req.body.asset.title, req.body.asset.dateUploaded, req.body.asset.fileLocation);
+  res.status(201).json(newAsset);
+});
 
-// app.put('/asset/:_id', jsonParser, (req, res) => {
-//   const requiredFields = ['firstName', 'lastName', 'email'];
-//   for (let i=0; i<requiredFields.length; i++) {
-//     const field = requiredFields[i];
-//     if (!(field in req.body)) {
-//       const message = `Missing \`${field}\` in request body`
-//       console.error(message);
-//       return res.status(400).send(message);
-//     }
-//   }
+app.put('/api/:_id/asset/', jsonParser, (req, res) => {
+  if (req.params._id !== req.body._id) {
+    const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
+    console.error(message);
+    return res.status(400).send(message);
+  }
 
-//   if (req.params._id !== req.body._id) {
-//     const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
-//     console.error(message);
-//     return res.status(400).send(message);
-//   }
-//   console.log(`Updating user info \`${req.params._id}\``);
-//   UserInfo.update({
-//     id: req.params._id,
-//     firstName: req.body.firstName,
-//     lastName: req.body.lastName,
-//     email: req.body.email, 
-//   });
-//   res.status(204).end();
-// });
+  const reqAsset = [req.body.asset.title, req.body.asset.dateUploaded, req.body.asset.fileLocation];
+  for (let i=0; i<reqAsset.length; i++) {
+    const field = reqAsset[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
 
-// app.delete('/asset/:id', (req, res) => {
-//   UserInfo
-//   .findByIdAndRemove(req.params.id)
-//   .then(() => {
-//       res.status(204).json({message: 'Success!!'});
-//   })
-//   .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: 'There is an error'});
-//   });
-// });
+  console.log(`Updating user info \`${req.params._id}\``);
+  UserInfo.asset.update({
+    id: req.params._id,
+    title: req.body.asset.title,
+    dateUploaded: req.body.asset.dateUploaded,
+    fileLocation: req.body.asset.fileLocation 
+  });
+  res.status(204).end();
+});
+
+app.delete('/api/:_id/asset', (req, res) => {
+  UserInfo.asset
+  .findByIdAndRemove(req.params.id)
+  .then(() => {
+      res.status(204).json({message: 'Success!!'});
+  })
+  .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'There is an error'});
+  });
+});
 
 let server;
 
@@ -265,5 +272,7 @@ if (require.main === module) {
 };
 
 module.exports = {app, runServer, closeServer};
+
+
 
 

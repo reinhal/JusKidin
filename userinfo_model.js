@@ -10,11 +10,8 @@ const userInfoSchema = mongoose.Schema({
     email: {type: String, required: true},
     childProfs: [
         {
-            id: {type: Number},
             firstName: {type: String, required: true},  
-            lastName: {type: String, required: true},
             birthDate: {type: String, required: true},
-            sex: {type: String, required: true}
         }
     ],
     asset: [
@@ -32,7 +29,7 @@ const UserInfo = mongoose.model('UserInfo', userInfoSchema, 'UserInfo');
 //const Assets = mongoose.model('Assets', userInfoSchema);
 
 userInfoSchema.virtual('userNameString').get(function() {
-    return `${this.firstName} ${this.lastName}`.trim();
+    return `${this.firstName}`.trim();
 });
 
 userInfoSchema.virtual('childNameString').get(function() {

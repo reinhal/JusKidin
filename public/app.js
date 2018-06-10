@@ -9,18 +9,12 @@ var MOCK_USER_INFO = {
             "email": "sb@thehive.com",
             "childProfs": [
                 {
-                    "id": "654654",
                     "firstName": "Sweet",
-                    "lastName": "Hive",
                     "birthDate": "10/30/18",
-                    "sex": "male"
                 },
                 {
-                    "id": "154154",
                     "firstName": "Little",
-                    "lastName": "Hive",
                     "birthDate": "08/22/16",
-                    "sex": "female"
                 }
             ],
             "asset": [
@@ -48,18 +42,12 @@ var MOCK_USER_INFO = {
             "email": "qb@thehive.com",
             "childProfs": [
                 {
-                    "id": "876876",
                     "firstName": "Dina",
-                    "lastName": "Lady",
                     "birthDate": "04/22/15",
-                    "sex": "male"
                 },
                 {
-                    "id": "437437",
                     "firstName": "Nyle",
-                    "lastName": "Lady",
                     "birthDate": "03/12/14",
-                    "sex": "female"
                 }
             ],
             "asset": [
@@ -87,18 +75,12 @@ var MOCK_USER_INFO = {
             "email": "wb@thehive.com",
             "childProfs": [
                 {
-                    "id": "097097",
                     "firstName": "Morwenna",
-                    "lastName": "Bees",
                     "birthDate": "06/22/12",
-                    "sex": "male"
                 },
                 {
-                    "id": "842842",
                     "firstName": "Keavy",
-                    "lastName": "Bees",
                     "birthDate": "10/14/16",
-                    "sex": "female"
                 }
             ],
             "asset": [
@@ -126,18 +108,12 @@ var MOCK_USER_INFO = {
             "email": "db@thehive.com",
             "childProfs": [
                 {
-                    "id": "398398",
                     "firstName": "Rafi",
-                    "lastName": "Stinger",
                     "birthDate": "05/28/15",
-                    "sex": "male"
                 },
                 {
-                    "id": "877877",
                     "firstName": "Kaira",
-                    "lastName": "Stinger",
                     "birthDate": "01/08/17",
-                    "sex": "female"
                 }
             ],
             "asset": [
@@ -165,18 +141,12 @@ var MOCK_USER_INFO = {
             "email": "hb@thehive.com",
             "childProfs": [
                 {
-                    "id": "725725",
                     "firstName": "Lyndsey",
-                    "lastName": "Comb",
                     "birthDate": "06/23/16",
-                    "sex": "male"
                 },
                 {
-                    "id": "197623",
                     "firstName": "Esa",
-                    "lastName": "Comb",
                     "birthDate": "11/02/14",
-                    "sex": "female"
                 }
             ],
             "asset": [
@@ -393,4 +363,87 @@ function getAndDisplayGsearchInfo() {
         getAndDisplayUserInfo();
     })
 
-//  Responsive Navigation Menu
+////////////////////////////////////////////////////////
+/////////////  Responsive Navigation Menu //////////////
+////////////////////////////////////////////////////////
+
+function showNavigationItems() {
+    var x = document.getElementById("responsivetopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+
+function childOn() {
+    document.getElementById("childoverlay").style.display = "block";
+}
+
+function childOff() {
+    document.getElementById("childoverlay").style.display = "none";
+}
+
+function assetOn() {
+    document.getElementById("assetoverlay").style.display = "block";
+}
+
+function assetOff() {
+    document.getElementById("assetoverlay").style.display = "none";
+}
+
+function drawerOn() {
+    document.getElementById("draweroverlay").style.display = "block";
+}
+
+function drawerOff() {
+    document.getElementById("draweroverlay").style.display = "none";
+}
+
+////////////////////////////////////////////////////////
+///////////// JusKidin Functions ///////////////////////
+////////////////////////////////////////////////////////
+
+function createNewAccount() {
+
+}
+
+function editAccount() {
+
+}
+
+function deleteAccount() {
+
+}
+
+function  addNewChild() {
+
+}
+
+function displayGoogleSearch() {
+
+}
+
+function editChild() {
+
+}
+
+function deleteChild() {
+
+}
+
+function uploadNewAsset() {
+
+}
+
+function deleteAsset() {
+
+}
+
+function searchAssets() {
+
+}
+
+function getAndDisplayImagesOnHomePage() {
+
+}

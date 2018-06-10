@@ -12,49 +12,100 @@
 		
 	</head>
 <body>
-	<div class="topnav" id="mainnav">
-		<nav aria-label="JusKidin Menu Options" class="maintopnav" role="navigation">
-			<button class="dropbtn">Home  <i class="fas fa-home"></i></button>
-			<div class="Navbar__Link Navbar__Link-toggle">
-				<i class="fas fa-bars"></i>
-			</div>
-			<button class="dropbtn">Account  <i class="fas fa-user"></i></button>
+	<ul class="topnav" role="navigation" id="responsivetopnav">
+		<li class="icon"><a href="javascript:void(0);" class="icon" onclick="showNavigationItems()"><i class="fa fa-bars"></i></a>
+		</li>
+		<li class="maintopnav"><button class="dropbtn">Home  <i class="fas fa-home"></i></button></li>
+		<li class="maintopnav"><button class="dropbtn">Account  <i class="fas fa-user"></i></button></li>
 			<div class="dropdown">
-				<button class="dropbtn">Child/ren  <i class="fas fa-arrow-down"></i></button>
+				<li class="maintopnav"><button class="dropbtn">Child/ren  <i class="fas fa-arrow-down"></i></button></li>
 					<div class="dropdown-content">
 						<a href="#">Child 1</a>
 						<a href="#">Child 2</a>
-						<a href="#"><i class="fas fa-plus"></i> New Child</a>
+						<a onclick="childOn()" href="#"><i class="fas fa-plus"></i> New Child</a>
 					</div>
-			</div>
-			<div class="dropdown">
-				<button class="dropbtn">Drawers  <i class="fas fa-arrow-down"></i></a>
-				</button>
+				<li class="maintopnav"><button class="dropbtn">Drawers  <i class="fas fa-arrow-down"></i></a>
+				</button></li>
 					<div class="dropdown-content">
 						<a href="#">Drawer 1</a>
 						<a href="#">Drawer 2</a>
-						<a href="#"><i class="fas fa-upload"></i> Upload</a>
-						<a href="#"><i class="fas fa-plus"></i>  New Drawer</a>
+						<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
+						<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
 					</div>
 			</div>
-		</nav>
-		<nav class="searchnav">
-			<div class="search-container">
-				<form action="/action_page.php">
-					<legend>Search</legend>
-					<label for="search-drawers">Search Drawers</label><i class="fas fa-search"></i>
-				  	<input type="text" placeholder="Search" name="search">
-				  	<button type="submit">Submit</button>
-				</form>
-			</div>
-		</nav>
-	</div>
+		<div class="searchnav">	
+			<li class="searchtopnav">
+				<legend>Search</legend>
+				<label for="search-drawers">Search Drawers</label><i class="fas fa-search"></i>
+				<input type="text" placeholder="Search.." name="search">
+			</li>
+			<li class="searchtopnav"><button type="submit">Submit</button></li>	
+			
+		</div>
+	</ul>
 	<div id="header">
 		<header role="banner">
 			<h1>JusKidin</h1>
 			<h2>Support your children.  Keep all the memories.</h2>
 			<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
 		</header>
+	</div>
+	<div id="addChildForm">
+		<div class="addChild" id="childoverlay" onclick="childOff()">
+			<form>
+				<ul class="flex-outer">
+					<li>
+					<label for="first-name">First Name</label>
+					<input type="text" id="first-name" placeholder="Enter child's first name here">
+					</li>
+					<li>
+					<label for="birth-date">Birth Date</label>
+					<input type="text" id="birth-date" placeholder="Enter child's birth date here">
+					</li>
+					<li>
+					<button type="submit">Create</button>
+					</li>
+				</ul>
+			</form>
+		</div>
+	</div>
+	<div id="uploadAssetForm">
+		<div class="uploadAsset" id="assetoverlay" onclick="assetOff()">
+			<form>
+				<ul class="flex-outer">
+					<li>
+					<label for="title">Title</label>
+					<input type="text" id="first-name" placeholder="Title">
+					</li>
+					<li>
+					<label for="date-uploaded">Today's Date</label>
+					<input type="text" id="date-uploaded" placeholder="Enter Today's Date">
+					</li>
+					<li>
+						<label for="image">Image</label>
+						<input type="image" id="image" width="300" height="250" placeholder="Upload Your Image Here">
+					</li>
+					<li>
+					<button type="submit">Upload</button>
+					</li>
+				</ul>
+			</form>
+		</div>
+	</div>
+	<div id="addDrawerForm">
+		<div class="addDrawer" id="draweroverlay" onclick="drawerOff()">
+			<form>
+				<ul class="flex-outer">
+					<li>
+					<label for="drawer-name">Drawer Name</label>
+					<input type="text" id="first-name" placeholder="Drawer Name">
+					</li>
+					<li>
+					<button type="submit">Create</button>
+					</li>
+				</ul>
+			</form>
+		</div>
 	</div>
 	<div id="body">
 		<main role="main">

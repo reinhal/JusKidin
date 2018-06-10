@@ -72,6 +72,10 @@ ul li {
     color: aliceblue;
 }
 
+ul > li {
+    float: left;
+}
+
 .dropbtn {
     background-color: black;
     color: aliceblue;
@@ -96,14 +100,19 @@ ul li {
     background-color: black;
     color: aliceblue;
     list-style: none;
-    padding: 5px 30px 5px 30px;
+    padding: 30px;
     position: relative;
-    display: flex;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     width: 100%;
+    margin: 0 auto;
 }
 
-.dropdown {
+.menuitems {
+    margin: auto;
+    padding: 15px;
+}
+
+.maintopnav .dropdown {
     display: inline-block;
     position: relative;
 }
@@ -150,14 +159,6 @@ legend, label {
     display: none;
 }
 
-.searchnav {
-    margin-left: auto;
-}
-
-.topnav .search-container {
-    float: right;
-}
-
 .topnav input[type=text] {
     padding: 5px;
     margin-top: 5px;
@@ -167,11 +168,9 @@ legend, label {
     background-color: aliceblue;
 }
 
-.topnav .search-container button {
-  float: right;
+button {
   padding: 5px;
   margin-top: 5px;
-  margin-right: 16px;
   color: aliceblue;
   background: black;
   font-size: 18px;
@@ -180,33 +179,202 @@ legend, label {
   cursor: pointer;
 }
 
-.topnav .search-container button:hover {
+button:hover {
     background: aliceblue;
     color: black;
     border: 1px solid aliceblue;
     border-radius: 0px 5px 5px 0px; 
 }
 
-.topnav .icon {
-    display: none;
+/* .icon:hover {
+    background: aliceblue;
+    color: black;
+    margin: 0 auto;
+    border: 1px solid aliceblue;
+    border-radius: 5px 5px 5px 5px; 
+} */
+
+.searchnav {
+   display: inherit;
+   float: right;
 }
 
-.Navbar__Link-toggle {
+.searchnav li {
+    float: left;
+}
+
+.topnav .icon {
     display: none;
 }
 
 /* Form Styling */
 
-/* Footer */
-
-footer {
-    background-color: black;
-    color: aliceblue;
-    text-align: center;
-    font-size: 14px;
+.addChild {
+    width: 80%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 3px;
+    padding: 50px 0;
 }
+  
+.addChild * {
+    box-sizing: border-box;
+}
+
+.uploadAsset {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+  
+.uploadAsset * {
+    box-sizing: border-box;
+}
+
+.addDrawer {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+  
+.addDrawer * {
+    box-sizing: border-box;
+}
+ 
+.flex-outer {
+    list-style-type: none;
+    padding: 0;
+}
+  
+.flex-outer {
+    max-width: 800px;
+    margin: 0 auto;
+    display: inline-block;
+}
+  
+.flex-outer li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+  
+.flex-outer > li:not(:last-child) {
+    margin-bottom: 20px;
+}
+  
+.flex-outer li label,
+.flex-outer li p {
+    padding: 18px;
+    font-weight: 300;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+  
+.flex-outer > li > label,
+.flex-outer li p {
+        flex: 1 0 220px;
+        max-width: 320px;
+}
+  
+.flex-outer > li > label + * {
+    flex: 1 0 220px;
+}
+  
+.flex-outer li p {
+    margin: 0;
+}
+  
+.flex-outer li button {
+    margin-left: auto;
+    padding: 8px 16px;
+    width: 100%;
+    border: none;
+    background:black;
+    color: aliceblue;
+    font-size: 18px;
+    letter-spacing: .09em;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 5px;
+}
+
+#childoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
+#assetoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
+#draweroverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
+#addChildForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+#uploadAssetForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 3;
+}
+
+#addDrawerForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 4;
+}
+
+
+/* Footer */
 
 /*  Responsive Styling */
 
@@ -224,5 +392,41 @@ footer {
   @media screen and (min-width: 900px) {
     .cell {
       width: 25%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .dropbtn { 
+       font-size: 14px;
+    }
+
+    .topnav input[type=text] {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .topnav li {display: none;} 
+    .topnav .icon {
+      float: left;
+      display: block;
+    }
+} 
+
+@media screen and (max-width: 650px) {
+    .topnav.responsive {position: relative;}
+    .topnav.responsive .icon li {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .topnav.responsive li {
+        display: block;
+        text-align: left;
+        float: none;
     }
 }
