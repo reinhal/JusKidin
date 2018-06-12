@@ -102,6 +102,7 @@ ul li {
 .dropdown-content {
     display: none;
     position: absolute;
+    margin-top: 60px;
     background-color:black;
     color: aliceblue;
     border: 1px solid black;
@@ -389,6 +390,16 @@ button:hover {
 
     .searchnav li {
         float: left;
+    }
+
+    .dropdown-content a {
+        font-size: 12px;
+        padding: 6px 8px;
+        z-index: 1;
+    }
+
+    .dropdown-content a:hover {
+        font-size: 12px;
     }
 }
 
