@@ -31,12 +31,6 @@ function generateBirthDate() {
   return birthDate[Math.floor(Math.random() * birthDate.length)];
 }
 
-function generateSex() {
-  const sex = [
-    'male', 'female'];
-  return sex[Math.floor(Math.random() * sex.length)];
-}
-
 function generateTitle() {
   const title = [
     'Soccer Game', 'Birthday Party', 'School Project', 'Animal Research', 'Math Test'];
