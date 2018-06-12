@@ -12,13 +12,11 @@
 		
 	</head>
 <body>
-	<ul class="topnav" role="navigation" id="responsivetopnav">
-		<li class="icon"><a href="#" onclick="showNavigationItems()"><i class="fa fa-bars"></i>
-		</a></li>
-		<li class="maintopnav"><button class="dropbtn">Home  <i class="fas fa-home"></i></button></li>
-		<li class="maintopnav"><button class="dropbtn">Account  <i class="fas fa-user"></i></button></li>
+	<div class="topnav" role="navigation" id="responsivetopnav">
+		<a class="active" href="#home">Home  <i class="fas fa-home"></i></a>
+		<a href="#account">Account <i class="fas fa-user"></i></a>
 			<div class="dropdown">
-				<li class="maintopnav"><button class="dropbtn">Child/ren  <i class="fas fa-arrow-down"></i></button></li>
+				<a href="#children">Child(ren)  <i class="fas fa-arrow-down"></i></a>
 					<div class="dropdown-content">
 						<a href="#">Child 1</a>
 						<a href="#">Child 2</a>
@@ -26,8 +24,7 @@
 					</div>
 			</div>
 			<div class="dropdown">
-				<li class="maintopnav"><button class="dropbtn">Drawers  <i class="fas fa-arrow-down"></i></a>
-				</button></li>
+				<a href="#drawers">Drawers  <i class="fas fa-arrow-down"></i></a>
 					<div class="dropdown-content">
 						<a href="#">Drawer 1</a>
 						<a href="#">Drawer 2</a>
@@ -35,15 +32,13 @@
 						<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
 					</div>
 			</div>
-		<div class="searchnav">
-			<li style="float:right; padding-left: 0" class="search-button"><button type="submit">Submit</button></li>	
-			<li style="float:right; padding-right: 0" class="maintopnav">
-				<legend>Search</legend>
-				<label class="search-label" for="search-drawers">Search Drawers</label><i class="fas fa-search"></i>
-				<input type="text" placeholder="Search.." name="search">
-			</li>
-		</div>
-	</ul>
+			<div class="search-container">
+				<form action="/action_page.php">
+				  <input type="text" placeholder="Search.." name="search">
+				  <button type="submit"><i class="fa fa-search"></i></button>
+				</form>
+			</div>
+	</div>
 	<div id="header">
 		<header role="banner">
 			<h1>JusKidin</h1>

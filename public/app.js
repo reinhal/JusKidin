@@ -356,25 +356,12 @@ function getAndDisplayGsearchInfo() {
     getGsearchInfo(displayGsearchInfo);
 } 
 
-    $(function() {
-        getAndDisplayAssetInfo();
-        getAndDisplayGsearchInfo();
-        getAndDisplayChildInfo();
-        getAndDisplayUserInfo();
-    })
-
-////////////////////////////////////////////////////////
-/////////////  Responsive Navigation Menu //////////////
-////////////////////////////////////////////////////////
-
-function showNavigationItems() {
-    var x = document.getElementById("responsivetopnav");
-    if (x.className === "topnav") {
-        x.className += "responsive";
-    } else {
-        x.className = "topnav";
-    }
-}
+$(function() {
+    getAndDisplayAssetInfo();
+    getAndDisplayGsearchInfo();
+    getAndDisplayChildInfo();
+    getAndDisplayUserInfo();
+})
 
 function childOn() {
     document.getElementById("childoverlay").style.display = "block";

@@ -69,44 +69,67 @@ ul li {
 /* Navigation */
 
 .topnav {
+    overflow: hidden;
     background-color: black;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    overflow: hidden;
-    margin: 15px;
-}
-
-.topnav li {
+  }
+  
+.topnav a {
     float: left;
-    font-size: 18px;
+    display: block;
     color: aliceblue;
     text-align: center;
-    padding: 12px 14px;
+    padding: 14px 16px;
     text-decoration: none;
+    font-size: 17px;
 }
-
-
-.dropbtn {
-    background-color:black;
+  
+.topnav a:hover {
+    background-color: aliceblue;
+    color: black;
+}
+  
+.topnav a.active {
+    background-color: rgb(11, 135, 243);
     color: aliceblue;
-    padding: 10px;
-    font-size: 18px;
-    border: 1px solid aliceblue;
-    border-radius: 5px;
 }
-
-.dropdown {
-    float: left;
-    overflow: hidden;
+  
+.topnav .search-container {
+    float: right;
 }
+  
+.topnav input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+    background-color: aliceblue;
+}
+  
+.topnav .search-container button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: black;
+    color: aliceblue;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+  
+.topnav .search-container button:hover {
+    background: aliceblue;
+    color: black;
+} 
 
 .dropdown-content {
     display: none;
     position: absolute;
-    margin-top: 60px;
+    margin-top: 45px;
     background-color:black;
     color: aliceblue;
     border: 1px solid black;
-    border-radius: 5px;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -117,8 +140,8 @@ ul li {
     color: aliceblue;
     padding: 12px 16px;
     text-decoration: none;
+    border-color: aliceblue;
     display: block;
-    border-radius: 5px;
     text-align: left;
 }
 
@@ -133,58 +156,6 @@ ul li {
     display: block;
 }
 
-.dropdown:hover .dropbtn {
-    background-color: aliceblue;
-    color: black;
-}
-
-.icon, legend, .search-label {
-    display: none;
-}
-
-button:hover {
-    background: aliceblue;
-    color: black;
-    border: 1px solid black;
-    border-radius: 5px 5px 5px 5px;
-}
-
-.searchnav button  {
-        float: right;
-        padding: 10.5px;
-        margin-top: 5px;
-        margin-right: 18px;
-        color: aliceblue;
-        background: black;
-        font-size: 16px;
-        border: 1px solid aliceblue;
-        border-radius: 0px 5px 5px 0px;
-        cursor: pointer;  
-}
-
-.searchnav button:hover  {
-    color: black;
-    background: aliceblue;
-}
-
-.topnav input[type=text] {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid aliceblue;
-    border-radius: 5px 0px 0px 5px;
-    background-color: aliceblue;
-}
-
-.searchnav {
-    margin-left: auto;
-}
-
-.topnav .search-container {
-    float: right;
-    padding-top: 15px;
-}
- 
 /* Form Styling */
 
 .addChild {
@@ -418,59 +389,22 @@ button:hover {
     }
 }
 
-@media screen and (max-width: 1000px) {
-    .dropbtn { 
-       font-size: 14px;
+@media screen and (max-width: 750px) {
+    .topnav .search-container {
+      float: none;
     }
-
+    .topnav a, .topnav input[type=text], .topnav .search-container button {
+      float: none;
+      display: block;
+      text-align: left;
+      width: 100%;
+      margin: 0;
+      padding: 14px;
+    }
     .topnav input[type=text] {
-        font-size: 12px;
+      border: 1px solid aliceblue;  
     }
-
-    button {
-        font-size: 12px;
-    }
-
-    .searchnav button {
-        font-size: 10.5px;
-    }
-
-    .searchnav li {
-        float: left;
-    }
-
-    .dropdown-content a {
-        font-size: 12px;
-        padding: 6px 8px;
-        z-index: 1;
-    }
-
-    .dropdown-content a:hover {
-        font-size: 12px;
-    }
-}
-
-
-@media screen and (max-width: 825px) {
-    .topnav li {display: none;} 
-    .topnav .icon li {
-        color: aliceblue;
-        float: left;
-        display: block;
-    }
-} 
-
-@media screen and (max-width: 825px) {
-    .topnav.responsive {position: relative;}
-    .topnav.responsive li.icon {
-        color: aliceblue;
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-    .topnav.responsive li {
-        display: block;
-        text-align: left;
-        float: none;
+    .dropdown-content {
+        margin-top: 0;
     }
 }
