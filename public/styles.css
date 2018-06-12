@@ -371,6 +371,7 @@ form {
     overflow: hidden;
     background-color: slategray;
     color: aliceblue;
+    margin: 75px; 
 }
 
 .tab button {

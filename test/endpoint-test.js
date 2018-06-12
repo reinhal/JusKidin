@@ -13,7 +13,7 @@ const {DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
-var userID = 'userinfo._id';
+var userID = '';
 
 function seedUserInfoData() {
     console.info('seeding account data');
@@ -22,7 +22,9 @@ function seedUserInfoData() {
     for (let i=1; i<=10; i++) {
       seedData.push(generateUserInfoData());
     }
-    return UserInfo.insertMany(seedData);
+    return UserInfo.insertMany(seedData).then(user => {
+      return userID = user[0]._id;
+    });
 }
 
 function generateBirthDate() {
@@ -227,11 +229,11 @@ describe('Child Profile API resource', function() {
                 expect(res).to.have.status(201);
                 expect(res).to.be.json;
                 expect(res.body).to.be.a('object');
-                //expect(res.body).to.include.keys('firstName', 'birthDate');
+                expect(res.body).to.include.keys('firstName', 'birthDate');
                 expect(res.body.id).to.not.be.null;
                 //go through the array and find the object of the child and match against that
-                //expect(res.body.childProfs.firstName).to.equal(newChild.firstName);
-                //expect(res.body.childProfs.birthDate).to.equal(newChild.birthDate); 
+                expect(res.body.childProfs.firstName).to.equal(newChild.firstName);
+                expect(res.body.childProfs.birthDate).to.equal(newChild.birthDate); 
                 return res.body;
         })
     });
@@ -242,7 +244,7 @@ describe('Child Profile API resource', function() {
         return UserInfo.childProfs
           .findOne()
           .then(function(userinfo) {
-            updatedChild._id = userinfo._id;
+            updatedChild._id = userID;
             return chai.request(app)
               .put(`/api/${userID}/childProf`)
               .send(updatedChild);
@@ -252,8 +254,12 @@ describe('Child Profile API resource', function() {
             return UserInfo.childProfs.findById(updatedChild._id);
           })
           .then(function(userinfo) {
-            expect(userinfo.ChildProfs.firstName).to.equal(updatedChild.firstName);
-            expect(userinfo.ChildProfs.birthDate).to.equal(updatedChild.birthDate);
+            for (let i=0; i<updatedChild.length; i++) {
+              const firstNameField = updatedChild[i].firstName;
+              if (firstNameField == undefined) {
+                expect(userinfo.ChildProfs.firstName).to.equal(updatedChild.firstName);
+                expect(userinfo.ChildProfs.birthDate).to.equal(updatedChild.birthDate);
+              }
           });
       });
     });
@@ -305,7 +311,7 @@ describe('Asset API resource', function() {
         const newAsset = generateUserInfoData();
 
         return chai.request(app)
-            .post('/api/:_id/asset')
+            .post('/api/${userID}/asset')
             .send(newAsset)
             .then(function(res) {
                 expect(res).to.have.status(201);
@@ -314,9 +320,9 @@ describe('Asset API resource', function() {
                 expect(res.body).to.include.keys(
                   'title', 'dateUploaded', 'fileLocation');
                 expect(res.body.id).to.not.be.null;
-                expect(res.body.asset.title).to.equal(body.newAsset.title);
-                expect(res.body.asset.dateUploaded).to.equal(body.newAsset.dateUploaded);
-                expect(res.body.asset.fileLocation).to.equal(body.newAsset.fileLocation); 
+                expect(res.body.asset.title).to.equal(newAsset.title);
+                expect(res.body.asset.dateUploaded).to.equal(newAsset.dateUploaded);
+                expect(res.body.asset.fileLocation).to.equal(newAsset.fileLocation); 
                 return res.body;
         })
     });
@@ -329,7 +335,7 @@ describe('Asset API resource', function() {
           .then(function(userinfo) {
             asset._id = userinfo._id;
             return chai.request(app)
-              .put(`/api/asset/${userinfo._id}`)
+              .put(`/api/${userID}/asset/`)
               .send(updatedAsset);
           })
           .then(function(res) {
@@ -337,16 +343,16 @@ describe('Asset API resource', function() {
             return UserInfo.asset.findById(updatedAsset._id);
           })
           .then(function(userinfo) {
-            expect(userinfo.Asset.title).to.equal(userinfo.updatedAsset.title);
-            expect(userinfo.Asset.dateUploaded).to.equal(userinfo.updatedAsset.dateUploaded);
-            expect(userinfo.Asset.fileLocation).to.equal(userinfo.updatedAsset.fileLocation);
+            expect(userinfo.Asset.title).to.equal(updatedAsset.title);
+            expect(userinfo.Asset.dateUploaded).to.equal(updatedAsset.dateUploaded);
+            expect(userinfo.Asset.fileLocation).to.equal(updatedAsset.fileLocation);
           });
       });
     });
   });
   describe('DELETE endpoint', function() {
       
-      it('should delete digital assey by id', function() {
+      it('should delete digital asset by id', function() {
   
         let userinfo;
   
@@ -354,7 +360,7 @@ describe('Asset API resource', function() {
           .findOne()
           .then(function(_userinfo) {
             userinfo = _userinfo;
-            return chai.request(app).delete(`/api/${userinfo._id}/asset`);
+            return chai.request(app).delete(`/api/${userID}/asset`);
           })
           .then(function(res) {
             expect(res).to.have.status(204);

@@ -25,7 +25,7 @@ const userInfoSchema = mongoose.Schema({
 
 const UserInfo = mongoose.model('UserInfo', userInfoSchema);
 //const ChildProf = mongoose.model('ChildProf', userInfoSchema);
-const ChildAge = mongoose.model('ChildAge', userInfoSchema);
+//const ChildAge = mongoose.model('ChildAge', userInfoSchema);
 //const Assets = mongoose.model('Assets', userInfoSchema);
 
 userInfoSchema.virtual('userNameString').get(function() {
@@ -62,4 +62,4 @@ userInfoSchema.virtual('assetsString').get(function() {
 //module.exports = {Assets};
 //module.exports = {ChildProf};
 module.exports = {UserInfo};
-module.exports = {childAge};
+//module.exports = {childAge};

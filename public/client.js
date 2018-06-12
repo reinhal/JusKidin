@@ -30,7 +30,7 @@ function drawerOff() {
     document.getElementById("draweroverlay").style.display = "none";
 }
 
-///////////// Child(ren) Tabbed View ///////////////////////
+///////////// Child(ren) Page Functions ///////////////////////
 
 function openChild(evt, childName) {
     var i, tabcontent, tablinks;
@@ -47,6 +47,22 @@ function openChild(evt, childName) {
 }
 
 document.getElementById("defaultOpen").click();
+
+function  addNewChild() {
+// this function will need to take input from #child-age-form
+// to get value for childAge var 
+// and to create another a link in .dropdown-content in nav
+// and to create another tab in tablinks
+// the link and the tab will take the value of the input from #first-name
+}
+
+function editChild() {
+// add fa icon to edit info input of #child-age-form
+}
+
+function deleteChild() {
+// add fa icon to delete childProf
+}
 
 ///////////// Google Search Functions ///////////////////////
 
@@ -67,6 +83,8 @@ function displayGoogleSearch(gsearch) {
         </ul>`)
 }
 
+// need to increase the number of search result items to at least 5 or 6
+
 function watchSubmit() {
     $('.child-age-form').submit(event => {
       event.preventDefault();
@@ -79,7 +97,7 @@ function watchSubmit() {
   
   $(watchSubmit);
 
-///////////// JusKidin Functions ///////////////////////
+///////////// Account Functions ///////////////////////
 
 function createNewAccount() {
 
@@ -93,16 +111,18 @@ function deleteAccount() {
 
 }
 
-function  addNewChild() {
+///////////// Drawer Functions ///////////////////////
+
+function createDrawer() {
 
 }
 
-function editChild() {
-
+function editDrawer() {
+    
 }
 
-function deleteChild() {
-
+function deleteDrawer() {
+    
 }
 
 function uploadNewAsset() {
