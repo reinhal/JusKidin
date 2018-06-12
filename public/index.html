@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>JusKidin</title>
 		<link rel="stylesheet" href="styles.css" />
 		<link href="https://fonts.googleapis.com/css?family=Overlock|Open+Sans:400,600" rel="stylesheet">
@@ -13,8 +13,8 @@
 	</head>
 <body>
 	<ul class="topnav" role="navigation" id="responsivetopnav">
-		<li class="icon"><a href="javascript:void(0);" class="icon" onclick="showNavigationItems()"><i class="fa fa-bars"></i></a>
-		</li>
+		<li class="icon"><a href="javascript:void(0);" onclick="showNavigationItems()"><i class="fa fa-bars"></i>
+		</a></li>
 		<li class="maintopnav"><button class="dropbtn">Home  <i class="fas fa-home"></i></button></li>
 		<li class="maintopnav"><button class="dropbtn">Account  <i class="fas fa-user"></i></button></li>
 			<div class="dropdown">
@@ -24,6 +24,8 @@
 						<a href="#">Child 2</a>
 						<a onclick="childOn()" href="#"><i class="fas fa-plus"></i> New Child</a>
 					</div>
+			</div>
+			<div class="dropdown">
 				<li class="maintopnav"><button class="dropbtn">Drawers  <i class="fas fa-arrow-down"></i></a>
 				</button></li>
 					<div class="dropdown-content">
@@ -33,14 +35,13 @@
 						<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
 					</div>
 			</div>
-		<div class="searchnav">	
-			<li class="searchtopnav">
+		<div class="searchnav">
+			<li style="float:right; padding-left: 0" class="search-button"><button type="submit">Submit</button></li>	
+			<li style="float:right; padding-right: 0" class="maintopnav">
 				<legend>Search</legend>
-				<label for="search-drawers">Search Drawers</label><i class="fas fa-search"></i>
+				<label class="search-label" for="search-drawers">Search Drawers</label><i class="fas fa-search"></i>
 				<input type="text" placeholder="Search.." name="search">
 			</li>
-			<li class="searchtopnav"><button type="submit">Submit</button></li>	
-			
 		</div>
 	</ul>
 	<div id="header">

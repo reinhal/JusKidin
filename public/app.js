@@ -370,7 +370,7 @@ function getAndDisplayGsearchInfo() {
 function showNavigationItems() {
     var x = document.getElementById("responsivetopnav");
     if (x.className === "topnav") {
-        x.className += " responsive";
+        x.className += "responsive";
     } else {
         x.className = "topnav";
     }

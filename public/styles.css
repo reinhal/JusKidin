@@ -11,6 +11,7 @@ body {
 h1 {
 font-family: 'Overlock', cursive;
 font-size: 72px;
+text-shadow: 2px 3px rgba(0,0,0,0.2);
 }
 
 p {
@@ -67,146 +68,120 @@ ul li {
 
 /* Navigation */
 
-.topnav a { 
-    text-decoration: none;
-    color: aliceblue;
-}
-
-ul > li {
-    float: left;
-}
-
-.dropbtn {
-    background-color: black;
-    color: aliceblue;
-    font-size: 18px;
-    border: 1px solid aliceblue;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-.dropbtn:hover {
-    border: 1px solid aliceblue;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 5px;
-    background-color: aliceblue;
-    color: black;
-}
-
 .topnav {
     background-color: black;
-    color: aliceblue;
-    list-style: none;
-    padding: 30px;
-    position: relative;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    width: 100%;
-    margin: 0 auto;
+    overflow: hidden;
+    margin: 15px;
 }
 
-.menuitems {
-    margin: auto;
-    padding: 15px;
+.topnav li {
+    float: left;
+    font-size: 18px;
+    color: aliceblue;
+    text-align: center;
+    padding: 12px 14px;
+    text-decoration: none;
 }
 
-.maintopnav .dropdown {
-    display: inline-block;
-    position: relative;
+
+.dropbtn {
+    background-color:black;
+    color: aliceblue;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid aliceblue;
+    border-radius: 5px;
 }
 
-.dropbtn a:hover {
-    background-color: aliceblue;
-    color: black;
+.dropdown {
+    float: left;
+    overflow: hidden;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: black;
+    background-color:black;
+    color: aliceblue;
+    border: 1px solid black;
     border-radius: 5px;
-    min-width: 80px;
+    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
 .dropdown-content a {
-    color: aliceblue;
     background-color: black;
-    padding: 8px 10px;
-    border-radius: 5px;
+    color: aliceblue;
+    padding: 12px 16px;
     text-decoration: none;
     display: block;
+    border-radius: 5px;
+    text-align: left;
 }
 
 .dropdown-content a:hover {
-    color: black;
     background-color: aliceblue;
-    padding: 8px 10px;
-    min-width: 90px;
-    border-radius: 5px;
-    border: 1px solid black;
+    color: black;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
-    border-radius: 5px;
 }
 
-legend, label {
-    display: none;
-}
-
-.topnav input[type=text] {
-    padding: 5px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 1px solid aliceblue;
-    border-radius: 5px 0px 0px 5px; 
+.dropdown:hover .dropbtn {
     background-color: aliceblue;
+    color: black;
 }
 
-button {
-  padding: 5px;
-  margin-top: 5px;
-  color: aliceblue;
-  background: black;
-  font-size: 18px;
-  border: 1px solid aliceblue;
-  border-radius: 0px 5px 5px 0px; 
-  cursor: pointer;
+.icon, legend, .search-label {
+    display: none;
 }
 
 button:hover {
     background: aliceblue;
     color: black;
-    border: 1px solid aliceblue;
-    border-radius: 0px 5px 5px 0px; 
+    border: 1px solid black;
+    border-radius: 5px 5px 5px 5px;
 }
 
-/* .icon:hover {
-    background: aliceblue;
+.searchnav button  {
+        float: right;
+        padding: 10.5px;
+        margin-top: 5px;
+        margin-right: 18px;
+        color: aliceblue;
+        background: black;
+        font-size: 16px;
+        border: 1px solid aliceblue;
+        border-radius: 0px 5px 5px 0px;
+        cursor: pointer;  
+}
+
+.searchnav button:hover  {
     color: black;
-    margin: 0 auto;
-    border: 1px solid aliceblue;
-    border-radius: 5px 5px 5px 5px; 
-} */
+    background: aliceblue;
+}
+
+.topnav input[type=text] {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid aliceblue;
+    border-radius: 5px 0px 0px 5px;
+    background-color: aliceblue;
+}
 
 .searchnav {
-   display: inherit;
-   float: right;
+    margin-left: auto;
 }
 
-.searchnav li {
-    float: left;
+.topnav .search-container {
+    float: right;
+    padding-top: 15px;
 }
-
-.topnav .icon {
-    display: none;
-}
-
+ 
 /* Form Styling */
 
 .addChild {
@@ -395,7 +370,7 @@ button:hover {
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     .dropbtn { 
        font-size: 14px;
     }
@@ -407,22 +382,33 @@ button:hover {
     button {
         font-size: 12px;
     }
+
+    .searchnav button {
+        font-size: 10.5px;
+    }
+
+    .searchnav li {
+        float: left;
+    }
 }
 
-@media screen and (max-width: 650px) {
+
+@media screen and (max-width: 825px) {
     .topnav li {display: none;} 
     .topnav .icon {
-      float: left;
-      display: block;
+        color: aliceblue;
+        float: left;
+        display: block;
     }
 } 
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 825px) {
     .topnav.responsive {position: relative;}
     .topnav.responsive .icon li {
-      position: absolute;
-      left: 0;
-      top: 0;
+        color: aliceblue;
+        position: absolute;
+        left: 0;
+        top: 0;
     }
     .topnav.responsive li {
         display: block;
