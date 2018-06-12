@@ -1,4 +1,8 @@
 
+
+
+const {childAge} = require('../userinfo_model');
+
 ///////////// Overlay Form Functions ///////////////////////
 
 
@@ -42,8 +46,38 @@ function openChild(evt, childName) {
     evt.currentTarget.className += " active";
 }
 
-// Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
+
+///////////// Google Search Functions ///////////////////////
+
+function googleSearch(childAge, callback) {
+    url = `https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=developmental%20milestones%20for%20" + {childAge} + "&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A`,
+    $.getJSON(url, callback)
+}
+
+function displayGoogleSearch(gsearch) {
+    console.log(gsearch);
+  $('.tabcontent').html(`<h2>Web Resources: ${gsearch[0].title} </h2>
+        <ul>
+            <li>${gsearch[0].pagemap.cse_thumbnail.width}</li>
+            <li>${gsearch[0].pagemap.cse_thumbnail.height}</li>
+            <li>${gsearch[0].pagemap.cse_thumbnail.src}</li>
+            <li>${gsearch[0].link} </li>
+            <li>${gsearch[0].snippet}</li>
+        </ul>`)
+}
+
+function watchSubmit() {
+    $('.child-age-form').submit(event => {
+      event.preventDefault();
+      let queryTarget = $(event.currentTarget).find('.child-birth-date');
+      let query = queryTarget.val();
+      queryTarget.val("");
+      googleSearch(query, displayGoogleSearch);
+    });
+  }
+  
+  $(watchSubmit);
 
 ///////////// JusKidin Functions ///////////////////////
 
@@ -60,10 +94,6 @@ function deleteAccount() {
 }
 
 function  addNewChild() {
-
-}
-
-function displayGoogleSearch() {
 
 }
 

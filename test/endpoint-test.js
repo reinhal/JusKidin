@@ -13,7 +13,7 @@ const {DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
-var userID = '5b1db10b9fc93b10fb98c146';
+var userID = 'userinfo._id';
 
 function seedUserInfoData() {
     console.info('seeding account data');
@@ -244,7 +244,7 @@ describe('Child Profile API resource', function() {
           .then(function(userinfo) {
             updatedChild._id = userinfo._id;
             return chai.request(app)
-              .put(`/api/:_id/childProf/${userinfo._id}`)
+              .put(`/api/${userID}/childProf`)
               .send(updatedChild);
           })
           .then(function(res) {
@@ -252,8 +252,8 @@ describe('Child Profile API resource', function() {
             return UserInfo.childProfs.findById(updatedChild._id);
           })
           .then(function(userinfo) {
-            expect(userinfo.ChildProfs.firstName).to.equal(userinfo.updatedChild.firstName);
-            expect(userinfo.ChildProfs.birthDate).to.equal(userinfo.updatedChild.birthDate);
+            expect(userinfo.ChildProfs.firstName).to.equal(updatedChild.firstName);
+            expect(userinfo.ChildProfs.birthDate).to.equal(updatedChild.birthDate);
           });
       });
     });
@@ -268,11 +268,11 @@ describe('Child Profile API resource', function() {
           .findOne()
           .then(function(_userinfo) {
             userinfo = _userinfo;
-            return chai.request(app).delete(`/api/${userinfo._id}/childProf`);
+            return chai.request(app).delete(`/api/${userID}/childProf`);
           })
           .then(function(res) {
             expect(res).to.have.status(204);
-            return UserInfo.childProfs.findById(userinfo.childProfs._id);
+            return UserInfo.childProfs.findById(childProfs._id);
           })
           .then(function(_userinfo) {
             expect(_userinfo.childProfs).to.be.null;
