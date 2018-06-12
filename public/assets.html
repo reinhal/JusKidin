@@ -2,15 +2,84 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>JusKidin GSearch</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>JusKidin</title>
 		<link rel="stylesheet" href="styles.css" />
 		<link href="https://fonts.googleapis.com/css?family=Overlock|Open+Sans:400,600" rel="stylesheet">
-		<link rel="stylesheet" href="float-grid.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="app.js"></script>
+		<script type="text/javascript" src="client.js"></script>		
 	</head>
 <body>
-	<h1>Digital Drawers</h1>
-	
+	<div class="topnav" role="navigation" id="responsivetopnav">
+		<a href="#home">Home  <i class="fas fa-home"></i></a>
+		<a href="#account">Account <i class="fas fa-user"></i></a>
+		<div class="dropdown">
+			<a href="#children">Child(ren)  <i class="fas fa-arrow-down"></i></a>
+				<div class="dropdown-content">
+					<a href="#">Child 1</a>
+					<a href="#">Child 2</a>
+					<a onclick="childOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> New Child</a>
+				</div>
+		</div>
+		<div class="dropdown">
+			<a href="#drawers">Drawers  <i class="fas fa-arrow-down"></i></a>
+				<div class="dropdown-content">
+					<a href="#">Drawer 1</a>
+					<a href="#">Drawer 2</a>
+					<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
+					<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
+				</div>
+		</div>
+		<div class="search-container">
+			<form action="/action_page.php">
+				<input type="text" placeholder="Search.." name="search">
+				<button type="submit"><i class="fa fa-search"></i></button>
+			</form>
+		</div>
+	</div>
+	<div id="header">
+		<header role="banner">
+			<h1>JusKidin</h1>
+			<h2>Drawers</h2>
+		</header>
+	</div>
+	<div class="tab">
+			<button class="tablinks" onclick="openChild(event, 'Child1')" id="defaultOpen">Drawer 1</button>
+			<button class="tablinks" onclick="openChild(event, 'Child2')">Drawer 2</button>
+			<button class="tablinks" onclick="openChild(event, 'NewChild')">New Drawer</button>
+	</div>		  
+	<div id="Child1" class="tabcontent">
+		<section role="region">
+			<div class="container">
+				<div class="grid">
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image1" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image2" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image3" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image4" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image5" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image6" class="responsive-image"></div>
+				</div>
+			</div>
+		</section>
+	</div>		  
+	<div id="Child2" class="tabcontent">
+		<section role="region">
+			<div class="container">
+				<div class="grid">
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image1" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image2" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image3" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image4" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image5" class="responsive-image"></div>
+					<div class="cell"><img src="http://via.placeholder.com/300x250" alt="Image6" class="responsive-image"></div>
+				</div>
+			</div>
+		</section> 
+	</div>		  
+	<div id="NewChild" class="tabcontent">
+		<h3>Create Drawer</h3>
+		<p>Use this form to create a new drawer.</p>
+	</div>
 </body>
