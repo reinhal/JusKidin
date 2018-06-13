@@ -142,7 +142,7 @@ app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
     return res.status(400).send(message);
   }
 
-  const updatedChild = ['firstName', 'lastName', 'birthDate', 'sex'];
+  const updatedChild = ['firstName','birthDate'];
   for (let i=0; i<updatedChild.length; i++) {
     const field = updatedChild[i];
     if (!(field in req.body)) {

@@ -238,8 +238,6 @@ describe('Child Profile API resource', function() {
                 expect(res.body).to.be.a('object');
                 expect(res.body.childProfs[0]).to.include.keys('firstName', 'birthDate');
                 expect(res.body.id).to.not.be.null;
-                //go through the array and find the object of the child and match against that
-                console.log(res.body.childProfs);
                 expect(res.body.childProfs[1].firstName).to.equal(newChild.firstName);
                 expect(res.body.childProfs[1].birthDate).to.equal(newChild.birthDate); 
                 return res.body;
@@ -248,8 +246,8 @@ describe('Child Profile API resource', function() {
     describe('PUT endpoint', function() {
       it('should update a child', function() {
         this.timeout(4000);
-        const updatedChild = generateUserInfoData();
-        return UserInfo.childProfs
+        const updatedChild = generateNewChild();
+        return UserInfo
           .findOne()
           .then(function(userinfo) {
             updatedChild._id = userID;
@@ -262,34 +260,29 @@ describe('Child Profile API resource', function() {
             return UserInfo.childProfs.findById(updatedChild._id);
           })
           .then(function(userinfo) {
-            for (let i=0; i<updatedChild.length; i++) {
-              const firstNameField = updatedChild[i].firstName;
-              if (firstNameField == undefined) {
-                expect(userinfo.ChildProfs.firstName).to.equal(updatedChild.firstName);
-                expect(userinfo.ChildProfs.birthDate).to.equal(updatedChild.birthDate);
-              }
-          }
-      });
+                expect(userinfo.ChildProfs[1].firstName).to.equal(updatedChild.firstName);
+                expect(userinfo.ChildProfs[1].birthDate).to.equal(updatedChild.birthDate);
+          })
     });
   });
   describe('DELETE endpoint', function() {
       
       it('should delete child profile by id', function() {
   
-        let userinfo;
+        let childprofile;
   
-        return UserInfo.ChildProfs
+        return UserInfo.childProfs
           .findOne()
-          .then(function(_userinfo) {
-            userinfo = _userinfo;
+          .then(function(_childprofile) {
+            childprofile = _childprofile;
             return chai.request(app).delete(`/api/${userID}/childProf`);
           })
           .then(function(res) {
             expect(res).to.have.status(204);
             return UserInfo.childProfs.findById(childProfs._id);
           })
-          .then(function(_userinfo) {
-            expect(_userinfo.childProfs).to.be.null;
+          .then(function(_childprofile) {
+            expect(UserInfo._childprofile).to.be.null;
           });
       });
   });
