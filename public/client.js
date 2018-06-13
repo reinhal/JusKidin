@@ -73,14 +73,14 @@ function googleSearch(childAge, callback) {
 
 function displayGoogleSearch(gsearch) {
     console.log(gsearch, 'gsearch');
-  $('.tabcontent').html(`<h2>Web Resources: ${gsearch[0].title} </h2>
+    for ( let i = 0; i < gsearch.items.length; i ++) {
+  $('.tabcontent').append(`<h2>Web Resources: ${gsearch.items[i].title} </h2>
         <ul>
-            <li>${gsearch[0].pagemap.cse_thumbnail.width}</li>
-            <li>${gsearch[0].pagemap.cse_thumbnail.height}</li>
-            <li>${gsearch[0].pagemap.cse_thumbnail.src}</li>
-            <li>${gsearch[0].link} </li>
-            <li>${gsearch[0].snippet}</li>
+            <li class="google-image"><img src="${gsearch.items[i].pagemap.cse_thumbnail[0].src}" alt="" size="${gsearch.items[0].pagemap.cse_thumbnail[0].width}x${gsearch.items[0].pagemap.cse_thumbnail[0].height}"></li>
+            <li class="google"><a href="${gsearch.items[i].link}">${gsearch.items[i].link}</a></li>
+            <li class="google">${gsearch.items[i].snippet}</li>
         </ul>`)
+    }
 }
 
 googleSearch(4, displayGoogleSearch);
