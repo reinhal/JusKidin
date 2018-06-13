@@ -62,6 +62,13 @@ function generateUserInfoData() {
     }
 }
 
+function generateNewChild() {
+  return {
+  firstName: faker.name.firstName(),
+  birthDate: generateBirthDate()
+  }
+}
+
 function tearDownDb() {
     console.warn('Deleting database');
     return mongoose.connection.dropDatabase();
@@ -212,14 +219,14 @@ describe('Child Profile API resource', function() {
     });
   
     after(function() {
-     // tearDownDb();
+      tearDownDb();
       return closeServer();
     });
 
   describe('POST endpoint', function() {
     it('should add a new childProfile', function() {
 
-        const newChild = generateUserInfoData();
+        const newChild = generateNewChild();
 
         return chai.request(app)
             .post(`/api/${userID}/childProf`)
@@ -229,11 +236,12 @@ describe('Child Profile API resource', function() {
                 expect(res).to.have.status(201);
                 expect(res).to.be.json;
                 expect(res.body).to.be.a('object');
-                expect(res.body).to.include.keys('firstName', 'birthDate');
+                expect(res.body.childProfs[0]).to.include.keys('firstName', 'birthDate');
                 expect(res.body.id).to.not.be.null;
                 //go through the array and find the object of the child and match against that
-                expect(res.body.childProfs.firstName).to.equal(newChild.firstName);
-                expect(res.body.childProfs.birthDate).to.equal(newChild.birthDate); 
+                console.log(res.body.childProfs);
+                expect(res.body.childProfs[1].firstName).to.equal(newChild.firstName);
+                expect(res.body.childProfs[1].birthDate).to.equal(newChild.birthDate); 
                 return res.body;
         })
     });
@@ -260,7 +268,7 @@ describe('Child Profile API resource', function() {
                 expect(userinfo.ChildProfs.firstName).to.equal(updatedChild.firstName);
                 expect(userinfo.ChildProfs.birthDate).to.equal(updatedChild.birthDate);
               }
-          });
+          }
       });
     });
   });
@@ -371,4 +379,4 @@ describe('Asset API resource', function() {
           });
       });
   });
-});
+});})

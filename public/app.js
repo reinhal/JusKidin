@@ -187,8 +187,8 @@ function getChildInfo(callbackFn) {
 }
 
 function displayChildInfo(data) {
-    for (index in data.userInfo.childProfs) {
-    }
+    //for (index in data.userInfo.childProfs) {
+    //}
 }
 
 function getAndDisplayChildInfo() {

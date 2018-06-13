@@ -1,7 +1,7 @@
 
 
 
-const {childAge} = require('../userinfo_model');
+//const {childAge} = require('../userinfo_model');
 
 ///////////// Overlay Form Functions ///////////////////////
 
@@ -46,7 +46,7 @@ function openChild(evt, childName) {
     evt.currentTarget.className += " active";
 }
 
-document.getElementById("defaultOpen").click();
+//document.getElementById("defaultOpen").click();
 
 function  addNewChild() {
 // this function will need to take input from #child-age-form
@@ -72,7 +72,7 @@ function googleSearch(childAge, callback) {
 }
 
 function displayGoogleSearch(gsearch) {
-    console.log(gsearch);
+    console.log(gsearch, 'gsearch');
   $('.tabcontent').html(`<h2>Web Resources: ${gsearch[0].title} </h2>
         <ul>
             <li>${gsearch[0].pagemap.cse_thumbnail.width}</li>
@@ -82,6 +82,8 @@ function displayGoogleSearch(gsearch) {
             <li>${gsearch[0].snippet}</li>
         </ul>`)
 }
+
+googleSearch(4, displayGoogleSearch);
 
 // need to increase the number of search result items to at least 5 or 6
 

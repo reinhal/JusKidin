@@ -108,7 +108,7 @@ app.delete('/api/account/:id', (req, res) => {
 
 
 app.post('/api/:_id/childProf', jsonParser, (req, res) => {
-  const reqChildProfs = [req.body.childProfs.firstName, req.body.childProfs.birthDate];
+  const reqChildProfs = [req.body.firstName, req.body.birthDate];
   for (let i=0; i<reqChildProfs.length; i++) {
     const field = reqChildProfs[i];
     if (field == undefined) {
@@ -121,12 +121,14 @@ app.post('/api/:_id/childProf', jsonParser, (req, res) => {
       "_id": req.params._id
     })
     .then(userinfo => {
-      userinfo.childProfs.push({firstName: req.body.childProfs.firstName, birthDate: req.body.childProfs.birthDate});
+      console.log(userinfo, 'console.log(userinfo)');
+      userinfo.childProfs.push({firstName: req.body.firstName, birthDate: req.body.birthDate});
       userinfo.save()
         res.status(201);
         res.json(userinfo);
       })
     .catch(err => {
+      console.log(err);
       res.status(500).json({ message: 'Internal server error' });
     });
 
