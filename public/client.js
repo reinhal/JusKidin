@@ -67,7 +67,7 @@ function deleteChild() {
 ///////////// Google Search Functions ///////////////////////
 
 function googleSearch(childAge, callback) {
-    url = `https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=developmental%20milestones%20for%20" + {childAge} + "&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A`,
+    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=' + childAge + '%20year%20old%20&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
     $.getJSON(url, callback)
 }
 
@@ -83,7 +83,7 @@ function displayGoogleSearch(gsearch) {
     }
 }
 
-googleSearch(4, displayGoogleSearch);
+googleSearch(2, displayGoogleSearch);
 
 // need to increase the number of search result items to at least 5 or 6
 
@@ -114,6 +114,20 @@ function deleteAccount() {
 }
 
 ///////////// Drawer Functions ///////////////////////
+
+function openDrawer(evt, drawerName) {
+    var i, assettabcontent, tablinks;
+    assettabcontent = document.getElementsByClassName("assettabcontent");
+    for (i = 0; i < assettabcontent.length; i++) {
+        assettabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(drawerName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
 
 function createDrawer() {
 

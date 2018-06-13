@@ -151,8 +151,8 @@ app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
       return res.status(400).send(message);
     }
   }
-
-  UserInfo.childProfs.findByIdAndUpdate(
+  //console.log(UserInfo, "UserInfo")
+  UserInfo.findByIdAndUpdate(
     req.params._id,
     req.body,
     {new: true},
@@ -160,7 +160,7 @@ app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
       if(err) {
         return res.status(500).send(err)
       } 
-      res.status(204).send(updatedUser);
+      res.status(204).send(updatedChild);
       console.log(updatedChild);
     }
   )
@@ -169,6 +169,7 @@ app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
 
 app.delete('/api/:_id/childProf', (req, res) => {
   UserInfo.childProfs
+  console.log(UserInfo.childProfs, 'UserInfo.childProfs') 
   .findByIdAndRemove(req.params.id)
   .then(() => {
       res.status(204).json({message: 'Success!!'});
@@ -183,17 +184,29 @@ app.delete('/api/:_id/childProf', (req, res) => {
 
 
 app.post('/api/:_id/asset', jsonParser, (req, res) => {
-  const reqAsset = [req.body.asset.title, req.body.asset.dateUploaded, req.body.asset.fileLocation];
+  const reqAsset = [req.body.title, req.body.dateUploaded, req.asset.fileLocation];
   for (let i=0; i<reqAsset.length; i++) {
     const field = reqAsset[i];
-    if (!(field in req.body)) {
+    if (field == undefined) {
       const message = `Missing \`${field}\` in request body`
-      console.error(message);
       return res.status(400).send(message);
     }
   }
-  const newAsset = UserInfo.asset.create(req.body.asset.title, req.body.asset.dateUploaded, req.body.asset.fileLocation);
-  res.status(201).json(newAsset);
+  UserInfo
+    .findOne({
+      "_id": req.params._id
+    })
+    .then(userinfo => {
+      console.log(userinfo, 'console.log(userinfo)');
+      userinfo.asset.push({title: req.body.title, dateUploaded: req.body.dateUploaded, fileLocation: req.body.fileLocation});
+      userinfo.save()
+        res.status(201);
+        res.json(userinfo);
+      })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
 });
 
 app.put('/api/:_id/asset/', jsonParser, (req, res) => {
@@ -274,7 +287,3 @@ if (require.main === module) {
 };
 
 module.exports = {app, runServer, closeServer};
-
-
-
-

@@ -64,11 +64,18 @@ function generateUserInfoData() {
 
 function generateNewChild() {
   return {
-  firstName: faker.name.firstName(),
+  childFirstName: faker.name.firstName(),
   birthDate: generateBirthDate()
   }
 }
 
+function generateAssetData() {
+  return {
+    title: generateTitle(),
+    dateUploaded: generateDateUploaded(),
+    fileLocation: faker.image.nature()
+  }
+}
 function tearDownDb() {
     console.warn('Deleting database');
     return mongoose.connection.dropDatabase();
@@ -236,33 +243,37 @@ describe('Child Profile API resource', function() {
                 expect(res).to.have.status(201);
                 expect(res).to.be.json;
                 expect(res.body).to.be.a('object');
-                expect(res.body.childProfs[0]).to.include.keys('firstName', 'birthDate');
+                expect(res.body.childProfs[0]).to.include.keys('childFirstName', 'birthDate');
                 expect(res.body.id).to.not.be.null;
                 expect(res.body.childProfs[1].firstName).to.equal(newChild.firstName);
                 expect(res.body.childProfs[1].birthDate).to.equal(newChild.birthDate); 
                 return res.body;
         })
     });
-    describe('PUT endpoint', function() {
-      it('should update a child', function() {
-        this.timeout(4000);
-        const updatedChild = generateNewChild();
-        return UserInfo
-          .findOne()
-          .then(function(userinfo) {
-            updatedChild._id = userID;
-            return chai.request(app)
-              .put(`/api/${userID}/childProf`)
-              .send(updatedChild);
-          })
-          .then(function(res) {
-            expect(res).to.have.status(204);
-            return UserInfo.childProfs.findById(updatedChild._id);
-          })
-          .then(function(userinfo) {
-                expect(userinfo.ChildProfs[1].firstName).to.equal(updatedChild.firstName);
-                expect(userinfo.ChildProfs[1].birthDate).to.equal(updatedChild.birthDate);
-          })
+  });
+  describe('PUT endpoint', function() {
+    it('should update a child', function() {
+      this.timeout(4000);
+
+      const updatedChild = generateNewChild();
+      console.log(updatedChild);
+      return UserInfo
+        .findOne()
+        .then(function(userinfo) {
+          updatedChild._id = userID;
+          return chai.request(app)
+            .put(`/api/${userID}/childProf`)
+            .send(updatedChild);
+        })
+        .then(function(res) {
+          expect(res).to.have.status(204);
+          console.log(updatedChild, "updatedChild")
+          return UserInfo.findById(updatedChild._id);
+        })
+        .then(function(userinfo) {
+              expect(userinfo.childProfs[0].firstName).to.equal(updatedChild.childProfs[0].firstName);
+              expect(userinfo.childProfs[0].birthDate).to.equal(updatedChild.childProfs[0].birthDate);
+        })
     });
   });
   describe('DELETE endpoint', function() {
@@ -271,7 +282,7 @@ describe('Child Profile API resource', function() {
   
         let childprofile;
   
-        return UserInfo.childProfs
+        return UserInfo
           .findOne()
           .then(function(_childprofile) {
             childprofile = _childprofile;
@@ -288,88 +299,85 @@ describe('Child Profile API resource', function() {
   });
 });
 
-describe('Asset API resource', function() {
+// describe('Asset API resource', function() {
     
-  before(function() {
-      return runServer(DATABASE_URL);
-    });
+//   before(function() {
+//       return runServer(DATABASE_URL);
+//     });
   
-    beforeEach(function() {
-      return seedUserInfoData();
-    });
+//     beforeEach(function() {
+//       return seedUserInfoData();
+//     });
   
-    afterEach(function() {
-      //return tearDownDb();
-    });
+//     afterEach(function() {
+//       //return tearDownDb();
+//     });
   
-    after(function() {
-      return closeServer();
-    });
+//     after(function() {
+//       return closeServer();
+//     });
 
-  describe('POST endpoint', function() {
-    it('should add a new digital asset', function() {
+//   describe('POST endpoint', function() {
+//     it('should add a new digital asset', function() {
 
-        const newAsset = generateUserInfoData();
+//         const newAsset = generateAssetData();
 
-        return chai.request(app)
-            .post('/api/${userID}/asset')
-            .send(newAsset)
-            .then(function(res) {
-                expect(res).to.have.status(201);
-                expect(res).to.be.json;
-                expect(res.body).to.be.a('object');
-                expect(res.body).to.include.keys(
-                  'title', 'dateUploaded', 'fileLocation');
-                expect(res.body.id).to.not.be.null;
-                expect(res.body.asset.title).to.equal(newAsset.title);
-                expect(res.body.asset.dateUploaded).to.equal(newAsset.dateUploaded);
-                expect(res.body.asset.fileLocation).to.equal(newAsset.fileLocation); 
-                return res.body;
-        })
-    });
-    describe('PUT endpoint', function() {
-      it('should update a digital asset', function() {
-        this.timeout(4000);
-        const updatedAsset = generateUserInfoData();
-        return UserInfo.asset
-          .findOne()
-          .then(function(userinfo) {
-            asset._id = userinfo._id;
-            return chai.request(app)
-              .put(`/api/${userID}/asset/`)
-              .send(updatedAsset);
-          })
-          .then(function(res) {
-            expect(res).to.have.status(204);
-            return UserInfo.asset.findById(updatedAsset._id);
-          })
-          .then(function(userinfo) {
-            expect(userinfo.Asset.title).to.equal(updatedAsset.title);
-            expect(userinfo.Asset.dateUploaded).to.equal(updatedAsset.dateUploaded);
-            expect(userinfo.Asset.fileLocation).to.equal(updatedAsset.fileLocation);
-          });
-      });
-    });
-  });
-  describe('DELETE endpoint', function() {
-      
-      it('should delete digital asset by id', function() {
-  
-        let userinfo;
-  
-        return UserInfo.asset
-          .findOne()
-          .then(function(_userinfo) {
-            userinfo = _userinfo;
-            return chai.request(app).delete(`/api/${userID}/asset`);
-          })
-          .then(function(res) {
-            expect(res).to.have.status(204);
-            return UserInfo.asset.findById(userinfo.asset._id);
-          })
-          .then(function(_userinfo) {
-            expect(_userinfo.asset).to.be.null;
-          });
-      });
-  });
-});})
+//         return chai.request(app)
+//             .post(`/api/${userID}/asset`)
+//             .send(newAsset)
+//             .then(function(res) {
+//                 console.log(res.body, 'body');
+//                 expect(res).to.have.status(201);
+//                 expect(res).to.be.json;
+//                 expect(res.body).to.be.a('object');
+//                 expect(res.body).to.include.keys('title', 'dateUploaded', 'fileLocation');
+//                 expect(res.body.id).to.not.be.null;
+//                 expect(res.body.asset[1].title).to.equal(newAsset.title);
+//                 expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
+//                 expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation); 
+//                 return res.body;
+//             })
+//     });
+//   });
+//   describe('PUT endpoint', function() {
+//     it('should update a digital asset', function() {
+//       this.timeout(4000);
+//       const updatedAsset = generateAssetData();
+//       return UserInfo.asset
+//       .findOne()
+//       .then(function(userinfo) {
+//         asset._id = userinfo._id;
+//         return chai.request(app)
+//           .put(`/api/${userID}/asset/`)
+//           .send(updatedAsset);
+//       })
+//       .then(function(res) {
+//         expect(res).to.have.status(204);
+//         return UserInfo.asset.findById(updatedAsset._id);
+//       })
+//       .then(function(userinfo) {
+//         expect(userinfo.Asset.title).to.equal(updatedAsset.title);
+//         expect(userinfo.Asset.dateUploaded).to.equal(updatedAsset.dateUploaded);
+//         expect(userinfo.Asset.fileLocation).to.equal(updatedAsset.fileLocation);
+//       });
+//     });
+//   });
+//   describe('DELETE endpoint', function() {
+//     it('should delete digital asset by id', function() {
+//       let userinfo;
+//       return UserInfo.asset
+//       .findOne()
+//       .then(function(_userinfo) {
+//         userinfo = _userinfo;
+//         return chai.request(app).delete(`/api/${userID}/asset`);
+//       })
+//       .then(function(res) {
+//         expect(res).to.have.status(204);
+//         return UserInfo.asset.findById(userinfo.asset._id);
+//       })
+//       .then(function(_userinfo) {
+//         expect(_userinfo.asset).to.be.null;
+//       });
+//     });
+//   });
+// });

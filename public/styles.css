@@ -54,7 +54,7 @@ ul li {
 }
 
 .cell {
-    margin: 10px;
+    margin: 20px;
     border-radius: 5px;
     display: block;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -402,8 +402,20 @@ form {
     border-top: none;
 }
 
+.assettabcontent {
+    display: none;
+    padding: 12px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
 .tabcontent h2 {
    margin-left: 40px;
+}
+
+.web-resource h2 {
+    font-size: 36px;
+    text-transform: uppercase;
 }
 
 
