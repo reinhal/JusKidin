@@ -52,6 +52,106 @@
 			<h2>Drawers</h2>
 		</header>
 	</div>
+	<section role="region">
+		<div id="accountoverlay">
+			<div class="addAccount" id="addAccountForm">
+				<form class="account-form">
+					<ul class="flex-outer">
+						<p class="form-title">Create New Account</p>
+						<li>
+						<label for="first-name">First Name</label>
+						<input type="text" id="first-name" placeholder="Enter first name here">
+						</li>
+						<li>
+							<label for="first-name">Last Name</label>
+							<input type="text" id="last-name" placeholder="Enter last name here">
+							</li>
+						<li>
+						<label for="account-email">email</label>
+						<input type="text" class="email" id="account-email" placeholder="Enter email here">
+						</li>
+						<li>
+						<button id="accountoverlaybutton" type="submit" onclick="accountOff()">Create Account</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
+	<section role="region">
+		<div id="childoverlay">
+			<div class="addChild" id="addChildForm">
+				<form class="child-age-form">
+					<ul class="flex-outer">
+						<p class="form-title">Add New Child</p>
+						<li>
+						<label for="first-name">First Name</label>
+						<input type="text" id="first-name" placeholder="Enter child's first name here">
+						</li>
+						<li>
+						<label for="birth-date">Birth Date</label>
+						<input type="text" class="child-birth-date" id="birth-date" placeholder="Enter child's birth date here">
+						</li>
+						<li>
+						<button id="childoverlaybutton" type="submit" onclick="childOff()">Create</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
+	<section role="region">
+		<div id="assetoverlay">
+			<div class="uploadAsset" id="uploadAssetForm">
+				<form>
+					<ul class="flex-outer">
+						<p class="form-title">Upload File</p>
+						<li>
+						<label for="title">Title</label>
+						<input type="text" id="first-name" placeholder="Title">
+						</li>
+						<li>
+						<label for="date-uploaded">Today's Date</label>
+						<input type="text" id="date-uploaded" placeholder="Enter Today's Date">
+						</li>
+						<li>
+							<label for="notes">Notes</label>
+							<input type="text" id="notes" placeholder="Notes">
+						</li>
+						<li>
+							<label for="drawer-title">Drawer Title</label>
+							<input type="text" id="drawer-title" placeholder="Drawer Title">
+						</li>
+						<li>
+							<label for="image">Image</label>
+							<input type="image" id="image" width="300" height="250" placeholder="Upload Your Image Here">
+						</li>
+						<li>
+						<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Upload</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
+	<section role="region">
+		<div id="draweroverlay">
+			<div class="addDrawer" id="addDrawerForm">
+				<form>
+					<ul class="flex-outer">
+						<p class="form-title">Create Drawer</p>
+						<li>
+						<label for="drawer-name">Drawer Name</label>
+						<input type="text" id="drawer-name" placeholder="Drawer Name">
+						</li>
+						<li>
+						<button id="draweroverlaybutton" type="submit" onclick="drawerOff()">Create</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
 	<main role="main">
 		<div class="tab">
 				<button class="tablinks" onclick="openDrawer(event, 'Drawer1')" id="defaultOpen">Drawer 1</button>
