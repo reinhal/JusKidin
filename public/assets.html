@@ -13,10 +13,17 @@
 	</head>
 <body>
 	<div class="topnav" role="navigation" id="responsivetopnav">
-		<a href="index.html">Home  <i class="fas fa-home"></i></a>
-		<a href="#account">Account <i class="fas fa-user"></i></a>
+		<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
 		<div class="dropdown">
-			<a href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
+			<a class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
+				<div class="dropdown-content">
+					<a href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+					<a href="#"><i class="fas fa-edit"></i> Edit Account</a>
+					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
+				</div>
+		</div>
+		<div class="dropdown">
+			<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content">
 					<a href="#">Child 1</a>
 					<a href="#">Child 2</a>
@@ -24,7 +31,7 @@
 				</div>
 		</div>
 		<div class="dropdown">
-			<a href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
+			<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content">
 					<a href="#">Drawer 1</a>
 					<a href="#">Drawer 2</a>
@@ -49,38 +56,69 @@
 		<div class="tab">
 				<button class="tablinks" onclick="openDrawer(event, 'Drawer1')" id="defaultOpen">Drawer 1</button>
 				<button class="tablinks" onclick="openDrawer(event, 'Drawer2')">Drawer 2</button>
-		</div>		  
+		</div>
 		<div id="Drawer1" class="assettabcontent">
 			<section role="region">
-				<div class="container">
-					<div class="grid">
-						<div class="cell"><img src="http://image.ibb.co/mrmVQJ/fox.jpg" class="responsive-image" alt="fox" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/iXGTRm/lavendar.jpg" class="responsive-image" alt="lavendar" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/cFzs5J/frog.jpg" alt="frog" class="responsive-image" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/m8PTCy/antelopecanyon.jpg" alt="antelopecanyon" class="responsive-image" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/cyVUKd/orchids.jpg" alt="orchids" class="responsive-image" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/nHCFsy/bwca.jpg" alt="bwca" class="responsive-image" border="0" size="300x250"></div>
+				<div class="row">
+					<div class="col-4">
+			  		<div class="asset">
+						<img class="asset-image" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/rey_square.png" alt="Rey">
+						<div>
+				  		<p class="asset-content"><strong>Rey</strong></p>
+				  		<p class="asset-content">Protagonist, from Jakku</p>
+						</div>
+			  		</div>
+					</div>
+					<div class="col-4">
+			  		<div class="asset">
+						<img class="asset-image" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/finn_square.png" alt="Finn">
+						<div>
+				  		<p class="asset-content"><strong>Finn</strong></p>
+				  		<p class="asset-content">Stormtropper, befriends Rey</p>
+						</div>
+			  		</div>
+					</div>
+					<div class="col-4">
+			  		<div class="asset">
+						<img class="asset-image" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/kylo_square.png" alt="KyloRen">
+						<div>
+				  		<p class="asset-content"><strong>Kylo Ren</strong></p>
+				  		<p class="asset-content">Main villain, or is he?</p>
+						</div>
+			  		</div>
+					</div>
+		  		</div>
+		  
+		  		<div class="row">
+					<div class="col-4">
+			  			<div class="asset">
+							<img class="asset-image" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/poe_square.png" alt="Poe">
+							<div>
+				  				<p class="asset-content"><strong>Poe</strong></p>
+				  				<p class="asset-content">Pilot for the resistance</p>
+							</div>
+			  			</div>
+						</div>
+						<div class="col-4">
+			  			<div class="asset">
+							<img class="asset-image" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/chewbacca_square.png" alt="Chewbacca">
+							<div>
+				  				<p class="asset-content"><strong>Chewbacca</strong></p>
+				  				<p class="asset-content">A great first mate</p>
+							</div>
+			  			</div>
+						</div>
+						<div class="col-4">
+			  			<div class="asset">
+							<img class="asset-image" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.6.3_challenge_responsive_layout/yoda_square.png" alt="Yoda">
+			  				<div>
+				  				<p class="asset-content"><strong>Yoda</strong></p>
+				  				<p class="asset-content">Wise old Jedi master</p>
+							</div>
+			  			</div>
 					</div>
 				</div>
 			</section>
 		</div>		  
-		<div id="Drawer2" class="asset-tabcontent">
-			<section role="region">
-				<div class="container">
-					<div class="grid">
-						<div class="cell"><img src="http://image.ibb.co/mrmVQJ/fox.jpg" class="responsive-image" alt="fox" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/iXGTRm/lavendar.jpg" class="responsive-image" alt="lavendar" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/cFzs5J/frog.jpg" alt="frog" class="responsive-image" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/m8PTCy/antelopecanyon.jpg" alt="antelopecanyon" class="responsive-image" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/cyVUKd/orchids.jpg" alt="orchids" class="responsive-image" border="0" size="300x250"></div>
-						<div class="cell"><img src="https://image.ibb.co/nHCFsy/bwca.jpg" alt="bwca" class="responsive-image" border="0" size="300x250"></div>
-					</div>
-				</div>
-			</section> 
-		</div>		  
-		<div id="NewChild" class="tabcontent">
-			<h3>Create Drawer</h3>
-			<p>Use this form to create a new drawer.</p>
-		</div>
 	</main>
 </body>

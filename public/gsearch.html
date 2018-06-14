@@ -13,10 +13,17 @@
 	</head>
 <body>
 	<div class="topnav" role="navigation" id="responsivetopnav">
-		<a href="index.html">Home  <i class="fas fa-home"></i></a>
-		<a href="#account">Account <i class="fas fa-user"></i></a>
+		<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
 		<div class="dropdown">
-			<a href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
+			<a class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
+				<div class="dropdown-content">
+					<a href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+					<a href="#"><i class="fas fa-edit"></i> Edit Account</a>
+					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
+				</div>
+		</div>
+		<div class="dropdown">
+			<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content">
 					<a href="#">Child 1</a>
 					<a href="#">Child 2</a>
@@ -24,7 +31,7 @@
 				</div>
 		</div>
 		<div class="dropdown">
-			<a href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
+			<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content">
 					<a href="#">Drawer 1</a>
 					<a href="#">Drawer 2</a>
@@ -54,9 +61,5 @@
 		</div>		  
 		<div id="Child2" class="tabcontent">
 		</div>		  
-		<div id="NewChild" class="tabcontent">
-			<h3>New Child</h3>
-			<p>Use this form to add a new child.</p>
-		</div>
 	</main>	
 </body>

@@ -4,7 +4,13 @@
 //const {childAge} = require('../userinfo_model');
 
 ///////////// Overlay Form Functions ///////////////////////
+function accountOn() {
+    document.getElementById("accountoverlay").style.display = "block";
+}
 
+function accountOff() {
+    document.getElementById("accountoverlay").style.display = "none";
+}
 
 function childOn() {
     document.getElementById("childoverlay").style.display = "block";
@@ -76,7 +82,7 @@ function displayGoogleSearch(gsearch) {
     for ( let i = 0; i < gsearch.items.length; i ++) {
   $('.tabcontent').append(`<h2>${gsearch.items[i].title} </h2>
         <ul>
-            <li class="google-image"><img src="${gsearch.items[i].pagemap.cse_thumbnail[0].src}" alt="" size="${gsearch.items[0].pagemap.cse_thumbnail[0].width}x${gsearch.items[0].pagemap.cse_thumbnail[0].height}"></li>
+            <li class="google-image"><img src="${gsearch.items[i].pagemap.cse_thumbnail[i].src}" alt="" size="${gsearch.items[i].pagemap.cse_thumbnail[i].width}x${gsearch.items[i].pagemap.cse_thumbnail[i].height}"></li>
             <li class="google"><a href="${gsearch.items[i].link}">${gsearch.items[i].link}</a></li>
             <li class="google">${gsearch.items[i].snippet}</li>
         </ul>`)

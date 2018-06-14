@@ -76,7 +76,7 @@ ul li {
   }
   
 .topnav a {
-    float: left;
+    /* float: left; */
     display: block;
     color: aliceblue;
     text-align: center;
@@ -124,15 +124,31 @@ ul li {
     color: black;
 }
 
+.dropdown {
+    float: left;
+}
+
+.home {
+    float: left;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px; 
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit; 
+    margin: 0;
+    display: block;
+}
+
 
 .dropdown-content {
     display: none;
     position: absolute;
-    margin-top: 45px;
     background-color:black;
     color: aliceblue;
     border: 1px solid black;
-    min-width: 100px;
+    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -145,6 +161,7 @@ ul li {
     border-color: aliceblue;
     display: block;
     text-align: left;
+    float: none;
 }
 
 .dropdown-content a:hover {
@@ -292,6 +309,20 @@ form {
     width: 300px;
 }
 
+#accountoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
 #childoverlay {
     position: fixed; 
     display: none;
@@ -332,6 +363,16 @@ form {
     background-color: rgba(0,0,0,0.5); 
     z-index: 2; 
     cursor: pointer; 
+}
+
+#addAccountForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
 }
 
 #addChildForm{
@@ -418,7 +459,54 @@ form {
     text-transform: uppercase;
 }
 
+/*////////////////Asset Styling//////////////////*/
 
+.col-4 {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 15px;
+}
+  
+.asset {
+    background-color: white;
+    border: 1px solid slategray;
+}
+  
+.asset-image {
+    width: 100%;
+}
+  
+.asset-content {
+    padding-left: 25px;
+}
+
+.row {
+    max-width: 1000px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0 auto;
+}
+  
+.row::before,
+.row::after {
+    display: table;
+    content: '';
+}
+  
+.row::after {
+    clear: both;
+}
+  
+.col-3, .col-4, .col-6, .col-12 {
+    float: left;
+    padding-left: 1.04166666%;
+    padding-right: 1.04166666%;
+}
+  
+.col-3, .col-4, .col-6, .col-12 {
+    width: 100%;
+}
+  
 /*////////////////Footer//////////////////*/
 
 /*////////////Responsive Styling//////////*/
@@ -434,7 +522,25 @@ form {
     }
 }
 
-  @media screen and (min-width: 900px) {
+@media only screen and (min-width: 640px) {
+    .col-3 {
+      width: 25%;
+    }
+  
+    .col-4 {
+      width: 33.33333%;
+    }
+    
+    .col-6 {
+      width: 50%;
+    }
+    
+    .col-12 {
+      width: 100%;
+    }
+}
+
+@media screen and (min-width: 900px) {
     .cell {
       width: 25%;
     }

@@ -14,31 +14,38 @@
 	</head>
 <body>
 	<div class="topnav" role="navigation" id="responsivetopnav">
-		<a href="index.html">Home  <i class="fas fa-home"></i></a>
-		<a href="#account">Account <i class="fas fa-user"></i></a>
-			<div class="dropdown">
-				<a href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
-					<div class="dropdown-content">
-						<a href="#">Child 1</a>
-						<a href="#">Child 2</a>
-						<a onclick="childOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> New Child</a>
-					</div>
-			</div>
-			<div class="dropdown">
-				<a href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
-					<div class="dropdown-content">
-						<a href="#">Drawer 1</a>
-						<a href="#">Drawer 2</a>
-						<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
-						<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
-					</div>
-			</div>
-			<div class="search-container">
-				<form action="/action_page.php">
-				  <input type="text" placeholder="Search.." name="search">
-				  <button type="submit"><i class="fa fa-search"></i></button>
-				</form>
-			</div>
+		<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
+		<div class="dropdown">
+			<a class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
+				<div class="dropdown-content">
+					<a href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+					<a href="#"><i class="fas fa-edit"></i> Edit Account</a>
+					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
+				</div>
+		</div>
+		<div class="dropdown">
+			<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
+				<div class="dropdown-content">
+					<a href="#">Child 1</a>
+					<a href="#">Child 2</a>
+					<a onclick="childOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> New Child</a>
+				</div>
+		</div>
+		<div class="dropdown">
+			<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
+				<div class="dropdown-content">
+					<a href="#">Drawer 1</a>
+					<a href="#">Drawer 2</a>
+					<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
+					<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
+				</div>
+		</div>
+		<div class="search-container">
+			<form action="/action_page.php">
+				<input type="text" placeholder="Search.." name="search">
+				<button type="submit"><i class="fa fa-search"></i></button>
+			</form>
+		</div>
 	</div>
 	<div id="header">
 		<header role="banner">
@@ -47,6 +54,32 @@
 			<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
 		</header>
 	</div>
+	<section role="region">
+		<div id="accountoverlay" class="overlay">
+			<div class="addAccount" id="addAccountForm">
+				<form class="account-form">
+					<ul class="flex-outer">
+						<p class="form-title">Create New Account</p>
+						<li>
+						<label for="first-name">First Name</label>
+						<input type="text" id="first-name" placeholder="Enter first name here">
+						</li>
+						<li>
+							<label for="first-name">Last Name</label>
+							<input type="text" id="last-name" placeholder="Enter last name here">
+							</li>
+						<li>
+						<label for="account-email">email</label>
+						<input type="text" class="email" id="account-email" placeholder="Enter email here">
+						</li>
+						<li>
+						<button id="accountoverlaybutton" type="submit" onclick="accountOff()">Create Account</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
 	<section role="region">
 		<div id="childoverlay" class="overlay">
 			<div class="addChild" id="addChildForm">
