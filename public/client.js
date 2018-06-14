@@ -54,7 +54,9 @@ function openChild(evt, childName) {
 
 document.getElementById("defaultOpen").click();
 
-function  addNewChild() {
+function  addNewChild(firstName, birthDate, callback) {
+    url = '',
+    $.getJSON(url, callback)
 // this function will need to take input from #child-age-form
 // to get value for childAge var 
 // and to create another a link in .dropdown-content in nav

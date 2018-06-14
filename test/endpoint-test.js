@@ -223,8 +223,8 @@ describe('Child Profile API resource', function() {
     });
   
     after(function() {
-      tearDownDb();
-      return closeServer();
+      //tearDownDb();
+      //return closeServer();
     });
 
   describe('POST endpoint', function() {
