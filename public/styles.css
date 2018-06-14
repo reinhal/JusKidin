@@ -188,6 +188,14 @@ form {
     background-color: rgba(0,0,0,0.5);
 }
 
+.addAccount {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
 .form-title {
     font-size: 36px;
     color: aliceblue;
@@ -283,6 +291,24 @@ form {
 /*////////////Overlay Styling//////////*/
 
 #first-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 300px;
+}
+
+#last-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 300px;
+}
+
+#account-email {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
