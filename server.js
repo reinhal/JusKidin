@@ -15,7 +15,7 @@ app.use(express.json());
 const jsonParser = bodyParser.json();
 const {UserInfo} = require('./userinfo_model');
 
-app.use(morgan('common'));
+//app.use(morgan('common'));
 
 // Account Info Endpoints//
 
@@ -24,7 +24,6 @@ app.get('/api/account', (req, res) => {
     .find()
     .select(req.query.select)
     .then(userinfo => {
-      console.log(userinfo)
         res.json(userinfo);
       })
     .catch(err => {
@@ -38,7 +37,6 @@ app.get('/api/account/:_id', (req, res) => {
       "_id": req.params._id
     })
     .then(userinfo => {
-      console.log(userinfo)
         res.json(userinfo);
       })
     .catch(err => {
@@ -66,7 +64,6 @@ app.post('/api/account', jsonParser, (req, res) => {
 app.put('/api/account/:_id', jsonParser, (req, res) => {
   if (req.params._id !== req.body._id) {
     const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
-    console.error(message);
     return res.status(400).send(message);
   }
   const updatedUser = ['firstName', 'lastName', 'email'];
@@ -74,7 +71,6 @@ app.put('/api/account/:_id', jsonParser, (req, res) => {
     const field = updatedUser[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`
-      console.error(message);
       return res.status(400).send(message);
     }
   }
@@ -87,7 +83,6 @@ app.put('/api/account/:_id', jsonParser, (req, res) => {
         return res.status(500).send(err)
       } 
       res.status(204).send(updatedUser);
-      console.log(updatedUser);
     }
   )
 });
@@ -121,14 +116,12 @@ app.post('/api/:_id/childProf', jsonParser, (req, res) => {
       "_id": req.params._id
     })
     .then(userinfo => {
-      console.log(userinfo, 'console.log(userinfo)');
       userinfo.childProfs.push({firstName: req.body.firstName, birthDate: req.body.birthDate});
       userinfo.save()
         res.status(201);
         res.json(userinfo);
       })
     .catch(err => {
-      console.log(err);
       res.status(500).json({ message: 'Internal server error' });
     });
 
@@ -138,20 +131,16 @@ app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
 
   if (req.params._id !== req.body._id) {
     const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
-    console.error(message);
     return res.status(400).send(message);
   }
-
-  const updatedChild = ['firstName','birthDate'];
+  const updatedChild = ['firstName','lastName','childProfs'];
   for (let i=0; i<updatedChild.length; i++) {
     const field = updatedChild[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`
-      console.error(message);
       return res.status(400).send(message);
     }
   }
-  //console.log(UserInfo, "UserInfo")
   UserInfo.findByIdAndUpdate(
     req.params._id,
     req.body,
@@ -161,22 +150,40 @@ app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
         return res.status(500).send(err)
       } 
       res.status(204).send(updatedChild);
-      console.log(updatedChild);
     }
   )
   //for loop to find the right ID and then update
 });
 
 app.delete('/api/:_id/childProf', (req, res) => {
-  UserInfo.childProfs
-  console.log(UserInfo.childProfs, 'UserInfo.childProfs') 
-  .findByIdAndRemove(req.params.id)
-  .then(() => {
-      res.status(204).json({message: 'Success!!'});
+  // UserInfo.childProfs
+  // console.log(UserInfo.childProfs, 'UserInfo.childProfs') 
+  // .findByIdAndRemove(req.params.id)
+  // .then(() => {
+  //     res.status(204).json({message: 'Success!!'});
+  // })
+  // .catch(err => {
+  //     console.error(err);
+  //     res.status(500).json({ error: 'There is an error'});
+  // });
+  UserInfo
+  .findOne({
+    "_id": req.params._id
   })
+  .then(userinfo => {
+    for (let index = 0; index < userinfo.childProfs.length; index++) {
+      if(userinfo.childProfs[index]._id === req.params._id){
+        userinfo.childProfs.splice(index,1)
+        return
+      }      
+    }
+    userinfo.save()
+      res.status(204);
+      res.json(userinfo);
+    })
   .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: 'There is an error'});
+    console.log(err);
+    res.status(500).json({ message: 'Internal server error' });
   });
 });
 
@@ -197,7 +204,6 @@ app.post('/api/:_id/asset', jsonParser, (req, res) => {
       "_id": req.params._id
     })
     .then(userinfo => {
-      console.log(userinfo, 'console.log(userinfo)');
       userinfo.asset.push({title: req.body.title, dateUploaded: req.body.dateUploaded, fileLocation: req.body.fileLocation});
       userinfo.save()
         res.status(201);
@@ -221,12 +227,10 @@ app.put('/api/:_id/asset/', jsonParser, (req, res) => {
     const field = reqAsset[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`
-      console.error(message);
       return res.status(400).send(message);
     }
   }
 
-  console.log(`Updating user info \`${req.params._id}\``);
   UserInfo.asset.update({
     id: req.params._id,
     title: req.body.asset.title,
