@@ -52,7 +52,7 @@ function openChild(evt, childName) {
     evt.currentTarget.className += " active";
 }
 
-//document.getElementById("defaultOpen").click();
+document.getElementById("defaultOpen").click();
 
 function  addNewChild() {
 // this function will need to take input from #child-age-form
@@ -64,10 +64,12 @@ function  addNewChild() {
 
 function editChild() {
 // add fa icon to edit info input of #child-age-form
+// I am holding off on this function for the time being
 }
 
 function deleteChild() {
 // add fa icon to delete childProf
+// maybe through a dropdown menu on hover of child
 }
 
 ///////////// Google Search Functions ///////////////////////
@@ -89,9 +91,7 @@ function displayGoogleSearch(gsearch) {
     }
 }
 
-googleSearch(2, displayGoogleSearch);
-
-// need to increase the number of search result items to at least 5 or 6
+googleSearch(7, displayGoogleSearch);
 
 function watchSubmit() {
     $('.child-age-form').submit(event => {
@@ -108,18 +108,20 @@ function watchSubmit() {
 ///////////// Account Functions ///////////////////////
 
 function createNewAccount() {
-
+// this function will create a new user, with password and authentication
+// it will take first name, last name, email
 }
 
 function editAccount() {
-
+//this function will be able to edit the account information, to a tbd extent
+//at least change password, get password help
 }
 
 function deleteAccount() {
-
+//delete account
 }
 
-///////////// Drawer Functions ///////////////////////
+///////////// Drawer and Asset Functions ///////////////////////
 
 function openDrawer(evt, drawerName) {
     var i, assettabcontent, tablinks;
@@ -136,29 +138,39 @@ function openDrawer(evt, drawerName) {
 }
 
 function createDrawer() {
-
+// This function will take information from the #addDrawerForm to create a new drawer to hold user uploaded assets
+// from the #drawer-name field it need to create a new .tab button element on the asset.html page 
+// this drawer will hold assets uploaded by user
 }
 
 function editDrawer() {
-    
+//edit drawer title   
 }
 
 function deleteDrawer() {
-    
+// delete drawer and all contents   
 }
 
 function uploadNewAsset() {
+// upload new asset from #uploadAssetForm 
+// user will need to identify existing drawer to upload asset to
+// asset will be added to asset.html page, under identified drawer, 
+// populated with items from the #uploadAssetForm fields
+}
 
+function editAsset() {
+// edit title, notes or drawer location for a particular asset
 }
 
 function deleteAsset() {
-
+// delete a particular asset from the drawer
 }
 
 function searchAssets() {
-
+// using search field in navbar to search title and notes input fields
+// return results in search.html
 }
 
 function getAndDisplayImagesOnHomePage() {
-
+// display six random user uploaded images on home page
 }

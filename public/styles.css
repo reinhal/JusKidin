@@ -326,6 +326,33 @@ form {
     width: 300px;
 }
 
+#drawer-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 300px;
+}
+
+#drawer-title {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 300px;
+}
+
+#notes {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 300px;
+}
+
 #date-uploaded { 
     padding: 10px;
     margin-top: 5px;
