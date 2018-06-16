@@ -13,7 +13,7 @@ const {DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
-var userID = '';
+var userID = '5b22a73ffb6efb156dcee37b';
 
 function seedUserInfoData() {
     const seedData = [];

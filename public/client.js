@@ -1,6 +1,4 @@
 
-
-
 //const {childAge} = require('../userinfo_model');
 
 ///////////// Overlay Form Functions ///////////////////////
@@ -37,6 +35,24 @@ function drawerOff() {
 }
 
 ///////////// Child(ren) Page Functions ///////////////////////
+function editProf() {
+    document.getElementById("profDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn-prof')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-prof");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 
 function openChild(evt, childName) {
     var i, tabcontent, tablinks;
@@ -52,48 +68,141 @@ function openChild(evt, childName) {
     evt.currentTarget.className += " active";
 }
 
-document.getElementById("defaultOpen").click();
+//document.getElementById("defaultOpen").click();
+var userID = '5b22a6c47d980013c82b08df';
+var childName = $('#child-first-name').val();
+var childAge = $(document).ready(function(){
+    $("#childoverlaybutton").click(function(){
+    var bday = $("#birth-date").val().toString();
+    var birthYear = parseInt(mdate.substring(0,4), 10);
+    var birthMonth = parseInt(mdate.substring(5,7), 10);
+    
+    var today = new Date();
+    var birthday = new Date(birthYear, birthMonth-1,);
+    
+    var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+    
+    var currentAge = Math.floor(differenceInMilisecond / 31536000000);
 
-function  addNewChild(firstName, birthDate, callback) {
-    url = '',
-    $.getJSON(url, callback)
-// this function will need to take input from #child-age-form
-// to get value for childAge var 
-// and to create another a link in .dropdown-content in nav
-// and to create another tab in tablinks
-// the link and the tab will take the value of the input from #first-name
+    console.log(currentAge);
+    });
+});
+var serverBase = '//localhost:8080/';
+var ACCOUNT_URL = serverBase + 'api/account';
+var CHILDPROFS_URL = serverBase + `api/${userID}/childProf`;
+var ASSETS_URL = serverBase + `api/${userID}/assets`;
+
+var childProfileTemplate = (
+    `<div class="child-drop><a href="#">'${childName}'/a></div>` +
+    '<hr>' +
+    `<button class="tablinks" onclick="openChild(event, '${childName}')">${childName} years old</br> ${childAge}</button>` +
+    '<hr>' +
+    `<div id="${childName}" class="tabcontent">
+    </div>	`
+)
+//check for child name already exisiting for this profile
+function addChildProfile(userInfoSchema) {
+    console.log('Adding new child profile: ' + userInfoSchema);
+    $.ajax({
+      method: 'POST',
+      url: CHILDPROFS_URL,
+      data: JSON.stringify(userInfoSchema),
+      success: function(data) {
+        getAndDisplayChildProfiles();
+      },
+      dataType: 'json',
+      contentType: 'application/json'
+    });
+  }
+
+function getAndDisplayChildProfile() {
+    console.log('Retrieving child profile');
+    $.getJSON(CHILDPROFS_URL, function(items) {
+      console.log('Rendering child profile');
+      var childProfileElements = items.map(function(userInfoSchema) {
+        var element = $(childProfileTemplate);
+        element.attr('id', userInfoSchema.id);
+        var childProfileFirstName = element.find(`${childName}`)
+        itemName.text(userInfoSchema.childProfs.firstName);
+        var childProfileBirthDate = element.find(`${childAge}`)
+        itemName.text(userInfoSchema.childProfs.birthDate);
+        return element
+      });
+      $('.tablinks').html(childProfileElements);
+    });
 }
 
-function editChild() {
-// add fa icon to edit info input of #child-age-form
-// I am holding off on this function for the time being
+function handleChildProfileAdd() {
+
+    $('#child-age-form').submit(function(e) {
+        e.preventDefault();
+        addChildProfileTab({
+            childName: $(e.currentTarget).find('#child-first-name').val(),
+            childAge: $(document).ready(function(){
+                $("#childoverlaybutton").click(function(){
+                var bday = $("#birth-date").val().toString();
+                var birthYear = parseInt(mdate.substring(0,4), 10);
+                var birthMonth = parseInt(mdate.substring(5,7), 10);
+            
+                var today = new Date();
+                var birthday = new Date(birthYear, birthMonth-1,);
+            
+                var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+            
+                var currentAge = Math.floor(differenceInMilisecond / 31536000000);
+        
+                console.log(currentAge);
+                });
+            })
+        });
+    });
 }
 
-function deleteChild() {
+$(function() {
+    addChildProfile();
+    getAndDisplayChildProfile();
+    handleChildProfileAdd();
+  });
+
+function editChildProfile() {
+
+}
+
+function deleteChildProfile() {
 // add fa icon to delete childProf
-// maybe through a dropdown menu on hover of child
+// hoverable window to check are you sure? 
 }
 
 ///////////// Google Search Functions ///////////////////////
 
 function googleSearch(childAge, callback) {
-    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=' + childAge + '%20year%20old%20&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
+    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=' + childAge + '%20year%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
     $.getJSON(url, callback)
 }
 
 function displayGoogleSearch(gsearch) {
     console.log(gsearch, 'gsearch');
     for ( let i = 0; i < gsearch.items.length; i ++) {
-  $('.tabcontent').append(`<h2>${gsearch.items[i].title} </h2>
-        <ul>
-            <li class="google-image"><img src="${gsearch.items[i].pagemap.cse_thumbnail[i].src}" alt="" size="${gsearch.items[i].pagemap.cse_thumbnail[i].width}x${gsearch.items[i].pagemap.cse_thumbnail[i].height}"></li>
-            <li class="google"><a href="${gsearch.items[i].link}">${gsearch.items[i].link}</a></li>
-            <li class="google">${gsearch.items[i].snippet}</li>
-        </ul>`)
+        let data = gsearch.items[i]
+        if (data.pagemap.cse_thumbnail) {
+            $('.tabcontent').append(`<h2>${data.title} </h2>
+                <ul>
+                    <li class="google-image"><img src="${data.pagemap.cse_thumbnail[0].src}"></li>
+                    <li class="google"><a href="${data.link}">${data.link}</a></li>
+                    <li class="google">${data.snippet}</li>
+                </ul>`)
+        } else {
+            $('.tabcontent').append(`<h2>${data.title} </h2>
+                <ul>
+                    <li class="google"><a href="${data.link}">${data.link}</a></li>
+                    <li class="google">${data.snippet}</li>
+                </ul>`)
+        }
+        
     }
 }
 
-googleSearch(7, displayGoogleSearch);
+googleSearch(2, displayGoogleSearch);
 
 function watchSubmit() {
     $('.child-age-form').submit(event => {
@@ -153,7 +262,7 @@ function deleteDrawer() {
 // delete drawer and all contents   
 }
 
-function uploadNewAsset() {
+function uploadAndDisplayNewAsset() {
 // upload new asset from #uploadAssetForm 
 // user will need to identify existing drawer to upload asset to
 // asset will be added to asset.html page, under identified drawer, 

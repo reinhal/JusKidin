@@ -153,13 +153,17 @@
 		</div>
 	</section>
 	<main role="main">
-		<div class="tab">
-				<button class="tablinks" onclick="openChild(event, 'Child1')" id="defaultOpen">Stella </br> 7 years old </button>
-				<button class="tablinks" onclick="openChild(event, 'Child2')">Finn </br> 10 years old</button>
+		<div class="tab dropdown-prof">
+				<button class="tablinks dropbtn-prof" onclick="editProf(), openChild(event, 'Stella')">Stella </br> 7 years old </button>
+				<button class="tablinks dropbtn-prof" onclick="editProf(), openChild(event, 'Finn')">Finn </br> 10 years old</button>
+		</div>	
+		<div id="profDropdown" class="dropdown-childProfile">
+			<a href="#"><i class="fas fa-edit"></i> Edit</a>
+			<a href="#"><i class="fas fa-minus-circle"></i> Delete</a>
+		</div>	  
+		<div id="Stella" class="tabcontent">
 		</div>		  
-		<div id="Child1" class="tabcontent">
-		</div>		  
-		<div id="Child2" class="tabcontent">
+		<div id="Finn" class="tabcontent">
 		</div>		  
 	</main>	
 </body>

@@ -130,6 +130,7 @@ ul li {
 
 .home {
     float: left;
+    display: block;
 }
 
 .dropdown .dropbtn {
@@ -291,6 +292,24 @@ form {
 /*////////////Overlay Styling//////////*/
 
 #first-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 400px;
+}
+
+#child-first-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 400px;
+}
+
+#title {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
@@ -511,6 +530,54 @@ form {
     font-size: 36px;
     text-transform: uppercase;
 }
+/*////////////////Child and Asset DropDown Buttons//////////////////*/
+
+
+.dropbtn-prof {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn-prof:hover, .dropbtn-prof:focus {
+    background-color: #2980B9;
+}
+
+.dropdown-prof {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-childProfile {
+    display: none;
+    position: absolute;
+    /* border: 1px solid slategray; */
+    margin-top: -50px;
+    margin-left: 75px;
+    /* background-color: #f1f1f1; */
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdown-childProfile a {
+    color: slategray;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    float: right;
+}
+
+.dropdown-childProfile a:hover {
+    background-color: #ddd
+}
+
+.show {
+    display: block;
+    
+}
 
 /*////////////////Asset Styling//////////////////*/
 
@@ -600,6 +667,12 @@ form {
     }
 }
 
+@media screen and (max-width: 860px) {
+    p {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
 @media screen and (max-width: 750px) {
     .topnav .search-container {
       float: none;
@@ -617,5 +690,9 @@ form {
     }
     .dropdown-content {
         margin-top: 0;
+    }
+    p {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
