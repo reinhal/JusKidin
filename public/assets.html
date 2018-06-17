@@ -153,11 +153,78 @@
 		</div>
 	</section>
 	<main role="main">
-		<div class="tab">
-				<button class="tablinks" onclick="openDrawer(event, 'Drawer1')" id="defaultOpen">Drawer 1</button>
-				<button class="tablinks" onclick="openDrawer(event, 'Drawer2')">Drawer 2</button>
+		<div class="tab dropdown-asset">
+				<button class="tablinks dropbtn-asset" onclick="editAsset(), openDrawer(event, 'Drawer1')">Drawer 1</button>
+					<div id="assetDropdown" class="dropdown-asset">
+						<a href="#"><i class="fas fa-edit"></i> Edit</a>
+						<a class="asset-delete" href="#"><i class="fas fa-minus-circle"></i> Delete</a>
+					</div>
+				<button class="tablinks dropbtn-asset" onclick="editAsset(), openDrawer(event, 'Drawer2')">Drawer 2</button>
 		</div>
 		<div id="Drawer1" class="assettabcontent">
+			<section role="region">
+				<div class="row">
+					<div class="col-4">
+			  		<div class="asset">
+						<img class="asset-image" src="http://image.ibb.co/mrmVQJ/fox.jpg" alt="fox">
+						<div>
+				  		<p class="asset-content"><strong>Fox</strong></p>
+				  		<p class="asset-content">fox sleeping on top of a log in neighborhood</p>
+						</div>
+			  		</div>
+					</div>
+					<div class="col-4">
+			  		<div class="asset">
+						<img class="asset-image" src="https://image.ibb.co/iXGTRm/lavendar.jpg" alt="lavendar">
+						<div>
+				  		<p class="asset-content"><strong>Lavendar</strong></p>
+				  		<p class="asset-content">Field of beautiful lavendar with bees</p>
+						</div>
+			  		</div>
+					</div>
+					<div class="col-4">
+			  		<div class="asset">
+						<img class="asset-image" src="https://image.ibb.co/cFzs5J/frog.jpg" alt="frog">
+						<div>
+				  		<p class="asset-content"><strong>Frog</strong></p>
+				  		<p class="asset-content">Little colorful frog, probably poisonous</p>
+						</div>
+			  		</div>
+					</div>
+		  		</div>
+		  
+		  		<div class="row">
+					<div class="col-4">
+			  			<div class="asset">
+							<img class="asset-image" src="https://image.ibb.co/m8PTCy/antelopecanyon.jpg" alt="antelopecanyon">
+							<div>
+				  				<p class="asset-content"><strong>Antelope Canyon</strong></p>
+				  				<p class="asset-content">Rocks that look like waves.  Can't wait to see this place.</p>
+							</div>
+			  			</div>
+						</div>
+						<div class="col-4">
+			  			<div class="asset">
+							<img class="asset-image" src="https://image.ibb.co/cyVUKd/orchids.jpg" alt="orchids">
+							<div>
+				  				<p class="asset-content"><strong>Orchids</strong></p>
+				  				<p class="asset-content">Beautiful flowers.  So grateful we have a couple of these.</p>
+							</div>
+			  			</div>
+						</div>
+						<div class="col-4">
+			  			<div class="asset">
+							<img class="asset-image" src="https://image.ibb.co/nHCFsy/bwca.jpg" alt="bwca">
+			  				<div>
+				  				<p class="asset-content"><strong>BWCA</strong></p>
+				  				<p class="asset-content">One of my favorite places in the world.</p>
+							</div>
+			  			</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div id="Drawer2" class="assettabcontent">
 			<section role="region">
 				<div class="row">
 					<div class="col-4">

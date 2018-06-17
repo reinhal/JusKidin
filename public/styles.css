@@ -483,7 +483,7 @@ form {
     overflow: hidden;
     background-color: slategray;
     color: aliceblue;
-    margin: 75px; 
+    margin: 60px; 
 }
 
 .tab button {
@@ -554,10 +554,8 @@ form {
 .dropdown-childProfile {
     display: none;
     position: absolute;
-    /* border: 1px solid slategray; */
     margin-top: -50px;
-    margin-left: 75px;
-    /* background-color: #f1f1f1; */
+    margin-left: 60px;
     min-width: 160px;
     z-index: 1;
 }
@@ -574,9 +572,47 @@ form {
     background-color: #ddd
 }
 
+.dropbtn-asset {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn-asset:hover, .dropbtn-asset:focus {
+    background-color: #2980B9;
+}
+
+.dropdown-asset {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-asset {
+    position: absolute;
+    margin-left: 60px;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdown-asset a {
+    display: none;
+    color: slategray;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    float: right;
+    margin-top: 150px;
+}
+
+.dropdown-asset a:hover {
+    background-color: #ddd
+}
+
 .show {
     display: block;
-    
 }
 
 /*////////////////Asset Styling//////////////////*/

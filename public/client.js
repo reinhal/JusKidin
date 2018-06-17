@@ -39,7 +39,6 @@ function editProf() {
     document.getElementById("profDropdown").classList.toggle("show");
 }
 
-// Close the dropdown menu if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn-prof')) {
 
@@ -71,22 +70,23 @@ function openChild(evt, childName) {
 //document.getElementById("defaultOpen").click();
 var userID = '5b22a6c47d980013c82b08df';
 var childName = $('#child-first-name').val();
-var childAge = $(document).ready(function(){
-    $("#childoverlaybutton").click(function(){
-    var bday = $("#birth-date").val().toString();
-    var birthYear = parseInt(mdate.substring(0,4), 10);
-    var birthMonth = parseInt(mdate.substring(5,7), 10);
+var childAge = "10"
+    // $(document).ready(function(){
+    // $("#childoverlaybutton").click(function(){
+    // var bday = $("#birth-date").val().toString();
+    // var birthYear = parseInt(mdate.substring(0,4), 10);
+    // var birthMonth = parseInt(mdate.substring(5,7), 10);
     
-    var today = new Date();
-    var birthday = new Date(birthYear, birthMonth-1,);
+    // var today = new Date();
+    // var birthday = new Date(birthYear, birthMonth-1,);
     
-    var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+    // var differenceInMilisecond = today.valueOf() - birthday.valueOf();
     
-    var currentAge = Math.floor(differenceInMilisecond / 31536000000);
+    // var currentAge = Math.floor(differenceInMilisecond / 31536000000);
 
-    console.log(currentAge);
-    });
-});
+    // console.log(currentAge);
+    // });
+// });
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
 var CHILDPROFS_URL = serverBase + `api/${userID}/childProf`;
@@ -97,10 +97,10 @@ var childProfileTemplate = (
     '<hr>' +
     `<button class="tablinks" onclick="openChild(event, '${childName}')">${childName} years old</br> ${childAge}</button>` +
     '<hr>' +
-    `<div id="${childName}" class="tabcontent">
-    </div>	`
+    `<div id="${childName}" class="tabcontent"></div>`
 )
 //check for child name already exisiting for this profile
+
 function addChildProfile(userInfoSchema) {
     console.log('Adding new child profile: ' + userInfoSchema);
     $.ajax({
@@ -113,7 +113,7 @@ function addChildProfile(userInfoSchema) {
       dataType: 'json',
       contentType: 'application/json'
     });
-  }
+}
 
 function getAndDisplayChildProfile() {
     console.log('Retrieving child profile');
@@ -133,36 +133,47 @@ function getAndDisplayChildProfile() {
 }
 
 function handleChildProfileAdd() {
-
-    $('#child-age-form').submit(function(e) {
+    $('.child-age-form').submit(function(e) {
         e.preventDefault();
-        addChildProfileTab({
+        addChildProfile({
             childName: $(e.currentTarget).find('#child-first-name').val(),
-            childAge: $(document).ready(function(){
-                $("#childoverlaybutton").click(function(){
-                var bday = $("#birth-date").val().toString();
-                var birthYear = parseInt(mdate.substring(0,4), 10);
-                var birthMonth = parseInt(mdate.substring(5,7), 10);
+            childAge: "10"
+            // $(document).ready(function(){
+            //     $("#childoverlaybutton").click(function(){
+            //     var bday = $("#birth-date").val().toString();
+            //     var birthYear = parseInt(mdate.substring(0,4), 10);
+            //     var birthMonth = parseInt(mdate.substring(5,7), 10);
             
-                var today = new Date();
-                var birthday = new Date(birthYear, birthMonth-1,);
+            //     var today = new Date();
+            //     var birthday = new Date(birthYear, birthMonth-1,);
             
-                var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+            //     var differenceInMilisecond = today.valueOf() - birthday.valueOf();
             
-                var currentAge = Math.floor(differenceInMilisecond / 31536000000);
+            //     var currentAge = Math.floor(differenceInMilisecond / 31536000000);
         
-                console.log(currentAge);
-                });
-            })
+            //     console.log(currentAge);
+                // });
+            // })
         });
     });
 }
 
-$(function() {
-    addChildProfile();
-    getAndDisplayChildProfile();
-    handleChildProfileAdd();
-  });
+function deleteChildProfile(userID) {
+    console.log('Deleting child profile `' + userID + '`');
+    $.ajax({
+      url: CHILDPROFS_URL + '/' + userID,
+      method: 'DELETE',
+      success: getAndDisplayChildProfile
+    });
+}
+
+function handleChildProfileDelete() {
+    $('.dropdown-childProfile').on('click', '.child-profile-delete', function(e) {
+      e.preventDefault();
+      deleteChildProfile(
+        $(e.currentTarget).closest('.dropbtn-prof').attr('id'));
+    });
+}
 
 function editChildProfile() {
 
@@ -212,9 +223,9 @@ function watchSubmit() {
       queryTarget.val("");
       googleSearch(query, displayGoogleSearch);
     });
-  }
+}
   
-  $(watchSubmit);
+$(watchSubmit);
 
 ///////////// Account Functions ///////////////////////
 
@@ -248,10 +259,69 @@ function openDrawer(evt, drawerName) {
     evt.currentTarget.className += " active";
 }
 
-function createDrawer() {
+function editAsset() {
+    document.getElementById("assetDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn-asset')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-asset");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+var drawerTemplate = (
+   `<div class="dropdown-content"><a href="#">${drawerTitle}</a></div>` +
+   '<hr>' +
+   `<div class="tab"><button class="tablinks" onclick="openDrawer(event, '${drawerTitle}')">${drawerTitle}</button></div>` +
+   '<hr>' +
+   `<div id="${drawerTitle}" class="assettabcontent"></div>`
+)
+function addDrawer(userInfoSchema) {
+    console.log('Adding new new drawer: ' + userInfoSchema);
+    $.ajax({
+      method: 'POST',
+      url: ASSETS_URL,
+      data: JSON.stringify(userInfoSchema),
+      success: function(data) {
+        getAndDisplayDrawers();
+      },
+      dataType: 'json',
+      contentType: 'application/json'
+    });
+}
+function getAndDisplayDrawer() {
+    console.log('Retrieving drawers');
+    $.getJSON(ASSETS_URL, function(items) {
+      console.log('Rendering drawers');
+      var drawerElements = items.map(function(userInfoSchema) {
+        var element = $(drawerTemplate);
+        element.attr('id', userInfoSchema.id);
+        var drawerTitle = element.find(`${drawerTitle}`)
+        itemName.text(userInfoSchema.assets.title);
+        return element
+      });
+      $('.tablinks').html(drawerElements);
+    });
 // This function will take information from the #addDrawerForm to create a new drawer to hold user uploaded assets
 // from the #drawer-name field it need to create a new .tab button element on the asset.html page 
 // this drawer will hold assets uploaded by user
+}
+
+function handleDrawerAdd() {
+    $('#addDrawerForm').submit(function(e) {
+        e.preventDefault();
+        addChildProfileTab({
+            drawerTitle: $(e.currentTarget).find('#drawer-name').val(),
+        });
+    });
 }
 
 function editDrawer() {
@@ -259,7 +329,12 @@ function editDrawer() {
 }
 
 function deleteDrawer() {
-// delete drawer and all contents   
+    console.log('Deleting drawer `' + userID + '`');
+    $.ajax({
+      url: ASSETS_URL + '/' + userID,
+      method: 'DELETE',
+      success: getAndDisplayDrawer
+    }); 
 }
 
 function uploadAndDisplayNewAsset() {
@@ -285,3 +360,14 @@ function searchAssets() {
 function getAndDisplayImagesOnHomePage() {
 // display six random user uploaded images on home page
 }
+
+$(function() {
+    addChildProfile();
+    getAndDisplayChildProfile();
+    handleChildProfileAdd();
+    deleteChildProfile();
+    handleChildProfileDelete();
+    addDrawer();
+    getAndDisplayDrawer();
+    handleDrawerAdd();
+});
