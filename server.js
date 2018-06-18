@@ -36,6 +36,7 @@ app.get('/api/account/:_id', (req, res) => {
     .findOne({
       "_id": req.params._id
     })
+    .select(req.query.select)
     .then(userinfo => {
         res.json(userinfo);
       })

@@ -53,7 +53,7 @@ window.onclick = function(event) {
   }
 }
 
-function openChild(evt, childName) {
+function openChild(evt, childID) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -63,13 +63,15 @@ function openChild(evt, childName) {
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(childName).style.display = "block";
+
+    document.getElementById(childID).style.display = "block";
     evt.currentTarget.className += " active";
 }
 
 //document.getElementById("defaultOpen").click();
-var userID = '5b22a6c47d980013c82b08df';
-var childName = $('#child-first-name').val();
+var userID = '5b22a73ffb6efb156dcee381';
+var childName = 'Lisa'
+// var childName = $('#child-first-name').val();
 var childAge = "10"
     // $(document).ready(function(){
     // $("#childoverlaybutton").click(function(){
@@ -89,16 +91,22 @@ var childAge = "10"
 // });
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
-var CHILDPROFS_URL = serverBase + `api/${userID}/childProf`;
+var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
 var ASSETS_URL = serverBase + `api/${userID}/assets`;
 
-var childProfileTemplate = (
-    `<div class="child-drop><a href="#">'${childName}'/a></div>` +
-    '<hr>' +
-    `<button class="tablinks" onclick="openChild(event, '${childName}')">${childName} years old</br> ${childAge}</button>` +
-    '<hr>' +
-    `<div id="${childName}" class="tabcontent"></div>`
-)
+var childProfileTemplate = function (childName, childAge, childID) { 
+    const htmlString = `<button class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> years old</button>` +
+    `<div id="${childID}" class="tabcontent"></div>`
+    console.log (htmlString);
+    $('.dropdown-prof').append(
+        `<button class="tablinks dropbtn-prof"> years old</button>` +
+        `<div id="${childID}" class="tabcontent"></div>`
+    )
+
+    $('.child-dropbtn').append(
+        `<a href="#">${childName}</a>`
+    )
+}
 //check for child name already exisiting for this profile
 
 function addChildProfile(userInfoSchema) {
@@ -119,49 +127,47 @@ function getAndDisplayChildProfile() {
     console.log('Retrieving child profile');
     $.getJSON(CHILDPROFS_URL, function(items) {
       console.log('Rendering child profile');
-      var childProfileElements = items.map(function(userInfoSchema) {
-        var element = $(childProfileTemplate);
-        element.attr('id', userInfoSchema.id);
-        var childProfileFirstName = element.find(`${childName}`)
-        itemName.text(userInfoSchema.childProfs.firstName);
-        var childProfileBirthDate = element.find(`${childAge}`)
-        itemName.text(userInfoSchema.childProfs.birthDate);
+      var childProfileElements = items.childProfs.map(function(userInfoSchema) {
+        var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema._id ))
+        element.attr('id', userInfoSchema._id);
         return element
       });
       $('.tablinks').html(childProfileElements);
     });
 }
 
+function getChildAge(toBeABDayStr) {
+    var bday = toBeABDayStr;
+    // var mdate = $(02/06/2008).val().toString();
+    var birthYear = parseInt(bday.substring(0,4), 10);
+    var birthMonth = parseInt(bday.substring(5,7), 10);
+        
+    var today = new Date();
+    var birthday = new Date(birthYear, birthMonth-1,);
+        
+    var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+        
+    var currentAge = Math.floor(differenceInMilisecond / 31536000000);
+    
+    return currentAge;
+}
+
 function handleChildProfileAdd() {
+    // define variables
     $('.child-age-form').submit(function(e) {
         e.preventDefault();
         addChildProfile({
             childName: $(e.currentTarget).find('#child-first-name').val(),
-            childAge: "10"
-            // $(document).ready(function(){
-            //     $("#childoverlaybutton").click(function(){
-            //     var bday = $("#birth-date").val().toString();
-            //     var birthYear = parseInt(mdate.substring(0,4), 10);
-            //     var birthMonth = parseInt(mdate.substring(5,7), 10);
-            
-            //     var today = new Date();
-            //     var birthday = new Date(birthYear, birthMonth-1,);
-            
-            //     var differenceInMilisecond = today.valueOf() - birthday.valueOf();
-            
-            //     var currentAge = Math.floor(differenceInMilisecond / 31536000000);
-        
-            //     console.log(currentAge);
-                // });
-            // })
+            //validate childName ==== '#child-first-name').val()
+            childAge: getChildAge("02/06/2008")
         });
     });
 }
 
 function deleteChildProfile(userID) {
-    console.log('Deleting child profile `' + userID + '`');
+    console.log('Deleting child profile');
     $.ajax({
-      url: CHILDPROFS_URL + '/' + userID,
+      url: CHILDPROFS_URL,
       method: 'DELETE',
       success: getAndDisplayChildProfile
     });
@@ -187,7 +193,7 @@ function deleteChildProfile() {
 ///////////// Google Search Functions ///////////////////////
 
 function googleSearch(childAge, callback) {
-    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=' + childAge + '%20year%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
+    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=' + `${getChildAge(childAge)}` + '%20year%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
     $.getJSON(url, callback)
 }
 
@@ -213,7 +219,7 @@ function displayGoogleSearch(gsearch) {
     }
 }
 
-googleSearch(2, displayGoogleSearch);
+// googleSearch(2, displayGoogleSearch);
 
 function watchSubmit() {
     $('.child-age-form').submit(event => {
@@ -277,13 +283,13 @@ window.onclick = function(event) {
   }
 }
 
-var drawerTemplate = (
-   `<div class="dropdown-content"><a href="#">${drawerTitle}</a></div>` +
-   '<hr>' +
-   `<div class="tab"><button class="tablinks" onclick="openDrawer(event, '${drawerTitle}')">${drawerTitle}</button></div>` +
-   '<hr>' +
-   `<div id="${drawerTitle}" class="assettabcontent"></div>`
-)
+// var drawerTemplate = (
+//    `<div class="dropdown-content"><a href="#">${drawerTitle}</a></div>` +
+//    '<hr>' +
+//    `<div class="tab"><button class="tablinks" onclick="openDrawer(event, '${drawerTitle}')">${drawerTitle}</button></div>` +
+//    '<hr>' +
+//    `<div id="${drawerTitle}" class="assettabcontent"></div>`
+// )
 function addDrawer(userInfoSchema) {
     console.log('Adding new new drawer: ' + userInfoSchema);
     $.ajax({
@@ -362,12 +368,12 @@ function getAndDisplayImagesOnHomePage() {
 }
 
 $(function() {
-    addChildProfile();
+    //addChildProfile();
     getAndDisplayChildProfile();
     handleChildProfileAdd();
     deleteChildProfile();
     handleChildProfileDelete();
-    addDrawer();
-    getAndDisplayDrawer();
-    handleDrawerAdd();
+    // addDrawer();
+    // getAndDisplayDrawer();
+    // handleDrawerAdd();
 });
