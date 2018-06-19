@@ -31,6 +31,7 @@ app.get('/api/account', (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     });
 });
+
 app.get('/api/account/:_id', (req, res) => {
   UserInfo
     .findOne({
@@ -47,7 +48,9 @@ app.get('/api/account/:_id', (req, res) => {
 });
 
 app.post('/api/account', jsonParser, (req, res) => {
+  
   const newUser = ['firstName', 'lastName', 'email'];
+  
   for (let i=0; i<newUser.length; i++) {
     const field = newUser[i];
     if (!(field in req.body)) {
@@ -103,7 +106,7 @@ app.delete('/api/account/:id', (req, res) => {
 // // Child Profile Info Endpoints//
 
 
-app.post('/api/:_id/childProf', jsonParser, (req, res) => {
+app.post('/api/account/:_id', jsonParser, (req, res) => {
   const reqChildProfs = [req.body.firstName, req.body.birthDate];
   for (let i=0; i<reqChildProfs.length; i++) {
     const field = reqChildProfs[i];
@@ -116,6 +119,7 @@ app.post('/api/:_id/childProf', jsonParser, (req, res) => {
     .findOne({
       "_id": req.params._id
     })
+    .select(req.query.select)
     .then(userinfo => {
       userinfo.childProfs.push({firstName: req.body.firstName, birthDate: req.body.birthDate});
       userinfo.save()
@@ -129,7 +133,7 @@ app.post('/api/:_id/childProf', jsonParser, (req, res) => {
 });
 
 app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
-
+//  /api/account/_id/childProf/:child_id
   if (req.params._id !== req.body._id) {
     const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
     return res.status(400).send(message);
@@ -156,26 +160,15 @@ app.put('/api/:_id/childProf/', jsonParser, (req, res) => {
   //for loop to find the right ID and then update
 });
 
-app.delete('/api/:_id/childProf', (req, res) => {
-  // UserInfo.childProfs
-  // console.log(UserInfo.childProfs, 'UserInfo.childProfs') 
-  // .findByIdAndRemove(req.params.id)
-  // .then(() => {
-  //     res.status(204).json({message: 'Success!!'});
-  // })
-  // .catch(err => {
-  //     console.error(err);
-  //     res.status(500).json({ error: 'There is an error'});
-  // });
+app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
   UserInfo
   .findOne({
     "_id": req.params._id
   })
   .then(userinfo => {
     for (let index = 0; index < userinfo.childProfs.length; index++) {
-      if(userinfo.childProfs[index]._id === req.params._id){
+      if(userinfo.childProfs[index].id === req.params.child_id){
         userinfo.childProfs.splice(index,1)
-        return
       }      
     }
     userinfo.save()
@@ -191,7 +184,7 @@ app.delete('/api/:_id/childProf', (req, res) => {
 // // Digital Assets Endpoints//
 
 
-app.post('/api/:_id/asset', jsonParser, (req, res) => {
+app.post('/api/account/:_id', jsonParser, (req, res) => {
   const reqAsset = [req.body.title, req.body.dateUploaded, req.asset.fileLocation];
   for (let i=0; i<reqAsset.length; i++) {
     const field = reqAsset[i];
@@ -204,6 +197,7 @@ app.post('/api/:_id/asset', jsonParser, (req, res) => {
     .findOne({
       "_id": req.params._id
     })
+    .select(req.query.select)
     .then(userinfo => {
       userinfo.asset.push({title: req.body.title, dateUploaded: req.body.dateUploaded, fileLocation: req.body.fileLocation});
       userinfo.save()

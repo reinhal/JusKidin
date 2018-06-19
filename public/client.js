@@ -69,37 +69,20 @@ function openChild(evt, childID) {
 }
 
 //document.getElementById("defaultOpen").click();
-var userID = '5b22a73ffb6efb156dcee381';
+var userID = '5b22a740fb6efb156dcee38d';
 var childName = 'Lisa'
 // var childName = $('#child-first-name').val();
 var childAge = "10"
-    // $(document).ready(function(){
-    // $("#childoverlaybutton").click(function(){
-    // var bday = $("#birth-date").val().toString();
-    // var birthYear = parseInt(mdate.substring(0,4), 10);
-    // var birthMonth = parseInt(mdate.substring(5,7), 10);
-    
-    // var today = new Date();
-    // var birthday = new Date(birthYear, birthMonth-1,);
-    
-    // var differenceInMilisecond = today.valueOf() - birthday.valueOf();
-    
-    // var currentAge = Math.floor(differenceInMilisecond / 31536000000);
-
-    // console.log(currentAge);
-    // });
-// });
+var drawerTitle = "Soccer"
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
 var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
-var ASSETS_URL = serverBase + `api/${userID}/assets`;
+var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
 
 var childProfileTemplate = function (childName, childAge, childID) { 
-    const htmlString = `<button class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> years old</button>` +
-    `<div id="${childID}" class="tabcontent"></div>`
-    console.log (htmlString);
+    
     $('.dropdown-prof').append(
-        `<button class="tablinks dropbtn-prof"> years old</button>` +
+        `<button class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(childAge)}</button>` +
         `<div id="${childID}" class="tabcontent"></div>`
     )
 
@@ -132,7 +115,7 @@ function getAndDisplayChildProfile() {
         element.attr('id', userInfoSchema._id);
         return element
       });
-      $('.tablinks').html(childProfileElements);
+    //   $('.tablinks').html(childProfileElements);
     });
 }
 
@@ -157,9 +140,11 @@ function handleChildProfileAdd() {
     $('.child-age-form').submit(function(e) {
         e.preventDefault();
         addChildProfile({
-            childName: $(e.currentTarget).find('#child-first-name').val(),
+            childName: Stella, 
+            //$(e.currentTarget).find('#child-first-name').val(),
             //validate childName ==== '#child-first-name').val()
-            childAge: getChildAge("02/06/2008")
+            childAge: 7,
+            //getChildAge("02/06/2008")
         });
     });
 }
@@ -283,13 +268,18 @@ window.onclick = function(event) {
   }
 }
 
-// var drawerTemplate = (
-//    `<div class="dropdown-content"><a href="#">${drawerTitle}</a></div>` +
-//    '<hr>' +
-//    `<div class="tab"><button class="tablinks" onclick="openDrawer(event, '${drawerTitle}')">${drawerTitle}</button></div>` +
-//    '<hr>' +
-//    `<div id="${drawerTitle}" class="assettabcontent"></div>`
-// )
+var drawerTemplate = function (drawerTitle) {
+
+    $('.dropdown-asset').append(
+        `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
+        `<div id="${drawerTitle}" class="assettabcontent"></div>`
+    )
+
+    $('.asset-dropbtn').append(
+        `<a href="#">${drawerTitle}</a>`
+    )
+}
+
 function addDrawer(userInfoSchema) {
     console.log('Adding new new drawer: ' + userInfoSchema);
     $.ajax({
@@ -307,14 +297,12 @@ function getAndDisplayDrawer() {
     console.log('Retrieving drawers');
     $.getJSON(ASSETS_URL, function(items) {
       console.log('Rendering drawers');
-      var drawerElements = items.map(function(userInfoSchema) {
-        var element = $(drawerTemplate);
+      var drawerElements = items.asset.map(function(userInfoSchema) {
+        var element = $(drawerTemplate(userInfoSchema.title))
         element.attr('id', userInfoSchema.id);
-        var drawerTitle = element.find(`${drawerTitle}`)
-        itemName.text(userInfoSchema.assets.title);
         return element
       });
-      $('.tablinks').html(drawerElements);
+    //   $('.tablinks').html(drawerElements);
     });
 // This function will take information from the #addDrawerForm to create a new drawer to hold user uploaded assets
 // from the #drawer-name field it need to create a new .tab button element on the asset.html page 
