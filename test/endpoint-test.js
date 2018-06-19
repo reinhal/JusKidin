@@ -44,6 +44,12 @@ function generateDateUploaded() {
   return dateUploaded[Math.floor(Math.random() * dateUploaded.length)];
 }
 
+function generateDrawerTitle() {
+  const drawerTitle = [
+    'Soccer 2016', 'First Grade Stella', 'Family Events', 'Everyday 2018', 'Fifth Grade Finn'];
+  return drawerTitle[Math.floor(Math.random() * drawerTitle.length)];
+}
+
 function generateUserInfoData() {
     return {
         firstName: faker.name.firstName(),
@@ -56,7 +62,8 @@ function generateUserInfoData() {
         asset: {
           title: generateTitle(),
           dateUploaded: generateDateUploaded(),
-          fileLocation: faker.image.nature()
+          fileLocation: faker.image.nature(),
+          drawerTitle: generateDrawerTitle()
         }
     }
 }
@@ -72,7 +79,8 @@ function generateAssetData() {
   return {
     title: generateTitle(),
     dateUploaded: generateDateUploaded(),
-    fileLocation: faker.image.nature()
+    fileLocation: faker.image.nature(),
+    drawerTitle: generateDrawerTitle()
   }
 }
 function tearDownDb() {
@@ -102,13 +110,11 @@ describe('UserInfo API resource', function() {
         it('should return all existing accounts', function() {
           let res;
           return chai.request(app)
-            //.select(res.query.select)
             .get('/api/account')
             .then(function(_res) {
               res = _res;
               expect(res).to.have.status(200);
               expect(res.body).to.have.lengthOf.at.least(1);
-              //userID = res.body[0]._id;
               return UserInfo.count();
             })
             .then(function(count) {

@@ -17,7 +17,8 @@ const userInfoSchema = mongoose.Schema({
         {
             title: {type: String},
             dateUploaded: {type: String},
-            fileLocation: {type: String}
+            fileLocation: {type: String},
+            drawerTitle: {type: String}
         }
     ]
 });

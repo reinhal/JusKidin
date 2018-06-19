@@ -21,17 +21,20 @@ var MOCK_USER_INFO = {
                 {
                     "title": "pic1",
                     "dateUploaded": "11/27/18", 
-                    "fileLocation": "/IMG_0032.jpg"
+                    "fileLocation": "/IMG_0032.jpg",
+                    "drawerTitle": "Drawer 2"
                 },
                 {
                     "title": "pic2",
                     "dateUploaded": "05/28/17", 
-                    "fileLocation": "/IMG_0006.jpg"
+                    "fileLocation": "/IMG_0006.jpg",
+                    "drawerTitle": "Drawer 1"
                 },
                 {
                     "title": "mov1",
                     "dateUploaded": "05/25/15", 
-                    "fileLocation": "/IMG_0016.m4v"
+                    "fileLocation": "/IMG_0016.m4v",
+                    "drawerTitle": "Drawer 1"
                 }
             ]
         },
@@ -54,17 +57,20 @@ var MOCK_USER_INFO = {
                 {
                     "title": "pic3",
                     "dateUploaded": "05/27/18", 
-                    "fileLocation": "/IMG_0052.jpg"
+                    "fileLocation": "/IMG_0052.jpg",
+                    "drawerTitle": "Drawer 1"
                 },
                 {
                     "title": "pic4",
                     "dateUploaded": "05/26/18", 
-                    "fileLocation": "/IMG_0009.jpg"
+                    "fileLocation": "/IMG_0009.jpg",
+                    "drawerTitle": "Drawer 2"
                 },
                 {
                     "title": "mov2",
                     "dateUploaded": "05/25/18", 
-                    "fileLocation": "/IMG_0010.m4v"
+                    "fileLocation": "/IMG_0010.m4v",
+                    "drawerTitle": "Drawer 2"
                 }
             ]
         },
@@ -87,17 +93,20 @@ var MOCK_USER_INFO = {
                 {
                     "title": "pic4",
                     "dateUploaded": "03/02/17", 
-                    "fileLocation": "/IMG_0252.jpg"
+                    "fileLocation": "/IMG_0252.jpg",
+                    "drawerTitle": "Drawer 1"
                 },
                 {
                     "title": "pic5",
                     "dateUploaded": "01/26/16", 
-                    "fileLocation": "/IMG_0019.jpg"
+                    "fileLocation": "/IMG_0019.jpg",
+                    "drawerTitle": "Drawer 1"
                 },
                 {
                     "title": "mov3",
                     "dateUploaded": "09/18/14", 
-                    "fileLocation": "/IMG_0023.m4v"
+                    "fileLocation": "/IMG_0023.m4v",
+                    "drawerTitle": "Drawer 2"
                 }
             ]
         },
@@ -120,17 +129,20 @@ var MOCK_USER_INFO = {
                 {
                     "title": "pic6",
                     "dateUploaded": "04/07/13", 
-                    "fileLocation": "/IMG_0152.jpg"
+                    "fileLocation": "/IMG_0152.jpg",
+                    "drawerTitle": "Drawer 2"
                 },
                 {
                     "title": "pic7",
                     "dateUploaded": "10/16/14", 
-                    "fileLocation": "/IMG_0109.jpg"
+                    "fileLocation": "/IMG_0109.jpg",
+                    "drawerTitle": "Drawer 2"
                 },
                 {
                     "title": "mov4",
                     "dateUploaded": "09/13/15", 
-                    "fileLocation": "/IMG_0110.m4v"
+                    "fileLocation": "/IMG_0110.m4v",
+                    "drawerTitle": "Drawer 1"
                 }
             ]
         },
@@ -153,17 +165,20 @@ var MOCK_USER_INFO = {
                 {
                     "title": "pic8",
                     "dateUploaded": "03/25/17", 
-                    "fileLocation": "/IMG_0025.jpg"
+                    "fileLocation": "/IMG_0025.jpg",
+                    "drawerTitle": "Drawer 1"
                 },
                 {
                     "title": "pic29",
                     "dateUploaded": "02/22/15", 
-                    "fileLocation": "/IMG_0019.jpg"
+                    "fileLocation": "/IMG_0019.jpg",
+                    "drawerTitle": "Drawer 2"
                 },
                 {
                     "title": "mov5",
                     "dateUploaded": "06/221/16", 
-                    "fileLocation": "/IMG_0011.m4v"
+                    "fileLocation": "/IMG_0011.m4v",
+                    "drawerTitle": "Drawer 1"
                 }
             ]
         }

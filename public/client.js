@@ -69,7 +69,7 @@ function openChild(evt, childID) {
 }
 
 //document.getElementById("defaultOpen").click();
-var userID = '5b22a740fb6efb156dcee38d';
+var userID = '5b291d8aeb29f2314f219591';
 var childName = 'Lisa'
 // var childName = $('#child-first-name').val();
 var childAge = "10"
@@ -234,21 +234,7 @@ function deleteAccount() {
 //delete account
 }
 
-///////////// Drawer and Asset Functions ///////////////////////
-
-function openDrawer(evt, drawerName) {
-    var i, assettabcontent, tablinks;
-    assettabcontent = document.getElementsByClassName("assettabcontent");
-    for (i = 0; i < assettabcontent.length; i++) {
-        assettabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(drawerName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
+///////////// Drawer and Asset Functions ///////////////////////////
 
 function editAsset() {
     document.getElementById("assetDropdown").classList.toggle("show");
@@ -268,7 +254,21 @@ window.onclick = function(event) {
   }
 }
 
-var drawerTemplate = function (drawerTitle) {
+function openDrawer(evt, drawerName) {
+    var i, assettabcontent, tablinks;
+    assettabcontent = document.getElementsByClassName("assettabcontent");
+    for (i = 0; i < assettabcontent.length; i++) {
+        assettabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(drawerName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+var drawerTemplate = function(drawerTitle) {
 
     $('.dropdown-asset').append(
         `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
@@ -281,29 +281,10 @@ var drawerTemplate = function (drawerTitle) {
 }
 
 function addDrawer(userInfoSchema) {
-    console.log('Adding new new drawer: ' + userInfoSchema);
-    $.ajax({
-      method: 'POST',
-      url: ASSETS_URL,
-      data: JSON.stringify(userInfoSchema),
-      success: function(data) {
-        getAndDisplayDrawers();
-      },
-      dataType: 'json',
-      contentType: 'application/json'
-    });
+   
 }
 function getAndDisplayDrawer() {
-    console.log('Retrieving drawers');
-    $.getJSON(ASSETS_URL, function(items) {
-      console.log('Rendering drawers');
-      var drawerElements = items.asset.map(function(userInfoSchema) {
-        var element = $(drawerTemplate(userInfoSchema.title))
-        element.attr('id', userInfoSchema.id);
-        return element
-      });
-    //   $('.tablinks').html(drawerElements);
-    });
+   
 // This function will take information from the #addDrawerForm to create a new drawer to hold user uploaded assets
 // from the #drawer-name field it need to create a new .tab button element on the asset.html page 
 // this drawer will hold assets uploaded by user
@@ -312,9 +293,20 @@ function getAndDisplayDrawer() {
 function handleDrawerAdd() {
     $('#addDrawerForm').submit(function(e) {
         e.preventDefault();
-        addChildProfileTab({
-            drawerTitle: $(e.currentTarget).find('#drawer-name').val(),
-        });
+        var drawerTemplate = function(drawerTitle) {
+
+            $('.dropdown-asset').append(
+                `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
+                `<div id="${drawerTitle}" class="assettabcontent"></div>`
+            )
+        
+            $('.asset-dropbtn').append(
+                `<a href="#">${drawerTitle}</a>`
+            )
+        }
+        // addChildProfileTab({
+        //     drawerTitle: $(e.currentTarget).find('#drawer-name').val(),
+        // });
     });
 }
 
@@ -323,15 +315,15 @@ function editDrawer() {
 }
 
 function deleteDrawer() {
-    console.log('Deleting drawer `' + userID + '`');
-    $.ajax({
-      url: ASSETS_URL + '/' + userID,
-      method: 'DELETE',
-      success: getAndDisplayDrawer
-    }); 
+    // console.log('Deleting drawer `' + userID + '`');
+    // $.ajax({
+    //   url: ASSETS_URL + '/' + userID,
+    //   method: 'DELETE',
+    //   success: getAndDisplayDrawer
+    // }); 
 }
 
-function uploadAndDisplayNewAsset() {
+function uploadAndDisplayAssets() {
 // upload new asset from #uploadAssetForm 
 // user will need to identify existing drawer to upload asset to
 // asset will be added to asset.html page, under identified drawer, 
@@ -361,7 +353,5 @@ $(function() {
     handleChildProfileAdd();
     deleteChildProfile();
     handleChildProfileDelete();
-    // addDrawer();
-    // getAndDisplayDrawer();
-    // handleDrawerAdd();
+    handleDrawerAdd();
 });
