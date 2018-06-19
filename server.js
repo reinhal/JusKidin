@@ -105,8 +105,7 @@ app.delete('/api/account/:id', (req, res) => {
 
 /////////// Child Profile Info Endpoints /////////////////////////////////////
 
-
-app.post('/api/account/:_id', jsonParser, (req, res) => {
+app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
   const reqChildProfs = [req.body.firstName, req.body.birthDate];
   for (let i=0; i<reqChildProfs.length; i++) {
     const field = reqChildProfs[i];
@@ -192,9 +191,8 @@ app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
 
 // // Digital Assets Endpoints//
 
-//this endpoint does not work
-app.post('/api/account/:_id', jsonParser, (req, res) => {
-  const reqAsset = [req.body.title, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
+app.post('/api/account/:_id/uploads', jsonParser, (req, res) => {
+  const updatedAssetObject = [req.body.title, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<reqAsset.length; i++) {
     const field = reqAsset[i];
     if (field == undefined) {
@@ -218,30 +216,44 @@ app.post('/api/account/:_id', jsonParser, (req, res) => {
     });
 });
 
-app.put('/api/account/:_id/asset', jsonParser, (req, res) => {
-  if (req.params._id !== req.body._id) {
-    const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
+app.put('/api/account/:_id/asset/:asset_id', jsonParser, (req, res) => {
+  if (req.params.asset !== req.body.asset) {
+    const message = `Request path id (${req.params.asset}) and request body id (${req.body.asset}) must match`;
     console.error(message);
     return res.status(400).send(message);
   }
 
-  const reqAsset = [req.body.asset.title, req.body.asset.dateUploaded, req.body.asset.fileLocation];
-  for (let i=0; i<reqAsset.length; i++) {
-    const field = reqAsset[i];
+  const updatedAssetObject = ["title", "dateUploaded", "fileLocation", "drawerTitle"];
+  for (let i=0; i<updatedAssetObject.length; i++) {
+    const field = updatedAssetObject[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`
       return res.status(400).send(message);
     }
   }
 
-  UserInfo.asset.update({
-    id: req.params._id,
-    title: req.body.asset.title,
-    dateUploaded: req.body.asset.dateUploaded,
-    fileLocation: req.body.asset.fileLocation,
-    drawerTitle: req.body.asset.drawerTitle
-  });
-  res.status(204).end();
+  return UserInfo.findById(
+    req.params._id)
+    .then(thisAsset => {
+    for ( let i=0; i < thisAsset.asset.length; i++ ) {
+      if (req.params.asset_id == thisAsset.asset[i].id) {
+       thisAsset.asset[i].title = req.body.title;
+       thisAsset.asset[i].dateUploaded = req.body.dateUploaded;
+       thisAsset.asset[i].fileLocation = req.body.fileLocation;
+       thisAsset.asset[i].drawerTitle = req.body.drawerTitle;
+      }
+    }
+
+  return UserInfo.findByIdAndUpdate(
+    req.params._id, {
+      asset:thisAsset.asset
+    }
+  ) 
+    .then(updatedAsset => {
+      console.log (updatedAsset);
+      return res.status(201).send(updatedAsset);
+    })
+  })
 });
 
 app.delete('/api/account/:_id/asset/:asset_id', (req, res) => {
@@ -264,17 +276,6 @@ app.delete('/api/account/:_id/asset/:asset_id', (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   });
 });
-//   UserInfo.asset
-//   .findByIdAndRemove(req.params.id)
-//   .then(() => {
-//       res.status(204).json({message: 'Success!!'});
-//   })
-//   .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ error: 'There is an error'});
-//   });
-// });
-
 let server;
 
 function runServer(DATABASE_URL, port = PORT) {
