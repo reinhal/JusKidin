@@ -151,20 +151,17 @@ app.put('/api/account/:_id/childProfs/:child_id', jsonParser, (req, res) => {
     req.params._id)
     .then(thisUser => {
     for ( let i=0; i < thisUser.childProfs.length; i++ ) {
-      console.log("this place", thisUser.childProfs[i]._id, req.params.child_id);
       if (req.params.child_id == thisUser.childProfs[i]._id) {
-        console.log("now here", thisUser.childProfs[i]);
         thisUser.childProfs[i].firstName = req.body.firstName;
         thisUser.childProfs[i].birthDate = req.body.birthDate;
       }
     }
-console.log(thisUser.childProfs, "here we are");
 
   return UserInfo.findByIdAndUpdate(
-      req.params._id, {
-        childProfs:thisUser.childProfs
-      }
-    ) 
+    req.params._id, {
+      childProfs:thisUser.childProfs
+    }
+  ) 
     .then(updatedChild => {
       console.log (updatedChild);
       return res.status(201).send(updatedChild);
