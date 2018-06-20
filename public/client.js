@@ -69,7 +69,7 @@ function openChild(evt, childID) {
 }
 
 //document.getElementById("defaultOpen").click();
-var userID = '5b291d8aeb29f2314f219591';
+var userID = '5b291d8aeb29f2314f21958e';
 var childName = 'Lisa'
 // var childName = $('#child-first-name').val();
 var childAge = "10"
@@ -115,7 +115,7 @@ function getAndDisplayChildProfile() {
         element.attr('id', userInfoSchema._id);
         return element
       });
-    //   $('.tablinks').html(childProfileElements);
+    $('.tablinks').html(childProfileElements);
     });
 }
 
@@ -204,7 +204,7 @@ function displayGoogleSearch(gsearch) {
     }
 }
 
-// googleSearch(2, displayGoogleSearch);
+googleSearch(2, displayGoogleSearch);
 
 function watchSubmit() {
     $('.child-age-form').submit(event => {
