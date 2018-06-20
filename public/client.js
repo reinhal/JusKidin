@@ -72,8 +72,9 @@ function openChild(evt, childID) {
 var userID = '5b291d8aeb29f2314f21959d';
 var childName = 'Lisa'
 // var childName = $('#child-first-name').val();
-var childAge = "10"
-var drawerTitle = "Soccer"
+var childAge = "10";
+var drawerTitle = $('#drawer-name').val();
+console.log('drawer title', drawerTitle);
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
 var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
@@ -82,8 +83,8 @@ var ASSETS_URL = serverBase + `api/account/${userID}/uploads`;
 var childProfileTemplate = function (childName, childAge, childID) { 
     console.log(childAge);
     $('.dropdown-prof').append(
-        `<button class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(childAge)}</button>` +
-        `<div id="${childID}" class="tabcontent"></div>`
+        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(childAge)}</button>` +
+        `<div class="tabcontent"></div>`
     )
 
     $('.child-dropbtn').append(
@@ -96,7 +97,7 @@ function addChildProfile(userInfoSchema) {
     console.log('Adding new child profile: ' + userInfoSchema);
     $.ajax({
       method: 'POST',
-      url: CHILDPROFS_URL,
+      url: `/api/account/{userID}/childProfiles`,
       data: JSON.stringify(userInfoSchema),
       success: function(data) {
         getAndDisplayChildProfiles();
@@ -179,12 +180,11 @@ function deleteChildProfile() {
 
 function googleSearch(childAge, callback) {
     console.log("childAge", childAge);
-    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=' + `${childAge}` + '%20year%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
+    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q='+`${childAge}`+'%20years%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
     $.getJSON(url, callback)
 }
 
 function displayGoogleSearch(gsearch) {
-    console.log(gsearch, 'gsearch');
     for ( let i = 0; i < gsearch.items.length; i ++) {
         let data = gsearch.items[i]
         if (data.pagemap.cse_thumbnail) {
@@ -205,19 +205,19 @@ function displayGoogleSearch(gsearch) {
     }
 }
 
-googleSearch(2, displayGoogleSearch);
+googleSearch(10, displayGoogleSearch);
 
-function watchSubmit() {
-    $('.child-age-form').submit(event => {
-      event.preventDefault();
-      let queryTarget = $(event.currentTarget).find('.child-birth-date');
-      let query = queryTarget.val();
-      queryTarget.val("");
-      googleSearch(query, displayGoogleSearch);
-    });
-}
+// function watchSubmit() {
+//     $('.child-age-form').submit(event => {
+//       event.preventDefault();
+//       let queryTarget = $(event.currentTarget).find('.child-birth-date');
+//       let query = queryTarget.val();
+//       queryTarget.val("");
+//       googleSearch(query, displayGoogleSearch);
+//     });
+// }
   
-$(watchSubmit);
+// $(watchSubmit);
 
 ///////////// Account Functions ///////////////////////
 
@@ -295,7 +295,7 @@ function handleDrawerAdd() {
     $('#addDrawerForm').submit(function(e) {
         e.preventDefault();
         var drawerTemplate = function(drawerTitle) {
-
+            var drawerTitle = $('#drawer-name').val();
             $('.dropdown-asset').append(
                 `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
                 `<div id="${drawerTitle}" class="assettabcontent"></div>`
@@ -305,9 +305,7 @@ function handleDrawerAdd() {
                 `<a href="#">${drawerTitle}</a>`
             )
         }
-        // addChildProfileTab({
-        //     drawerTitle: $(e.currentTarget).find('#drawer-name').val(),
-        // });
+        drawerTemplate();
     });
 }
 
@@ -331,7 +329,7 @@ function uploadAndDisplayAssets() {
 // populated with items from the #uploadAssetForm fields
 }
 
-function editAsset() {
+function editUploads() {
 // edit title, notes or drawer location for a particular asset
 }
 

@@ -195,7 +195,7 @@ app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
 // // Digital Assets Endpoints//
 
 app.post('/api/account/:_id/uploads', jsonParser, (req, res) => {
-  const updatedAssetObject = [req.body.title, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
+  const updatedAssetObject = [req.body.title, req.body.notes, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<reqAsset.length; i++) {
     const field = reqAsset[i];
     if (field == undefined) {
@@ -209,7 +209,7 @@ app.post('/api/account/:_id/uploads', jsonParser, (req, res) => {
     })
     .select(req.query.select)
     .then(userinfo => {
-      userinfo.asset.push({title: req.body.title, dateUploaded: req.body.dateUploaded, fileLocation: req.body.fileLocation, drawerTitle: req.body.drawerTitle});
+      userinfo.asset.push({title: req.body.title, notes: req.body.notes, dateUploaded: req.body.dateUploaded, fileLocation: req.body.fileLocation, drawerTitle: req.body.drawerTitle});
       userinfo.save()
         res.status(201);
         res.json(userinfo);
@@ -226,7 +226,7 @@ app.put('/api/account/:_id/asset/:asset_id', jsonParser, (req, res) => {
     return res.status(400).send(message);
   }
 
-  const updatedAssetObject = ["title", "dateUploaded", "fileLocation", "drawerTitle"];
+  const updatedAssetObject = ["title", "notes", "dateUploaded", "fileLocation", "drawerTitle"];
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];
     if (!(field in req.body)) {
@@ -241,6 +241,7 @@ app.put('/api/account/:_id/asset/:asset_id', jsonParser, (req, res) => {
     for ( let i=0; i < thisAsset.asset.length; i++ ) {
       if (req.params.asset_id == thisAsset.asset[i].id) {
        thisAsset.asset[i].title = req.body.title;
+       thisAsset.asset[i].notes = req.body.notes;
        thisAsset.asset[i].dateUploaded = req.body.dateUploaded;
        thisAsset.asset[i].fileLocation = req.body.fileLocation;
        thisAsset.asset[i].drawerTitle = req.body.drawerTitle;

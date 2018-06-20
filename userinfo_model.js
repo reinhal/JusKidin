@@ -16,6 +16,7 @@ const userInfoSchema = mongoose.Schema({
     asset: [
         {
             title: {type: String},
+            notes: {type: String},
             dateUploaded: {type: String},
             fileLocation: {type: String},
             drawerTitle: {type: String}

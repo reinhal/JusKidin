@@ -504,12 +504,14 @@ form {
 }
 
 .tab button.active {
-    background-color: aliceblue;
-    color: black;
+    background-color: black;
+    color: aliceblue;
 }
 
 .tabcontent {
     display: none;
+    background-color: aliceblue;
+    color: black;
     padding: 12px 12px;
     border: 1px solid #ccc;
     border-top: none;
@@ -533,7 +535,7 @@ form {
 /*////////////////Child and Asset DropDown Buttons//////////////////*/
 
 
-.dropbtn-prof {
+/* .dropbtn-prof {
     background-color: #3498DB;
     color: white;
     padding: 16px;
@@ -544,7 +546,7 @@ form {
 
 .dropbtn-prof:hover, .dropbtn-prof:focus {
     background-color: #2980B9;
-}
+} */
 
 .dropdown-prof {
     position: relative;

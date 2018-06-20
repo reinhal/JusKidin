@@ -340,8 +340,10 @@ describe('Child Profile API resource', function() {
 //                 expect(res.body).to.include.keys('title', 'dateUploaded', 'fileLocation');
 //                 expect(res.body.id).to.not.be.null;
 //                 expect(res.body.asset[1].title).to.equal(newAsset.title);
+//                 expect(res.body.asset[1].notes).to.equal(newAsset.notes);
 //                 expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
-//                 expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation); 
+//                 expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation);
+//                 expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle); 
 //                 return res.body;
 //             })
 //     });
@@ -364,8 +366,10 @@ describe('Child Profile API resource', function() {
 //       })
 //       .then(function(userinfo) {
 //         expect(userinfo.Asset.title).to.equal(updatedAsset.title);
+//         expect(res.body.asset[1].notes).to.equal(newAsset.notes);
 //         expect(userinfo.Asset.dateUploaded).to.equal(updatedAsset.dateUploaded);
 //         expect(userinfo.Asset.fileLocation).to.equal(updatedAsset.fileLocation);
+//         expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle);
 //       });
 //     });
 //   });
