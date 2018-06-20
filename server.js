@@ -15,6 +15,9 @@ app.use(express.json());
 const jsonParser = bodyParser.json();
 const {UserInfo} = require('./userinfo_model');
 
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
 //app.use(morgan('common'));
 
 // Account Info Endpoints//

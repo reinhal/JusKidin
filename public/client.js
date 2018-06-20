@@ -69,7 +69,7 @@ function openChild(evt, childID) {
 }
 
 //document.getElementById("defaultOpen").click();
-var userID = '5b291d8aeb29f2314f21958e';
+var userID = '5b291d8aeb29f2314f21959d';
 var childName = 'Lisa'
 // var childName = $('#child-first-name').val();
 var childAge = "10"
@@ -77,10 +77,10 @@ var drawerTitle = "Soccer"
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
 var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
-var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
+var ASSETS_URL = serverBase + `api/account/${userID}/uploads`;
 
 var childProfileTemplate = function (childName, childAge, childID) { 
-    
+    console.log(childAge);
     $('.dropdown-prof').append(
         `<button class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(childAge)}</button>` +
         `<div id="${childID}" class="tabcontent"></div>`
@@ -115,7 +115,7 @@ function getAndDisplayChildProfile() {
         element.attr('id', userInfoSchema._id);
         return element
       });
-    $('.tablinks').html(childProfileElements);
+    //$('.tablinks').html(childProfileElements);
     });
 }
 
@@ -178,7 +178,8 @@ function deleteChildProfile() {
 ///////////// Google Search Functions ///////////////////////
 
 function googleSearch(childAge, callback) {
-    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=' + `${getChildAge(childAge)}` + '%20year%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
+    console.log("childAge", childAge);
+    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=' + `${childAge}` + '%20year%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
     $.getJSON(url, callback)
 }
 
