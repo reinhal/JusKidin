@@ -76,7 +76,8 @@ var userID = '5b2be410d5c11e564ce9a97c';
 var childName = 'Lisa';
 // var childName = $('#child-first-name').val();
 // var childAge = "10";
-var drawerTitle = "Outdoor Adventures";
+var drawerUploads = [];
+var drawerTitle = "";
 console.log('drawer title', drawerTitle);
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
@@ -252,7 +253,9 @@ window.onclick = function(event) {
   }
 }
 
-function openDrawer(evt, drawerName) {
+function openDrawer(evt, drawerTitle) {
+    console.log("this drawer title", drawerTitle);
+    var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
     var i, assettabcontent, tablinks;
     assettabcontent = document.getElementsByClassName("assettabcontent");
     for (i = 0; i < assettabcontent.length; i++) {
@@ -262,7 +265,7 @@ function openDrawer(evt, drawerName) {
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(drawerName).style.display = "block";
+    document.getElementById(`${drawerID}`).style.display = "block";
     evt.currentTarget.className += " active";
 }
 
@@ -270,10 +273,13 @@ function openDrawer(evt, drawerName) {
 
 var drawerTemplate = function(drawerTitle) {
 console.log('Right Here', drawerTitle);
-
+var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
     $('.dropdown-asset').append(
-        `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}')"> ${drawerTitle}</button>
-        <div id="${drawerTitle}" class="assettabcontent"></div>`
+        `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}')"> ${drawerTitle}</button>`
+    )
+
+    $(`${drawerID}`).append(
+        `<div id="${drawerID}" class="assettabcontent"></div>`
     )
 
     $('.asset-dropbtn').append(
@@ -282,8 +288,8 @@ console.log('Right Here', drawerTitle);
 }
 
 var uploadTemplate = function(drawerTitle, title, notes, fileLocation) {
-
-    $('.assettabcontent').append(
+var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
+    $(`#${drawerID}`).append(
         `<section role="region">  
             <div class='col-4'>
                  <div class='asset'>
@@ -325,14 +331,27 @@ function getAndDisplayUploads() {
     console.log('retrieving uploads');
     $.getJSON(ASSETS_URL, function(items) {
         console.log('Rendering Uploads', items);
-        var uploadUploadElements = items.asset.map(function(userInfoSchema) {
-            var uploadElement = $(uploadTemplate(userInfoSchema.title, userInfoSchema.notes, userInfoSchema.fileLocation, userInfoSchema.id))
-            uploadElement.attr('id', userInfoSchema.id);
+        drawerUploads = items.asset;
+        console.log("drawer uploads", drawerUploads);
+        // click on drawer, filter the array then render
+        var uploadUploadElements = items.asset.map(function(item) {
+            var uploadElement = $(uploadTemplate(item.title, item.notes, item.fileLocation, item.drawerTitle))
+            uploadElement.attr('id', item);
             return uploadElement
         })
     })
 }
 
+function filterUploads() {
+   $('.tablinks').click(function() {
+     const uploadsArray = drawerUploads.filter(upload => upload.drawerTitle === $(this.drawerTitle).html())
+   });
+//    console.log ('uploads array', uploadsArray);
+}
+// text of drawer Jquery into html this.attr to specifiy the element
+// this create a new array
+// loop over and the appropriate html to each item
+// assign 343 to a new variable
 function handleDrawerAdd() {
     $('#addDrawerForm').submit(function(e) {
         e.preventDefault();
@@ -397,4 +416,5 @@ $(function() {
     handleDrawerAdd();
     getAndDisplayDrawer();
     getAndDisplayUploads();
+    filterUploads();
 });
