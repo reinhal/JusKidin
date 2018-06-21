@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 const {UserInfo} = require('../userinfo_model');
 const {app, runServer, closeServer} = require('../server');
-const {DATABASE_URL} = require('../config');
+const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 

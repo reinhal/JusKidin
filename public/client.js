@@ -72,7 +72,7 @@ function openChild(evt, childID) {
 }
 
 //document.getElementById("defaultOpen").click();
-var userID = '5b2b9f7ec5a6ef32a321cc6f';
+var userID = '5b2be410d5c11e564ce9a97c';
 var childName = 'Lisa';
 // var childName = $('#child-first-name').val();
 // var childAge = "10";
@@ -86,7 +86,7 @@ var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
 var childProfileTemplate = function (childName, birthDate, childID) { 
     console.log(birthDate);
     $('.dropdown-prof').append(
-        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)}</button>` +
+        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>` +
         `<div class="tabcontent"></div>`
     )
 
@@ -251,32 +251,29 @@ window.onclick = function(event) {
     }
   }
 }
-function convertDrawerTitle() {
 
-}
-function openDrawer(evt, drawerTitle) {
-    // var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
+function openDrawer(evt, drawerName) {
     var i, assettabcontent, tablinks;
-    // assettabcontent = document.getElementsByClassName("assettabcontent");
-    // for (i = 0; i < assettabcontent.length; i++) {
-    //     assettabcontent[i].style.display = "none";
-    // }
+    assettabcontent = document.getElementsByClassName("assettabcontent");
+    for (i = 0; i < assettabcontent.length; i++) {
+        assettabcontent[i].style.display = "none";
+    }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    // document.getElementById(drawerID).style.display = "block";
-    // evt.currentTarget.className += " active";
+    document.getElementById(drawerName).style.display = "block";
+    evt.currentTarget.className += " active";
 }
 
 //when click Pirate Ship button, give me pirateship image elements, append those the id of the div below the button
 
 var drawerTemplate = function(drawerTitle) {
-console.log('drawer title', drawerTitle);
-var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
+console.log('Right Here', drawerTitle);
+
     $('.dropdown-asset').append(
-        `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}')"> ${drawerTitle}</button>`
-        // `<div id="${drawerID}" class="assettabcontent"></div>`
+        `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}')"> ${drawerTitle}</button>
+        <div id="${drawerTitle}" class="assettabcontent"></div>`
     )
 
     $('.asset-dropbtn').append(
@@ -286,9 +283,7 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
 
 var uploadTemplate = function(drawerTitle, title, notes, fileLocation) {
 
-    var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
-
-    $('#Drawer1').append(
+    $('.assettabcontent').append(
         `<section role="region">  
             <div class='col-4'>
                  <div class='asset'>
@@ -306,26 +301,36 @@ function addDrawer(userInfoSchema) {
 }
 
 function getAndDisplayDrawer() {
-    console.log('Retrieving drawer');
+    console.log('retrieving drawer');
     $.getJSON(ASSETS_URL, function(items) {
-      console.log('Rendering drawer', items);
-      function uniqueDrawerTitles(input) {
-          var output = [];
-          for(var i=0; i < input.asset.length; i++) {
+        console.log('Rendering drawer', items);
+        function uniqueDrawerTitles(input) {
+            var output = [];
+            for(var i=0; i < input.asset.length; i++) {
               if(output.indexOf(input.asset[i].drawerTitle) === -1)
               output.push(input.asset[i].drawerTitle);
-          }
-          return output;
-      }
-      uniqueDrawerTitles(items);
-      console.log("unique drawers", uniqueDrawerTitles(items));
-      var drawerElement = items.asset.map(function(userInfo) {
-            var element = $(drawerTemplate(userInfo.drawerTitle, userInfo.id))
-            var uploadElements = $(uploadTemplate(userInfo.drawerTitle, userInfo.title, userInfo.notes, userInfo.fileLocation, userInfo.id))
-            element.attr('id', userInfo.id);
+            }
+        return output;
+        }
+        items = uniqueDrawerTitles(items);
+        var drawerElement = items.map(function(item) {
+            var element = $(drawerTemplate(item))
+            element.attr('id', item);
             return element
-      });
+        });
     });
+}
+
+function getAndDisplayUploads() {
+    console.log('retrieving uploads');
+    $.getJSON(ASSETS_URL, function(items) {
+        console.log('Rendering Uploads', items);
+        var uploadUploadElements = items.asset.map(function(userInfoSchema) {
+            var uploadElement = $(uploadTemplate(userInfoSchema.title, userInfoSchema.notes, userInfoSchema.fileLocation, userInfoSchema.id))
+            uploadElement.attr('id', userInfoSchema.id);
+            return uploadElement
+        })
+    })
 }
 
 function handleDrawerAdd() {
@@ -391,4 +396,5 @@ $(function() {
     handleChildProfileDelete();
     handleDrawerAdd();
     getAndDisplayDrawer();
+    getAndDisplayUploads();
 });

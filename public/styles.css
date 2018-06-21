@@ -607,7 +607,7 @@ select {
 }
 
 .dropbtn-asset {
-    background-color: #3498DB;
+    background-color: black;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -616,7 +616,7 @@ select {
 }
 
 .dropbtn-asset:hover, .dropbtn-asset:focus {
-    background-color: #2980B9;
+    background-color: black;
 }
 
 .dropdown-asset {
