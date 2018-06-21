@@ -381,6 +381,26 @@ form {
     width: 400px;
 }
 
+select { 
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    color: gray;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 400px;
+}
+
+#current-drawer-titles { 
+    padding: 20px;
+    margin-top: 5px;
+    font-size: 18px;
+    color: gray;
+    border: 0px solid aliceblue;
+    background-color: aliceblue;
+    width: 400px;
+}
+
 #accountoverlay {
     position: fixed; 
     display: none;
@@ -480,14 +500,15 @@ form {
 /*////////////Child and Drawer Tabbed View//////////*/
 
 .tab {
-    overflow: hidden;
-    background-color: slategray;
-    color: aliceblue;
+    /* overflow: hidden; */
+    background-color: aliceblue;
+    color: black;
     margin: 60px; 
+    /* width: 80%; */
 }
 
 .tab button {
-    background-color: inherit;
+    background-color: slategray;
     font-size: 16px;
     color: aliceblue;
     float: left;
@@ -517,10 +538,21 @@ form {
     border-top: none;
 }
 
-.assettabcontent {
+.displayTabcontent {
     display: none;
+    background-color: aliceblue;
+    color: black;
     padding: 12px 12px;
     border: 1px solid #ccc;
+    border-top: none;
+}
+
+.assettabcontent {
+    display: none;
+    background-color: aliceblue;
+    color: black;
+    margin-top: 30px;
+    padding: 12px 12px;
     border-top: none;
 }
 
@@ -642,8 +674,8 @@ form {
 /*////////////////Asset Styling//////////////////*/
 
 .col-4 {
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     padding: 15px;
 }
   
@@ -727,12 +759,6 @@ form {
     }
 }
 
-@media screen and (max-width: 860px) {
-    p {
-        padding-left: 100px;
-        padding-right: 100px;
-    }
-}
 @media screen and (max-width: 750px) {
     .topnav .search-container {
       float: none;

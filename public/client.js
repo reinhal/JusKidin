@@ -54,10 +54,10 @@ window.onclick = function(event) {
 }
 
 function openChild(evt, childID) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+    var i, displayTabcontent, tablinks;
+    displayTabcontent = document.getElementsByClassName("displayTabcontent");
+    for (i = 0; i < displayTabcontent.length; i++) {
+        displayTabcontent[i].style.display = "none";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -66,24 +66,27 @@ function openChild(evt, childID) {
 
     document.getElementById(childID).style.display = "block";
     evt.currentTarget.className += " active";
+
+    var currentAge =  $(evt.target).text().match(/\d+/)[0];
+    googleSearch(currentAge, displayGoogleSearch);
 }
 
 //document.getElementById("defaultOpen").click();
-var userID = '5b291d8aeb29f2314f21959d';
-var childName = 'Lisa'
+var userID = '5b2b9f7ec5a6ef32a321cc6f';
+var childName = 'Lisa';
 // var childName = $('#child-first-name').val();
-var childAge = "10";
-var drawerTitle = $('#drawer-name').val();
+// var childAge = "10";
+var drawerTitle = "Outdoor Adventures";
 console.log('drawer title', drawerTitle);
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
 var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
-var ASSETS_URL = serverBase + `api/account/${userID}/uploads`;
+var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
 
-var childProfileTemplate = function (childName, childAge, childID) { 
-    console.log(childAge);
+var childProfileTemplate = function (childName, birthDate, childID) { 
+    console.log(birthDate);
     $('.dropdown-prof').append(
-        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(childAge)}</button>` +
+        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)}</button>` +
         `<div class="tabcontent"></div>`
     )
 
@@ -93,14 +96,14 @@ var childProfileTemplate = function (childName, childAge, childID) {
 }
 //check for child name already exisiting for this profile
 
-function addChildProfile(userInfoSchema) {
-    console.log('Adding new child profile: ' + userInfoSchema);
+function addChildProfile(firstName, birthDate) {
+    console.log('Adding new child profile: ' + childName + birthDate);
     $.ajax({
       method: 'POST',
-      url: `/api/account/{userID}/childProfiles`,
-      data: JSON.stringify(userInfoSchema),
+      url: `/api/account/${userID}/childProfiles`,
+      data: JSON.stringify({firstName, birthDate}),
       success: function(data) {
-        getAndDisplayChildProfiles();
+        getAndDisplayChildProfile();
       },
       dataType: 'json',
       contentType: 'application/json'
@@ -112,48 +115,33 @@ function getAndDisplayChildProfile() {
     $.getJSON(CHILDPROFS_URL, function(items) {
       console.log('Rendering child profile');
       var childProfileElements = items.childProfs.map(function(userInfoSchema) {
-        var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema._id ))
-        element.attr('id', userInfoSchema._id);
+        var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ))
+        element.attr('id', userInfoSchema.id);
         return element
       });
-    //$('.tablinks').html(childProfileElements);
     });
 }
 
-function getChildAge(toBeABDayStr) {
-    var bday = toBeABDayStr;
-    // var mdate = $(02/06/2008).val().toString();
-    var birthYear = parseInt(bday.substring(0,4), 10);
-    var birthMonth = parseInt(bday.substring(5,7), 10);
-        
-    var today = new Date();
-    var birthday = new Date(birthYear, birthMonth-1,);
-        
-    var differenceInMilisecond = today.valueOf() - birthday.valueOf();
-        
-    var currentAge = Math.floor(differenceInMilisecond / 31536000000);
-    
-    return currentAge;
+function getChildAge(birthDate) {
+    var childAge = moment(birthDate, "MM/DD/YYYY").month(0).from(moment().month(0));
+    let thenum = childAge.match(/\d+/)[0];
+    return thenum;
 }
 
 function handleChildProfileAdd() {
-    // define variables
     $('.child-age-form').submit(function(e) {
+        var childName = $('#child-first-name').val();
+        var birthDate = $('.child-birth-date').val();
+        console.log("Child Info", childName, birthDate, $('.child-birth-date'))
         e.preventDefault();
-        addChildProfile({
-            childName: Stella, 
-            //$(e.currentTarget).find('#child-first-name').val(),
-            //validate childName ==== '#child-first-name').val()
-            childAge: 7,
-            //getChildAge("02/06/2008")
-        });
+        addChildProfile(childName, birthDate);
     });
 }
 
-function deleteChildProfile(userID) {
+function deleteChildProfile(userID, child_id) {
     console.log('Deleting child profile');
     $.ajax({
-      url: CHILDPROFS_URL,
+      url: `/api/account/${userID}/childProfs/:child_id`,
       method: 'DELETE',
       success: getAndDisplayChildProfile
     });
@@ -167,28 +155,37 @@ function handleChildProfileDelete() {
     });
 }
 
-function editChildProfile() {
-
+function handleChildProfileUpdate() {
+    $('.dropdown-childProfile').on('click', '.child-profile-edit', function(e) {
+        e.preventDefault();
+        editChildProfile(
+            $(e.currentTarget).closest('dropbtn-prof').attr('id'));
+    })
 }
 
-function deleteChildProfile() {
-// add fa icon to delete childProf
-// hoverable window to check are you sure? 
+function editChildProfile(userID, child_id) {
+    console.log('Editing child profile');
+    $.ajax({
+        url: `/api/account/${userID}/childProfs/:child_id`,
+        method: 'PUT',
+        success: getAndDisplayChildProfile
+    });
 }
 
 ///////////// Google Search Functions ///////////////////////
 
 function googleSearch(childAge, callback) {
     console.log("childAge", childAge);
-    url = 'https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q='+`${childAge}`+'%20years%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A',
+    url = `https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=${childAge}%20years%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A`,
     $.getJSON(url, callback)
 }
 
 function displayGoogleSearch(gsearch) {
+    console.log('gsearch', gsearch);
     for ( let i = 0; i < gsearch.items.length; i ++) {
         let data = gsearch.items[i]
         if (data.pagemap.cse_thumbnail) {
-            $('.tabcontent').append(`<h2>${data.title} </h2>
+            $('.displayTabcontent').append(`<h2>${data.title} </h2>
                 <ul>
                     <li class="google-image"><img src="${data.pagemap.cse_thumbnail[0].src}"></li>
                     <li class="google"><a href="${data.link}">${data.link}</a></li>
@@ -205,7 +202,7 @@ function displayGoogleSearch(gsearch) {
     }
 }
 
-googleSearch(10, displayGoogleSearch);
+// googleSearch(currentAge, displayGoogleSearch);
 
 // function watchSubmit() {
 //     $('.child-age-form').submit(event => {
@@ -254,26 +251,32 @@ window.onclick = function(event) {
     }
   }
 }
+function convertDrawerTitle() {
 
-function openDrawer(evt, drawerName) {
+}
+function openDrawer(evt, drawerTitle) {
+    // var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
     var i, assettabcontent, tablinks;
-    assettabcontent = document.getElementsByClassName("assettabcontent");
-    for (i = 0; i < assettabcontent.length; i++) {
-        assettabcontent[i].style.display = "none";
-    }
+    // assettabcontent = document.getElementsByClassName("assettabcontent");
+    // for (i = 0; i < assettabcontent.length; i++) {
+    //     assettabcontent[i].style.display = "none";
+    // }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(drawerName).style.display = "block";
-    evt.currentTarget.className += " active";
+    // document.getElementById(drawerID).style.display = "block";
+    // evt.currentTarget.className += " active";
 }
 
-var drawerTemplate = function(drawerTitle) {
+//when click Pirate Ship button, give me pirateship image elements, append those the id of the div below the button
 
+var drawerTemplate = function(drawerTitle) {
+console.log('drawer title', drawerTitle);
+var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
     $('.dropdown-asset').append(
-        `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
-        `<div id="${drawerTitle}" class="assettabcontent"></div>`
+        `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}')"> ${drawerTitle}</button>`
+        // `<div id="${drawerID}" class="assettabcontent"></div>`
     )
 
     $('.asset-dropbtn').append(
@@ -281,14 +284,48 @@ var drawerTemplate = function(drawerTitle) {
     )
 }
 
+var uploadTemplate = function(drawerTitle, title, notes, fileLocation) {
+
+    var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
+
+    $('#Drawer1').append(
+        `<section role="region">  
+            <div class='col-4'>
+                 <div class='asset'>
+                 <img class='asset-image' src="${fileLocation}" alt="${title}">
+                 <div>
+                 <p class="asset-content"><strong>${title}</strong></p>
+                 <p class="asset-content">${notes}</p>
+             </div>
+        </section>`
+    )
+}
+
 function addDrawer(userInfoSchema) {
    
 }
+
 function getAndDisplayDrawer() {
-   
-// This function will take information from the #addDrawerForm to create a new drawer to hold user uploaded assets
-// from the #drawer-name field it need to create a new .tab button element on the asset.html page 
-// this drawer will hold assets uploaded by user
+    console.log('Retrieving drawer');
+    $.getJSON(ASSETS_URL, function(items) {
+      console.log('Rendering drawer', items);
+      function uniqueDrawerTitles(input) {
+          var output = [];
+          for(var i=0; i < input.asset.length; i++) {
+              if(output.indexOf(input.asset[i].drawerTitle) === -1)
+              output.push(input.asset[i].drawerTitle);
+          }
+          return output;
+      }
+      uniqueDrawerTitles(items);
+      console.log("unique drawers", uniqueDrawerTitles(items));
+      var drawerElement = items.asset.map(function(userInfo) {
+            var element = $(drawerTemplate(userInfo.drawerTitle, userInfo.id))
+            var uploadElements = $(uploadTemplate(userInfo.drawerTitle, userInfo.title, userInfo.notes, userInfo.fileLocation, userInfo.id))
+            element.attr('id', userInfo.id);
+            return element
+      });
+    });
 }
 
 function handleDrawerAdd() {
@@ -305,7 +342,7 @@ function handleDrawerAdd() {
                 `<a href="#">${drawerTitle}</a>`
             )
         }
-        drawerTemplate();
+        drawerTemplate("outdoor adventures");
     });
 }
 
@@ -347,10 +384,11 @@ function getAndDisplayImagesOnHomePage() {
 }
 
 $(function() {
-    //addChildProfile();
+    addChildProfile();
     getAndDisplayChildProfile();
     handleChildProfileAdd();
     deleteChildProfile();
     handleChildProfileDelete();
     handleDrawerAdd();
+    getAndDisplayDrawer();
 });

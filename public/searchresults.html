@@ -9,7 +9,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script src="simpleUpload.min.js"></script>
 		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
 		<script type="text/javascript" src="app.js"></script>
 		<script type="text/javascript" src="client.js"></script>
 	</head>
@@ -38,7 +38,7 @@
 					<a href="#">Drawer 1</a>
 					<a href="#">Drawer 2</a>
 					<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
-					<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
+					<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
 				</div>
 		</div>
 		<div class="search-container">
@@ -91,8 +91,8 @@
 						<input type="text" id="child-first-name" placeholder="Enter child's first name here">
 						</li>
 						<li>
-						<label for="birth-date">Birth Date</label>
-						<input type="text" class="child-birth-date" id="birth-date" placeholder="Enter child's birth date here">
+						<label for="birth-date">Child's Birth Date</label>
+						<input type="text" class="child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
 						</li>
 						<li>
 						<button id="childoverlaybutton" type="submit" onclick="childOff()">Create</button>
@@ -114,15 +114,22 @@
 						</li>
 						<li>
 						<label for="date-uploaded">Today's Date</label>
-						<input type="text" id="date-uploaded" placeholder="Enter Today's Date">
+						<input type="text" id="date-uploaded" placeholder="Enter Today's Date mm/dd/yyyy">
 						</li>
 						<li>
 							<label for="notes">Notes</label>
 							<input type="text" id="notes" placeholder="Notes">
 						</li>
 						<li>
-							<label for="drawer-title">Drawer Title</label>
+							<label for="drawer-title">Create New Drawer</label>
 							<input type="text" id="drawer-title" placeholder="Drawer Title">
+						</li>
+						<li>
+							<label for="new-drawer-title">Add To Drawer</label>
+							<select name="current-drawer-titles">
+								<option value=`${drawerTitle}`>Drawer 1</option>
+								<option value=`${drawerTitle}`>Drawer 2</option>
+							</select>
 						</li>
 						<li>
 							<label for="image">Image</label>
