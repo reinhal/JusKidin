@@ -35,9 +35,9 @@ function drawerOff() {
 }
 
 ///////////// Child(ren) Page Functions ///////////////////////
-function editProf() {
-    document.getElementById("profDropdown").classList.toggle("show");
-}
+// function editProf() {
+//     document.getElementById("profDropdown").classList.toggle("show");
+// }
 
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn-prof')) {
@@ -57,7 +57,7 @@ function openChild(evt, childID) {
     var i, displayTabcontent, tablinks;
     displayTabcontent = document.getElementsByClassName("displayTabcontent");
     for (i = 0; i < displayTabcontent.length; i++) {
-        displayTabcontent[i].style.display = "none";
+        displayTabcontent[i].style.display = "block";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -71,14 +71,11 @@ function openChild(evt, childID) {
     googleSearch(currentAge, displayGoogleSearch);
 }
 
-//document.getElementById("defaultOpen").click();
-var userID = '5b2be410d5c11e564ce9a97c';
-var childName = 'Lisa';
-// var childName = $('#child-first-name').val();
-// var childAge = "10";
+var userID = '5b2c5d2aabcd8768d5ed39ef';
+var childName = '';
+var childAge = '';
 var drawerUploads = [];
 var drawerTitle = "";
-console.log('drawer title', drawerTitle);
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
 var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
@@ -87,7 +84,7 @@ var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
 var childProfileTemplate = function (childName, birthDate, childID) { 
     console.log(birthDate);
     $('.dropdown-prof').append(
-        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="editProf(); openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>` +
+        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>` +
         `<div class="tabcontent"></div>`
     )
 
@@ -139,30 +136,30 @@ function handleChildProfileAdd() {
     });
 }
 
-function deleteChildProfile(userID, child_id) {
-    console.log('Deleting child profile');
-    $.ajax({
-      url: `/api/account/${userID}/childProfs/:child_id`,
-      method: 'DELETE',
-      success: getAndDisplayChildProfile
-    });
-}
+// function deleteChildProfile(userID, child_id) {
+//     console.log('Deleting child profile');
+//     $.ajax({
+//       url: `/api/account/${userID}/childProfs/:child_id`,
+//       method: 'DELETE',
+//       success: getAndDisplayChildProfile
+//     });
+// }
 
-function handleChildProfileDelete() {
-    $('.dropdown-childProfile').on('click', '.child-profile-delete', function(e) {
-      e.preventDefault();
-      deleteChildProfile(
-        $(e.currentTarget).closest('.dropbtn-prof').attr('id'));
-    });
-}
+// function handleChildProfileDelete() {
+//     $('.dropdown-childProfile').on('click', '.child-profile-delete', function(e) {
+//       e.preventDefault();
+//       deleteChildProfile(
+//         $(e.currentTarget).closest('.dropbtn-prof').attr('id'));
+//     });
+// }
 
-function handleChildProfileUpdate() {
-    $('.dropdown-childProfile').on('click', '.child-profile-edit', function(e) {
-        e.preventDefault();
-        editChildProfile(
-            $(e.currentTarget).closest('dropbtn-prof').attr('id'));
-    })
-}
+// function handleChildProfileUpdate() {
+//     $('.dropdown-childProfile').on('click', '.child-profile-edit', function(e) {
+//         e.preventDefault();
+//         editChildProfile(
+//             $(e.currentTarget).closest('dropbtn-prof').attr('id'));
+//     })
+// }
 
 function editChildProfile(userID, child_id) {
     console.log('Editing child profile');
@@ -203,19 +200,17 @@ function displayGoogleSearch(gsearch) {
     }
 }
 
-// googleSearch(currentAge, displayGoogleSearch);
-
-// function watchSubmit() {
-//     $('.child-age-form').submit(event => {
-//       event.preventDefault();
-//       let queryTarget = $(event.currentTarget).find('.child-birth-date');
-//       let query = queryTarget.val();
-//       queryTarget.val("");
-//       googleSearch(query, displayGoogleSearch);
-//     });
-// }
+function watchSubmit() {
+    $('dropbtn-prof').submit(event => {
+      event.preventDefault();
+      let queryTarget = $(event.currentTarget).find('.child-birth-date');
+      let query = queryTarget.val();
+      queryTarget.val("");
+      googleSearch(query, displayGoogleSearch);
+    });
+}
   
-// $(watchSubmit);
+$(watchSubmit);
 
 ///////////// Account Functions ///////////////////////
 
@@ -259,7 +254,7 @@ function openDrawer(evt, drawerTitle) {
     var i, assettabcontent, tablinks;
     assettabcontent = document.getElementsByClassName("assettabcontent");
     for (i = 0; i < assettabcontent.length; i++) {
-        assettabcontent[i].style.display = "none";
+        assettabcontent[i].style.display = "block";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -278,7 +273,7 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
         `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}')"> ${drawerTitle}</button>`
     )
 
-    $(`${drawerID}`).append(
+    $('#Drawer1').append(
         `<div id="${drawerID}" class="assettabcontent"></div>`
     )
 
@@ -324,7 +319,9 @@ function getAndDisplayDrawer() {
             element.attr('id', item);
             return element
         });
+        getAndDisplayUploads();
     });
+    
 }
 
 function getAndDisplayUploads() {
@@ -333,18 +330,44 @@ function getAndDisplayUploads() {
         console.log('Rendering Uploads', items);
         drawerUploads = items.asset;
         console.log("drawer uploads", drawerUploads);
-        // click on drawer, filter the array then render
-        var uploadUploadElements = items.asset.map(function(item) {
-            var uploadElement = $(uploadTemplate(item.title, item.notes, item.fileLocation, item.drawerTitle))
-            uploadElement.attr('id', item);
-            return uploadElement
+        // drawerUploads.sort(function(a, b) {
+        //     var nameA = a.drawerTitle.toUpperCase(); 
+        //     var nameB = b.drawerTitle.toUpperCase(); 
+        //     if (nameA < nameB) {
+        //       return -1;
+        //     }
+        //     if (nameA > nameB) {
+        //       return 1;
+        //     }
+        //     return 0;
+        //   });
+        drawerUploads.forEach(item => {
+        console.log('item', item.drawerTitle);
+        const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
+        $(`#${drawerID}`).append(
+            `<section role="region">  
+                <div class='col-4'>
+                    <div class='asset'>
+                    <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
+                    <div>
+                    <p class="asset-content"><strong>${item.title}</strong></p>
+                    <p class="asset-content">${item.notes}</p>
+                </div>
+            </section>`)
         })
+        // click on drawer, filter the array then render
+        // var uploadUploadElements = items.asset.map(function(item) {
+        //     var uploadElement = $(uploadTemplate(item.title, item.notes, item.fileLocation, item.drawerTitle))
+        //     uploadElement.attr('id', item);
+        //     return uploadElement
+        // })
     })
 }
 
 function filterUploads() {
+    console.log('drawer uploads here', drawerUploads);
    $('.tablinks').click(function() {
-     const uploadsArray = drawerUploads.filter(upload => upload.drawerTitle === $(this.drawerTitle).html())
+     //getElementById
    });
 //    console.log ('uploads array', uploadsArray);
 }
@@ -408,13 +431,13 @@ function getAndDisplayImagesOnHomePage() {
 }
 
 $(function() {
-    addChildProfile();
+    // addChildProfile();
     getAndDisplayChildProfile();
     handleChildProfileAdd();
-    deleteChildProfile();
-    handleChildProfileDelete();
+    // deleteChildProfile();
+    // handleChildProfileDelete();
     handleDrawerAdd();
     getAndDisplayDrawer();
-    getAndDisplayUploads();
-    filterUploads();
+    // getAndDisplayUploads();
+    // filterUploads();
 });

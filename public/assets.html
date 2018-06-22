@@ -35,8 +35,8 @@
 		<div class="dropdown">
 			<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content asset-dropbtn">
-					<a href="#">Drawer 1</a>
-					<a href="#">Drawer 2</a>
+					<!-- <a href="#">Drawer 1</a>
+					<a href="#">Drawer 2</a> -->
 					<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
 					<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
 				</div>
@@ -127,13 +127,13 @@
 						<li>
 							<label for="new-drawer-title">Add To Drawer</label>
 							<select id = "current-drawer-titles" name="current-drawer-titles">
-								<option value=`${drawerTitle}`>Drawer 1</option>
-								<option value=`${drawerTitle}`>Drawer 2</option>
+								<option value=`${drawerTitle}`>Pirate Ship</option>
+								<option value=`${drawerTitle}`>Remote Beach</option>
 							</select>
 						</li>
 						<li>
 							<label for="image">Image</label>
-							<input type="image" id="image" width="300" height="250" placeholder="Upload Your Image Here">
+							<input disabled type="file">
 						</li>
 						<li>
 						<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Upload</button>
@@ -162,129 +162,8 @@
 		</div>
 	</section>
 	<main role="main">
-		<div class="tab dropdown-asset">
-				<!-- <button class="tablinks dropbtn-asset" onclick="editAsset(), openDrawer(event, 'Drawer1')">Drawer 1</button>
-				<button class="tablinks dropbtn-asset" onclick="editAsset(), openDrawer(event, 'Drawer2')">Drawer 2</button> -->
-		</div>
-		<div id="assetDropdown" class="dropdown-editAsset">
-			<a class="asset-edit(" href="#"><i class="fas fa-edit"></i> Edit</a>
-			<a class="asset-delete" href="#"><i class="fas fa-minus-circle"></i> Delete</a>
-		</div>
-		<div id="Drawer1" class="assettabcontent">
-			<!-- <section role="region">
-				<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="http://image.ibb.co/mrmVQJ/fox.jpg" alt="fox">
-						<div>
-				  		<p class="asset-content"><strong>Fox</strong></p>
-				  		<p class="asset-content">fox sleeping on top of a log in neighborhood</p>
-					</div>
-			  	</div>
-				<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="https://image.ibb.co/iXGTRm/lavendar.jpg" alt="lavendar">
-						<div>
-				  		<p class="asset-content"><strong>Lavendar</strong></p>
-				  		<p class="asset-content">Field of beautiful lavendar with bees</p>
-					</div>
-			  	</div>
-				<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="https://image.ibb.co/cFzs5J/frog.jpg" alt="frog">
-						<div>
-				  		<p class="asset-content"><strong>Frog</strong></p>
-				  		<p class="asset-content">Little colorful frog, probably poisonous</p>
-					</div>
-		  		</div>
-				<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="https://image.ibb.co/m8PTCy/antelopecanyon.jpg" alt="antelopecanyon">
-						<div>
-				  		<p class="asset-content"><strong>Antelope Canyon</strong></p>
-				  		<p class="asset-content">Rocks that look like waves.  Can't wait to see this place.</p>
-					</div>
-			  	</div>
-				<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="https://image.ibb.co/cyVUKd/orchids.jpg" alt="orchids">
-						<div>
-				  		<p class="asset-content"><strong>Orchids</strong></p>
-				  		<p class="asset-content">Beautiful flowers.  So grateful we have a couple of these.</p>
-					</div>
-			  	</div>
-				<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="https://image.ibb.co/nHCFsy/bwca.jpg" alt="bwca">
-			  			<div>
-				  		<p class="asset-content"><strong>BWCA</strong></p>
-				  		<p class="asset-content">One of my favorite places in the world.</p>
-						</div>
-			  		</div>
-				</div>
-			</section>
-		</div>
-		<div id="Drawer2" class="assettabcontent">
-			<section role="region">
-				<div class="row">
-					<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="http://image.ibb.co/mrmVQJ/fox.jpg" alt="fox">
-						<div>
-				  		<p class="asset-content"><strong>Fox</strong></p>
-				  		<p class="asset-content">fox sleeping on top of a log in neighborhood</p>
-						</div>
-			  		</div>
-					</div>
-					<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="https://image.ibb.co/iXGTRm/lavendar.jpg" alt="lavendar">
-						<div>
-				  		<p class="asset-content"><strong>Lavendar</strong></p>
-				  		<p class="asset-content">Field of beautiful lavendar with bees</p>
-						</div>
-			  		</div>
-					</div>
-					<div class="col-4">
-			  		<div class="asset">
-						<img class="asset-image" src="https://image.ibb.co/cFzs5J/frog.jpg" alt="frog">
-						<div>
-				  		<p class="asset-content"><strong>Frog</strong></p>
-				  		<p class="asset-content">Little colorful frog, probably poisonous</p>
-						</div>
-			  		</div>
-					</div>
-		  		</div>
-		  
-		  		<div class="row">
-					<div class="col-4">
-			  			<div class="asset">
-							<img class="asset-image" src="https://image.ibb.co/m8PTCy/antelopecanyon.jpg" alt="antelopecanyon">
-							<div>
-				  				<p class="asset-content"><strong>Antelope Canyon</strong></p>
-				  				<p class="asset-content">Rocks that look like waves.  Can't wait to see this place.</p>
-							</div>
-			  			</div>
-						</div>
-						<div class="col-4">
-			  			<div class="asset">
-							<img class="asset-image" src="https://image.ibb.co/cyVUKd/orchids.jpg" alt="orchids">
-							<div>
-				  				<p class="asset-content"><strong>Orchids</strong></p>
-				  				<p class="asset-content">Beautiful flowers.  So grateful we have a couple of these.</p>
-							</div>
-			  			</div>
-						</div>
-						<div class="col-4">
-			  			<div class="asset">
-							<img class="asset-image" src="https://image.ibb.co/nHCFsy/bwca.jpg" alt="bwca">
-			  				<div>
-				  				<p class="asset-content"><strong>BWCA</strong></p>
-				  				<p class="asset-content">One of my favorite places in the world.</p>
-							</div>
-			  			</div>
-					</div>
-				</div>
-			</section> -->
-		</div>		  
+		<div class="tab dropdown-asset"></div>
+		<div id="assetDropdown" class="dropdown-editAsset"></div>
+		<div id="Drawer1" class="assettabcontent"></div> 
 	</main>
 </body>

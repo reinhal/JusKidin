@@ -35,8 +35,8 @@
 		<div class="dropdown">
 			<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content asset-dropbtn">
-					<a href="#">Drawer 1</a>
-					<a href="#">Drawer 2</a>
+					<!-- <a href="#">Drawer 1</a>
+					<a href="#">Drawer 2</a> -->
 					<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
 					<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
 				</div>
@@ -133,7 +133,7 @@
 						</li>
 						<li>
 							<label for="image">Image</label>
-							<input type="image" id="image" width="300" height="250" placeholder="Upload Your Image Here">
+							<input disabled type="file">
 						</li>
 						<li>
 						<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Upload</button>
@@ -163,16 +163,9 @@
 	</section>
 	<main role="main">
 		<div class="tab dropdown-prof">
-			<!-- <button class="tablinks dropbtn-prof" onclick="editProf(), openChild(event, 'Stella')">Stella </br> 7 years old </button>
-			<button class="tablinks dropbtn-prof" onclick="editProf(), openChild(event, 'Finn')">Finn </br> 10 years old</button> -->
 		</div>	
-		<div id="profDropdown" class="dropdown-childProfile">
-			<a class="child-profile-edit"href="#"><i class="fas fa-edit"></i> Edit</a>
-			<a class="child-profile-delete" href="#"><i class="fas fa-minus-circle"></i> Delete</a>
-		</div>	  
-		<div id="dropbtn-prof" class="displayTabcontent">
-		</div>		  
-		<div id="dropbtn-prof" class="displayTabcontent">
-		</div>		  
+			<div id="dropbtn-prof" class="displayTabcontent">
+			</div>
+		<!-- </div>		   -->
 	</main>	
 </body>
