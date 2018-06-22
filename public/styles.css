@@ -548,12 +548,16 @@ select {
 }
 
 .assettabcontent {
-    display: none;
+    /* display: none; */
     background-color: whitesmoke;
     color: black;
     margin-top: 30px;
     padding: 12px 12px;
     border-top: none;
+}
+
+.uploadContainer {
+    display: none;
 }
 
 .tabcontent h2 {

@@ -54,11 +54,18 @@ window.onclick = function(event) {
 }
 
 function openChild(evt, childID) {
-    var i, displayTabcontent, tablinks;
-    displayTabcontent = document.getElementsByClassName("displayTabcontent");
-    for (i = 0; i < displayTabcontent.length; i++) {
-        displayTabcontent[i].style.display = "block";
+    console.log('child id', childID);
+    var i, currentChild, tablinks;
+    var gsearchContainer = document.getElementsByClassName("gsearchContainer");
+    for (i = 0; i < gsearchContainer.length; i++) {
+        if (gsearchContainer[i].style.display = "block") {
+            gsearchContainer[i].style.display = "none";
+        }
     }
+
+    currentChild = document.getElementById(childID);
+    currentChild.style.display ="block";
+
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
@@ -81,11 +88,14 @@ var ACCOUNT_URL = serverBase + 'api/account';
 var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
 var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
 
-var childProfileTemplate = function (childName, birthDate, childID) { 
+var childProfileTemplate = function (childName, birthDate, childID) {
     console.log(birthDate);
     $('.dropdown-prof').append(
-        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>` +
-        `<div class="tabcontent"></div>`
+        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
+    )
+
+    $('#GsearchResults').append(
+        `<div id="${childID}" class="gsearchContainer"></div>`
     )
 
     $('.child-dropbtn').append(
@@ -251,11 +261,18 @@ window.onclick = function(event) {
 function openDrawer(evt, drawerTitle) {
     console.log("this drawer title", drawerTitle);
     var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
-    var i, assettabcontent, tablinks;
-    assettabcontent = document.getElementsByClassName("assettabcontent");
-    for (i = 0; i < assettabcontent.length; i++) {
-        assettabcontent[i].style.display = "block";
+    console.log('DrawerID', drawerID);
+    var i, currentDrawer, tablinks;
+    var uploadContainer = document.getElementsByClassName('uploadContainer');
+        for (i=0; i < uploadContainer.length; i++ ) {
+            if (uploadContainer[i].style.display === 'block') {
+                uploadContainer[i].style.display = 'none';
+            }
     }
+
+    currentDrawer = document.getElementById(drawerID);
+    currentDrawer.style.display = "block";
+
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
@@ -274,7 +291,7 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
     )
 
     $('#Drawer1').append(
-        `<div id="${drawerID}" class="assettabcontent"></div>`
+        `<div id="${drawerID}" class="uploadContainer"></div>`
     )
 
     $('.asset-dropbtn').append(
@@ -330,37 +347,21 @@ function getAndDisplayUploads() {
         console.log('Rendering Uploads', items);
         drawerUploads = items.asset;
         console.log("drawer uploads", drawerUploads);
-        // drawerUploads.sort(function(a, b) {
-        //     var nameA = a.drawerTitle.toUpperCase(); 
-        //     var nameB = b.drawerTitle.toUpperCase(); 
-        //     if (nameA < nameB) {
-        //       return -1;
-        //     }
-        //     if (nameA > nameB) {
-        //       return 1;
-        //     }
-        //     return 0;
-        //   });
         drawerUploads.forEach(item => {
-        console.log('item', item.drawerTitle);
-        const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
-        $(`#${drawerID}`).append(
-            `<section role="region">  
-                <div class='col-4'>
-                    <div class='asset'>
-                    <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
-                    <div>
-                    <p class="asset-content"><strong>${item.title}</strong></p>
-                    <p class="asset-content">${item.notes}</p>
-                </div>
-            </section>`)
+            console.log('item', item.drawerTitle);
+            const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
+            $(`#${drawerID}`).append(
+                `<section role="region">  
+                    <div class='col-4'>
+                        <div class='asset'>
+                        <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
+                        <div>
+                        <p class="asset-content"><strong>${item.title}</strong></p>
+                        <p class="asset-content">${item.notes}</p>
+                    </div>
+                </section>`
+            )
         })
-        // click on drawer, filter the array then render
-        // var uploadUploadElements = items.asset.map(function(item) {
-        //     var uploadElement = $(uploadTemplate(item.title, item.notes, item.fileLocation, item.drawerTitle))
-        //     uploadElement.attr('id', item);
-        //     return uploadElement
-        // })
     })
 }
 
