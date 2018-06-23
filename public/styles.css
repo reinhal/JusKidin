@@ -6,6 +6,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0 auto;
     background-color: whitesmoke;
+    color: 	#303030;
 }
 
 h1 {
@@ -71,7 +72,7 @@ ul li {
 
 .topnav {
     overflow: hidden;
-    background-color: black;
+    background-color: 	#303030;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   }
   
@@ -87,7 +88,7 @@ ul li {
   
 .topnav a:hover {
     background-color:whitesmoke;
-    color: black;
+    color: 	#303030;
 }
   
 .topnav a.active {
@@ -96,6 +97,7 @@ ul li {
 }
   
 .topnav .search-container {
+    display: none;
     float: right;
 }
   
@@ -112,7 +114,7 @@ ul li {
     padding: 6px 10px;
     margin-top: 8px;
     margin-right: 16px;
-    background: black;
+    background: 	#303030;
     color:whitesmoke;
     font-size: 17px;
     border: none;
@@ -121,7 +123,7 @@ ul li {
   
 .topnav .search-container button:hover {
     background:whitesmoke;
-    color: black;
+    color: 	#303030;
 }
 
 .dropdown {
@@ -146,16 +148,16 @@ ul li {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color:black;
+    background-color:	#303030;
     color: whitesmoke;
-    border: 1px solid black;
+    border: 1px solid 	#303030;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
 .dropdown-content a {
-    background-color: black;
+    background-color: 	#303030;
     color:whitesmoke;
     padding: 12px 16px;
     text-decoration: none;
@@ -167,7 +169,7 @@ ul li {
 
 .dropdown-content a:hover {
     background-color: whitesmoke;
-    color: black;
+    color: 	#303030;
     border: none;
     display: block;
 }
@@ -175,6 +177,11 @@ ul li {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+#navAccount {
+    float: right;
+    margin-right: 45px;
 }
 
 /*////////////Form Styling//////////*/
@@ -282,7 +289,7 @@ form {
     width: 100%;
     border: none;
     background:whitesmoke;
-    color: black;
+    color: 	#303030;
     font-size: 24px;
     letter-spacing: .09em;
     text-transform: uppercase;
@@ -502,13 +509,13 @@ select {
 .tab {
     /* overflow: hidden; */
     background-color: whitesmoke;
-    color: black;
+    color: 	#303030;
     margin: 60px; 
     /* width: 80%; */
 }
 
 .tab button {
-    background-color: slategray;
+    background-color:#707070 ;
     font-size: 16px;
     color: whitesmoke;
     float: left;
@@ -521,42 +528,47 @@ select {
 
 .tab button:hover {
     background-color: whitesmoke;
-    color: black;
+    color: 	#303030;
 }
 
 .tab button.active {
-    background-color: black;
+    background-color: 	#303030;
     color: whitesmoke;
 }
 
 .tabcontent {
     display: none;
     background-color: whitesmoke;
-    color: black;
+    color: 	#303030;
     padding: 12px 12px;
     border: 1px solid #ccc;
     border-top: none;
 }
 
 .displayTabcontent {
-    display: none;
-    background-color: whitesmoke;
-    color: black;
+    /* display: none; */
+    background-color: white;
+    color: 	#303030;
     padding: 12px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
+    border: 5px solid #2980b9;
+    margin: 0 50px 50px 50px;
 }
 
 .assettabcontent {
     /* display: none; */
     background-color: whitesmoke;
-    color: black;
+    color: 	#303030;
     margin-top: 30px;
     padding: 12px 12px;
     border-top: none;
 }
 
 .uploadContainer {
+    display: none;
+}
+
+
+.gsearchContainer {
     display: none;
 }
 
@@ -579,7 +591,6 @@ select {
     border: none;
     cursor: pointer;
 }
-
 .dropbtn-prof:hover, .dropbtn-prof:focus {
     background-color: #2980B9;
 } */
@@ -599,7 +610,7 @@ select {
 }
 
 .dropdown-childProfile a {
-    color: slategray;
+    color:#707070 ;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -611,7 +622,7 @@ select {
 }
 
 .dropbtn-asset {
-    background-color: black;
+    background-color: 	#303030;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -620,7 +631,7 @@ select {
 }
 
 .dropbtn-asset:hover, .dropbtn-asset:focus {
-    background-color: black;
+    background-color: 	#303030;
 }
 
 .dropdown-asset {
@@ -633,7 +644,7 @@ select {
 
 .dropdown-asset a {
     display: none;
-    color: slategray;
+    color:#707070 ;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -659,7 +670,7 @@ select {
 }
 
 .dropdown-editAsset a {
-    color: slategray;
+    color:#707070 ;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -685,7 +696,7 @@ select {
   
 .asset {
     background-color: white;
-    border: 1px solid slategray;
+    border: 1px solid#707070 ;
 }
   
 .asset-image {

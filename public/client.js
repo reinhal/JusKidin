@@ -1,7 +1,31 @@
 
-//const {childAge} = require('../userinfo_model');
+var userID = '5b2c5d2aabcd8768d5ed39ef';
+var firstName = '';
+var lastName = '';
+var email = '';
+var childName = '';
+var childAge = '';
+var drawerUploads = [];
+var drawerTitle = "";
+var serverBase = '//localhost:8080/';
+var ACCOUNT_URL = serverBase + 'api/account';
+var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
+var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
+
+function getUserID() {
+    
+}
+
 
 ///////////// Overlay Form Functions ///////////////////////
+function newAccountOn() {
+    document.getElementById("new-account-overlay").style.display = "block";
+}
+
+function newAccountOff() {
+    document.getElementById("new-account-overlay").style.display = "none";
+}
+
 function accountOn() {
     document.getElementById("accountoverlay").style.display = "block";
 }
@@ -35,9 +59,9 @@ function drawerOff() {
 }
 
 ///////////// Child(ren) Page Functions ///////////////////////
-// function editProf() {
-//     document.getElementById("profDropdown").classList.toggle("show");
-// }
+function editProf() {
+    document.getElementById("profDropdown").classList.toggle("show");
+}
 
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn-prof')) {
@@ -53,45 +77,40 @@ window.onclick = function(event) {
   }
 }
 
-function openChild(evt, childID) {
+function openChild(evt, childName) {
+    console.log('child name', childName);
+    var childID = childName.replace(/\s+/g, '-').toLowerCase();
     console.log('child id', childID);
     var i, currentChild, tablinks;
     var gsearchContainer = document.getElementsByClassName("gsearchContainer");
-    for (i = 0; i < gsearchContainer.length; i++) {
-        if (gsearchContainer[i].style.display = "block") {
-            gsearchContainer[i].style.display = "none";
-        }
+        for (i = 0; i < gsearchContainer.length; i++) {
+            if (gsearchContainer[i].style.display = "block") {
+                gsearchContainer[i].style.display = "none";
+            }
     }
 
     currentChild = document.getElementById(childID);
-    currentChild.style.display ="block";
+    console.log('current child',currentChild.style.display);
+    currentChild.style.display = "block";
+    console.log('after current child',currentChild.style.display);
 
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
-    document.getElementById(childID).style.display = "block";
+    document.getElementById(`${childID}`).style.display = "block";
     evt.currentTarget.className += " active";
 
     var currentAge =  $(evt.target).text().match(/\d+/)[0];
-    googleSearch(currentAge, displayGoogleSearch);
+    googleSearch(currentAge, displayGoogleSearch(childID));
 }
 
-var userID = '5b2c5d2aabcd8768d5ed39ef';
-var childName = '';
-var childAge = '';
-var drawerUploads = [];
-var drawerTitle = "";
-var serverBase = '//localhost:8080/';
-var ACCOUNT_URL = serverBase + 'api/account';
-var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
-var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
-
-var childProfileTemplate = function (childName, birthDate, childID) {
+var childProfileTemplate = function (childName, birthDate) {
+    var childID = childName.replace(/\s+/g, '-').toLowerCase();
     console.log(birthDate);
     $('.dropdown-prof').append(
-        `<button id="${childID}" class="tablinks dropbtn-prof" onclick="openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
+        `<button class="tablinks dropbtn-prof" onclick="openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
     )
 
     $('#GsearchResults').append(
@@ -188,25 +207,27 @@ function googleSearch(childAge, callback) {
     $.getJSON(url, callback)
 }
 
-function displayGoogleSearch(gsearch) {
-    console.log('gsearch', gsearch);
-    for ( let i = 0; i < gsearch.items.length; i ++) {
-        let data = gsearch.items[i]
-        if (data.pagemap.cse_thumbnail) {
-            $('.displayTabcontent').append(`<h2>${data.title} </h2>
-                <ul>
-                    <li class="google-image"><img src="${data.pagemap.cse_thumbnail[0].src}"></li>
-                    <li class="google"><a href="${data.link}">${data.link}</a></li>
-                    <li class="google">${data.snippet}</li>
-                </ul>`)
-        } else {
-            $('.tabcontent').append(`<h2>${data.title} </h2>
-                <ul>
-                    <li class="google"><a href="${data.link}">${data.link}</a></li>
-                    <li class="google">${data.snippet}</li>
-                </ul>`)
+function displayGoogleSearch(childName) {
+    return function(gsearch) {
+    var childID = childName.replace(/\s+/g, '-').toLowerCase();
+        console.log('gsearch', gsearch);
+            for ( let i = 0; i < gsearch.items.length; i ++) {
+            let data = gsearch.items[i]
+            if (data.pagemap.cse_thumbnail) {
+                $(`#${childID}`).append(`<h2>${data.title} </h2>
+                    <ul>
+                        <li class="google-image"><img src="${data.pagemap.cse_thumbnail[0].src}"></li>
+                        <li class="google"><a href="${data.link}">${data.link}</a></li>
+                        <li class="google">${data.snippet}</li>
+                    </ul>`)
+            } else {
+                $('.gsearchContainer').append(`<h2 #${childID}>${data.title} </h2>
+                    <ul>
+                        <li class="google"><a href="${data.link}">${data.link}</a></li>
+                        <li class="google">${data.snippet}</li>
+                    </ul>`)
+            }    
         }
-        
     }
 }
 
@@ -216,7 +237,6 @@ function watchSubmit() {
       let queryTarget = $(event.currentTarget).find('.child-birth-date');
       let query = queryTarget.val();
       queryTarget.val("");
-      googleSearch(query, displayGoogleSearch);
     });
 }
   
@@ -225,8 +245,29 @@ $(watchSubmit);
 ///////////// Account Functions ///////////////////////
 
 function createNewAccount() {
+    console.log('Creating new Account: ' + firstName + lastName + email);
+    $.ajax({
+      method: 'POST',
+      url: ACCOUNT_URL,
+      data: JSON.stringify({firstName, lastName, email}),
+      success: function(data) {
+        getAndDisplayAccount();
+      },
+      dataType: 'json',
+      contentType: 'application/json'
+    });
 // this function will create a new user, with password and authentication
 // it will take first name, last name, email
+}
+
+function handleAccountAdd() {
+    $('.account-form').submit(function(e) {
+        var firstName = $('#first-name').val();
+        var lastName = $('#last-name').val();
+        console.log("Account Info", firstName, lastName, email)
+        e.preventDefault();
+        addAccount(firstName, lastName, email);
+    });
 }
 
 function editAccount() {
@@ -312,10 +353,6 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
              </div>
         </section>`
     )
-}
-
-function addDrawer(userInfoSchema) {
-   
 }
 
 function getAndDisplayDrawer() {
@@ -433,6 +470,7 @@ function getAndDisplayImagesOnHomePage() {
 
 $(function() {
     // addChildProfile();
+    createNewAccount();
     getAndDisplayChildProfile();
     handleChildProfileAdd();
     // deleteChildProfile();

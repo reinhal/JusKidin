@@ -16,8 +16,8 @@
 <body>
 	<div class="topnav" role="navigation" id="responsivetopnav">
 		<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
-		<div class="dropdown">
-			<a class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
+		<div id="navAccount" class="dropdown">
+			<a onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
 				<div class="dropdown-content">
 					<a href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
 					<a href="#"><i class="fas fa-edit"></i> Edit Account</a>
@@ -55,6 +55,32 @@
 			<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
 		</header>
 	</div>
+	<!-- <section role="region">
+			<div id="new-account-overlay">
+				<div class="Account" id="AccountInfo">
+					<form class="account-info-form">
+						<ul class="flex-outer">
+							<p class="form-title">Account Info</p>
+							<li>
+							<label for="first-name">First Name</label>
+							<input type="text" id="first-name" placeholder="Enter first name here">
+							</li>
+							<li>
+								<label for="last-name">Last Name</label>
+								<input type="text" id="last-name" placeholder="Enter last name here">
+								</li>
+							<li>
+							<label for="account-email">email</label>
+							<input type="text" class="email" id="account-email" placeholder="Enter email here">
+							</li>
+							<li>
+							<button id="account-info-overlaybutton" type="submit" onclick="newAccountOff()">Create Account</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+	</section> -->
 	<section role="region">
 		<div id="accountoverlay">
 			<div class="addAccount" id="addAccountForm">
@@ -66,7 +92,7 @@
 						<input type="text" id="first-name" placeholder="Enter first name here">
 						</li>
 						<li>
-							<label for="first-name">Last Name</label>
+							<label for="last-name">Last Name</label>
 							<input type="text" id="last-name" placeholder="Enter last name here">
 							</li>
 						<li>
