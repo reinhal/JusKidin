@@ -221,7 +221,7 @@ function displayGoogleSearch(childName) {
                         <li class="google">${data.snippet}</li>
                     </ul>`)
             } else {
-                $('.gsearchContainer').append(`<h2 #${childID}>${data.title} </h2>
+                $(`#${childID}`).append(`<h2 #${childID}>${data.title} </h2>
                     <ul>
                         <li class="google"><a href="${data.link}">${data.link}</a></li>
                         <li class="google">${data.snippet}</li>
