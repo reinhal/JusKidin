@@ -36,15 +36,6 @@ Promise.all([
           expect(res).to.have.status(200);
         });
     });
-  }),
-  describe('search results page', function () {
-    it('should exist', function () {
-      return chai.request(app)
-        requester.get('/searchresults')
-        .then(function (res) {
-          expect(res).to.have.status(200);
-        });
-    });
   })
 ])
 .then(() => requester.close())

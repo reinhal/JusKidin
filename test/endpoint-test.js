@@ -52,6 +52,8 @@ function generateDrawerTitle() {
 
 function generateUserInfoData() {
     return {
+        username: faker.internet.userName(),
+        password: faker.internet.password(),
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
@@ -90,7 +92,7 @@ function tearDownDb() {
 describe('UserInfo API resource', function() {
     
     before(function() {
-        return runServer(DATABASE_URL);
+        return runServer(TEST_DATABASE_URL);
       });
     
       beforeEach(function() {
@@ -98,7 +100,7 @@ describe('UserInfo API resource', function() {
       });
     
       afterEach(function() {
-        //return tearDownDb();
+        return tearDownDb();
       });
     
       after(function() {
@@ -146,26 +148,52 @@ describe('UserInfo API resource', function() {
             });
         });
     });
-    describe('POST endpoint', function() {
-      it('should add a new user', function() {
+    describe('/api/account', function () {
+      describe('POST endpoint', function() {
+        it.skip('should add a new user', function() {
+
+            const newUser = generateUserInfoData();
+
+            return chai.request(app)
+                .post('/api/account')
+                .send(newUser)
+                .then(function(res) {
+                    expect(res).to.have.status(201);
+                    expect(res).to.be.json;
+                    expect(res.body).to.be.a('object');
+                    expect(res.body).to.include.keys(
+                      'firstName', 'lastName', 'email');
+                    expect(res.body.id).to.not.be.null;
+                    expect(res.body.firstName).to.equal(newUser.firstName);
+                    expect(res.body.lastName).to.equal(newUser.lastName);
+                    expect(res.body.email).to.equal(newUser.email); 
+                    return res.body;
+            })
+        });
+        it.only('Should reject users with missing username', function () {
 
           const newUser = generateUserInfoData();
-
-          return chai.request(app)
-              .post('/api/account')
-              .send(newUser)
-              .then(function(res) {
-                  expect(res).to.have.status(201);
-                  expect(res).to.be.json;
-                  expect(res.body).to.be.a('object');
-                  expect(res.body).to.include.keys(
-                    'firstName', 'lastName', 'email');
-                  expect(res.body.id).to.not.be.null;
-                  expect(res.body.firstName).to.equal(newUser.firstName);
-                  expect(res.body.lastName).to.equal(newUser.lastName);
-                  expect(res.body.email).to.equal(newUser.email); 
-                  return res.body;
-          })
+          delete newUser.username;
+          console.log('newUser', newUser);
+          return chai
+            .request(app)
+            .post('/api/account')
+            .send( newUser )
+            // .then(() =>
+            //   //expect.fail(null, null, 'Request should not succeed')
+            // )
+            .catch(err => {
+              if (err instanceof chai.AssertionError) {
+                throw err;
+              }
+  
+              const res = err.response;
+              expect(res).to.have.status(422);
+              expect(res.body.reason).to.equal('ValidationError');
+              expect(res.body.message).to.equal('Missing field');
+              expect(res.body.location).to.equal('username');
+            });
+        });
       });
       describe('PUT endpoint', function() {
         it('should update the user', function() {
@@ -217,7 +245,7 @@ describe('UserInfo API resource', function() {
 describe('Child Profile API resource', function() {
     
   before(function() {
-      return runServer(DATABASE_URL);
+      return runServer(TEST_DATABASE_URL);
     });
   
     beforeEach(function() {
@@ -310,7 +338,7 @@ describe('Child Profile API resource', function() {
 // describe('Asset API resource', function() {
     
 //   before(function() {
-//       return runServer(DATABASE_URL);
+//       return runServer(TEST_DATABASE_URL);
 //     });
   
 //     beforeEach(function() {
