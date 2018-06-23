@@ -52,9 +52,9 @@ app.get('/api/account/:_id', (req, res) => {
 
 app.post('/api/account', jsonParser, (req, res) => {
   
-  const newUser = ['username','firstName', 'lastName', 'email'];
-  const missingField = newUser.find(field => !(field in req.body));
-  console.log("missing field", missingField);
+  const requiredFields = ['username', 'password', 'firstName', 'lastName', 'email'];
+  const missingField = requiredFields.find(field => !(field in req.body));
+  
   if (missingField) {
     return res.status(422).json({
       code: 422,
@@ -64,7 +64,7 @@ app.post('/api/account', jsonParser, (req, res) => {
     });
   }
 
-  const stringFields = ['username', 'firstName', 'lastName', "email"];
+  const stringFields = ['username', 'password', 'firstName', 'lastName', "email"];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -78,7 +78,7 @@ app.post('/api/account', jsonParser, (req, res) => {
     });
   }
 
-  const explicityTrimmedFields = ['username'];
+  const explicityTrimmedFields = ['username','password'];
   const nonTrimmedField = explicityTrimmedFields.find(
     field => req.body[field].trim() !== req.body[field]
   );
@@ -95,13 +95,13 @@ app.post('/api/account', jsonParser, (req, res) => {
   const sizedFields = {
     username: {
       min: 1
+    },
+    password: {
+      min: 10,
+      // bcrypt truncates after 72 characters, so let's not give the illusion
+      // of security by storing extra (unused) info
+      max: 72
     }
-    // password: {
-    //   min: 10,
-    //   // bcrypt truncates after 72 characters, so let's not give the illusion
-    //   // of security by storing extra (unused) info
-    //   max: 72
-    // }
   };
 
   const tooSmallField = Object.keys(sizedFields).find(
@@ -128,16 +128,52 @@ app.post('/api/account', jsonParser, (req, res) => {
     });
   }
 
-  let {username, firstName = '', lastName = ''} = req.body;
+  let {username, password, firstName = '', lastName = '', email = ''} = req.body;
   // Username and password come in pre-trimmed, otherwise we throw an error
   // before this
   firstName = firstName.trim();
   lastName = lastName.trim();
 
-  UserInfo.create({username: req.body.username, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
-  .then(function(newUser) {
-    res.status(201).json(newUser);
-  });
+  return UserInfo.find({username})
+    .count()
+    .then(count => {
+      if (count > 0) {
+        // There is an existing user with the same username
+        return Promise.reject({
+          code: 422,
+          reason: 'ValidationError',
+          message: 'Username already taken',
+          location: 'username'
+        });
+      }
+      // If there is no existing user, hash the password
+      return UserInfo.hashPassword(password);
+    })
+    .then(hash => {
+      return UserInfo.create({
+        username,
+        password: hash,
+        firstName,
+        lastName,
+        email
+      });
+    })
+    .then(user => {
+      return res.status(201).json(user.serialize());
+    })
+    .catch(err => {
+      // Forward validation errors on to the client, otherwise give a 500
+      // error because something unexpected has happened
+      if (err.reason === 'ValidationError') {
+        return res.status(err.code).json(err);
+      }
+      res.status(500).json({code: 500, message: 'Internal server error'});
+    });
+
+  // UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
+  // .then(function(newUser) {
+  //   res.status(201).json(newUser);
+  // });
 });
 
 // router.post ('/') has to merge with app.post('/api/account')
