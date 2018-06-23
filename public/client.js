@@ -338,6 +338,10 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
     $('.asset-dropbtn').append(
         `<a href="#">${drawerTitle}</a>`
     )
+
+    $('.new-drawer-title').append(
+        `<option value=${drawerTitle}>${drawerTitle}</option>`
+    )
 }
 
 var uploadTemplate = function(drawerTitle, title, notes, fileLocation) {
@@ -402,32 +406,15 @@ function getAndDisplayUploads() {
     })
 }
 
-function filterUploads() {
-    console.log('drawer uploads here', drawerUploads);
-   $('.tablinks').click(function() {
-     //getElementById
-   });
-//    console.log ('uploads array', uploadsArray);
-}
-// text of drawer Jquery into html this.attr to specifiy the element
-// this create a new array
-// loop over and the appropriate html to each item
-// assign 343 to a new variable
-function handleDrawerAdd() {
-    $('#addDrawerForm').submit(function(e) {
-        e.preventDefault();
-        var drawerTemplate = function(drawerTitle) {
-            var drawerTitle = $('#drawer-name').val();
-            $('.dropdown-asset').append(
-                `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
-                `<div id="${drawerTitle}" class="assettabcontent"></div>`
-            )
-        
-            $('.asset-dropbtn').append(
-                `<a href="#">${drawerTitle}</a>`
-            )
-        }
-        drawerTemplate("outdoor adventures");
+
+function handleAssetAdd() {
+    $('#connectAssetForm').submit(function(e) {
+        var title = $('#title').val(); 
+        var notes = $('#date-uploaded').val();
+        var dateUploaded = $('#notes').val();
+        var fileLocation = $('#image-url').val();
+        var drawerTitle = $('#drawer-title').val();
+        console.log('asset info', title, notes, dateUploaded, fileLocation, drawerTitle);
     });
 }
 

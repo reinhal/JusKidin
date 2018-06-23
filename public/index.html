@@ -131,17 +131,17 @@
 	</section>
 	<section role="region">
 		<div id="assetoverlay">
-			<div class="uploadAsset" id="uploadAssetForm">
+			<div class="uploadAsset" id="connectAssetForm">
 				<form>
 					<ul class="flex-outer">
-						<p class="form-title">Upload File</p>
+						<p class="form-title">Connect File</p>
 						<li>
-						<label for="title">Title</label>
-						<input type="text" id="first-name" placeholder="Title">
+							<label for="title">Title</label>
+							<input type="text" id="title" placeholder="Title">
 						</li>
 						<li>
-						<label for="date-uploaded">Today's Date</label>
-						<input type="text" id="date-uploaded" placeholder="mm/dd/yyyy">
+							<label for="date-uploaded">Today's Date</label>
+							<input type="text" id="date-uploaded" placeholder="mm/dd/yyyy">
 						</li>
 						<li>
 							<label for="notes">Notes</label>
@@ -153,17 +153,17 @@
 						</li>
 						<li>
 							<label for="new-drawer-title">Add To Drawer</label>
-							<select name="current-drawer-titles">
+							<select name="current-drawer-titles" class="new-drawer-title">
 								<option value=`${drawerTitle}`>Drawer 1</option>
 								<option value=`${drawerTitle}`>Drawer 2</option>
 							</select>
 						</li>
 						<li>
-							<label for="image">Image</label>
-							<input type="file" id="image">
+							<label for="image-url">Image URL</label>
+							<input type="text" id="image-url" placeholder="http://imageurl.jpg">
 						</li>
 						<li>
-						<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Upload</button>
+						<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Publish</button>
 						</li>
 					</ul>
 				</form>
