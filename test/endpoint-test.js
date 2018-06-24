@@ -185,9 +185,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/account')
             .send( newUser )
-            // .then(() =>
-            //   //expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -209,9 +206,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/users')
             .send( newUser )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -233,9 +227,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/users')
             .send( newUser )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -311,9 +302,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/users')
             .send( newUser )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -337,9 +325,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/users')
             .send( newUser )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -363,9 +348,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/users')
             .send( newUser )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -389,9 +371,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/users')
             .send( newUser )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -415,9 +394,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/users')
             .send( newUser )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -441,9 +417,6 @@ describe('UserInfo API resource', function() {
             .request(app)
             .post('/api/users')
             .send( newUser )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;
@@ -467,9 +440,6 @@ describe('UserInfo API resource', function() {
             .then(() =>
               chai.request(app).post('/api/users').send( newUser )
             )
-            // .then(() =>
-            //   expect.fail(null, null, 'Request should not succeed')
-            // )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
                 throw err;

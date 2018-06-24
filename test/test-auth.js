@@ -10,9 +10,6 @@ const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
 
 const expect = chai.expect;
 
-// This let's us make HTTP requests
-// in our tests.
-// see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
 
 describe('Auth endpoints', function () {
@@ -58,7 +55,7 @@ describe('Auth endpoints', function () {
             expect(res).to.have.status(400);
           });
       });
-      it.only('Should reject requests with incorrect usernames', function () {
+      it('Should reject requests with incorrect usernames', function () {
         return chai
           .request(app)
           .post('/api/auth/login')
@@ -77,9 +74,6 @@ describe('Auth endpoints', function () {
           .request(app)
           .post('/api/auth/login')
           .send({ username, password: 'wrongPassword' })
-          .then(() =>
-            expect.fail(null, null, 'Request should not succeed')
-          )
           .catch(err => {
             if (err instanceof chai.AssertionError) {
               throw err;
@@ -116,9 +110,6 @@ describe('Auth endpoints', function () {
         return chai
           .request(app)
           .post('/api/auth/refresh')
-          .then(() =>
-            expect.fail(null, null, 'Request should not succeed')
-          )
           .catch(err => {
             if (err instanceof chai.AssertionError) {
               throw err;
@@ -146,9 +137,6 @@ describe('Auth endpoints', function () {
           .request(app)
           .post('/api/auth/refresh')
           .set('Authorization', `Bearer ${token}`)
-          .then(() =>
-            expect.fail(null, null, 'Request should not succeed')
-          )
           .catch(err => {
             if (err instanceof chai.AssertionError) {
               throw err;
@@ -179,9 +167,6 @@ describe('Auth endpoints', function () {
           .request(app)
           .post('/api/auth/refresh')
           .set('authorization', `Bearer ${token}`)
-          .then(() =>
-            expect.fail(null, null, 'Request should not succeed')
-          )
           .catch(err => {
             if (err instanceof chai.AssertionError) {
               throw err;
