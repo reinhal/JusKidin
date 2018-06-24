@@ -278,7 +278,7 @@ function handleAccountAdd() {
         var email = $('#account-email').val();
         console.log("Account Info", firstName, lastName, email)
         e.preventDefault();
-        if (childName == '' || birthDate == '') {
+        if (firstName == '' || lastName == '' || email == '' || ) {
             alert('Missing Information')
             } else { addAccount(username, password, firstName, lastName, email);
         }
