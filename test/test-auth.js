@@ -83,7 +83,7 @@ describe('Auth endpoints', function () {
             expect(res).to.have.status(401);
           });
       });
-      it('Should return a valid auth token', function () {
+      it.only('Should return a valid auth token', function () {
         return chai
           .request(app)
           .post('/api/auth/login')
@@ -147,6 +147,7 @@ describe('Auth endpoints', function () {
           });
       });
       it('Should reject requests with an expired token', function () {
+        console.log('JWT secret', JWT_SECRET);
         const token = jwt.sign(
           {
             user: {
