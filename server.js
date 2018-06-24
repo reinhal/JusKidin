@@ -15,13 +15,31 @@ app.use(express.json());
 
 const jsonParser = bodyParser.json();
 const {UserInfo} = require('./userinfo_model');
+const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
+app.use('/api/auth/', authRouter);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+passport.use(localStrategy); 
+passport.use(jwtStrategy);
+
 //app.use(morgan('common'));
 
 // Account Info Endpoints//
+
+app.get('/api/protected', jwtAuth, (req, res) => {
+  return res.json({
+    data: 'rosebud'
+  });
+});
+
+app.use('*', (req, res) => {
+  return res.status(404).json({ message: 'Not Found' });
+});
 
 app.get('/api/account', (req, res) => {
   UserInfo
@@ -161,7 +179,6 @@ app.post('/api/account', jsonParser, (req, res) => {
       });
     })
     .then(user => {
-      console.log("here at line 164");
       return res.status(201).json(user.serialize());
     })
     .catch(err => {

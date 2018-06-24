@@ -17,6 +17,7 @@ describe('Auth endpoints', function () {
     const password = 'examplePass';
     const firstName = 'Example';
     const lastName = 'User';
+    const email= "example@wwww.com";
   
     before(function () {
       return runServer(TEST_DATABASE_URL);
@@ -32,7 +33,8 @@ describe('Auth endpoints', function () {
           username,
           password,
           firstName,
-          lastName
+          lastName, 
+          email
         })
       );
     });
@@ -83,7 +85,7 @@ describe('Auth endpoints', function () {
             expect(res).to.have.status(401);
           });
       });
-      it.only('Should return a valid auth token', function () {
+      it('Should return a valid auth token', function () {
         return chai
           .request(app)
           .post('/api/auth/login')
@@ -99,7 +101,8 @@ describe('Auth endpoints', function () {
             expect(payload.user).to.deep.equal({
               username,
               firstName,
-              lastName
+              lastName, 
+              email
             });
           });
       });

@@ -156,8 +156,6 @@ describe('UserInfo API resource', function() {
             delete newUser.childProfs;
             delete newUser.asset;
 
-            console.log("new user here", newUser);
-
             return chai.request(app)
                 .post('/api/account')
                 .send(newUser)
@@ -165,7 +163,6 @@ describe('UserInfo API resource', function() {
                     expect(res).to.have.status(201);
                     expect(res).to.be.json;
                     expect(res.body).to.be.a('object');
-                    console.log('res.body', res.body);
                     expect(res.body).to.include.keys(
                       'username', 'firstName', 'lastName', 'email');
                     expect(res.body.id).to.not.be.null;
@@ -460,8 +457,6 @@ describe('UserInfo API resource', function() {
           delete newUser.childProfs;
           delete newUser.asset;
 
-          console.log('this new user', newUser);
-
           return chai
             .request(app)
             .post('/api/account')
@@ -469,7 +464,6 @@ describe('UserInfo API resource', function() {
             .then(res => {
               expect(res).to.have.status(201);
               expect(res.body).to.be.an('object');
-              console.log ('res.body', res.body);
               expect(res.body).to.have.keys(
                 'username',
                 'firstName',
