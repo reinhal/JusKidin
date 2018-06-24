@@ -19,9 +19,9 @@
 		<div id="navAccount" class="dropdown">
 			<a onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
 				<div class="dropdown-content">
-					<a href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+					<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
 					<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
-					<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
+					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
 				</div>
 		</div>
 		<div class="dropdown">
@@ -63,48 +63,14 @@
 						<p class="form-title">Login</p>
 						<li>
 							<label for="user-name">Username</label>
-							<input type="text" id="user-name" placeholder="Enter desired username">
+							<input type="text" id="user-name" placeholder="Enter username">
 						</li>
 						<li>
 							<label for="password">Password</label>
-							<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
+							<input type="text" id="password2" placeholder="Enter password">
 						</li>
 						<li>
 							<button id="login" type="submit" onclick="loginOff()">Login</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
-	<section role="region">
-		<div id="accountoverlay">
-			<div class="addAccount" id="addAccountForm">
-				<form class="account-form">
-					<ul class="flex-outer">
-						<p class="form-title">Create New Account</p>
-						<li>
-							<label for="user-name">Username</label>
-							<input type="text" id="user-name" placeholder="Enter desired username">
-						</li>
-						<li>
-							<label for="password">Password</label>
-							<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
-						</li>
-						<li>
-							<label for="first-name">First Name</label>
-							<input type="text" id="first-name" placeholder="Enter first name here">
-						</li>
-						<li>
-							<label for="last-name">Last Name</label>
-							<input type="text" id="last-name" placeholder="Enter last name here">
-							</li>
-						<li>
-						<label for="account-email">email</label>
-						<input type="text" class="email" id="account-email" placeholder="Enter email here">
-						</li>
-						<li>
-						<button id="accountoverlaybutton" type="submit" onclick="accountOff()">Create Account</button>
 						</li>
 					</ul>
 				</form>
@@ -192,8 +158,8 @@
 						<li>
 							<label for="new-drawer-title">Add To Drawer</label>
 							<select name="current-drawer-titles" class="new-drawer-title">
-								<option value=`${drawerTitle}`>Drawer 1</option>
-								<option value=`${drawerTitle}`>Drawer 2</option>
+								<!-- <option value=`${drawerTitle}`>Drawer 1</option>
+								<option value=`${drawerTitle}`>Drawer 2</option> -->
 							</select>
 						</li>
 						<li>

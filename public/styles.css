@@ -192,6 +192,15 @@ ul li {
 form {
     text-align: center;
 }
+
+.loginHere {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
 .addChild {
     width: 100%;
     max-width: 1200px;
@@ -329,6 +338,15 @@ form {
     width: 400px;
 }
 
+#password2 {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
 #child-first-name {
     padding: 10px;
     margin-top: 5px;
@@ -410,6 +428,24 @@ form {
     width: 400px;
 }
 
+.new-drawer-title {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#image-url { 
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
 select { 
     padding: 10px;
     margin-top: 5px;
@@ -428,6 +464,20 @@ select {
     border: 0px solid whitesmoke;
     background-color: whitesmoke;
     width: 400px;
+}
+
+#loginForm {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
 }
 
 #update-accountoverlay {
