@@ -134,6 +134,9 @@ function addChildProfile(firstName, birthDate) {
       },
       dataType: 'json',
       contentType: 'application/json'
+    //   error: function(data) {
+
+    //   }
     });
 }
 
@@ -461,8 +464,8 @@ $(function() {
     getAndDisplayChildProfile();
     handleChildProfileAdd();
     // deleteChildProfile();
-    // handleChildProfileDelete();
-    handleDrawerAdd();
+    // // handleChildProfileDelete();
+    // handleDrawerAdd();
     getAndDisplayDrawer();
     // getAndDisplayUploads();
     // filterUploads();

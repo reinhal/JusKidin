@@ -117,6 +117,7 @@ app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
       return res.status(400).send(message);
     }
   }
+  // ifs statements for each data
   UserInfo
     .findOne({
       "_id": req.params._id
