@@ -150,7 +150,7 @@ describe('UserInfo API resource', function() {
     });
     describe('/api/account', function () {
       describe('POST endpoint', function() {
-        it.only('should add a new user', function() {
+        it('should add a new user', function() {
 
             const newUser = generateUserInfoData();
             delete newUser.childProfs;
@@ -167,10 +167,9 @@ describe('UserInfo API resource', function() {
                     expect(res.body).to.be.a('object');
                     console.log('res.body', res.body);
                     expect(res.body).to.include.keys(
-                      'username', 'password', 'firstName', 'lastName', 'email');
+                      'username', 'firstName', 'lastName', 'email');
                     expect(res.body.id).to.not.be.null;
                     expect(res.body.username).to.equal(newUser.username);
-                    expect(res.body.password).to.equal(newUser.password);
                     expect(res.body.firstName).to.equal(newUser.firstName);
                     expect(res.body.lastName).to.equal(newUser.lastName);
                     expect(res.body.email).to.equal(newUser.email); 
@@ -459,7 +458,7 @@ describe('UserInfo API resource', function() {
               expect(res.body.location).to.equal('password');
             });
         });
-        it.skip('Should reject users with duplicate username', function () {
+        it('Should reject users with duplicate username', function () {
 
           const newUser = generateUserInfoData();
           newUser.username = "sameuser";
@@ -485,7 +484,7 @@ describe('UserInfo API resource', function() {
               expect(res.body.location).to.equal('username');
             });
         });
-        it.skip('Should create a new user', function () {
+        it('Should create a new user', function () {
 
           const newUser = generateUserInfoData();
           delete newUser.childProfs;
@@ -507,30 +506,30 @@ describe('UserInfo API resource', function() {
                 'lastName',
                 'email'
               );
-              expect(res.body.username).to.equal(username);
-              expect(res.body.firstName).to.equal(firstName);
-              expect(res.body.lastName).to.equal(lastName);
-              expect(res.body.email).to.equal(email);
-              return newUser.findOne({
-                username
+              expect(res.body.username).to.equal(newUser.username);
+              expect(res.body.firstName).to.equal(newUser.firstName);
+              expect(res.body.lastName).to.equal(newUser.lastName);
+              expect(res.body.email).to.equal(newUser.email);
+              return UserInfo.findOne({
+                username: newUser.username
               });
             })
             .then(user => {
               expect(user).to.not.be.null;
-              expect(user.firstName).to.equal(firstName);
-              expect(user.lastName).to.equal(lastName);
-              expect(user.email).to.equal(email);
-              return user.validatePassword(password);
+              expect(user.firstName).to.equal(newUser.firstName);
+              expect(user.lastName).to.equal(newUser.lastName);
+              expect(user.email).to.equal(newUser.email);
+              return user.validatePassword(newUser.password);
             })
             .then(passwordIsCorrect => {
               expect(passwordIsCorrect).to.be.true;
             });
         });
-        it.skip('Should trim firstName and lastName', function () {
+        it('Should trim firstName and lastName', function () {
 
           const newUser = generateUserInfoData();
-          newUser.firstName = ` ${firstName} `,
-          newUser.lastName =  ` ${lastName} `
+          newUser.firstName = ` ${newUser.firstName} `,
+          newUser.lastName =  ` ${newUser.lastName} `
 
           return chai
             .request(app)
@@ -542,19 +541,21 @@ describe('UserInfo API resource', function() {
               expect(res.body).to.have.keys(
                 'username',
                 'firstName',
-                'lastName'
+                'lastName',
+                "email"
               );
-              expect(res.body.username).to.equal(username);
-              expect(res.body.firstName).to.equal(firstName);
-              expect(res.body.lastName).to.equal(lastName);
-              return User.findOne({
-                username
+              expect(res.body.username).to.equal(newUser.username);
+              expect(res.body.firstName).to.equal(newUser.firstName.trim());
+              expect(res.body.lastName).to.equal(newUser.lastName.trim());
+              expect(res.body.email).to.equal(newUser.email);
+              return UserInfo.findOne({
+                username: newUser.username
               });
             })
             .then(newUser => {
-              expect(newUsernewUsernewUser).to.not.be.null;
-              expect(newUsernewUser.firstName).to.equal(firstName);
-              expect(newUser.lastName).to.equal(lastName);
+              expect(newUser).to.not.be.null;
+              expect(newUser.firstName).to.equal(newUser.firstName.trim());
+              expect(newUser.lastName).to.equal(newUser.lastName.trim());
             });
         });
       });
