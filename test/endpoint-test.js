@@ -13,7 +13,7 @@ const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
-var userID = '5b22a73ffb6efb156dcee37b';
+var userID = '';
 
 function seedUserInfoData() {
     const seedData = [];
@@ -150,9 +150,13 @@ describe('UserInfo API resource', function() {
     });
     describe('/api/account', function () {
       describe('POST endpoint', function() {
-        it.skip('should add a new user', function() {
+        it.only('should add a new user', function() {
 
             const newUser = generateUserInfoData();
+            delete newUser.childProfs;
+            delete newUser.asset;
+
+            console.log("new user here", newUser);
 
             return chai.request(app)
                 .post('/api/account')
@@ -161,9 +165,12 @@ describe('UserInfo API resource', function() {
                     expect(res).to.have.status(201);
                     expect(res).to.be.json;
                     expect(res.body).to.be.a('object');
+                    console.log('res.body', res.body);
                     expect(res.body).to.include.keys(
-                      'firstName', 'lastName', 'email');
+                      'username', 'password', 'firstName', 'lastName', 'email');
                     expect(res.body.id).to.not.be.null;
+                    expect(res.body.username).to.equal(newUser.username);
+                    expect(res.body.password).to.equal(newUser.password);
                     expect(res.body.firstName).to.equal(newUser.firstName);
                     expect(res.body.lastName).to.equal(newUser.lastName);
                     expect(res.body.email).to.equal(newUser.email); 
@@ -484,6 +491,8 @@ describe('UserInfo API resource', function() {
           delete newUser.childProfs;
           delete newUser.asset;
 
+          console.log('this new user', newUser);
+
           return chai
             .request(app)
             .post('/api/account')
@@ -491,6 +500,7 @@ describe('UserInfo API resource', function() {
             .then(res => {
               expect(res).to.have.status(201);
               expect(res.body).to.be.an('object');
+              console.log ('res.body', res.body);
               expect(res.body).to.have.keys(
                 'username',
                 'firstName',
@@ -606,16 +616,16 @@ describe('Child Profile API resource', function() {
     });
   
     afterEach(function() {
-      //return tearDownDb();
+      return tearDownDb();
     });
   
     after(function() {
-      //tearDownDb();
-      //return closeServer();
+      tearDownDb();
+      return closeServer();
     });
 
   describe('POST endpoint', function() {
-    it('should add a new childProfile', function() {
+    it.skip('should add a new childProfile', function() {
 
         const newChild = generateNewChild();
 
@@ -664,71 +674,71 @@ describe('Child Profile API resource', function() {
   //       })
   //   });
   // });
-  describe('DELETE endpoint', function() {
+  // describe('DELETE endpoint', function() {
       
-      it('should delete child profile by id', function() {
+  //     it('should delete child profile by id', function() {
   
-        let childprofile;
+  //       let childprofile;
   
-        return UserInfo
-          .findOne()
-          .then(function(_childprofile) {
-            childprofile = _childprofile;
-            return chai.request(app).delete(`/api/${userID}/childProf`);
-          })
-          .then(function(res) {
-            expect(res).to.have.status(204);
-            return UserInfo.findById(childprofile._id);
-          })
-          .then(function(_childprofile) {
-            expect(UserInfo._childprofile).to.be.undefined;
-            //COME AND CHECK ___ PROFILE
-          });
-      });
-  });
+  //       return UserInfo
+  //         .findOne()
+  //         .then(function(_childprofile) {
+  //           childprofile = _childprofile;
+  //           return chai.request(app).delete(`/api/${userID}/childProf`);
+  //         })
+  //         .then(function(res) {
+  //           expect(res).to.have.status(204);
+  //           return UserInfo.findById(childprofile._id);
+  //         })
+  //         .then(function(_childprofile) {
+  //           expect(UserInfo._childprofile).to.be.undefined;
+  //           //COME AND CHECK ___ PROFILE
+  //         });
+  //     });
+  // });
 });
 
-// describe('Asset API resource', function() {
+describe('Asset API resource', function() {
     
-//   before(function() {
-//       return runServer(TEST_DATABASE_URL);
-//     });
+  before(function() {
+      return runServer(TEST_DATABASE_URL);
+    });
   
-//     beforeEach(function() {
-//       return seedUserInfoData();
-//     });
+    beforeEach(function() {
+      return seedUserInfoData();
+    });
   
-//     afterEach(function() {
-//       //return tearDownDb();
-//     });
+    afterEach(function() {
+      return tearDownDb();
+    });
   
-//     after(function() {
-//       return closeServer();
-//     });
+    after(function() {
+      return closeServer();
+    });
 
-//   describe('POST endpoint', function() {
-//     it('should add a new digital asset', function() {
+  describe('POST endpoint', function() {
+    it.skip('should add a new digital asset', function() {
 
-//         const newAsset = generateAssetData();
+        const newAsset = generateAssetData();
 
-//         return chai.request(app)
-//             .post(`/api/${userID}/asset`)
-//             .send(newAsset)
-//             .then(function(res) {
-//                 expect(res).to.have.status(201);
-//                 expect(res).to.be.json;
-//                 expect(res.body).to.be.a('object');
-//                 expect(res.body).to.include.keys('title', 'dateUploaded', 'fileLocation');
-//                 expect(res.body.id).to.not.be.null;
-//                 expect(res.body.asset[1].title).to.equal(newAsset.title);
-//                 expect(res.body.asset[1].notes).to.equal(newAsset.notes);
-//                 expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
-//                 expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation);
-//                 expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle); 
-//                 return res.body;
-//             })
-//     });
-//   });
+        return chai.request(app)
+            .post(`/api/${userID}/asset`)
+            .send(newAsset)
+            .then(function(res) {
+                expect(res).to.have.status(201);
+                expect(res).to.be.json;
+                expect(res.body).to.be.a('object');
+                expect(res.body).to.include.keys('title', 'dateUploaded', 'fileLocation');
+                expect(res.body.id).to.not.be.null;
+                expect(res.body.asset[1].title).to.equal(newAsset.title);
+                expect(res.body.asset[1].notes).to.equal(newAsset.notes);
+                expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
+                expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation);
+                expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle); 
+                return res.body;
+            })
+    });
+  });
 //   describe('PUT endpoint', function() {
 //     it('should update a digital asset', function() {
 //       this.timeout(4000);
@@ -772,4 +782,4 @@ describe('Child Profile API resource', function() {
 //       });
 //     });
 //   });
-// });
+});

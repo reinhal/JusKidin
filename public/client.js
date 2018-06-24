@@ -161,7 +161,11 @@ function handleChildProfileAdd() {
         var birthDate = $('.child-birth-date').val();
         console.log("Child Info", childName, birthDate, $('.child-birth-date'))
         e.preventDefault();
-        addChildProfile(childName, birthDate);
+        if (childName == '' || birthDate == '') {
+            alert('Missing Information')
+        } else {
+            addChildProfile(childName, birthDate);
+        }
     });
 }
 

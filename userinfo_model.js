@@ -1,5 +1,6 @@
 'use strict';
 
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
@@ -33,18 +34,23 @@ const userInfoSchema = mongoose.Schema({
     ]
 });
 
+userInfoSchema.methods.serialize = function() {
+    return {
+      username: this.username || '',
+      firstName: this.firstName || '',
+      lastName: this.lastName || '',
+      email: this.email || ''
+    };
+  };
+
+userInfoSchema.methods.validatePassword = function(password) {
+    return bcrypt.compare(password, this.password);
+};
+  
+userInfoSchema.statics.hashPassword = function(password) {
+    return bcrypt.hash(password, 10);
+};
+
 const UserInfo = mongoose.model('UserInfo', userInfoSchema);
-
-userInfoSchema.virtual('userNameString').get(function() {
-    return `${this.firstName}`.trim();
-});
-
-userInfoSchema.virtual('childNameString').get(function() {
-    return `${this.childProfs.firstName}`.trim();
-});
-
-userInfoSchema.virtual('assetsString').get(function() {
-    return `${this.asset.title}`.trim();
-});
 
 module.exports = {UserInfo};

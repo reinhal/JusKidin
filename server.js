@@ -6,6 +6,7 @@ const { PORT, DATABASE_URL } = require('./config');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 mongoose.Promise = global.Promise;
 
@@ -133,7 +134,7 @@ app.post('/api/account', jsonParser, (req, res) => {
   // before this
   firstName = firstName.trim();
   lastName = lastName.trim();
-
+  
   return UserInfo.find({username})
     .count()
     .then(count => {
@@ -149,6 +150,7 @@ app.post('/api/account', jsonParser, (req, res) => {
       // If there is no existing user, hash the password
       return UserInfo.hashPassword(password);
     })
+    
     .then(hash => {
       return UserInfo.create({
         username,
@@ -159,6 +161,7 @@ app.post('/api/account', jsonParser, (req, res) => {
       });
     })
     .then(user => {
+      console.log("here at line 164");
       return res.status(201).json(user.serialize());
     })
     .catch(err => {
