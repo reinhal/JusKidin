@@ -57,7 +57,7 @@ app.post('/api/account', jsonParser, (req, res) => {
   for (let i=0; i<newUser.length; i++) {
     const field = newUser[i];
     if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
+      const message = `Missing \`${field} \`in request body`
       console.error(message);
       return res.status(400).send(message);
     }

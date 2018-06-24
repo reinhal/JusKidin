@@ -200,7 +200,7 @@ form {
     background-color: rgba(0,0,0,0.5);
 }
 
-.addAccount {
+.updateAccount {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -311,6 +311,24 @@ form {
     width: 400px;
 }
 
+#user-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#password {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
 #child-first-name {
     padding: 10px;
     margin-top: 5px;
@@ -412,6 +430,20 @@ select {
     width: 400px;
 }
 
+#update-accountoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
 #accountoverlay {
     position: fixed; 
     display: none;
@@ -468,7 +500,7 @@ select {
     cursor: pointer; 
 }
 
-#addAccountForm{
+#updateAccountForm{
     position: absolute;
     top: 50%;
     left: 50%;

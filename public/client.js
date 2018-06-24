@@ -1,5 +1,7 @@
 
 var userID = '5b2c5d2aabcd8768d5ed39ef';
+var username = '';
+var password = '';
 var firstName = '';
 var lastName = '';
 var email = '';
@@ -18,12 +20,12 @@ function getUserID() {
 
 
 ///////////// Overlay Form Functions ///////////////////////
-function newAccountOn() {
-    document.getElementById("new-account-overlay").style.display = "block";
+function updateAccountOn() {
+    document.getElementById("update-accountoverlay").style.display = "block";
 }
 
-function newAccountOff() {
-    document.getElementById("new-account-overlay").style.display = "none";
+function updateAccountOff() {
+    document.getElementById("update-accountoverlay").style.display = "none";
 }
 
 function accountOn() {
@@ -134,9 +136,6 @@ function addChildProfile(firstName, birthDate) {
       },
       dataType: 'json',
       contentType: 'application/json'
-    //   error: function(data) {
-
-    //   }
     });
 }
 
@@ -164,7 +163,10 @@ function handleChildProfileAdd() {
         var birthDate = $('.child-birth-date').val();
         console.log("Child Info", childName, birthDate, $('.child-birth-date'))
         e.preventDefault();
-        addChildProfile(childName, birthDate);
+        if (childName == '' || birthDate == '') {
+            alert('Missing Information')
+            } else { addChildProfile(childName, birthDate);
+        }
     });
 }
 
@@ -248,28 +250,30 @@ $(watchSubmit);
 ///////////// Account Functions ///////////////////////
 
 function createNewAccount() {
-    console.log('Creating new Account: ' + firstName + lastName + email);
+    console.log('Creating new Account:', username + password + firstName + lastName + email);
     $.ajax({
       method: 'POST',
       url: ACCOUNT_URL,
-      data: JSON.stringify({firstName, lastName, email}),
+      data: JSON.stringify({username, password, firstName, lastName, email}),
       success: function(data) {
         getAndDisplayAccount();
       },
       dataType: 'json',
       contentType: 'application/json'
     });
-// this function will create a new user, with password and authentication
-// it will take first name, last name, email
 }
 
 function handleAccountAdd() {
     $('.account-form').submit(function(e) {
         var firstName = $('#first-name').val();
         var lastName = $('#last-name').val();
+        var email = $('#account-email').val();
         console.log("Account Info", firstName, lastName, email)
         e.preventDefault();
-        addAccount(firstName, lastName, email);
+        if (childName == '' || birthDate == '') {
+            alert('Missing Information')
+            } else { addAccount(username, password, firstName, lastName, email);
+        }
     });
 }
 
