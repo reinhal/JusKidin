@@ -21,11 +21,11 @@ function getUserID() {
 
 ///////////// Overlay Form Functions ///////////////////////
 function loginOn() {
-    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("loginoverlay").style.display = "block";
 }
 
 function loginOff() {
-    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("loginoverlay").style.display = "none";
 }
 
 function updateAccountOn() {
@@ -127,9 +127,9 @@ var childProfileTemplate = function (childName, birthDate) {
         `<div id="${childID}" class="gsearchContainer"></div>`
     )
 
-    $('.child-dropbtn').append(
-        `<a href="#">${childName}</a>`
-    )
+    // $('.child-dropbtn').append(
+    //     `<a href="#">${childName}</a>`
+    // )
 }
 //check for child name already exisiting for this profile
 
@@ -278,7 +278,7 @@ function handleAccountAdd() {
         var email = $('#account-email').val();
         console.log("Account Info", firstName, lastName, email)
         e.preventDefault();
-        if (firstName == '' || lastName == '' || email == '' || ) {
+        if (firstName == '' || lastName == '' || email == '' || password == '' || username == '' ) {
             alert('Missing Information')
             } else { addAccount(username, password, firstName, lastName, email);
         }
@@ -350,9 +350,9 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
         `<div id="${drawerID}" class="uploadContainer"></div>`
     )
 
-    $('.asset-dropbtn').append(
-        `<a href="#">${drawerTitle}</a>`
-    )
+    // $('.asset-dropbtn').append(
+    //     `<a href="#">${drawerTitle}</a>`
+    // )
 
     $('.new-drawer-title').append(
         `<option value=${drawerTitle}>${drawerTitle}</option>`

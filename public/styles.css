@@ -193,14 +193,6 @@ form {
     text-align: center;
 }
 
-.loginHere {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 50px 50px;
-    background-color: rgba(0,0,0,0.5);
-}
-
 .addChild {
     width: 100%;
     max-width: 1200px;
@@ -209,7 +201,23 @@ form {
     background-color: rgba(0,0,0,0.5);
 }
 
+.loginHere {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
 .updateAccount {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.addAccount {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -466,7 +474,7 @@ select {
     width: 400px;
 }
 
-#loginForm {
+#loginoverlay {
     position: fixed; 
     display: none;
     width: 100%; 
@@ -551,6 +559,26 @@ select {
 }
 
 #updateAccountForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+#addAccountForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+#loginForm{
     position: absolute;
     top: 50%;
     left: 50%;

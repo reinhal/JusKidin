@@ -17,28 +17,23 @@
 	<div class="topnav" role="navigation" id="responsivetopnav">
 		<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
 		<div id="navAccount" class="dropdown">
-			<a class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
+			<a onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
 				<div class="dropdown-content">
-					<a href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
-					<a href="#"><i class="fas fa-edit"></i> Edit Account</a>
+					<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
+					<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
 					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
 				</div>
 		</div>
 		<div class="dropdown">
 			<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content child-dropbtn">
-					<!-- <a href="#">Child 1</a>
-					<a href="#">Child 2</a> -->
 					<a onclick="childOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> New Child</a>
 				</div>
 		</div>
 		<div class="dropdown">
 			<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content asset-dropbtn">
-					<!-- <a href="#">Drawer 1</a>
-					<a href="#">Drawer 2</a> -->
-					<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
-					<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
+					<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
 				</div>
 		</div>
 		<div class="search-container">
@@ -54,6 +49,62 @@
 			<h2 class="web-resource">Web Resource Links</h2>
 		</header>
 	</div>
+	<section role="region">
+		<div id="loginoverlay">
+			<div class="loginHere" id="loginForm">
+				<form class="login-form">
+					<ul class="flex-outer">
+						<p class="form-title">Login</p>
+						<li>
+							<label for="user-name">Username</label>
+							<input type="text" id="user-name" placeholder="Enter username">
+						</li>
+						<li>
+							<label for="password">Password</label>
+							<input type="text" id="password2" placeholder="Enter password">
+						</li>
+						<li>
+							<button id="login" type="submit" onclick="loginOff()">Login</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
+	<section role="region">
+		<div id="update-accountoverlay">
+			<div class="updateAccount" id="updateAccountForm">
+				<form class="update-account-form">
+					<ul class="flex-outer">
+						<p class="form-title">Update Account Information</p>
+						<li>
+							<label for="user-name">Username</label>
+							<input type="text" id="user-name" placeholder="Enter desired username">
+						</li>
+						<li>
+							<label for="password">Password</label>
+							<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
+						</li>
+						<li>
+							<label for="first-name">First Name</label>
+							<input type="text" id="first-name" placeholder="Enter first name here">
+						</li>
+						<li>
+							<label for="last-name">Last Name</label>
+							<input type="text" id="last-name" placeholder="Enter last name here">
+						</li>
+						<li>
+							<label for="account-email">email</label>
+							<input type="text" class="email" id="account-email" placeholder="Enter email here">
+						</li>
+						<li>
+							<button id="update-accountoverlaybutton" type="submit" onclick="accountOff()">Update Account</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
 	<section role="region">
 		<div id="accountoverlay">
 			<div class="addAccount" id="addAccountForm">

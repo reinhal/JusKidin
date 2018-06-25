@@ -37,7 +37,7 @@
 				<div class="dropdown-content asset-dropbtn">
 					<!-- <a href="#">Drawer 1</a>
 					<a href="#">Drawer 2</a> -->
-					<a onclick="assetOn()" href="#"><i class="fas fa-upload"></i> Upload</a>
+					<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
 					<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
 				</div>
 		</div>
@@ -56,7 +56,7 @@
 		</header>
 	</div>
 	<section role="region">
-		<div id="login">
+		<div id="loginoverlay">
 			<div class="loginHere" id="loginForm">
 				<form class="login-form">
 					<ul class="flex-outer">
@@ -71,6 +71,32 @@
 						</li>
 						<li>
 							<button id="login" type="submit" onclick="loginOff()">Login</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
+	<section role="region">
+		<div id="accountoverlay">
+			<div class="addAccount" id="addAccountForm">
+				<form class="account-form">
+					<ul class="flex-outer">
+						<p class="form-title">Create New Account</p>
+						<li>
+							<label for="first-name">First Name</label>
+							<input type="text" id="first-name" placeholder="Enter first name here">
+						</li>
+						<li>
+							<label for="last-name">Last Name</label>
+							<input type="text" id="last-name" placeholder="Enter last name here">
+						</li>
+						<li>
+							<label for="account-email">email</label>
+							<input type="text" class="email" id="account-email" placeholder="Enter email here">
+						</li>
+						<li>
+							<button id="accountoverlaybutton" type="submit" onclick="accountOff()">Create Account</button>
 						</li>
 					</ul>
 				</form>
