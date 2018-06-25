@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
@@ -109,7 +109,7 @@ describe('UserInfo API resource', function() {
 
     describe('GET endpoint', function() {
 
-        it('should return all existing accounts', function() {
+        it.only('should return all existing accounts', function() {
           let res;
           return chai.request(app)
             .get('/api/account')
@@ -123,7 +123,7 @@ describe('UserInfo API resource', function() {
               expect(res.body).to.have.lengthOf(count);
             });
         });
-
+        console.log('res', res.body);
         it('should return account info with the right fields', function() {
           let resAccount;
           return chai.request(app)

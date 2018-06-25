@@ -115,7 +115,7 @@ describe('Protected endpoint', function () {
             expect(res).to.have.status(401);
           });
         });
-        it.only('Should send protected data', function () {
+        it('Should send protected data', function () {
             const token = jwt.sign(
                 {
                     user: {
