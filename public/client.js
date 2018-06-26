@@ -169,8 +169,9 @@ function handleChildProfileAdd() {
     $('.child-age-form').submit(function(e) {
         var childName = $('#child-first-name').val();
         var birthDate = $('.child-birth-date').val();
-        console.log("Child Info", childName, birthDate, $('.child-birth-date'))
+        // console.log("Child Info", childName, birthDate, $('.child-birth-date'))
         e.preventDefault();
+        window.location.reload(true);
         if (childName == '' || birthDate == '') {
             alert('Missing Information')
             } else { addChildProfile(childName, birthDate);
@@ -369,6 +370,8 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
                  <div>
                  <p class="asset-content"><strong>${title}</strong></p>
                  <p class="asset-content">${notes}</p>
+                 <p class="icon"><i class="fas fa-edit"></i>Edit</p>
+                 <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
              </div>
         </section>`
     )
@@ -414,6 +417,8 @@ function getAndDisplayUploads() {
                         <div>
                         <p class="asset-content"><strong>${item.title}</strong></p>
                         <p class="asset-content">${item.notes}</p>
+                        <a class="icon"><i class="fas fa-edit"></i></a>
+                        <a class="icon"><i class="fas fa-trash-alt"></i></a>
                     </div>
                 </section>`
             )
@@ -430,6 +435,8 @@ function handleAssetAdd() {
         var fileLocation = $('#image-url').val();
         var drawerTitle = $('#drawer-title').val();
         console.log('asset info', title, notes, dateUploaded, fileLocation, drawerTitle);
+        e.preventDefault();
+        window.location.reload(true);
     });
 }
 
@@ -471,7 +478,6 @@ function getAndDisplayImagesOnHomePage() {
 }
 
 $(function() {
-    // addChildProfile();
     createNewAccount();
     getAndDisplayChildProfile();
     handleChildProfileAdd();

@@ -12,11 +12,15 @@ body {
 h1 {
 font-family: 'Overlock', cursive;
 font-size: 72px;
-text-shadow: 2px 3px rgba(0,0,0,0.2);
+text-shadow: 0px 8px 16px rgba(0,0,0,0.2);
 }
 
-h2 {
-    margin-left: 38px;
+.intro {
+    border: 3px solid #303030;
+    background: white;
+    margin: 0px 300px 0px 300px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 0px;
 }
 
 p {
@@ -118,7 +122,7 @@ ul li {
     padding: 6px 10px;
     margin-top: 8px;
     margin-right: 16px;
-    background: 	#303030;
+    background: #303030;
     color:whitesmoke;
     font-size: 17px;
     border: none;
@@ -645,7 +649,7 @@ select {
 }
 
 .tab button.active {
-    background-color: 	#303030;
+    background-color:#303030;
     color: whitesmoke;
 }
 
@@ -734,7 +738,7 @@ select {
 }
 
 .dropbtn-asset {
-    background-color: 	#303030;
+    background-color:#303030;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -743,7 +747,7 @@ select {
 }
 
 .dropbtn-asset:hover, .dropbtn-asset:focus {
-    background-color: 	#303030;
+    background-color:#303030;
 }
 
 .dropdown-asset {
@@ -845,6 +849,12 @@ select {
   
 .col-3, .col-4, .col-6, .col-12 {
     width: 100%;
+}
+
+.icon {
+    color: #707070;
+    align-content: right;
+    padding: 5px;
 }
   
 /*////////////////Footer//////////////////*/
