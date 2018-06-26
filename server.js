@@ -419,6 +419,7 @@ app.delete('/api/account/:_id/uploads/:asset_id', (req, res) => {
 app.use('*', (req, res) => {
   return res.status(404).json({ message: 'Not Found' });
 });
+
 let server;
 
 function runServer(DATABASE_URL, port = PORT) {

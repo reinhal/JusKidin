@@ -12,9 +12,6 @@ const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
-/// do I need these variables?
-var userID = '';
-var assetID ='';
 
 function seedUserInfoData() {
     const seedData = [];
@@ -430,14 +427,14 @@ describe('UserInfo API resource', function() {
               expect(res.body.location).to.equal('password');
             });
         });
-        it('Should reject users with duplicate username', function () {
+        it('Should reject user with a duplicate username', function () {
 
           const newUser = generateUserInfoData();
           newUser.username = "sameuser";
 
-          return chai .request(app).post('/api/users').send( newUser )
+          return chai .request(app).post('/api/account').send( newUser )
             .then(() =>
-              chai.request(app).post('/api/users').send( newUser )
+              chai.request(app).post('/api/account').send( newUser )
             )
             .catch(err => {
               if (err instanceof chai.AssertionError) {
@@ -610,6 +607,29 @@ describe('Child Profile API resource', function() {
                 return res.body;
         })
     });
+    it('Should reject child profile with a duplicate name', function () {
+
+      const newChild = generateNewChild();
+      newChild.firstName = "samename";
+
+      return chai .request(app).post(`/api/account/${userID}/childProfiles`).send( newChild )
+        .then(() =>
+          chai.request(app).post(`/api/account/${userID}/childProfiles`).send( newChild )
+        )
+        .catch(err => {
+          if (err instanceof chai.AssertionError) {
+            throw err;
+          }
+
+          const res = err.response;
+          expect(res).to.have.status(422);
+          expect(res.body.reason).to.equal('ValidationError');
+          expect(res.body.message).to.equal(
+            'Child name already taken'
+          );
+          expect(res.body.location).to.equal('firstName');
+        });
+    });
   });
   // describe('PUT endpoint', function() {
   //   it('should update a child', function() {
@@ -687,7 +707,6 @@ describe('Asset API resource', function() {
     it('should add a new digital asset', function() {
 
         const newAsset = generateAssetData();
-        console.log ('newAsset', newAsset);
 
         return chai.request(app)
             .post(`/api/account/${userID}/uploads`)
@@ -709,9 +728,8 @@ describe('Asset API resource', function() {
     });
   });
   describe('PUT endpoint', function() {
-    it.only('should update a digital asset', function() {
-      this.timeout(4000);
-
+    it('should update a digital asset', function() {
+    
       const updatedAsset = ({
           "title": "Yellow Jack",
           "notes": "pillage line long boat avast dead men tell no tales case shot ho",
@@ -756,19 +774,16 @@ describe('Asset API resource', function() {
   })
         .then(function(userinfo) {
           let userID = userinfo._id;
-          // userinfo.asset[0] = updatedAsset;
-          console.log('userinfo 759', userinfo);
+          
           return chai.request(app)
             .put(`/api/account/${userID}/uploads/0`)
             .send(updatedAsset)
             .then(function(res) {
-              console.log('res 764', res);
+              
               //expect(res).to.have.status(204);
               return UserInfo.findById(userID);
             })
             .then(function(userinfo) {
-              console.log('772', userinfo)
-              console.log('773', updatedAsset)
               expect(userinfo.asset[0].title).to.equal(updatedAsset.title);
               expect(userinfo.asset[0].notes).to.equal(updatedAsset.notes);
               expect(userinfo.asset[0].dateUploaded).to.equal(updatedAsset.dateUploaded);
@@ -780,43 +795,41 @@ describe('Asset API resource', function() {
     });
   });
   describe('DELETE endpoint', function() {
-    it('should delete digital asset by id', function() {
-      // const newUser =          
+    it('should delete digital asset by id', function() {        
       
-      // UserInfo.create({
-      //                 "username": "Qlady",
-      //                 "password": "queen2345",
-      //                 "firstName": "Queen",
-      //                 "lastName": "Lady",
-      //                 "email": "qb@thehive.com",
-      //                 "childProfs": [
-      //                     {
-      //                         "firstName": "Dina",
-      //                         "birthDate": "04/22/15"
-      //                     },
-      //                     {
-      //                         "firstName": "Nyle",
-      //                         "birthDate": "03/12/14"
-      //                     }
-      //                 ],
-      //                 "asset": [
-      //                     {
-      //                         "title": "Barbary Coast",
-      //                         "notes": "lee swing the lead spike tackle Nelsons folly Privateer run a rig marooned",
-      //                         "dateUploaded": "11/27/18", 
-      //                         "fileLocation": "https://picsum.photos/350/300/?random",
-      //                         "drawerTitle": "Pirate Ship"
-      //                     },
-      //                     {
-      //                         "title": "Main Brethren",
-      //                         "notes": "lateen sail man-of-war knave wherry rum",
-      //                         "dateUploaded": "05/28/17", 
-      //                         "fileLocation": "https://picsum.photos/350/300/?random",
-      //                         "drawerTitle": "Pirate Ship"
-      //                     }
-      //                 ]
-      //           });
-      let asset;
+     return UserInfo.create({
+                      "username": "Qlady",
+                      "password": "queen2345",
+                      "firstName": "Queen",
+                      "lastName": "Lady",
+                      "email": "qb@thehive.com",
+                      "childProfs": [
+                          {
+                              "firstName": "Dina",
+                              "birthDate": "04/22/15"
+                          },
+                          {
+                              "firstName": "Nyle",
+                              "birthDate": "03/12/14"
+                          }
+                      ],
+                      "asset": [
+                          {
+                              "title": "Barbary Coast",
+                              "notes": "lee swing the lead spike tackle Nelsons folly Privateer run a rig marooned",
+                              "dateUploaded": "11/27/18", 
+                              "fileLocation": "https://picsum.photos/350/300/?random",
+                              "drawerTitle": "Pirate Ship"
+                          },
+                          {
+                              "title": "Main Brethren",
+                              "notes": "lateen sail man-of-war knave wherry rum",
+                              "dateUploaded": "05/28/17", 
+                              "fileLocation": "https://picsum.photos/350/300/?random",
+                              "drawerTitle": "Pirate Ship"
+                          }
+                      ]
+                });
 
       return UserInfo
       .findOne()
