@@ -37,10 +37,6 @@ app.get('/api/protected', jwtAuth, (req, res) => {
   });
 });
 
-app.use('*', (req, res) => {
-  return res.status(404).json({ message: 'Not Found' });
-});
-
 app.get('/api/account', (req, res) => {
   UserInfo
     .find()
@@ -353,10 +349,10 @@ app.post('/api/account/:_id/uploads', jsonParser, (req, res) => {
     });
 });
 
-app.put('/api/account/:_id/asset/:asset_id', jsonParser, (req, res) => {
-  if (req.params.asset !== req.body.asset) {
-    const message = `Request path id (${req.params.asset}) and request body id (${req.body.asset}) must match`;
-    console.error(message);
+app.put('/api/account/:_id/uploads/:assetIndex', jsonParser, (req, res) => {
+  if (+req.params.assetIndex !== req.body.assetIndex) {
+    const message = `Request path id (${req.params.assetIndex}) and request body id (${req.body.assetIndex}) must match`;
+    console.error('this is the:', message);
     return res.status(400).send(message);
   }
 
@@ -381,11 +377,16 @@ app.put('/api/account/:_id/asset/:asset_id', jsonParser, (req, res) => {
        thisAsset.asset[i].drawerTitle = req.body.drawerTitle;
       }
     }
-
+     let update = {"$set": {}};
+     update["$set"]["asset."+ req.params.assetIndex] = {
+       title: req.body.title,
+       notes: req.body.notes, 
+       dateUploaded: req.body.dateUploaded, 
+       fileLocation: req.body.fileLocation, 
+       drawerTitle: req.body.drawerTitle
+     }
   return UserInfo.findByIdAndUpdate(
-    req.params._id, {
-      asset:thisAsset.asset
-    }
+    req.params._id, update
   ) 
     .then(updatedAsset => {
       console.log (updatedAsset);
@@ -394,7 +395,7 @@ app.put('/api/account/:_id/asset/:asset_id', jsonParser, (req, res) => {
   })
 });
 
-app.delete('/api/account/:_id/asset/:asset_id', (req, res) => {
+app.delete('/api/account/:_id/uploads/:asset_id', (req, res) => {
   UserInfo
   .findOne({
     "_id": req.params._id
@@ -413,6 +414,10 @@ app.delete('/api/account/:_id/asset/:asset_id', (req, res) => {
     console.log(err);
     res.status(500).json({ message: 'Internal server error' });
   });
+});
+
+app.use('*', (req, res) => {
+  return res.status(404).json({ message: 'Not Found' });
 });
 let server;
 

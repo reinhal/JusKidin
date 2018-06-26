@@ -12,8 +12,9 @@ const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
-
+/// do I need these variables?
 var userID = '';
+var assetID ='';
 
 function seedUserInfoData() {
     const seedData = [];
@@ -34,7 +35,7 @@ function generateBirthDate() {
 
 function generateTitle() {
   const title = [
-    'Soccer Game', 'Birthday Party', 'School Project', 'Animal Research', 'Math Test'];
+    'Soccer Game', 'Birthday Party', 'School Project', 'Animal Research', 'Math Test', 'Fishing Trip', 'Lapham Peak', 'Stella\'s Play', 'Heritage Project', 'Piano Practice', 'Artwork', 'Knitting Project'];
   return title[Math.floor(Math.random() * title.length)];
 }
 
@@ -80,6 +81,7 @@ function generateNewChild() {
 function generateAssetData() {
   return {
     title: generateTitle(),
+    notes: faker.lorem.sentence(),
     dateUploaded: generateDateUploaded(),
     fileLocation: faker.image.nature(),
     drawerTitle: generateDrawerTitle()
@@ -109,7 +111,7 @@ describe('UserInfo API resource', function() {
 
     describe('GET endpoint', function() {
 
-        it.only('should return all existing accounts', function() {
+        it('should return all existing accounts', function() {
           let res;
           return chai.request(app)
             .get('/api/account')
@@ -123,7 +125,7 @@ describe('UserInfo API resource', function() {
               expect(res.body).to.have.lengthOf(count);
             });
         });
-        console.log('res', res.body);
+        // console.log('res', res.body);
         it('should return account info with the right fields', function() {
           let resAccount;
           return chai.request(app)
@@ -590,12 +592,12 @@ describe('Child Profile API resource', function() {
     });
 
   describe('POST endpoint', function() {
-    it.skip('should add a new childProfile', function() {
+    it('should add a new childProfile', function() {
 
         const newChild = generateNewChild();
 
         return chai.request(app)
-            .post(`/api/${userID}/childProf`)
+            .post(`/api/account/${userID}/childProfiles`)
             .send(newChild)
             .then(function(res) {
                 expect(res).to.have.status(201);
@@ -682,18 +684,20 @@ describe('Asset API resource', function() {
     });
 
   describe('POST endpoint', function() {
-    it.skip('should add a new digital asset', function() {
+    it('should add a new digital asset', function() {
 
         const newAsset = generateAssetData();
+        console.log ('newAsset', newAsset);
 
         return chai.request(app)
-            .post(`/api/${userID}/asset`)
+            .post(`/api/account/${userID}/uploads`)
             .send(newAsset)
             .then(function(res) {
+              console.log('res', res.body);
                 expect(res).to.have.status(201);
                 expect(res).to.be.json;
                 expect(res.body).to.be.a('object');
-                expect(res.body).to.include.keys('title', 'dateUploaded', 'fileLocation');
+                expect(res.body.asset[1]).to.include.keys('title', 'notes', 'dateUploaded', 'fileLocation', 'drawerTitle');
                 expect(res.body.id).to.not.be.null;
                 expect(res.body.asset[1].title).to.equal(newAsset.title);
                 expect(res.body.asset[1].notes).to.equal(newAsset.notes);
@@ -704,47 +708,129 @@ describe('Asset API resource', function() {
             })
     });
   });
-//   describe('PUT endpoint', function() {
-//     it('should update a digital asset', function() {
-//       this.timeout(4000);
-//       const updatedAsset = generateAssetData();
-//       return UserInfo.asset
-//       .findOne()
-//       .then(function(userinfo) {
-//         asset._id = userinfo._id;
-//         return chai.request(app)
-//           .put(`/api/${userID}/asset/`)
-//           .send(updatedAsset);
-//       })
-//       .then(function(res) {
-//         expect(res).to.have.status(204);
-//         return UserInfo.asset.findById(updatedAsset._id);
-//       })
-//       .then(function(userinfo) {
-//         expect(userinfo.Asset.title).to.equal(updatedAsset.title);
-//         expect(res.body.asset[1].notes).to.equal(newAsset.notes);
-//         expect(userinfo.Asset.dateUploaded).to.equal(updatedAsset.dateUploaded);
-//         expect(userinfo.Asset.fileLocation).to.equal(updatedAsset.fileLocation);
-//         expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle);
-//       });
-//     });
-//   });
-//   describe('DELETE endpoint', function() {
-//     it('should delete digital asset by id', function() {
-//       let userinfo;
-//       return UserInfo.asset
-//       .findOne()
-//       .then(function(_userinfo) {
-//         userinfo = _userinfo;
-//         return chai.request(app).delete(`/api/${userID}/asset`);
-//       })
-//       .then(function(res) {
-//         expect(res).to.have.status(204);
-//         return UserInfo.asset.findById(userinfo.asset._id);
-//       })
-//       .then(function(_userinfo) {
-//         expect(_userinfo.asset).to.be.null;
-//       });
-//     });
-//   });
+  describe('PUT endpoint', function() {
+    it.only('should update a digital asset', function() {
+      this.timeout(4000);
+
+      const updatedAsset = ({
+          "title": "Yellow Jack",
+          "notes": "pillage line long boat avast dead men tell no tales case shot ho",
+          "dateUploaded": "05/28/17", 
+          "fileLocation": "https://picsum.photos/350/300/?random",
+          "drawerTitle": "Remote Beach",
+          "assetIndex": 0
+      });
+
+      return UserInfo.create({
+        "username": "Beelady",
+        "password": "queen2345",
+        "firstName": "Queen",
+        "lastName": "Lady",
+        "email": "qb@thehive.com",
+        "childProfs": [
+            {
+                "firstName": "Dina",
+                "birthDate": "04/22/15"
+            },
+            {
+                "firstName": "Nyle",
+                "birthDate": "03/12/14"
+            }
+        ],
+        "asset": [
+            {
+                "title": "Barbary Coast",
+                "notes": "lee swing the lead spike tackle Nelsons folly Privateer run a rig marooned",
+                "dateUploaded": "11/27/18", 
+                "fileLocation": "https://picsum.photos/350/300/?random",
+                "drawerTitle": "Pirate Ship"
+            },
+            {
+                "title": "Main Brethren",
+                "notes": "lateen sail man-of-war knave wherry rum",
+                "dateUploaded": "05/28/17", 
+                "fileLocation": "https://picsum.photos/350/300/?random",
+                "drawerTitle": "Pirate Ship"
+            }
+        ]
+  })
+        .then(function(userinfo) {
+          let userID = userinfo._id;
+          // userinfo.asset[0] = updatedAsset;
+          console.log('userinfo 759', userinfo);
+          return chai.request(app)
+            .put(`/api/account/${userID}/uploads/0`)
+            .send(updatedAsset)
+            .then(function(res) {
+              console.log('res 764', res);
+              //expect(res).to.have.status(204);
+              return UserInfo.findById(userID);
+            })
+            .then(function(userinfo) {
+              console.log('772', userinfo)
+              console.log('773', updatedAsset)
+              expect(userinfo.asset[0].title).to.equal(updatedAsset.title);
+              expect(userinfo.asset[0].notes).to.equal(updatedAsset.notes);
+              expect(userinfo.asset[0].dateUploaded).to.equal(updatedAsset.dateUploaded);
+              expect(userinfo.asset[0].fileLocation).to.equal(updatedAsset.fileLocation);
+              expect(userinfo.asset[0].drawerTitle).to.equal(updatedAsset.drawerTitle);
+              
+            })
+        })  
+    });
+  });
+  describe('DELETE endpoint', function() {
+    it('should delete digital asset by id', function() {
+      // const newUser =          
+      
+      // UserInfo.create({
+      //                 "username": "Qlady",
+      //                 "password": "queen2345",
+      //                 "firstName": "Queen",
+      //                 "lastName": "Lady",
+      //                 "email": "qb@thehive.com",
+      //                 "childProfs": [
+      //                     {
+      //                         "firstName": "Dina",
+      //                         "birthDate": "04/22/15"
+      //                     },
+      //                     {
+      //                         "firstName": "Nyle",
+      //                         "birthDate": "03/12/14"
+      //                     }
+      //                 ],
+      //                 "asset": [
+      //                     {
+      //                         "title": "Barbary Coast",
+      //                         "notes": "lee swing the lead spike tackle Nelsons folly Privateer run a rig marooned",
+      //                         "dateUploaded": "11/27/18", 
+      //                         "fileLocation": "https://picsum.photos/350/300/?random",
+      //                         "drawerTitle": "Pirate Ship"
+      //                     },
+      //                     {
+      //                         "title": "Main Brethren",
+      //                         "notes": "lateen sail man-of-war knave wherry rum",
+      //                         "dateUploaded": "05/28/17", 
+      //                         "fileLocation": "https://picsum.photos/350/300/?random",
+      //                         "drawerTitle": "Pirate Ship"
+      //                     }
+      //                 ]
+      //           });
+      let asset;
+
+      return UserInfo
+      .findOne()
+      .then(function(_asset) {
+        asset = _asset;
+        return chai.request(app).delete(`/api/account/${userID}/uploads/${assetID}`);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(204);
+        return UserInfo.asset.findById(userinfo.asset._id);
+      })
+      .then(function(_asset) {
+        expect(UserInfo.asset).to.be.null;
+      });
+    });
+  });
 });
