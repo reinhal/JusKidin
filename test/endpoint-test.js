@@ -11,6 +11,8 @@ const {UserInfo} = require('../userinfo_model');
 const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 
+let userID = '';
+
 chai.use(chaiHttp);
 
 function seedUserInfoData() {
