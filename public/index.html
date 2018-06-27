@@ -22,6 +22,7 @@
 					<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
 					<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
 					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
+					<a onclick="deleteOn()" href="javascript:void(0)"><i class="fas fa-trash"></i> Delete Account</a>
 				</div>
 		</div>
 		<div class="dropdown">
@@ -55,6 +56,23 @@
 			<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
 		</header>
 	</div>
+	<section role="region">
+		<div id="deleteoverlay">
+			<div class="delete" id="deleteForm">
+				<form>
+					<ul class="flex-outer">
+						<p class="form-title">Are you sure?</p>
+						<li>
+							<label for="delete-name" id="delete-name">This action can not be undone.</label>
+						</li>
+						<li>
+							<button id="delete-overlaybutton" type="submit" onclick="deleteOff()">Delete Forever</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
 	<section role="region">
 		<div id="loginoverlay">
 			<div class="loginHere" id="loginForm">
@@ -130,7 +148,7 @@
 							<input type="text" class="email" id="account-email" placeholder="Enter email here">
 						</li>
 						<li>
-							<button id="update-accountoverlaybutton" type="submit" onclick="accountOff()">Update Account</button>
+							<button id="update-accountoverlaybutton" type="submit" onclick="updateAccountOff()">Update Account</button>
 						</li>
 					</ul>
 				</form>

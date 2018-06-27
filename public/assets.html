@@ -22,6 +22,7 @@
 					<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
 					<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
 					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
+					<a onclick="deleteOn()" href="javascript:void(0)"><i class="fas fa-trash"></i> Delete Account</a>
 				</div>
 		</div>
 		<div class="dropdown">
@@ -47,8 +48,7 @@
 		<header role="banner">
 			<h1>JusKidin</h1>
 			<div class="intro">
-			<h2>Drawers</h2>
-			<h3>Each drawer is an organizational topic. </br> Place related connected photos in the appropriate drawer.</h3>
+			<h2>Create and use drawers to organize your online photos.</h2>
 			</div>
 		</header>
 	</div>
@@ -102,7 +102,7 @@
 							<input type="text" class="email" id="account-email" placeholder="Enter email here">
 						</li>
 						<li>
-							<button id="update-accountoverlaybutton" type="submit" onclick="accountOff()">Update Account</button>
+							<button id="update-accountoverlaybutton" type="submit" onclick="updateAccountOff()">Update Account</button>
 						</li>
 					</ul>
 				</form>
@@ -182,8 +182,8 @@
 						<li>
 							<label for="new-drawer-title">Add To Drawer</label>
 							<select name="current-drawer-titles" class="new-drawer-title">
-								<option value=`${drawerTitle}`>Drawer 1</option>
-								<option value=`${drawerTitle}`>Drawer 2</option>
+								<!-- <option value=`${drawerTitle}`>Drawer 1</option>
+								<option value=`${drawerTitle}`>Drawer 2</option> -->
 							</select>
 						</li>
 						<li>
@@ -198,28 +198,69 @@
 			</div>
 		</div>
 	</section>
-	<section role="region">
-		<div id="draweroverlay">
-			<div class="addDrawer" id="addDrawerForm">
-				<form>
-					<ul class="flex-outer">
-						<p class="form-title">Create Drawer</p>
-						<li>
-						<label for="drawer-name">Drawer Name</label>
-						<input type="text" id="drawer-name" placeholder="Drawer Name">
-						</li>
-						<li>
-						<button id="draweroverlaybutton" type="submit" onclick="drawerOff()">Create</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
 	<main role="main">
 		<div class="tab dropdown-asset"></div>
 		<div id="assetDropdown" class="dropdown-editAsset"></div>
-		<div id="Drawer1" class="assettabcontent"></div> 
+		<div id="Drawer1" class="assettabcontent">
+			<section role="region">
+				<div id="edit-assetoverlay">
+					<div class="editAsset" id="editAssetForm">
+						<form>
+							<ul class="flex-outer">
+								<p class="form-title">Update Connected Image</p>
+								<li>
+									<label for="title">Title</label>
+									<input type="text" id="title" placeholder="Title">
+								</li>
+								<li>
+									<label for="date-uploaded">Upload Date</label>
+									<input type="text" id="date-uploaded" placeholder="mm/dd/yyyy">
+								</li>
+								<li>
+									<label for="notes">Notes</label>
+									<input type="text" id="notes" placeholder="Notes">
+								</li>
+								<li>
+									<label for="drawer-title">Create New Drawer</label>
+									<input type="text" id="drawer-title" placeholder="Drawer Title">
+								</li>
+								<li>
+									<label for="new-drawer-title">Add To Drawer</label>
+									<select name="current-drawer-titles" class="new-drawer-title">
+										<!-- <option value=`${drawerTitle}`>Drawer 1</option>
+										<option value=`${drawerTitle}`>Drawer 2</option> -->
+									</select>
+								</li>
+								<li>
+									<label for="image-url">Image URL</label>
+									<input type="text" id="image-url" placeholder="http://imageurl.jpg">
+								</li>
+								<li>
+								<button id="edit-assetoverlaybutton" type="submit" onclick="editAssetOff()">Update</button>
+								</li>
+							</ul>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section role="region">
+				<div id="deleteoverlay">
+					<div class="delete" id="deleteForm">
+						<form>
+							<ul class="flex-outer">
+								<p class="form-title">Are you sure?</p>
+								<li>
+									<label for="delete-name" id="delete-name">This action can not be undone.</label>
+								</li>
+								<li>
+									<button id="delete-overlaybutton" type="submit" onclick="deleteOff()">Delete Forever</button>
+								</li>
+							</ul>
+						</form>
+					</div>
+				</div>
+			</section>
+		</div>
 	</main>
 </body>
 </html>

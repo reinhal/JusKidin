@@ -1,5 +1,5 @@
 
-var userID = '5b2c5d2aabcd8768d5ed39ef';
+var userID = '5b328daf6994df88e5ab30f4';
 var username = '';
 var password = '';
 var firstName = '';
@@ -20,6 +20,14 @@ function getUserID() {
 
 
 ///////////// Overlay Form Functions ///////////////////////
+function deleteOn() {
+    document.getElementById("deleteoverlay").style.display = "block";
+}
+
+function deleteOff() {
+    document.getElementById("deleteoverlay").style.display = "none";
+}
+
 function loginOn() {
     document.getElementById("loginoverlay").style.display = "block";
 }
@@ -50,6 +58,14 @@ function childOn() {
 
 function childOff() {
     document.getElementById("childoverlay").style.display = "none";
+}
+
+function editAssetOn() {
+    document.getElementById("edit-assetoverlay").style.display = "block";
+}
+
+function editAssetOff() {
+    document.getElementById("edit-assetoverlay").style.display = "none";
 }
 
 function assetOn() {
@@ -233,7 +249,16 @@ function displayGoogleSearch(childName) {
                         <li class="google-image"><img src="${data.pagemap.cse_thumbnail[0].src}"></li>
                         <li class="google"><a href="${data.link}">${data.link}</a></li>
                         <li class="google">${data.snippet}</li>
-                    </ul>`)
+                    </ul>
+                    <style type="text/css">
+                    .displayTabcontent {
+                        background-color: white;
+                        color: 	#303030;
+                        padding: 12px 12px;
+                        border: 5px solid #2980b9;
+                        margin: 0 50px 50px 50px;
+                    }
+                    </style>`)
             } else {
                 $(`#${childID}`).append(`<h2 #${childID}>${data.title} </h2>
                     <ul>
@@ -417,8 +442,8 @@ function getAndDisplayUploads() {
                         <div>
                         <p class="asset-content"><strong>${item.title}</strong></p>
                         <p class="asset-content">${item.notes}</p>
-                        <a class="icon"><i class="fas fa-edit"></i></a>
-                        <a class="icon"><i class="fas fa-trash-alt"></i></a>
+                        <a onclick="editAssetOn()" href="#" class="icon"><i class="fas fa-edit"></i></a>
+                        <a onclick="deleteOn()" href="#" class="icon"><i class="fas fa-trash-alt"></i></a>
                     </div>
                 </section>`
             )
