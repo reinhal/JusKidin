@@ -70,8 +70,7 @@ app.post('/api/account', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password', 'firstName', 'lastName', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
   
-  // if (missingField) {
-  if (true) {
+  if (missingField) {
     return res.status(422).json({
       code: 422,
       reason: 'ValidationError',
@@ -246,23 +245,33 @@ app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
     if (field == undefined) {
       const message = `Missing \`${field}\` in request body`
       return res.status(400).send(message);
-    }
-  }
-  UserInfo
-    .findOne({
-      "_id": req.params._id
-    })
-    .select(req.query.select)
-    .then(userinfo => {
-      userinfo.childProfs.push({firstName: req.body.firstName, birthDate: req.body.birthDate});
-      userinfo.save()
-        res.status(201);
-        res.json(userinfo);
+    } 
+    UserInfo
+      .find({
+        "_id": req.params._id
       })
-    .catch(err => {
-      res.status(500).json({ message: 'Internal server error' });
-    });
-
+      .then( function (data) {
+        console.log("data 254", data[0].childProfs);
+        // data[0].childProfs.includes({
+        //   firstName: req.body.firstName
+        // })
+      // );  
+        return UserInfo
+        .findOne({
+          "_id": req.params._id
+        })
+        .select(req.query.select)
+        .then(userinfo => {
+          userinfo.childProfs.push({firstName: req.body.firstName, birthDate: req.body.birthDate});
+          userinfo.save()
+            res.status(201);
+            res.json(userinfo);
+          })
+        .catch(err => {
+          res.status(500).json({ message: 'Internal server error' });
+        });
+      })
+  }
 });
 
 app.put('/api/account/:_id/childProfs/:child_id', jsonParser, (req, res) => {
