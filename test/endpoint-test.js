@@ -63,6 +63,7 @@ function generateUserInfoData() {
         },
         asset: {
           title: generateTitle(),
+          notes: faker.lorem.sentence(),
           dateUploaded: generateDateUploaded(),
           fileLocation: faker.image.nature(),
           drawerTitle: generateDrawerTitle()
@@ -92,7 +93,7 @@ function tearDownDb() {
 
 describe('UserInfo API resource', function() {
     
-    before(function() {
+      before(function() {
         return runServer(TEST_DATABASE_URL);
       });
     
@@ -291,7 +292,7 @@ describe('UserInfo API resource', function() {
               expect(res.body.location).to.equal('firstName');
             });
         });
-        it('Should reject users with non-string last name', function () {
+        it.only('Should reject users with non-string last name', function () {
 
           const newUser = generateUserInfoData();
           newUser.lastName = 1234;

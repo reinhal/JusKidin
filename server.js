@@ -70,7 +70,8 @@ app.post('/api/account', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password', 'firstName', 'lastName', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
   
-  if (missingField) {
+  // if (missingField) {
+  if (true) {
     return res.status(422).json({
       code: 422,
       reason: 'ValidationError',
