@@ -87,6 +87,7 @@ function generateAssetData() {
     drawerTitle: generateDrawerTitle()
   }
 }
+
 function tearDownDb() {
     return mongoose.connection.dropDatabase();
 }
@@ -610,7 +611,6 @@ describe('Child Profile API resource', function() {
     });
   
     after(function() {
-      tearDownDb();
       return closeServer();
     });
 
