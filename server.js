@@ -253,6 +253,17 @@ app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
       })
       .then( function (data) {
         console.log("data 254", data[0].childProfs);
+        const duplicateList = data[0].childProfs.filter( 
+          o => o.firstName === reqChildProfs[i] );
+
+          if (duplicateList.length > 1) {
+            return res.status(422).json({
+              code: 422,
+              reason: 'ValidationError',
+              message: 'Child name already taken',
+              location: 'firstName'
+            });
+          }
         // data[0].childProfs.includes({
         //   firstName: req.body.firstName
         // })
