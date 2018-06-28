@@ -48,6 +48,7 @@ app.get('/api/account', (req, res) => {
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
     });
+
 });
 
 app.get('/api/account/:_id', (req, res) => {

@@ -1,5 +1,7 @@
 
 var userID = '5b328daf6994df88e5ab30f4';
+var username = '';
+var password = '';
 var firstName = '';
 var lastName = '';
 var email = '';
@@ -249,13 +251,13 @@ $(watchSubmit);
 ///////////// Account Functions ///////////////////////
 
 function createNewAccount() {
-    console.log('Creating new Account: ' + firstName + lastName + email);
+    console.log('Creating new Account: ' + username + password + firstName + lastName + email);
     $.ajax({
       method: 'POST',
       url: ACCOUNT_URL,
-      data: JSON.stringify({firstName, lastName, email}),
+      data: JSON.stringify({username, password, firstName, lastName, email}),
       success: function(data) {
-        getAndDisplayAccount();
+        //getAndDisplayAccount();
       },
       dataType: 'json',
       contentType: 'application/json'
@@ -266,11 +268,13 @@ function createNewAccount() {
 
 function handleAccountAdd() {
     $('.account-form').submit(function(e) {
+        var username = $('#user-name').val();
+        var password = $('#password').val();
         var firstName = $('#first-name').val();
         var lastName = $('#last-name').val();
-        console.log("Account Info", firstName, lastName, email)
+        console.log("Account Info 275", username, password, firstName, lastName, email)
         e.preventDefault();
-        addAccount(firstName, lastName, email);
+        createNewAccount(username, password, firstName, lastName, email);
     });
 }
 
@@ -481,6 +485,7 @@ $(function() {
     // handleChildProfileDelete();
     handleDrawerAdd();
     getAndDisplayDrawer();
+    handleAccountAdd();
     // getAndDisplayUploads();
     // filterUploads();
 });
