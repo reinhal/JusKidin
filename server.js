@@ -279,7 +279,6 @@ app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
             res.json(userinfo);
           })
         .catch(err => {
-          res.status(500).json({ message: 'Internal server error' });
         });
       })
   }

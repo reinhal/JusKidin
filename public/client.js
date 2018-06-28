@@ -196,14 +196,14 @@ function handleChildProfileAdd() {
 //     })
 // }
 
-function editChildProfile(userID, child_id) {
-    console.log('Editing child profile');
-    $.ajax({
-        url: `/api/account/${userID}/childProfs/:child_id`,
-        method: 'PUT',
-        success: getAndDisplayChildProfile
-    });
-}
+// function editChildProfile(userID, child_id) {
+//     console.log('Editing child profile');
+//     $.ajax({
+//         url: `/api/account/${userID}/childProfs/:child_id`,
+//         method: 'PUT',
+//         success: getAndDisplayChildProfile
+//     });
+// }
 
 ///////////// Google Search Functions ///////////////////////
 
@@ -272,9 +272,14 @@ function handleAccountAdd() {
         var password = $('#password').val();
         var firstName = $('#first-name').val();
         var lastName = $('#last-name').val();
+        var email =$('#account-email').val();
         console.log("Account Info 275", username, password, firstName, lastName, email)
         e.preventDefault();
-        createNewAccount(username, password, firstName, lastName, email);
+        if (username == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
+            alert('Missing Information')
+        } else {
+            createNewAccount(username, password, firstName, lastName, email);
+        }
     });
 }
 
@@ -382,8 +387,7 @@ function getAndDisplayDrawer() {
             return element
         });
         getAndDisplayUploads();
-    });
-    
+    });   
 }
 
 function getAndDisplayUploads() {
