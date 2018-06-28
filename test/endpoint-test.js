@@ -98,7 +98,7 @@ describe('UserInfo API resource', function() {
       });
     
       afterEach(function() {
-        //return tearDownDb();
+        return tearDownDb();
       });
     
       after(function() {
@@ -225,12 +225,11 @@ describe('Child Profile API resource', function() {
     });
   
     afterEach(function() {
-      //return tearDownDb();
+      return tearDownDb();
     });
   
     after(function() {
-      //tearDownDb();
-      //return closeServer();
+      return closeServer();
     });
 
   describe('POST endpoint', function() {
