@@ -150,7 +150,6 @@ describe('Auth endpoints', function () {
           });
       });
       it('Should reject requests with an expired token', function () {
-        console.log('JWT secret', JWT_SECRET);
         const token = jwt.sign(
           {
             user: {

@@ -252,7 +252,6 @@ app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
         "_id": req.params._id
       })
       .then( function (data) {
-        console.log("data 254", data[0].childProfs);
         const duplicateList = data[0].childProfs.filter( 
           o => o.firstName === reqChildProfs[i] );
 
@@ -317,7 +316,6 @@ app.put('/api/account/:_id/childProfs/:child_id', jsonParser, (req, res) => {
     }
   ) 
     .then(updatedChild => {
-      console.log (updatedChild);
       return res.status(201).send(updatedChild);
     })
   })
@@ -411,7 +409,6 @@ app.put('/api/account/:_id/uploads/:assetIndex', jsonParser, (req, res) => {
     req.params._id, update
   ) 
     .then(updatedAsset => {
-      console.log (updatedAsset);
       return res.status(201).send(updatedAsset);
     })
   })

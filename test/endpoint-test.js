@@ -371,10 +371,10 @@ describe('UserInfo API resource', function() {
               const res = err.response;
             });
         });
-        it.skip('Should reject users with empty username', function () {
+        it('Should reject users with empty username', function () {
 
           const newUser = generateUserInfoData();
-          newUser.username = " ";
+          newUser.username = "";
 
           return chai
             .request(app)
@@ -633,7 +633,7 @@ describe('Child Profile API resource', function() {
                 return res.body;
         })
     });
-    it.only('Should reject child profile with a duplicate name', function () {
+    it('Should reject child profile with a duplicate name', function () {
 
       const newChild = generateNewChild();
       newChild.firstName = "samename";
@@ -745,7 +745,6 @@ describe('Asset API resource', function() {
             .post(`/api/account/${userID}/uploads`)
             .send(newAsset)
             .then(function(res) {
-              console.log('res', res.body);
                 expect(res).to.have.status(201);
                 expect(res).to.be.json;
                 expect(res.body).to.be.a('object');
