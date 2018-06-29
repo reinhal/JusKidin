@@ -1,7 +1,6 @@
-// import { updateLocale } from "moment";
 
-//var userID = '5b328daf6994df88e5ab30f4';
-var userID = '';
+var userID = '5b328daf6994df88e5ab30f4';
+// var userID = '';
 var username = '';
 var password = '';
 var firstName = '';
@@ -112,7 +111,7 @@ function openChild(evt, childName) {
 
 var childProfileTemplate = function (childName, birthDate) {
     var childID = childName.replace(/\s+/g, '-').toLowerCase();
-    console.log(birthDate);
+    // console.log(birthDate);
     $('.dropdown-prof').append(
         `<button class="tablinks dropbtn-prof" onclick="openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
     )
@@ -125,7 +124,7 @@ var childProfileTemplate = function (childName, birthDate) {
         `<a href="#">${childName}</a>`
     )
 }
-//check for child name already exisiting for this profile
+
 
 function addChildProfile(firstName, birthDate) {
     console.log('Adding new child profile: ' + childName + birthDate);
@@ -265,8 +264,6 @@ function createNewAccount(username, password, firstName, lastName, email) {
       dataType: 'json',
       contentType: 'application/json'
     });
-// this function will create a new user, with password and authentication
-// it will take first name, last name, email
 }
 
 function handleAccountAdd() {
@@ -483,17 +480,17 @@ function getAndDisplayImagesOnHomePage() {
 // display six random user uploaded images on home page
 }
 
-// function updateNavUser(userID) {
-//     $('#navAccountName').text('Log In'); 
-//     if (userID) {
-//         $('#navAccountName').text('Logged In');
-//     }
-// }
+function updateNavUser(userID) {
+    $('#navAccountName').text('Log In'); 
+    if (userID) {
+        $('#navAccountName').text('Logged In');
+    }
+}
 
 $(function() {
     // addChildProfile();
     // createNewAccount();
-    //updateNavUser(getUserID());
+    updateNavUser(getUserID());
     getAndDisplayChildProfile();
     handleChildProfileAdd();
     // deleteChildProfile();
