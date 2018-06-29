@@ -19,7 +19,7 @@
 		<div id="navAccount" class="dropdown">
 			<a class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
 				<div class="dropdown-content">
-					<a href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+					<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
 					<a href="#"><i class="fas fa-edit"></i> Edit Account</a>
 					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
 				</div>
@@ -54,6 +54,28 @@
 			<h2 class="web-resource">Web Resource Links</h2>
 		</header>
 	</div>
+	<section role="region">
+		<div id="loginoverlay">
+			<div class="loginHere" id="loginForm">
+				<form class="login-form">
+					<ul class="flex-outer">
+						<p class="form-title">Login</p>
+						<li>
+							<label for="user-name">Username</label>
+							<input type="text" id="user-name" placeholder="Enter username">
+						</li>
+						<li>
+							<label for="password">Password</label>
+							<input type="text" id="password2" placeholder="Enter password">
+						</li>
+						<li>
+							<button id="login" type="submit" onclick="loginOff()">Login</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</section>
 	<section role="region">
 		<div id="accountoverlay">
 			<div class="addAccount" id="addAccountForm">

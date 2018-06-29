@@ -21,6 +21,14 @@ function getUserID() {
 
 
 ///////////// Overlay Form Functions ///////////////////////
+function loginOn() {
+    document.getElementById("loginoverlay").style.display = "block";
+}
+
+function loginOff() {
+    document.getElementById("loginoverlay").style.display = "none";
+}
+
 function newAccountOn() {
     document.getElementById("new-account-overlay").style.display = "block";
 }

@@ -196,6 +196,14 @@ form {
     background-color: rgba(0,0,0,0.5);
 }
 
+.loginHere {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
 .addAccount {
     width: 100%;
     max-width: 1200px;
@@ -343,7 +351,43 @@ form {
     width: 400px;
 }
 
+#user-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#password {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#password2 {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
 #birth-date { 
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#account-email {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
@@ -464,6 +508,20 @@ select {
     cursor: pointer; 
 }
 
+#loginoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
 #addAccountForm{
     position: absolute;
     top: 50%;
@@ -495,6 +553,16 @@ select {
 }
 
 #addDrawerForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+#loginForm{
     position: absolute;
     top: 50%;
     left: 50%;
