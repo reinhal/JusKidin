@@ -20,6 +20,7 @@ function getUserID() {
 }
 
 
+
 ///////////// Overlay Form Functions ///////////////////////
 function loginOn() {
     document.getElementById("loginoverlay").style.display = "block";
@@ -300,18 +301,19 @@ function handleLogInUser() {
         if (username == '' || password == '') {
             alert('Missing Information') 
         } else {
-            logInUser(username, password);
+            attemptLogInUser(username, password);
         }
     })
 }
 
-function logInUser(username, password) {
+function attemptLogInUser(username, password) {
     console.log('Logging in user:' + username + password);
     $.ajax({
         method: 'POST',
         url: '/api/auth/login',
         data: JSON.stringify({username, password}),
         success: function(data) {
+            console.log('data 316', data);
             alert('You have successfully logged in!');
         },
         dataType: 'json',
@@ -526,14 +528,20 @@ function updateNavUser(userID) {
 $(function() {
     // addChildProfile();
     // createNewAccount();
-    updateNavUser(getUserID());
-    getAndDisplayChildProfile();
+    if (getUserID()) {                //undefined implies not logged in, refactor later
+        getAndDisplayChildProfile();
+        getAndDisplayDrawer();
+    }
+
+    updateNavUser(getUserID());  //navbar handles logged in state
+    handleLogInUser();
     handleChildProfileAdd();
+    handleDrawerAdd();
+    handleAccountAdd();
+    // getAndDisplayChildProfile();
     // deleteChildProfile();
     // handleChildProfileDelete();
-    handleDrawerAdd();
-    getAndDisplayDrawer();
-    handleAccountAdd();
+    // getAndDisplayDrawer();
     // getAndDisplayUploads();
     // filterUploads();
 });
