@@ -1,6 +1,6 @@
 
-var userID = '5b328daf6994df88e5ab30f4';
-// var userID = '';
+//var userID = '5b328daf6994df88e5ab30f4';
+var userID = '';
 var username = '';
 var password = '';
 var firstName = '';
@@ -288,6 +288,34 @@ function handleAccountAdd() {
         } else {
             createNewAccount(username, password, firstName, lastName, email);
         }
+    });
+}
+
+function handleLogInUser() {
+    $('.login-form').submit(function(e) {
+        var username = $('#user-name').val();
+        var password = $('#password2').val();
+        console.log("login info 298", username, password);
+        e.preventDefault();
+        if (username == '' || password == '') {
+            alert('Missing Information') 
+        } else {
+            logInUser(username, password);
+        }
+    })
+}
+
+function logInUser(username, password) {
+    console.log('Logging in user:' + username + password);
+    $.ajax({
+        method: 'POST',
+        url: '/api/auth/login',
+        data: JSON.stringify({username, password}),
+        success: function(data) {
+            alert('You have successfully logged in!');
+        },
+        dataType: 'json',
+        contentType: 'application/json'
     });
 }
 
