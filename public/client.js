@@ -1,5 +1,7 @@
+// import { updateLocale } from "moment";
 
-var userID = '5b328daf6994df88e5ab30f4';
+//var userID = '5b328daf6994df88e5ab30f4';
+var userID = '';
 var username = '';
 var password = '';
 var firstName = '';
@@ -15,7 +17,7 @@ var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
 var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
 
 function getUserID() {
-    
+    return userID;
 }
 
 
@@ -250,13 +252,14 @@ $(watchSubmit);
 
 ///////////// Account Functions ///////////////////////
 
-function createNewAccount() {
+function createNewAccount(username, password, firstName, lastName, email) {
     console.log('Creating new Account: ' + username + password + firstName + lastName + email);
     $.ajax({
       method: 'POST',
       url: ACCOUNT_URL,
       data: JSON.stringify({username, password, firstName, lastName, email}),
       success: function(data) {
+        alert('New Account Created');
         //getAndDisplayAccount();
       },
       dataType: 'json',
@@ -273,7 +276,7 @@ function handleAccountAdd() {
         var firstName = $('#first-name').val();
         var lastName = $('#last-name').val();
         var email =$('#account-email').val();
-        console.log("Account Info 275", username, password, firstName, lastName, email)
+        console.log("Account Info 276", username, password, firstName, lastName, email)
         e.preventDefault();
         if (username == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
             alert('Missing Information')
@@ -480,9 +483,17 @@ function getAndDisplayImagesOnHomePage() {
 // display six random user uploaded images on home page
 }
 
+// function updateNavUser(userID) {
+//     $('#navAccountName').text('Log In'); 
+//     if (userID) {
+//         $('#navAccountName').text('Logged In');
+//     }
+// }
+
 $(function() {
     // addChildProfile();
-    createNewAccount();
+    // createNewAccount();
+    //updateNavUser(getUserID());
     getAndDisplayChildProfile();
     handleChildProfileAdd();
     // deleteChildProfile();

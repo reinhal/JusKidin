@@ -67,7 +67,7 @@ app.get('/api/account/:_id', (req, res) => {
 });
 
 app.post('/api/account', jsonParser, (req, res) => {
-  
+  console.log('UserInfo 70', UserInfo);
   const requiredFields = ['username', 'password', 'firstName', 'lastName', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
   
@@ -187,10 +187,10 @@ app.post('/api/account', jsonParser, (req, res) => {
       res.status(500).json({code: 500, message: 'Internal server error'});
     });
 
-  // UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
-  // .then(function(newUser) {
-  //   res.status(201).json(newUser);
-  // });
+    UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
+    .then(function(newUser) {
+      res.status(201).json(newUser);
+    });
 });
 
 // router.post ('/') has to merge with app.post('/api/account')

@@ -167,9 +167,10 @@ describe('UserInfo API resource', function() {
                     expect(res).to.be.json;
                     expect(res.body).to.be.a('object');
                     expect(res.body).to.include.keys(
-                      'username', 'firstName', 'lastName', 'email');
+                      'username', 'password', 'firstName', 'lastName', 'email');
                     expect(res.body.id).to.not.be.null;
                     expect(res.body.username).to.equal(newUser.username);
+                    expect(res.body.password).to.equal(newUser.password);
                     expect(res.body.firstName).to.equal(newUser.firstName);
                     expect(res.body.lastName).to.equal(newUser.lastName);
                     expect(res.body.email).to.equal(newUser.email); 
