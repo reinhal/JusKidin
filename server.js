@@ -27,7 +27,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 passport.use(localStrategy); 
 passport.use(jwtStrategy);
 
-//app.use(morgan('common'));
+app.use(morgan('common'));
 
 // Account Info Endpoints//
 
@@ -51,7 +51,7 @@ app.get('/api/account', (req, res) => {
 
 });
 
-app.get('/api/account/:_id', (req, res) => {
+app.get('/api/account/:_id', jwtAuth, (req, res) => {
   UserInfo
     .findOne({
       "_id": req.params._id
