@@ -31,6 +31,16 @@ app.use(morgan('common'));
 
 // Account Info Endpoints//
 
+// if(user.password === req.body.password) {
+//   // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
+//   var payload = {id: user.id};
+//   var token = jwt.sign(payload, jwtOptions.secretOrKey);
+//   res.json({message: "ok", token: token});
+// } else {
+//   res.status(401).json({message:"passwords did not match"});
+// }
+// });
+
 app.get('/api/protected', jwtAuth, (req, res) => {
   return res.json({
     data: 'rosebud'

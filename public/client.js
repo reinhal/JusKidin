@@ -1,5 +1,5 @@
 
-//var userID = '5b328daf6994df88e5ab30f4';
+// var userID = '5b35886a2ba1910d14830eb7';
 var userID = '';
 var username = '';
 var password = '';
@@ -19,7 +19,9 @@ function getUserID() {
     return userID;
 }
 
-
+function setUserID(id) {
+    userID = id;
+}
 
 ///////////// Overlay Form Functions ///////////////////////
 function loginOn() {
@@ -296,8 +298,7 @@ function handleLogInUser() {
     $('.login-form').submit(function(e) {
         var username = $('#user-name').val();
         var password = $('#password2').val();
-        console.log("login info 298", username, password);
-        e.preventDefault();
+            e.preventDefault();
         if (username == '' || password == '') {
             alert('Missing Information') 
         } else {
