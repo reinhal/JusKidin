@@ -153,7 +153,7 @@ describe('UserInfo API resource', function() {
     });
     describe('/api/account', function () {
       describe('POST endpoint', function() {
-        it('should add a new user', function() {
+        it.only('should add a new user', function() {
 
             const newUser = generateUserInfoData();
             delete newUser.childProfs;

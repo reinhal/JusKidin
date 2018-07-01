@@ -13,6 +13,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Auth endpoints', function () {
+    let _id;
     const username = 'exampleUser';
     const password = 'examplePass';
     const firstName = 'Example';
@@ -35,6 +36,9 @@ describe('Auth endpoints', function () {
           firstName,
           lastName, 
           email
+        })
+        .then(function (UserInfo) {
+          _id = UserInfo._id;
         })
       );
     });
@@ -98,7 +102,9 @@ describe('Auth endpoints', function () {
             const payload = jwt.verify(token, JWT_SECRET, {
               algorithm: ['HS256']
             });
+            console.log('payloud user 105', _id.toString());
             expect(payload.user).to.deep.equal({
+              _id: _id.toString(),
               username,
               firstName,
               lastName, 

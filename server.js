@@ -61,7 +61,7 @@ app.get('/api/account', (req, res) => {
 
 });
 
-app.get('/api/account/:_id', jwtAuth, (req, res) => {
+app.get('/api/account/:_id', (req, res) => {
   UserInfo
     .findOne({
       "_id": req.params._id
@@ -178,6 +178,7 @@ app.post('/api/account', jsonParser, (req, res) => {
     
     .then(hash => {
       return UserInfo.create({
+        _id,
         username,
         password: hash,
         firstName,
@@ -196,6 +197,8 @@ app.post('/api/account', jsonParser, (req, res) => {
       }
       res.status(500).json({code: 500, message: 'Internal server error'});
     });
+
+    console.log('UserInfo 189', UserInfo);
 
     UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
     .then(function(newUser) {

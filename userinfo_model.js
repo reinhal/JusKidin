@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const userInfoSchema = mongoose.Schema({
+    // _id: {
+    //     type: Schema.Types.ObjectId
+    // },
     username: {
         type: String,
         required: true,
@@ -36,12 +39,13 @@ const userInfoSchema = mongoose.Schema({
 
 userInfoSchema.methods.serialize = function() {
     return {
-      username: this.username || '',
-      firstName: this.firstName || '',
-      lastName: this.lastName || '',
-      email: this.email || ''
+        _id: this._id || '',
+        username: this.username || '',
+        firstName: this.firstName || '',
+        lastName: this.lastName || '',
+        email: this.email || ''
     };
-  };
+};
 
 userInfoSchema.methods.validatePassword = function(password) {
     return bcrypt.compare(password, this.password);
