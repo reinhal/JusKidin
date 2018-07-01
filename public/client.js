@@ -313,8 +313,8 @@ function attemptLogInUser(username, password) {
         method: 'POST',
         url: '/api/auth/login',
         data: JSON.stringify({username, password}),
-        success: function(data) {
-            console.log('data 316', data);
+        success: function(resData) {
+            console.log('resData 316 is authToken', resData);
             alert('You have successfully logged in!');
         },
         dataType: 'json',
