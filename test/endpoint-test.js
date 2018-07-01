@@ -158,11 +158,12 @@ describe('UserInfo API resource', function() {
             const newUser = generateUserInfoData();
             delete newUser.childProfs;
             delete newUser.asset;
-
+            console.log('new user 161', newUser);
             return chai.request(app)
                 .post('/api/account')
                 .send(newUser)
                 .then(function(res) {
+                    // console.log('rse 166', res.body);
                     expect(res).to.have.status(201);
                     expect(res).to.be.json;
                     expect(res.body).to.be.a('object');

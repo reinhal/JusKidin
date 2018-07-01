@@ -17,9 +17,6 @@ const jsonParser = bodyParser.json();
 const {UserInfo} = require('./userinfo_model');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
-
 app.use('/api/auth/', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
@@ -77,7 +74,7 @@ app.get('/api/account/:_id', (req, res) => {
 });
 
 app.post('/api/account', jsonParser, (req, res) => {
-  console.log('UserInfo 70', UserInfo);
+  // console.log('UserInfo 70', UserInfo);
   const requiredFields = ['username', 'password', 'firstName', 'lastName', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
   
@@ -178,7 +175,6 @@ app.post('/api/account', jsonParser, (req, res) => {
     
     .then(hash => {
       return UserInfo.create({
-        _id,
         username,
         password: hash,
         firstName,
@@ -187,8 +183,11 @@ app.post('/api/account', jsonParser, (req, res) => {
       });
     })
     .then(user => {
+      console.log( '185 user', user);
+      console.log('186 user', user.serialize());
       return res.status(201).json(user.serialize());
     })
+
     .catch(err => {
       // Forward validation errors on to the client, otherwise give a 500
       // error because something unexpected has happened
@@ -198,12 +197,12 @@ app.post('/api/account', jsonParser, (req, res) => {
       res.status(500).json({code: 500, message: 'Internal server error'});
     });
 
-    console.log('UserInfo 189', UserInfo);
-
-    UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
-    .then(function(newUser) {
-      res.status(201).json(newUser);
-    });
+    // probably safe to delete
+    // UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
+    // .then(function(newUser) {
+    //   res.status(201).json(newUser);
+    // });
+    
 });
 
 // router.post ('/') has to merge with app.post('/api/account')
