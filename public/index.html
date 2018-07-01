@@ -36,10 +36,8 @@
 		<div class="dropdown">
 			<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
 				<div class="dropdown-content asset-dropbtn">
-					<!-- <a href="#">Drawer 1</a>
-					<a href="#">Drawer 2</a> -->
 					<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
-					<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
+					<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
 				</div>
 		</div>
 		<div class="search-container">
@@ -196,12 +194,8 @@
 							<input type="text" id="notes" placeholder="Notes">
 						</li>
 						<li>
-							<label for="drawer-title">Create New Drawer</label>
-							<input type="text" id="drawer-title" placeholder="Drawer Title">
-						</li>
-						<li>
-							<label for="new-drawer-title">Add To Drawer</label>
-							<select name="current-drawer-titles" class="new-drawer-title">
+							<label for="drawer-title">Add To Drawer</label>
+							<select name="current-drawer-titles" id="drawer-title" class="new-drawer-title">
 								<!-- <option value=`${drawerTitle}`>Drawer 1</option>
 								<option value=`${drawerTitle}`>Drawer 2</option> -->
 							</select>
@@ -221,12 +215,12 @@
 	<section role="region">
 		<div id="draweroverlay">
 			<div class="addDrawer" id="addDrawerForm">
-				<form>
+				<form class="drawer-age-form">
 					<ul class="flex-outer">
 						<p class="form-title">Create Drawer</p>
 						<li>
 						<label for="drawer-name">Drawer Name</label>
-						<input type="text" id="drawer-name" placeholder="Drawer Name">
+						<input type="text" id="new-drawer-title" placeholder="Drawer Name">
 						</li>
 						<li>
 						<button id="draweroverlaybutton" type="submit" onclick="drawerOff()">Create</button>

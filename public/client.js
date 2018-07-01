@@ -147,7 +147,7 @@ var childProfileTemplate = function (childName, birthDate) {
     //     `<a href="#">${childName}</a>`
     // )
 }
-//check for child name already exisiting for this profile
+
 
 function addChildProfile(firstName, birthDate) {
     console.log('Adding new child profile: ' + childName + birthDate);
@@ -290,7 +290,8 @@ function createNewAccount() {
       url: ACCOUNT_URL,
       data: JSON.stringify({username, password, firstName, lastName, email}),
       success: function(data) {
-        getAndDisplayAccount();
+        //getAndDisplayAccount();
+        alert('You have successfully created your account');
       },
       dataType: 'json',
       contentType: 'application/json'
@@ -363,8 +364,6 @@ function openDrawer(evt, drawerTitle) {
     evt.currentTarget.className += " active";
 }
 
-//when click Pirate Ship button, give me pirateship image elements, append those the id of the div below the button
-
 var drawerTemplate = function(drawerTitle) {
 console.log('Right Here', drawerTitle);
 var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
@@ -425,6 +424,16 @@ function getAndDisplayDrawer() {
     
 }
 
+function handleDrawerAdd() {
+    $('.drawer-age-form').submit(function(e) {
+        var newDrawerTitle = $('#new-drawer-title').val();
+        console.log ('creating drawer 430: ', newDrawerTitle);
+        e.preventDefault();
+        window.location.reload(true);
+        drawerTemplate(newDrawerTitle);
+    });
+}
+
 function getAndDisplayUploads() {
     console.log('retrieving uploads');
     $.getJSON(ASSETS_URL, function(items) {
@@ -451,52 +460,48 @@ function getAndDisplayUploads() {
     })
 }
 
+function connectImage() {
+    console.log('connecting image: ' + title + notes + dateUploaded + fileLocation + drawerTitle);
+    $.ajax({
+        method: 'POST',
+        url: `/api/account/${userID}/uploads`,
+        data: JSON.stringify({title, notes, dateUploaded, fileLocation, drawerTitle}),
+        success : function(data) {
+            alert('You have succesfully connected the image!')
+            getAndDisplayUploads();
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+}
 
-function handleAssetAdd() {
+
+function handleImageConnect() {
     $('#connectAssetForm').submit(function(e) {
         var title = $('#title').val(); 
         var notes = $('#date-uploaded').val();
         var dateUploaded = $('#notes').val();
         var fileLocation = $('#image-url').val();
         var drawerTitle = $('#drawer-title').val();
-        console.log('asset info', title, notes, dateUploaded, fileLocation, drawerTitle);
+        console.log('asset info 476', title, notes, dateUploaded, fileLocation, drawerTitle);
         e.preventDefault();
         window.location.reload(true);
+        if (title == '' || notes == '' || fileLocation == '' || drawerTitle == '' || dateUploaded == '' ) {
+            alert('Missing Information')
+            } else { connectImage(title, notes, dateUploaded, fileLocation, drawerTitle);
+        }
     });
 }
 
-function editDrawer() {
-//edit drawer title   
-}
 
-function deleteDrawer() {
-    // console.log('Deleting drawer `' + userID + '`');
-    // $.ajax({
-    //   url: ASSETS_URL + '/' + userID,
-    //   method: 'DELETE',
-    //   success: getAndDisplayDrawer
-    // }); 
-}
-
-function uploadAndDisplayAssets() {
-// upload new asset from #uploadAssetForm 
-// user will need to identify existing drawer to upload asset to
-// asset will be added to asset.html page, under identified drawer, 
-// populated with items from the #uploadAssetForm fields
-}
-
-function editUploads() {
+function editConnectedImages() {
 // edit title, notes or drawer location for a particular asset
 }
 
-function deleteAsset() {
+function deleteConnectedImages() {
 // delete a particular asset from the drawer
 }
 
-function searchAssets() {
-// using search field in navbar to search title and notes input fields
-// return results in search.html
-}
 
 function getAndDisplayImagesOnHomePage() {
 // display six random user uploaded images on home page
@@ -506,10 +511,11 @@ $(function() {
     createNewAccount();
     getAndDisplayChildProfile();
     handleChildProfileAdd();
-    // deleteChildProfile();
-    // // handleChildProfileDelete();
-    // handleDrawerAdd();
+    handleImageConnect();
     getAndDisplayDrawer();
+    // deleteChildProfile();
+    // handleChildProfileDelete();
+    handleDrawerAdd();
     // getAndDisplayUploads();
     // filterUploads();
 });
