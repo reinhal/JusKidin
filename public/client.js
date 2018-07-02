@@ -137,10 +137,12 @@ var childProfileTemplate = function (childName, birthDate) {
 
 
 function addChildProfile(firstName, birthDate) {
+    userID =  localStorage.getItem('userID');
     console.log('Adding new child profile: ' + childName + birthDate);
     $.ajax({
       method: 'POST',
       url: `/api/account/${userID}/childProfiles`,
+      headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
       data: JSON.stringify({firstName, birthDate}),
       success: function(data) {
         getAndDisplayChildProfile();
@@ -149,18 +151,6 @@ function addChildProfile(firstName, birthDate) {
       contentType: 'application/json'
     });
 }
-
-// function getAndDisplayChildProfile() {
-//     console.log('Retrieving child profile');
-//     $.getJSON(CHILDPROFS_URL, function(items) {
-//       console.log('Rendering child profile');
-//       var childProfileElements = items.childProfs.map(function(userInfoSchema) {
-//         var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ))
-//         element.attr('id', userInfoSchema.id);
-//         return element
-//       });
-//     });
-// }
 
 function getAndDisplayChildProfile() {
     userID =  localStorage.getItem('userID');
@@ -564,7 +554,7 @@ $(function() {
     // addChildProfile();
     // createNewAccount();
     if (getUserID()) {                //undefined implies not logged in, refactor later
-        getAndDisplayChildProfile();
+        //getAndDisplayChildProfile();
         getAndDisplayDrawer();
     }
     getAndDisplayChildProfile();

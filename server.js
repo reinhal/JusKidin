@@ -257,7 +257,7 @@ app.delete('/api/account/:_id', (req, res) => {
 
 /////////// Child Profile Info Endpoints /////////////////////////////////////
 
-app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
+app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) => {
   // if (req.params._id == 'me') {
   //   req.params._id = req.user._id
   // }
