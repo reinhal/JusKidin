@@ -135,7 +135,6 @@ var childProfileTemplate = function (childName, birthDate) {
     )
 }
 
-
 function addChildProfile(firstName, birthDate) {
     userID =  localStorage.getItem('userID');
     console.log('Adding new child profile: ' + childName + birthDate);
@@ -145,7 +144,8 @@ function addChildProfile(firstName, birthDate) {
       headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
       data: JSON.stringify({firstName, birthDate}),
       success: function(data) {
-        getAndDisplayChildProfile();
+          console.log('148', 'what does this mean?');
+        //getAndDisplayChildProfile();
       },
       dataType: 'json',
       contentType: 'application/json'
@@ -187,7 +187,7 @@ function handleChildProfileAdd() {
         var birthDate = $('.child-birth-date').val();
         console.log("Child Info", childName, birthDate, $('.child-birth-date'))
         e.preventDefault();
-        
+        window.location.reload(true);
         if (childName == '' || birthDate == '') {
             alert('Missing Information')
         } else {
@@ -478,17 +478,6 @@ function getAndDisplayUploads() {
     })
 }
 
-function filterUploads() {
-    console.log('drawer uploads here', drawerUploads);
-   $('.tablinks').click(function() {
-     //getElementById
-   });
-//    console.log ('uploads array', uploadsArray);
-}
-// text of drawer Jquery into html this.attr to specifiy the element
-// this create a new array
-// loop over and the appropriate html to each item
-// assign 343 to a new variable
 function handleDrawerAdd() {
     $('#addDrawerForm').submit(function(e) {
         e.preventDefault();
