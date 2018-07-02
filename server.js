@@ -39,6 +39,7 @@ app.use(morgan('common'));
 // });
 
 app.get('/api/protected', jwtAuth, (req, res) => {
+  console.log('42', req.user);
   return res.json({
     data: 'rosebud'
   });

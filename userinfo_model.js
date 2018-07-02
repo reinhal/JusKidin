@@ -39,8 +39,9 @@ const userInfoSchema = mongoose.Schema({
 
 userInfoSchema.methods.serialize = function() {
     return {
-        // _id: this._id || '',
+        _id: this._id || '',
         username: this.username || '',
+        // password: this.password || '',
         firstName: this.firstName || '',
         lastName: this.lastName || '',
         email: this.email || ''

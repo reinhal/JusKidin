@@ -153,7 +153,7 @@ describe('UserInfo API resource', function() {
     });
     describe('/api/account', function () {
       describe('POST endpoint', function() {
-        it.only('should add a new user', function() {
+        it('should add a new user', function() {
 
             const newUser = generateUserInfoData();
             delete newUser.childProfs;
@@ -168,10 +168,9 @@ describe('UserInfo API resource', function() {
                     expect(res).to.be.json;
                     expect(res.body).to.be.a('object');
                     expect(res.body).to.include.keys(
-                      'username', 'password', 'firstName', 'lastName', 'email');
+                      'username', 'firstName', 'lastName', 'email');
                     expect(res.body.id).to.not.be.null;
                     expect(res.body.username).to.equal(newUser.username);
-                    expect(res.body.password).to.equal(newUser.password);
                     expect(res.body.firstName).to.equal(newUser.firstName);
                     expect(res.body.lastName).to.equal(newUser.lastName);
                     expect(res.body.email).to.equal(newUser.email); 
@@ -479,25 +478,29 @@ describe('UserInfo API resource', function() {
               const res = err.response;
             });
         });
-        it('Should create a new user', function () {
+        it.only('Should create a new user', function () {
 
           const newUser = generateUserInfoData();
           delete newUser.childProfs;
           delete newUser.asset;
+          console.log('486 newUser', newUser);
 
           return chai
             .request(app)
             .post('/api/account')
             .send( newUser )
             .then(res => {
+              console.log('493 res', res.body);
               expect(res).to.have.status(201);
               expect(res.body).to.be.an('object');
               expect(res.body).to.have.keys(
+                '_id',
                 'username',
                 'firstName',
                 'lastName',
                 'email'
               );
+              expect(res.body._id).to.equal(newUser._id);
               expect(res.body.username).to.equal(newUser.username);
               expect(res.body.firstName).to.equal(newUser.firstName);
               expect(res.body.lastName).to.equal(newUser.lastName);
@@ -508,6 +511,7 @@ describe('UserInfo API resource', function() {
             })
             .then(user => {
               expect(user).to.not.be.null;
+              expect(user._id).to.equal(newUser._id);
               expect(user.firstName).to.equal(newUser.firstName);
               expect(user.lastName).to.equal(newUser.lastName);
               expect(user.email).to.equal(newUser.email);
@@ -517,7 +521,7 @@ describe('UserInfo API resource', function() {
               expect(passwordIsCorrect).to.be.true;
             });
         });
-        it('Should trim firstName and lastName', function () {
+        it.only('Should trim firstName and lastName', function () {
 
           const newUser = generateUserInfoData();
           newUser.firstName = ` ${newUser.firstName} `,
@@ -528,14 +532,17 @@ describe('UserInfo API resource', function() {
             .post('/api/account')
             .send( newUser )
             .then(res => {
+              console.log('535 res', res.body);
               expect(res).to.have.status(201);
               expect(res.body).to.be.an('object');
               expect(res.body).to.have.keys(
+                '_id',
                 'username',
                 'firstName',
                 'lastName',
                 "email"
               );
+              expect(res.body._id).to.equal(newUser._id);
               expect(res.body.username).to.equal(newUser.username);
               expect(res.body.firstName).to.equal(newUser.firstName.trim());
               expect(res.body.lastName).to.equal(newUser.lastName.trim());
