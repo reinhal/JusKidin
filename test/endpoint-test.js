@@ -596,6 +596,7 @@ describe('UserInfo API resource', function() {
               return UserInfo.findById(userinfo._id);
             })
             .then(function(_userinfo) {
+              console.log('599', _userinfo);
               expect(_userinfo).to.be.null;
             });
         });

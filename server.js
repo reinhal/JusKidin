@@ -59,10 +59,8 @@ app.get('/api/account', (req, res) => {
 
 });
 
-app.get('/api/account/:_id', (req, res) => {
-  // if (req.params._id == 'me') {
-  //   req.params._id = req.user._id
-  // }
+app.get('/api/account/:_id', jwtAuth, (req, res) => {
+ 
   UserInfo
     .findOne({
       "_id": req.user._id
@@ -371,9 +369,6 @@ app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
 // // Digital Assets Endpoints//
 
 app.post('/api/account/:_id/uploads', jsonParser, (req, res) => {
-  // if (req.params._id == 'me') {
-  //   req.params._id = req.user._id
-  // }
 
   const updatedAssetObject = [req.body.title, req.body.notes, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {

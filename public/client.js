@@ -12,7 +12,6 @@ var drawerUploads = [];
 var drawerTitle = "";
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
-var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
 var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
 
 function getUserID() {
@@ -151,15 +150,38 @@ function addChildProfile(firstName, birthDate) {
     });
 }
 
+// function getAndDisplayChildProfile() {
+//     console.log('Retrieving child profile');
+//     $.getJSON(CHILDPROFS_URL, function(items) {
+//       console.log('Rendering child profile');
+//       var childProfileElements = items.childProfs.map(function(userInfoSchema) {
+//         var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ))
+//         element.attr('id', userInfoSchema.id);
+//         return element
+//       });
+//     });
+// }
+
 function getAndDisplayChildProfile() {
+    userID =  localStorage.getItem('userID');
+    var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
     console.log('Retrieving child profile');
-    $.getJSON(CHILDPROFS_URL, function(items) {
-      console.log('Rendering child profile');
-      var childProfileElements = items.childProfs.map(function(userInfoSchema) {
-        var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ))
-        element.attr('id', userInfoSchema.id);
-        return element
-      });
+    console.log('169 UserID', userID);
+    console.log('172 Child URL', CHILDPROFS_URL);
+    $.ajax({
+        method: 'GET',
+        url: CHILDPROFS_URL,
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
+        success: function(data) {
+            console.log('child profiles here!', data)
+            var childProfileElements = data.childProfs.map(function(userInfoSchema) {
+                var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ))
+                element.attr('id', userInfoSchema.id);
+            return element
+            })
+        },
+        dataType: 'json',
+        contentType: 'application/json'
     });
 }
 
@@ -314,8 +336,20 @@ function attemptLogInUser(username, password) {
         url: '/api/auth/login',
         data: JSON.stringify({username, password}),
         success: function(resData) {
-            console.log('resData 316 is authToken', resData);
+            localStorage.setItem('token', resData.authToken);
+            var JWT = jwt_decode(resData.authToken);
+            console.log('resData 316 is JWT.user._id', JWT.user._id);
+            userID = JWT.user._id;
+            localStorage.setItem('userID', userID);
             alert('You have successfully logged in!');
+            $.ajax({
+                method: 'GET',
+                url: `/api/account/${userID}`,
+                headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
+                success: function(data) {
+                    console.log('you made it here!', data);
+                }
+            })
         },
         dataType: 'json',
         contentType: 'application/json'
@@ -533,7 +567,7 @@ $(function() {
         getAndDisplayChildProfile();
         getAndDisplayDrawer();
     }
-
+    getAndDisplayChildProfile();
     updateNavUser(getUserID());  //navbar handles logged in state
     handleLogInUser();
     handleChildProfileAdd();
