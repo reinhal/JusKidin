@@ -478,7 +478,7 @@ describe('UserInfo API resource', function() {
               const res = err.response;
             });
         });
-        it.only('Should create a new user', function () {
+        it('Should create a new user', function () {
 
           const newUser = generateUserInfoData();
           delete newUser.childProfs;
@@ -500,7 +500,6 @@ describe('UserInfo API resource', function() {
                 'lastName',
                 'email'
               );
-              expect(res.body._id).to.equal(newUser._id);
               expect(res.body.username).to.equal(newUser.username);
               expect(res.body.firstName).to.equal(newUser.firstName);
               expect(res.body.lastName).to.equal(newUser.lastName);
@@ -511,7 +510,6 @@ describe('UserInfo API resource', function() {
             })
             .then(user => {
               expect(user).to.not.be.null;
-              expect(user._id).to.equal(newUser._id);
               expect(user.firstName).to.equal(newUser.firstName);
               expect(user.lastName).to.equal(newUser.lastName);
               expect(user.email).to.equal(newUser.email);
@@ -521,7 +519,7 @@ describe('UserInfo API resource', function() {
               expect(passwordIsCorrect).to.be.true;
             });
         });
-        it.only('Should trim firstName and lastName', function () {
+        it('Should trim firstName and lastName', function () {
 
           const newUser = generateUserInfoData();
           newUser.firstName = ` ${newUser.firstName} `,
@@ -542,7 +540,6 @@ describe('UserInfo API resource', function() {
                 'lastName',
                 "email"
               );
-              expect(res.body._id).to.equal(newUser._id);
               expect(res.body.username).to.equal(newUser.username);
               expect(res.body.firstName).to.equal(newUser.firstName.trim());
               expect(res.body.lastName).to.equal(newUser.lastName.trim());

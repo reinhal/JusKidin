@@ -60,9 +60,12 @@ app.get('/api/account', (req, res) => {
 });
 
 app.get('/api/account/:_id', (req, res) => {
+  // if (req.params._id == 'me') {
+  //   req.params._id = req.user._id
+  // }
   UserInfo
     .findOne({
-      "_id": req.params._id
+      "_id": req.user._id
     })
     .select(req.query.select)
     .then(userinfo => {
@@ -75,7 +78,6 @@ app.get('/api/account/:_id', (req, res) => {
 });
 
 app.post('/api/account', jsonParser, (req, res) => {
-  // console.log('UserInfo 70', UserInfo);
   const requiredFields = ['username', 'password', 'firstName', 'lastName', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
   
@@ -217,6 +219,11 @@ app.put('/api/account/:_id', jsonParser, (req, res) => {
     const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
     return res.status(400).send(message);
   }
+
+  // if (req.params._id == 'me') {
+  //   req.params._id = req.user._id
+  // }
+  
   const updatedUser = ['firstName', 'lastName', 'email'];
   for (let i=0; i<updatedUser.length; i++) {
     const field = updatedUser[i];
@@ -237,8 +244,8 @@ app.put('/api/account/:_id', jsonParser, (req, res) => {
     }
   )
 });
-// api/account/:id/asset/:WHATEVER THE IDENTIFIER
-app.delete('/api/account/:id', (req, res) => {
+
+app.delete('/api/account/:_id', (req, res) => {
   UserInfo
   .findByIdAndRemove(req.params.id)
   .then(() => {
@@ -253,6 +260,9 @@ app.delete('/api/account/:id', (req, res) => {
 /////////// Child Profile Info Endpoints /////////////////////////////////////
 
 app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
+  // if (req.params._id == 'me') {
+  //   req.params._id = req.user._id
+  // }
   const reqChildProfs = [req.body.firstName, req.body.birthDate];
   for (let i=0; i<reqChildProfs.length; i++) {
     const field = reqChildProfs[i];
@@ -297,66 +307,74 @@ app.post('/api/account/:_id/childProfiles', jsonParser, (req, res) => {
   }
 });
 
-app.put('/api/account/:_id/childProfs/:child_id', jsonParser, (req, res) => {
-  if (req.params.childProfs !== req.body.childProfs) {
-    const message = `Request path id (${req.params.childProf}) and request body id (${req.body.childProfs}) must match`;
-    return res.status(400).send(message);
-  }
+// app.put('/api/account/:_id/childProfs/:child_id', [jwtAuth, jsonParser], (req, res) => {
+//   if (req.params._id == 'me') {
+//     req.params._id = req.user._id
+//   }
 
-  const updatedChildObject = ['firstName','birthDate'];
-    for (let i=0; i<updatedChildObject.length; i++) {
-      const field = updatedChildObject[i];
-      if (!(field in req.body)) {
-        const message = `Missing \`${field}\` in request body`
-        return res.status(400).send(message);
-      }
-  }
+//   if (req.params.childProfs !== req.body.childProfs) {
+//     const message = `Request path id (${req.params.childProf}) and request body id (${req.body.childProfs}) must match`;
+//     return res.status(400).send(message);
+//   }
 
-  return UserInfo.findById(
-    req.params._id)
-    .then(thisUser => {
-    for ( let i=0; i < thisUser.childProfs.length; i++ ) {
-      if (req.params.child_id == thisUser.childProfs[i]._id) {
-        thisUser.childProfs[i].firstName = req.body.firstName;
-        thisUser.childProfs[i].birthDate = req.body.birthDate;
-      }
-    }
+//   const updatedChildObject = ['firstName','birthDate'];
+//     for (let i=0; i<updatedChildObject.length; i++) {
+//       const field = updatedChildObject[i];
+//       if (!(field in req.body)) {
+//         const message = `Missing \`${field}\` in request body`
+//         return res.status(400).send(message);
+//       }
+//   }
 
-  return UserInfo.findByIdAndUpdate(
-    req.params._id, {
-      childProfs:thisUser.childProfs
-    }
-  ) 
-    .then(updatedChild => {
-      return res.status(201).send(updatedChild);
-    })
-  })
-});
+//   return UserInfo.findById(
+//     req.params._id)
+//     .then(thisUser => {
+//     for ( let i=0; i < thisUser.childProfs.length; i++ ) {
+//       if (req.params.child_id == thisUser.childProfs[i]._id) {
+//         thisUser.childProfs[i].firstName = req.body.firstName;
+//         thisUser.childProfs[i].birthDate = req.body.birthDate;
+//       }
+//     }
 
-app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
-  UserInfo
-  .findOne({
-    "_id": req.params._id
-  })
-  .then(userinfo => {
-    for (let index = 0; index < userinfo.childProfs.length; index++) {
-      if(userinfo.childProfs[index].id === req.params.child_id){
-        userinfo.childProfs.splice(index,1)
-      }      
-    }
-    userinfo.save()
-      res.status(204);
-      res.json(userinfo);
-    })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({ message: 'Internal server error' });
-  });
-});
+//   return UserInfo.findByIdAndUpdate(
+//     req.params._id, {
+//       childProfs:thisUser.childProfs
+//     }
+//   ) 
+//     .then(updatedChild => {
+//       return res.status(201).send(updatedChild);
+//     })
+//   })
+// });
+
+// app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
+//   UserInfo
+//   .findOne({
+//     "_id": req.params._id
+//   })
+//   .then(userinfo => {
+//     for (let index = 0; index < userinfo.childProfs.length; index++) {
+//       if(userinfo.childProfs[index].id === req.params.child_id){
+//         userinfo.childProfs.splice(index,1)
+//       }      
+//     }
+//     userinfo.save()
+//       res.status(204);
+//       res.json(userinfo);
+//     })
+//   .catch(err => {
+//     console.log(err);
+//     res.status(500).json({ message: 'Internal server error' });
+//   });
+// });
 
 // // Digital Assets Endpoints//
 
 app.post('/api/account/:_id/uploads', jsonParser, (req, res) => {
+  // if (req.params._id == 'me') {
+  //   req.params._id = req.user._id
+  // }
+
   const updatedAssetObject = [req.body.title, req.body.notes, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];
