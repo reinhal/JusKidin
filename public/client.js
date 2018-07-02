@@ -3,6 +3,10 @@ var userID = '5b328daf6994df88e5ab30f4';
 var username = '';
 var password = '';
 var firstName = '';
+var dateUploaded = '';
+var notes = '';
+var title = '';
+var fileLocation = '';
 var lastName = '';
 var email = '';
 var childName = '';
@@ -430,7 +434,10 @@ function handleDrawerAdd() {
         console.log ('creating drawer 430: ', newDrawerTitle);
         e.preventDefault();
         //window.location.reload(true);
-        drawerTemplate(newDrawerTitle);
+        if (newDrawerTitle == '') {
+            alert('Missing Information')
+            } else { drawerTemplate(newDrawerTitle);
+        }
     });
 }
 
@@ -479,13 +486,13 @@ function connectImage() {
 function handleImageConnect() {
     $('#connectAssetForm').submit(function(e) {
         var title = $('#title').val(); 
-        var notes = $('#date-uploaded').val();
-        var dateUploaded = $('#notes').val();
+        var notes = $('#notes').val();
+        var dateUploaded = $('#date-uploaded').val();
         var fileLocation = $('#image-url').val();
         var drawerTitle = $('#drawer-title').val();
-        console.log('asset info 476', title, notes, dateUploaded, fileLocation, drawerTitle);
+        console.log('asset info 486', title, notes, dateUploaded, fileLocation, drawerTitle);
         e.preventDefault();
-        window.location.reload(true);
+        // window.location.reload(true);
         if (title == '' || notes == '' || fileLocation == '' || drawerTitle == '' || dateUploaded == '' ) {
             alert('Missing Information')
             } else { connectImage(title, notes, dateUploaded, fileLocation, drawerTitle);
