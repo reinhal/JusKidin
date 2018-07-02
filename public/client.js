@@ -379,7 +379,7 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
     //     `<a href="#">${drawerTitle}</a>`
     // )
 
-    $('.new-drawer-title').append(
+    $('.drawer-title').append(
         `<option value=${drawerTitle}>${drawerTitle}</option>`
     )
 }
@@ -429,7 +429,7 @@ function handleDrawerAdd() {
         var newDrawerTitle = $('#new-drawer-title').val();
         console.log ('creating drawer 430: ', newDrawerTitle);
         e.preventDefault();
-        window.location.reload(true);
+        //window.location.reload(true);
         drawerTemplate(newDrawerTitle);
     });
 }
@@ -513,9 +513,9 @@ $(function() {
     handleChildProfileAdd();
     handleImageConnect();
     getAndDisplayDrawer();
+    handleDrawerAdd();
     // deleteChildProfile();
     // handleChildProfileDelete();
-    handleDrawerAdd();
     // getAndDisplayUploads();
     // filterUploads();
 });

@@ -191,8 +191,8 @@
 							<input type="text" id="notes" placeholder="Notes">
 						</li>
 						<li>
-							<label for="new-drawer-title">Add To Drawer</label>
-							<select name="current-drawer-titles" class="new-drawer-title">
+							<label for="drawer-title">Add To Drawer</label>
+							<select name="current-drawer-titles" id="drawer-title" class="drawer-title">
 								<!-- <option value=`${drawerTitle}`>Drawer 1</option>
 								<option value=`${drawerTitle}`>Drawer 2</option> -->
 							</select>
@@ -217,7 +217,7 @@
 						<p class="form-title">Create Drawer</p>
 						<li>
 						<label for="drawer-name">Drawer Name</label>
-						<input type="text" id="new-drawer-title" placeholder="Drawer Name">
+						<input type="text" id="new-drawer-title" class="new-drawer-title" placeholder="Drawer Name">
 						</li>
 						<li>
 						<button id="draweroverlaybutton" type="submit" onclick="drawerOff()">Create</button>
