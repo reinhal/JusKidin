@@ -187,6 +187,7 @@ function handleChildProfileAdd() {
         var birthDate = $('.child-birth-date').val();
         console.log("Child Info", childName, birthDate, $('.child-birth-date'))
         e.preventDefault();
+        
         if (childName == '' || birthDate == '') {
             alert('Missing Information')
         } else {
