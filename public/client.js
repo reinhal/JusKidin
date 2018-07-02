@@ -12,7 +12,6 @@ var drawerUploads = [];
 var drawerTitle = "";
 var serverBase = '//localhost:8080/';
 var ACCOUNT_URL = serverBase + 'api/account';
-var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
 
 function getUserID() {
     return userID;
@@ -156,8 +155,6 @@ function getAndDisplayChildProfile() {
     userID =  localStorage.getItem('userID');
     var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
     console.log('Retrieving child profile');
-    console.log('169 UserID', userID);
-    console.log('172 Child URL', CHILDPROFS_URL);
     $.ajax({
         method: 'GET',
         url: CHILDPROFS_URL,
@@ -434,49 +431,106 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
 
 function getAndDisplayDrawer() {
     console.log('retrieving drawer');
-    $.getJSON(ASSETS_URL, function(items) {
-        console.log('Rendering drawer', items);
-        function uniqueDrawerTitles(input) {
-            var output = [];
-            for(var i=0; i < input.asset.length; i++) {
-              if(output.indexOf(input.asset[i].drawerTitle) === -1)
-              output.push(input.asset[i].drawerTitle);
+    userID =  localStorage.getItem('userID');
+    var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
+    $.ajax({
+        method: 'GET',
+        url: ASSETS_URL,
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
+        success: function(data) {
+            console.log('Rendering drawer', data);
+            function uniqueDrawerTitles(input) {
+                var output = [];
+                for(var i=0; i < input.asset.length; i++) {
+                  if(output.indexOf(input.asset[i].drawerTitle) === -1)
+                  output.push(input.asset[i].drawerTitle);
+                }
+            return output;
             }
-        return output;
+            data = uniqueDrawerTitles(data);
+            var drawerElement = data.map(function(item) {
+                var element = $(drawerTemplate(item))
+                element.attr('id', item);
+                return element
+            }); 
+            getAndDisplayUploads();
         }
-        items = uniqueDrawerTitles(items);
-        var drawerElement = items.map(function(item) {
-            var element = $(drawerTemplate(item))
-            element.attr('id', item);
-            return element
-        });
-        getAndDisplayUploads();
-    });   
+    })
+    // $.getJSON(ASSETS_URL, function(items) {
+    //     console.log('Rendering drawer', items);
+    //     function uniqueDrawerTitles(input) {
+    //         var output = [];
+    //         for(var i=0; i < input.asset.length; i++) {
+    //           if(output.indexOf(input.asset[i].drawerTitle) === -1)
+    //           output.push(input.asset[i].drawerTitle);
+    //         }
+    //     return output;
+    //     }
+    //     items = uniqueDrawerTitles(items);
+    //     var drawerElement = items.map(function(item) {
+    //         var element = $(drawerTemplate(item))
+    //         element.attr('id', item);
+    //         return element
+    //     });
+    //     getAndDisplayUploads();
+    // });   
 }
 
 function getAndDisplayUploads() {
+    userID =  localStorage.getItem('userID');
+    var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
     console.log('retrieving uploads');
-    $.getJSON(ASSETS_URL, function(items) {
-        console.log('Rendering Uploads', items);
-        drawerUploads = items.asset;
-        console.log("drawer uploads", drawerUploads);
-        drawerUploads.forEach(item => {
-            console.log('item', item.drawerTitle);
-            const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
-            $(`#${drawerID}`).append(
-                `<section role="region">  
-                    <div class='col-4'>
-                        <div class='asset'>
-                        <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
-                        <div>
-                        <p class="asset-content"><strong>${item.title}</strong></p>
-                        <p class="asset-content">${item.notes}</p>
-                    </div>
-                </section>`
-            )
-        })
-    })
+    $.ajax({
+        method: 'GET',
+        url: ASSETS_URL,
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
+        success: function(data) {
+            console.log('pictures here!', data)
+            console.log('Rendering Uploads', data);
+            drawerUploads = data.asset;
+            console.log("drawer uploads", drawerUploads);
+            drawerUploads.forEach(item => {
+                console.log('item', item.drawerTitle);
+                const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
+                $(`#${drawerID}`).append(
+                    `<section role="region">  
+                        <div class='col-4'>
+                            <div class='asset'>
+                            <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
+                            <div>
+                            <p class="asset-content"><strong>${item.title}</strong></p>
+                            <p class="asset-content">${item.notes}</p>
+                        </div>
+                    </section>`
+                )
+            })
+
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
 }
+//     $.getJSON(ASSETS_URL, function(items) {
+//         console.log('Rendering Uploads', items);
+//         drawerUploads = items.asset;
+//         console.log("drawer uploads", drawerUploads);
+//         drawerUploads.forEach(item => {
+//             console.log('item', item.drawerTitle);
+//             const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
+//             $(`#${drawerID}`).append(
+//                 `<section role="region">  
+//                     <div class='col-4'>
+//                         <div class='asset'>
+//                         <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
+//                         <div>
+//                         <p class="asset-content"><strong>${item.title}</strong></p>
+//                         <p class="asset-content">${item.notes}</p>
+//                     </div>
+//                 </section>`
+//             )
+//         })
+//     })
+// }
 
 function handleDrawerAdd() {
     $('#addDrawerForm').submit(function(e) {
@@ -553,10 +607,10 @@ $(function() {
     handleChildProfileAdd();
     handleDrawerAdd();
     handleAccountAdd();
+    getAndDisplayDrawer();
     // getAndDisplayChildProfile();
     // deleteChildProfile();
     // handleChildProfileDelete();
-    // getAndDisplayDrawer();
     // getAndDisplayUploads();
     // filterUploads();
 });
