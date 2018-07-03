@@ -425,10 +425,6 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
         `<div id="${drawerID}" class="uploadContainer"></div>`
     )
 
-    // $('.asset-dropbtn').append(
-    //     `<a href="#">${drawerTitle}</a>`
-    // )
-
     $('.drawer-title').append(
         `<option value=${drawerTitle}>${drawerTitle}</option>`
     )
