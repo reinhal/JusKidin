@@ -3,6 +3,8 @@
 var userID = '';
 var username = '';
 var password = '';
+var dateUploaded = '';
+var fileLocation = '';
 var firstName = '';
 var lastName = '';
 var email = '';
@@ -22,6 +24,14 @@ function setUserID(id) {
 }
 
 ///////////// Overlay Form Functions ///////////////////////
+function deleteOn() {
+    document.getElementById("deleteoverlay").style.display = "block";
+}
+
+function deleteOff() {
+    document.getElementById("deleteoverlay").style.display = "none";
+}
+
 function loginOn() {
     document.getElementById("loginoverlay").style.display = "block";
 }
@@ -30,12 +40,12 @@ function loginOff() {
     document.getElementById("loginoverlay").style.display = "none";
 }
 
-function newAccountOn() {
-    document.getElementById("new-account-overlay").style.display = "block";
+function updateAccountOn() {
+    document.getElementById("update-accountoverlay").style.display = "block";
 }
 
-function newAccountOff() {
-    document.getElementById("new-account-overlay").style.display = "none";
+function updateAccountOff() {
+    document.getElementById("update-accountoverlay").style.display = "none";
 }
 
 function accountOn() {
@@ -52,6 +62,14 @@ function childOn() {
 
 function childOff() {
     document.getElementById("childoverlay").style.display = "none";
+}
+
+function editAssetOn() {
+    document.getElementById("edit-assetoverlay").style.display = "block";
+}
+
+function editAssetOff() {
+    document.getElementById("edit-assetoverlay").style.display = "none";
 }
 
 function assetOn() {
@@ -129,9 +147,9 @@ var childProfileTemplate = function (childName, birthDate) {
         `<div id="${childID}" class="gsearchContainer"></div>`
     )
 
-    $('.child-dropbtn').append(
-        `<a href="#">${childName}</a>`
-    )
+    // $('.child-dropbtn').append(
+    //     `<a href="#">${childName}</a>`
+    // )
 }
 
 function addChildProfile(firstName, birthDate) {
@@ -396,8 +414,6 @@ function openDrawer(evt, drawerTitle) {
     evt.currentTarget.className += " active";
 }
 
-//when click Pirate Ship button, give me pirateship image elements, append those the id of the div below the button
-
 var drawerTemplate = function(drawerTitle) {
 console.log('Right Here', drawerTitle);
 var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
@@ -409,8 +425,12 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
         `<div id="${drawerID}" class="uploadContainer"></div>`
     )
 
-    $('.asset-dropbtn').append(
-        `<a href="#">${drawerTitle}</a>`
+    // $('.asset-dropbtn').append(
+    //     `<a href="#">${drawerTitle}</a>`
+    // )
+
+    $('.drawer-title').append(
+        `<option value=${drawerTitle}>${drawerTitle}</option>`
     )
 }
 
@@ -456,25 +476,21 @@ function getAndDisplayDrawer() {
             getAndDisplayUploads();
         }
     })
-    // $.getJSON(ASSETS_URL, function(items) {
-    //     console.log('Rendering drawer', items);
-    //     function uniqueDrawerTitles(input) {
-    //         var output = [];
-    //         for(var i=0; i < input.asset.length; i++) {
-    //           if(output.indexOf(input.asset[i].drawerTitle) === -1)
-    //           output.push(input.asset[i].drawerTitle);
-    //         }
-    //     return output;
-    //     }
-    //     items = uniqueDrawerTitles(items);
-    //     var drawerElement = items.map(function(item) {
-    //         var element = $(drawerTemplate(item))
-    //         element.attr('id', item);
-    //         return element
-    //     });
-    //     getAndDisplayUploads();
-    // });   
 }
+
+function handleDrawerAdd() {
+    $('.drawer-age-form').submit(function(e) {
+        var newDrawerTitle = $('#new-drawer-title').val();
+        console.log ('creating drawer 430: ', newDrawerTitle);
+        e.preventDefault();
+        //window.location.reload(true);
+        if (newDrawerTitle == '') {
+            alert('Missing Information')
+            } else { drawerTemplate(newDrawerTitle);
+        }
+    });
+}
+
 
 function getAndDisplayUploads() {
     userID =  localStorage.getItem('userID');
@@ -510,6 +526,42 @@ function getAndDisplayUploads() {
         contentType: 'application/json'
     });
 }
+
+function handleImageConnect() {
+    $('#connectAssetForm').submit(function(e) {
+        var title = $('#title').val(); 
+        var notes = $('#notes').val();
+        var dateUploaded = $('#date-uploaded').val();
+        var fileLocation = $('#image-url').val();
+        var drawerTitle = $('#drawer-title').val();
+        console.log('asset info 486', title, notes, dateUploaded, fileLocation, drawerTitle);
+        e.preventDefault();
+        // window.location.reload(true);
+        if (title == '' || notes == '' || fileLocation == '' || drawerTitle == '' || dateUploaded == '' ) {
+            alert('Missing Information')
+            } else { connectImage(title, notes, dateUploaded, fileLocation, drawerTitle);
+        }
+    });
+}
+
+function connectImage() {
+    console.log('connecting image: ' + title + notes + dateUploaded + fileLocation + drawerTitle);
+    userID =  localStorage.getItem('userID');
+    var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
+    $.ajax({
+        method: 'POST',
+        url: `/api/account/${userID}/uploads`,
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
+        data: JSON.stringify({title, notes, dateUploaded, fileLocation, drawerTitle}),
+        success : function(data) {
+            alert('You have succesfully connected the image!')
+            getAndDisplayUploads();
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+}
+
 //     $.getJSON(ASSETS_URL, function(items) {
 //         console.log('Rendering Uploads', items);
 //         drawerUploads = items.asset;
@@ -532,23 +584,43 @@ function getAndDisplayUploads() {
 //     })
 // }
 
-function handleDrawerAdd() {
-    $('#addDrawerForm').submit(function(e) {
-        e.preventDefault();
-        var drawerTemplate = function(drawerTitle) {
-            var drawerTitle = $('#drawer-name').val();
-            $('.dropdown-asset').append(
-                `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
-                `<div id="${drawerTitle}" class="assettabcontent"></div>`
-            )
+// function handleDrawerAdd() {
+//     $('#addDrawerForm').submit(function(e) {
+//         e.preventDefault();
+//         var drawerTemplate = function(drawerTitle) {
+//             var drawerTitle = $('#drawer-name').val();
+//             $('.dropdown-asset').append(
+//                 `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
+//                 `<div id="${drawerTitle}" class="assettabcontent"></div>`
+//             )
         
-            $('.asset-dropbtn').append(
-                `<a href="#">${drawerTitle}</a>`
-            )
-        }
-        drawerTemplate("outdoor adventures");
-    });
-}
+//             $('.asset-dropbtn').append(
+//                 `<a href="#">${drawerTitle}</a>`
+//             )
+//         }
+//         drawerTemplate("outdoor adventures");
+//     });
+// }
+
+ // $.getJSON(ASSETS_URL, function(items) {
+    //     console.log('Rendering drawer', items);
+    //     function uniqueDrawerTitles(input) {
+    //         var output = [];
+    //         for(var i=0; i < input.asset.length; i++) {
+    //           if(output.indexOf(input.asset[i].drawerTitle) === -1)
+    //           output.push(input.asset[i].drawerTitle);
+    //         }
+    //     return output;
+    //     }
+    //     items = uniqueDrawerTitles(items);
+    //     var drawerElement = items.map(function(item) {
+    //         var element = $(drawerTemplate(item))
+    //         element.attr('id', item);
+    //         return element
+    //     });
+    //     getAndDisplayUploads();
+    // });   
+
 
 function editDrawer() {
 //edit drawer title   
@@ -598,13 +670,15 @@ $(function() {
     // addChildProfile();
     // createNewAccount();
     if (getUserID()) {                //undefined implies not logged in, refactor later
-        //getAndDisplayChildProfile();
+        getAndDisplayChildProfile();
         getAndDisplayDrawer();
     }
     getAndDisplayChildProfile();
     updateNavUser(getUserID());  //navbar handles logged in state
     handleLogInUser();
     handleChildProfileAdd();
+    handleImageConnect();
+    connectImage();
     handleDrawerAdd();
     handleAccountAdd();
     getAndDisplayDrawer();

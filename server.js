@@ -28,22 +28,6 @@ app.use(morgan('common'));
 
 // Account Info Endpoints//
 
-// if(user.password === req.body.password) {
-//   // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
-//   var payload = {id: user.id};
-//   var token = jwt.sign(payload, jwtOptions.secretOrKey);
-//   res.json({message: "ok", token: token});
-// } else {
-//   res.status(401).json({message:"passwords did not match"});
-// }
-// });
-
-app.get('/api/protected', jwtAuth, (req, res) => {
-  console.log('42', req.user);
-  return res.json({
-    data: 'rosebud'
-  });
-});
 
 app.get('/api/account', (req, res) => {
   UserInfo
@@ -218,10 +202,6 @@ app.put('/api/account/:_id', jsonParser, (req, res) => {
     return res.status(400).send(message);
   }
 
-  // if (req.params._id == 'me') {
-  //   req.params._id = req.user._id
-  // }
-  
   const updatedUser = ['firstName', 'lastName', 'email'];
   for (let i=0; i<updatedUser.length; i++) {
     const field = updatedUser[i];
@@ -258,9 +238,7 @@ app.delete('/api/account/:_id', (req, res) => {
 /////////// Child Profile Info Endpoints /////////////////////////////////////
 
 app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) => {
-  // if (req.params._id == 'me') {
-  //   req.params._id = req.user._id
-  // }
+
   const reqChildProfs = [req.body.firstName, req.body.birthDate];
   for (let i=0; i<reqChildProfs.length; i++) {
     const field = reqChildProfs[i];

@@ -15,6 +15,7 @@ font-size: 72px;
 text-shadow: 0px 8px 16px rgba(0,0,0,0.2);
 }
 
+
 p {
     margin: 50px;
 }
@@ -74,10 +75,10 @@ ul li {
     overflow: hidden;
     background-color: 	#303030;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    margin: 40px;
   }
   
 .topnav a {
-    /* float: left; */
     display: block;
     color:whitesmoke;
     text-align: center;
@@ -114,7 +115,7 @@ ul li {
     padding: 6px 10px;
     margin-top: 8px;
     margin-right: 16px;
-    background: 	#303030;
+    background: #303030;
     color:whitesmoke;
     font-size: 17px;
     border: none;
@@ -181,13 +182,13 @@ ul li {
 
 #navAccount {
     float: right;
-    margin-right: 45px;
 }
 
 /*////////////Form Styling//////////*/
 form {
     text-align: center;
 }
+
 .addChild {
     width: 100%;
     max-width: 1200px;
@@ -197,6 +198,14 @@ form {
 }
 
 .loginHere {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.updateAccount {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -235,7 +244,31 @@ form {
     box-sizing: border-box;
 }
 
+.drawerDelete a {
+    margin: 10px;
+}
+
+.editAsset {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+  
+.editAsset * {
+    box-sizing: border-box;
+}
+
 .addDrawer {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.delete {
     width: 80%;
     max-width: 1200px;
     margin: 0 auto;
@@ -304,9 +337,40 @@ form {
     font-family: 'Open Sans', sans-serif;
 }
 
+#delete-overlaybutton {
+    background: red; 
+}
+
 /*////////////Overlay Styling//////////*/
 
 #first-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#user-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#password {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#password2 {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
@@ -351,43 +415,7 @@ form {
     width: 400px;
 }
 
-#user-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#password {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 14px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#password2 {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
 #birth-date { 
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#account-email {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
@@ -432,6 +460,24 @@ form {
     width: 400px;
 }
 
+.new-drawer-title {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#image-url { 
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
 select { 
     padding: 10px;
     margin-top: 5px;
@@ -452,6 +498,48 @@ select {
     width: 400px;
 }
 
+#deleteoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
+#loginoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
+#update-accountoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
 #accountoverlay {
     position: fixed; 
     display: none;
@@ -467,6 +555,20 @@ select {
 }
 
 #childoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
+#edit-assetoverlay {
     position: fixed; 
     display: none;
     width: 100%; 
@@ -508,21 +610,47 @@ select {
     cursor: pointer; 
 }
 
-#loginoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
+#editAssetForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+#updateAccountForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
 }
 
 #addAccountForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+#deleteForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+#loginForm{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -562,16 +690,6 @@ select {
     z-index: 2;
 }
 
-#loginForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
 /*////////////Child and Drawer Tabbed View//////////*/
 
 .tab {
@@ -600,7 +718,7 @@ select {
 }
 
 .tab button.active {
-    background-color: 	#303030;
+    background-color:#303030;
     color: whitesmoke;
 }
 
@@ -611,15 +729,6 @@ select {
     padding: 12px 12px;
     border: 1px solid #ccc;
     border-top: none;
-}
-
-.displayTabcontent {
-    /* display: none; */
-    background-color: white;
-    color: 	#303030;
-    padding: 12px 12px;
-    border: 5px solid #2980b9;
-    margin: 0 50px 50px 50px;
 }
 
 .assettabcontent {
@@ -690,7 +799,7 @@ select {
 }
 
 .dropbtn-asset {
-    background-color: 	#303030;
+    background-color:#303030;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -699,7 +808,7 @@ select {
 }
 
 .dropbtn-asset:hover, .dropbtn-asset:focus {
-    background-color: 	#303030;
+    background-color:#303030;
 }
 
 .dropdown-asset {
@@ -801,6 +910,11 @@ select {
   
 .col-3, .col-4, .col-6, .col-12 {
     width: 100%;
+}
+
+.icon {
+    color: #ddd;
+    padding: 5px;
 }
   
 /*////////////////Footer//////////////////*/
