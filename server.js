@@ -196,11 +196,12 @@ app.post('/api/account', jsonParser, (req, res) => {
 // code needs to update to change the names
 // what parts of the program will be affected, so I can 
 
-app.put('/api/account/:_id', jsonParser, (req, res) => {
-  if (req.params._id !== req.body._id) {
-    const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
-    return res.status(400).send(message);
-  }
+app.put('/api/account/:_id', [jsonParser, jwtAuth],(req, res) => {
+  console.log ('200', req.params.id, req.body.id);
+  // if (req.params._id !== req.body._id) {
+  //   const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
+  //   return res.status(400).send(message);
+  // }
 
   const updatedUser = ['firstName', 'lastName', 'email'];
   for (let i=0; i<updatedUser.length; i++) {

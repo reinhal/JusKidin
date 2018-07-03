@@ -161,7 +161,7 @@ function addChildProfile(firstName, birthDate) {
       headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
       data: JSON.stringify({firstName, birthDate}),
       success: function(data) {
-          console.log('148', 'what does this mean?');
+          console.log('148', 'Child Added');
         //getAndDisplayChildProfile();
       },
       dataType: 'json',
@@ -362,9 +362,38 @@ function attemptLogInUser(username, password) {
     });
 }
 
+function handleEditAccount() {
+    $('.update-account-form').submit(function(e) {
+        var username = $('#new-user-name').val();
+        var password = $('#new-password').val();
+        var firstName = $('#updated-first-name').val();
+        var lastName = $('#updated-last-name').val();
+        var email =$('#updated-email').val();
+        console.log("Account Info 372", username, password, firstName, lastName, email)
+        e.preventDefault();
+        if (username == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
+            alert('Missing Information')
+        } else {
+            editAccount(username, password, firstName, lastName, email);
+        }
+    });
+}
+
 function editAccount() {
-//this function will be able to edit the account information, to a tbd extent
-//at least change password, get password help
+    console.log('Editing account: ' + username + password + firstName + lastName + email);
+    userID =  localStorage.getItem('userID');
+    $.ajax({
+        method: 'PUT',
+        url: `/api/account/${userID}`,
+        data: JSON.stringify({username, password, firstName, lastName, email}),
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
+        success: function(data) {
+          alert('Account Updated');
+          //getAndDisplayAccount();
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+      });
 }
 
 function deleteAccount() {
@@ -481,8 +510,14 @@ function handleDrawerAdd() {
         e.preventDefault();
         //window.location.reload(true);
         if (newDrawerTitle == '') {
-            alert('Missing Information')
-            } else { drawerTemplate(newDrawerTitle);
+            alert('Missing Information')       
+            } else  { 
+                if (localStorage.getItem('newDrawerTitles') === null) {
+                    var addedDrawer = JSON.stringify([newDrawerTitle]);
+                    localStorage.setItem('addedDrawer', addedDrawer)
+                } else {
+                    
+                }
         }
     });
 }
@@ -674,9 +709,10 @@ $(function() {
     handleLogInUser();
     handleChildProfileAdd();
     handleImageConnect();
-    connectImage();
+    //connectImage();
     handleDrawerAdd();
     handleAccountAdd();
+    handleEditAccount();
     getAndDisplayDrawer();
     // getAndDisplayChildProfile();
     // deleteChildProfile();

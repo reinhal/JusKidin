@@ -101,6 +101,14 @@
 						<ul class="flex-outer">
 							<p class="form-title">Create New Account</p>
 							<li>
+								<label for="user-name">Username</label>
+								<input type="text" id="user-name" placeholder="Enter desired username">
+							</li>
+							<li>
+								<label for="password">Password</label>
+								<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
+							</li>
+							<li>
 								<label for="first-name">First Name</label>
 								<input type="text" id="first-name" placeholder="Enter first name here">
 							</li>
@@ -128,23 +136,23 @@
 							<p class="form-title">Update Account Information</p>
 							<li>
 								<label for="user-name">Username</label>
-								<input type="text" id="user-name" placeholder="Enter desired username">
+								<input type="text" id="new-user-name" placeholder="Enter desired username">
 							</li>
 							<li>
 								<label for="password">Password</label>
-								<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
+								<input type="text" id="new-password" placeholder="min 10 characters, letters and numbers">
 							</li>
 							<li>
 								<label for="first-name">First Name</label>
-								<input type="text" id="first-name" placeholder="Enter first name here">
+								<input type="text" id="updated-first-name" placeholder="Enter first name here">
 							</li>
 							<li>
 								<label for="last-name">Last Name</label>
-								<input type="text" id="last-name" placeholder="Enter last name here">
+								<input type="text" id="updated-last-name" placeholder="Enter last name here">
 							</li>
 							<li>
 								<label for="account-email">email</label>
-								<input type="text" class="email" id="account-email" placeholder="Enter email here">
+								<input type="text" class="email" id="updated-email" placeholder="Enter email here">
 							</li>
 							<li>
 								<button id="update-accountoverlaybutton" type="submit" onclick="updateAccountOff()">Update Account</button>
