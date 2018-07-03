@@ -506,17 +506,26 @@ function getAndDisplayDrawer() {
 function handleDrawerAdd() {
     $('.drawer-age-form').submit(function(e) {
         var newDrawerTitle = $('#new-drawer-title').val();
-        console.log ('creating drawer 430: ', newDrawerTitle);
+        console.log ('creating drawer 509: ', newDrawerTitle);
         e.preventDefault();
         //window.location.reload(true);
+        console.log('511', newDrawerTitle);
         if (newDrawerTitle == '') {
             alert('Missing Information')       
-            } else  { 
+            } else { 
+                console.log('515');
                 if (localStorage.getItem('newDrawerTitles') === null) {
+                    console.log('517');
                     var addedDrawer = JSON.stringify([newDrawerTitle]);
-                    localStorage.setItem('addedDrawer', addedDrawer)
+                    localStorage.setItem('newDrawerTitles', addedDrawer)
                 } else {
-                    
+                    let keptDrawers = localStorage.getItem('newDrawerTitles');
+                    keptDrawers = JSON.parse(keptDrawers);
+                    console.log('521 kept drawers', keptDrawers);
+                    keptDrawers.push(newDrawerTitle);
+                    console.log('526', keptDrawers);
+                    var keptAddedDrawers = JSON.stringify(keptDrawers);
+                    localStorage.setItem('newDrawerTitles', keptAddedDrawers);
                 }
         }
     });
