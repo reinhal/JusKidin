@@ -265,13 +265,31 @@ function displayGoogleSearch(childName) {
                         <li class="google-image"><img src="${data.pagemap.cse_thumbnail[0].src}"></li>
                         <li class="google"><a href="${data.link}">${data.link}</a></li>
                         <li class="google">${data.snippet}</li>
-                    </ul>`)
+                    </ul>
+                    <style type="text/css">
+                    .displayTabcontent {
+                        background-color: white;
+                        color: 	#303030;
+                        padding: 12px 12px;
+                        border: 5px solid #2980b9;
+                        margin: 0 50px 50px 50px;
+                    }
+                    </style>`)
             } else {
                 $('.gsearchContainer').append(`<h2 #${childID}>${data.title} </h2>
                     <ul>
                         <li class="google"><a href="${data.link}">${data.link}</a></li>
                         <li class="google">${data.snippet}</li>
-                    </ul>`)
+                    </ul>
+                    <style type="text/css">
+                    .displayTabcontent {
+                        background-color: white;
+                        color: 	#303030;
+                        padding: 12px 12px;
+                        border: 5px solid #2980b9;
+                        margin: 0 50px 50px 50px;
+                    }
+                    </style>`)
             }    
         }
     }
@@ -469,6 +487,8 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
                  <div>
                  <p class="asset-content"><strong>${title}</strong></p>
                  <p class="asset-content">${notes}</p>
+                 <p class="icon"><i class="fas fa-edit"></i>Edit</p>
+                 <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
              </div>
         </section>`
     )
@@ -503,33 +523,34 @@ function getAndDisplayDrawer() {
     })
 }
 
-function handleDrawerAdd() {
-    $('.drawer-age-form').submit(function(e) {
-        var newDrawerTitle = $('#new-drawer-title').val();
-        console.log ('creating drawer 509: ', newDrawerTitle);
-        e.preventDefault();
-        //window.location.reload(true);
-        console.log('511', newDrawerTitle);
-        if (newDrawerTitle == '') {
-            alert('Missing Information')       
-            } else { 
-                console.log('515');
-                if (localStorage.getItem('newDrawerTitles') === null) {
-                    console.log('517');
-                    var addedDrawer = JSON.stringify([newDrawerTitle]);
-                    localStorage.setItem('newDrawerTitles', addedDrawer)
-                } else {
-                    let keptDrawers = localStorage.getItem('newDrawerTitles');
-                    keptDrawers = JSON.parse(keptDrawers);
-                    console.log('521 kept drawers', keptDrawers);
-                    keptDrawers.push(newDrawerTitle);
-                    console.log('526', keptDrawers);
-                    var keptAddedDrawers = JSON.stringify(keptDrawers);
-                    localStorage.setItem('newDrawerTitles', keptAddedDrawers);
-                }
-        }
-    });
-}
+// function handleDrawerAdd() {
+//     $('.drawer-age-form').submit(function(e) {
+//         var newDrawerTitle = $('#new-drawer-title').val();
+//         console.log ('creating drawer 509: ', newDrawerTitle);
+//         e.preventDefault();
+//         //window.location.reload(true);
+//         console.log('511', newDrawerTitle);
+//         if (newDrawerTitle == '') {
+//             alert('Missing Information')       
+//             } else { 
+//                 console.log('515');
+//                 if (localStorage.getItem('newDrawerTitles') === null) {
+//                     console.log('517');
+//                     var addedDrawer = JSON.stringify([newDrawerTitle]);
+//                     localStorage.setItem('newDrawerTitles', addedDrawer)
+//                 } else {
+//                     let keptDrawers = localStorage.getItem('newDrawerTitles');
+//                     keptDrawers = JSON.parse(keptDrawers);
+//                     console.log('521 kept drawers', keptDrawers);
+//                     keptDrawers.push(newDrawerTitle);
+//                     console.log('526', keptDrawers);
+//                     var keptAddedDrawers = JSON.stringify(keptDrawers);
+//                     localStorage.setItem('newDrawerTitles', keptAddedDrawers);
+//                     drawerTemplate(newDrawerTitle);
+//                 }
+//         }
+//     });
+// }
 
 
 function getAndDisplayUploads() {
@@ -576,7 +597,7 @@ function handleImageConnect() {
         var drawerTitle = $('#drawer-title').val();
         console.log('asset info 486', title, notes, dateUploaded, fileLocation, drawerTitle);
         e.preventDefault();
-        // window.location.reload(true);
+        window.location.reload(true);
         if (title == '' || notes == '' || fileLocation == '' || drawerTitle == '' || dateUploaded == '' ) {
             alert('Missing Information')
             } else { connectImage(title, notes, dateUploaded, fileLocation, drawerTitle);
@@ -711,18 +732,20 @@ $(function() {
     // createNewAccount();
     if (getUserID()) {                //undefined implies not logged in, refactor later
         getAndDisplayChildProfile();
-        getAndDisplayDrawer();
+        //getAndDisplayDrawer();
+        getAndDisplayUploads();
     }
     getAndDisplayChildProfile();
     updateNavUser(getUserID());  //navbar handles logged in state
     handleLogInUser();
     handleChildProfileAdd();
     handleImageConnect();
-    //connectImage();
-    handleDrawerAdd();
+    // getAndDisplayUploads();
+    // connectImage();
     handleAccountAdd();
     handleEditAccount();
     getAndDisplayDrawer();
+    // handleDrawerAdd();
     // getAndDisplayChildProfile();
     // deleteChildProfile();
     // handleChildProfileDelete();

@@ -18,7 +18,7 @@
 		<div class="topnav" role="navigation" id="responsivetopnav">
 			<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
 			<div id="navAccount" class="dropdown">
-				<a onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
+				<a id ="navAccountName" onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
 					<div class="dropdown-content">
 						<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
 						<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
@@ -38,7 +38,7 @@
 				<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
 					<div class="dropdown-content asset-dropbtn">
 						<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
-						<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
+						<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
 					</div>
 			</div>
 			<div class="search-container">
@@ -204,10 +204,7 @@
 							</li>
 							<li>
 								<label for="drawer-title">Add To Drawer</label>
-								<select name="current-drawer-titles" id="drawer-title" class="drawer-title">
-									<!-- <option value=`${drawerTitle}`>Drawer 1</option>
-									<option value=`${drawerTitle}`>Drawer 2</option> -->
-								</select>
+								<input type="text" id="drawer-title" class="drawer-title" placeholder="Enter existing or new drawer name">
 							</li>
 							<li>
 								<label for="image-url">Image URL</label>

@@ -202,18 +202,26 @@ app.put('/api/account/:_id', [jsonParser, jwtAuth],(req, res) => {
   //   const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
   //   return res.status(400).send(message);
   // }
+  var passed = false;
+  var tempUser = {};
 
-  const updatedUser = ['firstName', 'lastName', 'email'];
+  const updatedUser = ['username', 'firstName', 'lastName', 'email'];
   for (let i=0; i<updatedUser.length; i++) {
     const field = updatedUser[i];
-    if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
-      return res.status(400).send(message);
+    if (field in req.body) {
+      passed = true;
+      tempUser[field] = req.body[field];
     }
   }
+
+  if (!passed) {
+    const message = 'Request is missing information.'
+    return res.status(400).send(message);
+  }
+
   UserInfo.findByIdAndUpdate(
     req.params._id,
-    req.body,
+    tempUser,
     {new: true},
     (err, updatedUser) => {
       if(err) {
