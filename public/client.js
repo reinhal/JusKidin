@@ -146,10 +146,6 @@ var childProfileTemplate = function (childName, birthDate) {
     $('#GsearchResults').append(
         `<div id="${childID}" class="gsearchContainer"></div>`
     )
-
-    // $('.child-dropbtn').append(
-    //     `<a href="#">${childName}</a>`
-    // )
 }
 
 function addChildProfile(firstName, birthDate) {
@@ -161,8 +157,8 @@ function addChildProfile(firstName, birthDate) {
       headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
       data: JSON.stringify({firstName, birthDate}),
       success: function(data) {
-          console.log('148', 'Child Added');
-        //getAndDisplayChildProfile();
+            console.log('148', 'Child Added');
+            getAndDisplayChildProfile();
       },
       dataType: 'json',
       contentType: 'application/json'
@@ -577,6 +573,8 @@ function getAndDisplayUploads() {
                             <div>
                             <p class="asset-content"><strong>${item.title}</strong></p>
                             <p class="asset-content">${item.notes}</p>
+                            <a onclick="editAssetOn()" href="#" class="icon"><i class="fas fa-edit"></i></a>
+                            <a onclick="deleteOn()" href="#" class="icon"><i class="fas fa-trash-alt"></i></a>
                         </div>
                     </section>`
                 )
@@ -589,7 +587,7 @@ function getAndDisplayUploads() {
 }
 
 function handleImageConnect() {
-    $('#connectAssetForm').submit(function(e) {
+    $('.connect-image-form').submit(function(e) {
         var title = $('#title').val(); 
         var notes = $('#notes').val();
         var dateUploaded = $('#date-uploaded').val();
@@ -600,12 +598,13 @@ function handleImageConnect() {
         window.location.reload(true);
         if (title == '' || notes == '' || fileLocation == '' || drawerTitle == '' || dateUploaded == '' ) {
             alert('Missing Information')
-            } else { connectImage(title, notes, dateUploaded, fileLocation, drawerTitle);
+        } else { 
+            connectImage(title, notes, dateUploaded, fileLocation, drawerTitle);
         }
     });
 }
 
-function connectImage() {
+function connectImage(title, notes, dateUploaded, fileLocation, drawerTitle) {
     console.log('connecting image: ' + title + notes + dateUploaded + fileLocation + drawerTitle);
     userID =  localStorage.getItem('userID');
     var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
@@ -623,97 +622,12 @@ function connectImage() {
     });
 }
 
-//     $.getJSON(ASSETS_URL, function(items) {
-//         console.log('Rendering Uploads', items);
-//         drawerUploads = items.asset;
-//         console.log("drawer uploads", drawerUploads);
-//         drawerUploads.forEach(item => {
-//             console.log('item', item.drawerTitle);
-//             const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
-//             $(`#${drawerID}`).append(
-//                 `<section role="region">  
-//                     <div class='col-4'>
-//                         <div class='asset'>
-//                         <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
-//                         <div>
-//                         <p class="asset-content"><strong>${item.title}</strong></p>
-//                         <p class="asset-content">${item.notes}</p>
-//                     </div>
-//                 </section>`
-//             )
-//         })
-//     })
-// }
-
-// function handleDrawerAdd() {
-//     $('#addDrawerForm').submit(function(e) {
-//         e.preventDefault();
-//         var drawerTemplate = function(drawerTitle) {
-//             var drawerTitle = $('#drawer-name').val();
-//             $('.dropdown-asset').append(
-//                 `<button class="tablinks dropbtn-asset" onclick="editProf(); openChild(event, '${drawerTitle}')"> ${drawerTitle}</button>` +
-//                 `<div id="${drawerTitle}" class="assettabcontent"></div>`
-//             )
-        
-//             $('.asset-dropbtn').append(
-//                 `<a href="#">${drawerTitle}</a>`
-//             )
-//         }
-//         drawerTemplate("outdoor adventures");
-//     });
-// }
-
- // $.getJSON(ASSETS_URL, function(items) {
-    //     console.log('Rendering drawer', items);
-    //     function uniqueDrawerTitles(input) {
-    //         var output = [];
-    //         for(var i=0; i < input.asset.length; i++) {
-    //           if(output.indexOf(input.asset[i].drawerTitle) === -1)
-    //           output.push(input.asset[i].drawerTitle);
-    //         }
-    //     return output;
-    //     }
-    //     items = uniqueDrawerTitles(items);
-    //     var drawerElement = items.map(function(item) {
-    //         var element = $(drawerTemplate(item))
-    //         element.attr('id', item);
-    //         return element
-    //     });
-    //     getAndDisplayUploads();
-    // });   
-
-
-function editDrawer() {
-//edit drawer title   
-}
-
-function deleteDrawer() {
-    // console.log('Deleting drawer `' + userID + '`');
-    // $.ajax({
-    //   url: ASSETS_URL + '/' + userID,
-    //   method: 'DELETE',
-    //   success: getAndDisplayDrawer
-    // }); 
-}
-
-function uploadAndDisplayAssets() {
-// upload new asset from #uploadAssetForm 
-// user will need to identify existing drawer to upload asset to
-// asset will be added to asset.html page, under identified drawer, 
-// populated with items from the #uploadAssetForm fields
-}
-
 function editUploads() {
 // edit title, notes or drawer location for a particular asset
 }
 
 function deleteAsset() {
 // delete a particular asset from the drawer
-}
-
-function searchAssets() {
-// using search field in navbar to search title and notes input fields
-// return results in search.html
 }
 
 function getAndDisplayImagesOnHomePage() {
