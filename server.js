@@ -198,10 +198,7 @@ app.post('/api/account', jsonParser, (req, res) => {
 
 app.put('/api/account/:_id', [jsonParser, jwtAuth],(req, res) => {
   console.log ('200', req.params.id, req.body.id);
-  // if (req.params._id !== req.body._id) {
-  //   const message = `Request path id (${req.params._id}) and request body id (${req.body._id}) must match`;
-  //   return res.status(400).send(message);
-  // }
+  
   var passed = false;
   var tempUser = {};
 
@@ -232,7 +229,7 @@ app.put('/api/account/:_id', [jsonParser, jwtAuth],(req, res) => {
   )
 });
 
-app.delete('/api/account/:_id', (req, res) => {
+app.delete('/api/account/:_id', jwtAuth, (req, res) => {
   UserInfo
   .findByIdAndRemove(req.params.id)
   .then(() => {
@@ -355,7 +352,7 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
 
 // // Digital Assets Endpoints//
 
-app.post('/api/account/:_id/uploads', jsonParser, (req, res) => {
+app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
 
   const updatedAssetObject = [req.body.title, req.body.notes, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {
@@ -381,20 +378,23 @@ app.post('/api/account/:_id/uploads', jsonParser, (req, res) => {
     });
 });
 
-app.put('/api/account/:_id/uploads/:assetIndex', jsonParser, (req, res) => {
-  if (+req.params.assetIndex !== req.body.assetIndex) {
-    const message = `Request path id (${req.params.assetIndex}) and request body id (${req.body.assetIndex}) must match`;
-    console.error('this is the:', message);
-    return res.status(400).send(message);
-  }
+app.put('/api/account/:_id/uploads/:assetIndex', [jsonParser, jwtAuth], (req, res) => {
+
+  var imagePassed = false;
+  var tempImage = {};
 
   const updatedAssetObject = ["title", "notes", "dateUploaded", "fileLocation", "drawerTitle"];
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];
-    if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
-      return res.status(400).send(message);
+    if (field in req.body) {
+      imagePassed = true;
+      tempImage[field] = req.body[field];
     }
+  }
+
+  if (!imagePassed) {
+    const message = 'Request is missing information.'
+    return res.status(400).send(message);
   }
 
   return UserInfo.findById(

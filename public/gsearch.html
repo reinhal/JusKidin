@@ -21,6 +21,7 @@
 				<a id ="navAccountName" onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
 					<div class="dropdown-content">
 						<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
+						<a onclick="logoffOn()" href="javascript:void(0)"><i class="fas fa-sign-out-alt"></i> Logoff</a>
 						<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
 						<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
 						<a onclick="deleteOn()" href="javascript:void(0)"><i class="fas fa-trash"></i> Delete Account</a>
@@ -74,10 +75,9 @@
 				<div class="loginHere" id="loginForm">
 					<form class="login-form">
 						<ul class="flex-outer">
-							<p class="form-title">Login</p>
 							<li>
-								<label for="user-name">Username</label>
-								<input type="text" id="user-name" placeholder="Enter username">
+								<label for="login-user-name">Username</label>
+								<input type="text" id="login-user-name" placeholder="Enter username">
 							</li>
 							<li>
 								<label for="password">Password</label>
@@ -85,6 +85,20 @@
 							</li>
 							<li>
 								<button id="login" type="submit" onclick="loginOff()">Login</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="logoffoverlay">
+				<div class="logoff" id="logoffForm">
+					<form>
+						<ul class="flex-outer">
+							<p class="form-title">Logoff</p>
+							<li>
+								<button id="logoff-overlaybutton" type="submit" onclick="logoffOff()">Logoff</button>
 							</li>
 						</ul>
 					</form>
@@ -100,10 +114,6 @@
 							<li>
 								<label for="user-name">Username</label>
 								<input type="text" id="new-user-name" placeholder="Enter desired username">
-							</li>
-							<li>
-								<label for="password">Password</label>
-								<input type="text" id="new-password" placeholder="min 10 characters, letters and numbers">
 							</li>
 							<li>
 								<label for="first-name">First Name</label>

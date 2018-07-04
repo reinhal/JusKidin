@@ -40,6 +40,14 @@ function loginOff() {
     document.getElementById("loginoverlay").style.display = "none";
 }
 
+function logoffOn() {
+    document.getElementById("logoffoverlay").style.display = "block";
+}
+
+function logoffOff() {
+    document.getElementById("logoffoverlay").style.display = "none";
+}
+
 function updateAccountOn() {
     document.getElementById("update-accountoverlay").style.display = "block";
 }
@@ -304,12 +312,12 @@ $(watchSubmit);
 
 ///////////// Account Functions ///////////////////////
 
-function createNewAccount(username, password, firstName, lastName, email) {
-    console.log('Creating new Account: ' + username + password + firstName + lastName + email);
+function createNewAccount(newUsername, password, firstName, lastName, email) {
+    console.log('Creating new Account: ' + newUsername + password + firstName + lastName + email);
     $.ajax({
       method: 'POST',
       url: ACCOUNT_URL,
-      data: JSON.stringify({username, password, firstName, lastName, email}),
+      data: JSON.stringify({newUsername, password, firstName, lastName, email}),
       success: function(data) {
         alert('New Account Created');
         //getAndDisplayAccount();
@@ -321,24 +329,24 @@ function createNewAccount(username, password, firstName, lastName, email) {
 
 function handleAccountAdd() {
     $('.account-form').submit(function(e) {
-        var username = $('#user-name').val();
+        var newUsername = $('#user-name').val();
         var password = $('#password').val();
         var firstName = $('#first-name').val();
         var lastName = $('#last-name').val();
         var email =$('#account-email').val();
-        console.log("Account Info 276", username, password, firstName, lastName, email)
+        console.log("Account Info 276", newUsername, password, firstName, lastName, email)
         e.preventDefault();
-        if (username == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
+        if (newUsername == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
             alert('Missing Information')
         } else {
-            createNewAccount(username, password, firstName, lastName, email);
+            createNewAccount(newUsername, password, firstName, lastName, email);
         }
     });
 }
 
 function handleLogInUser() {
     $('.login-form').submit(function(e) {
-        var username = $('#user-name').val();
+        var username = $('#login-user-name').val();
         var password = $('#password2').val();
             e.preventDefault();
         if (username == '' || password == '') {
@@ -347,6 +355,17 @@ function handleLogInUser() {
             attemptLogInUser(username, password);
         }
     })
+}
+
+function handleLogOffUser() {
+    $('.logoff-form').submit(function(e) {
+        e.preventDefault();
+            attemptLogOffUser();
+    })
+}
+
+function attemptLogOffUser() {
+    localStorage.clear();
 }
 
 function attemptLogInUser(username, password) {
@@ -376,34 +395,32 @@ function attemptLogInUser(username, password) {
     });
 }
 
-function handleEditAccount() {
+function handleEditAccount(username, firstName, lastName, email) {
     $('.update-account-form').submit(function(e) {
         var username = $('#new-user-name').val();
-        var password = $('#new-password').val();
         var firstName = $('#updated-first-name').val();
         var lastName = $('#updated-last-name').val();
         var email =$('#updated-email').val();
-        console.log("Account Info 372", username, password, firstName, lastName, email)
+        console.log("Account Info 372", username, firstName, lastName, email)
         e.preventDefault();
-        if (username == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
+        if (username == '' || firstName == '' || lastName == '' || email == '') {
             alert('Missing Information')
         } else {
-            editAccount(username, password, firstName, lastName, email);
+            editAccount(username, firstName, lastName, email);
         }
     });
 }
 
-function editAccount() {
-    console.log('Editing account: ' + username + password + firstName + lastName + email);
+function editAccount(username, firstName, lastName, email) {
+    console.log('Editing account: ' + username + firstName + lastName + email);
     userID =  localStorage.getItem('userID');
     $.ajax({
         method: 'PUT',
         url: `/api/account/${userID}`,
-        data: JSON.stringify({username, password, firstName, lastName, email}),
+        data: JSON.stringify({username, firstName, lastName, email}),
         headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
         success: function(data) {
           alert('Account Updated');
-          //getAndDisplayAccount();
         },
         dataType: 'json',
         contentType: 'application/json'
@@ -519,36 +536,6 @@ function getAndDisplayDrawer() {
     })
 }
 
-// function handleDrawerAdd() {
-//     $('.drawer-age-form').submit(function(e) {
-//         var newDrawerTitle = $('#new-drawer-title').val();
-//         console.log ('creating drawer 509: ', newDrawerTitle);
-//         e.preventDefault();
-//         //window.location.reload(true);
-//         console.log('511', newDrawerTitle);
-//         if (newDrawerTitle == '') {
-//             alert('Missing Information')       
-//             } else { 
-//                 console.log('515');
-//                 if (localStorage.getItem('newDrawerTitles') === null) {
-//                     console.log('517');
-//                     var addedDrawer = JSON.stringify([newDrawerTitle]);
-//                     localStorage.setItem('newDrawerTitles', addedDrawer)
-//                 } else {
-//                     let keptDrawers = localStorage.getItem('newDrawerTitles');
-//                     keptDrawers = JSON.parse(keptDrawers);
-//                     console.log('521 kept drawers', keptDrawers);
-//                     keptDrawers.push(newDrawerTitle);
-//                     console.log('526', keptDrawers);
-//                     var keptAddedDrawers = JSON.stringify(keptDrawers);
-//                     localStorage.setItem('newDrawerTitles', keptAddedDrawers);
-//                     drawerTemplate(newDrawerTitle);
-//                 }
-//         }
-//     });
-// }
-
-
 function getAndDisplayUploads() {
     userID =  localStorage.getItem('userID');
     var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
@@ -642,27 +629,19 @@ function updateNavUser(userID) {
 }
 
 $(function() {
-    // addChildProfile();
-    // createNewAccount();
     if (getUserID()) {                //undefined implies not logged in, refactor later
         getAndDisplayChildProfile();
-        //getAndDisplayDrawer();
         getAndDisplayUploads();
+        getAndDisplayDrawer();
+        handleLogOffUser();
     }
+    getAndDisplayDrawer();
     getAndDisplayChildProfile();
     updateNavUser(getUserID());  //navbar handles logged in state
     handleLogInUser();
+    handleLogOffUser();
     handleChildProfileAdd();
     handleImageConnect();
-    // getAndDisplayUploads();
-    // connectImage();
     handleAccountAdd();
     handleEditAccount();
-    getAndDisplayDrawer();
-    // handleDrawerAdd();
-    // getAndDisplayChildProfile();
-    // deleteChildProfile();
-    // handleChildProfileDelete();
-    // getAndDisplayUploads();
-    // filterUploads();
 });
