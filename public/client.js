@@ -16,8 +16,8 @@ var childName = '';
 var childAge = '';
 var drawerUploads = [];
 var drawerTitle = "";
-var serverBase = '//localhost:8080/';
-var ACCOUNT_URL = serverBase + 'api/account';
+// var serverBase = '//localhost:8080/'; //remove this from all endpoints
+var ACCOUNT_URL = 'api/account';
 
 function getUserID() {
     return userID;
@@ -179,7 +179,7 @@ function addChildProfile(firstName, birthDate) {
 
 function getAndDisplayChildProfile() {
     userID =  localStorage.getItem('userID');
-    var CHILDPROFS_URL = serverBase + `api/account/${userID}?select=childProfs`;
+    var CHILDPROFS_URL = `api/account/${userID}?select=childProfs`;
     console.log('Retrieving child profile');
     $.ajax({
         method: 'GET',
@@ -534,7 +534,7 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
 function getAndDisplayDrawer() {
     console.log('retrieving drawer');
     userID =  localStorage.getItem('userID');
-    var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
+    var ASSETS_URL = `api/account/${userID}?select=asset`;
     $.ajax({
         method: 'GET',
         url: ASSETS_URL,
@@ -575,7 +575,7 @@ function handleDrawerAdd() {
 
 function getAndDisplayUploads() {
     userID =  localStorage.getItem('userID');
-    var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
+    var ASSETS_URL = `api/account/${userID}?select=asset`;
     console.log('retrieving uploads');
     $.ajax({
         method: 'GET',
@@ -629,7 +629,7 @@ function handleImageConnect() {
 function connectImage(title, notes, dateUploaded, fileLocation, drawerTitle) {
     console.log('connecting image: ' + title + notes + dateUploaded + fileLocation + drawerTitle);
     userID =  localStorage.getItem('userID');
-    var ASSETS_URL = serverBase + `api/account/${userID}?select=asset`;
+    var ASSETS_URL = `api/account/${userID}?select=asset`;
     $.ajax({
         method: 'POST',
         url: `/api/account/${userID}/uploads`,
@@ -657,9 +657,9 @@ function getAndDisplayImagesOnHomePage() {
 }
 
 function updateNavUser(userID) {
-    $('#navAccountName').text('Log In'); 
+    $('#navAccountName').text('Account Login'); 
     if (userID) {
-        $('#navAccountName').text('Logged In');
+        $('#navAccountName').text('Account Logged In');
     }
 }
 
