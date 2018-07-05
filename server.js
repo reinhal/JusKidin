@@ -231,7 +231,7 @@ app.put('/api/account/:_id', [jsonParser, jwtAuth],(req, res) => {
 
 app.delete('/api/account/:_id', jwtAuth, (req, res) => {
   UserInfo
-  .findByIdAndRemove(req.params.id)
+  .findByIdAndRemove(req.params._id)
   .then(() => {
       res.status(204).json({message: 'Success!!'});
   })
@@ -252,41 +252,44 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
       const message = `Missing \`${field}\` in request body`
       return res.status(400).send(message);
     } 
-    UserInfo
-      .find({
-        "_id": req.params._id
-      })
-      .then( function (data) {
-        const duplicateList = data[0].childProfs.filter( 
-          o => o.firstName === reqChildProfs[i] );
-
-          if (duplicateList.length > 1) {
-            return res.status(422).json({
-              code: 422,
-              reason: 'ValidationError',
-              message: 'Child name already taken',
-              location: 'firstName'
-            });
-          }
-        // data[0].childProfs.includes({
-        //   firstName: req.body.firstName
-        // })
-      // );  
-        return UserInfo
-        .findOne({
-          "_id": req.params._id
-        })
-        .select(req.query.select)
-        .then(userinfo => {
-          userinfo.childProfs.push({firstName: req.body.firstName, birthDate: req.body.birthDate});
-          userinfo.save()
-            res.status(201);
-            res.json(userinfo);
-          })
-        .catch(err => {
-        });
-      })
   }
+  UserInfo
+    .find({
+      "_id": req.params._id
+    })
+    .then( function (data) {
+      const duplicateList = data[0].childProfs.filter( 
+        o => o.firstName === req.body.firstName );
+
+        if (duplicateList.length > 1) {
+          return res.status(422).json({
+            code: 422,
+            reason: 'ValidationError',
+            message: 'Child name already taken',
+            location: 'firstName'
+          });
+        }
+      return UserInfo
+      .findOneAndUpdate({
+        "_id": req.params._id
+      },
+        { $addToSet:
+          {
+            "childProfs": {
+              firstName: req.body.firstName,
+              birthDate: req.body.birthDate
+            }
+          }
+        },
+      { new: true })
+      .then(userinfo => {
+          res.status(201);
+          res.json(userinfo);
+        })
+      .catch(err => {
+        console.log('error', err);
+      });
+    })
 });
 
 // app.put('/api/account/:_id/childProfs/:child_id', [jwtAuth, jsonParser], (req, res) => {
@@ -378,74 +381,71 @@ app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
     });
 });
 
-app.put('/api/account/:_id/uploads/:assetIndex', [jsonParser, jwtAuth], (req, res) => {
+// app.put('/api/account/:_id/uploads/:assetIndex', [jsonParser, jwtAuth], (req, res) => {
 
-  var imagePassed = false;
-  var tempImage = {};
+//   var imagePassed = false;
+//   var tempImage = {};
 
-  const updatedAssetObject = ["title", "notes", "dateUploaded", "fileLocation", "drawerTitle"];
-  for (let i=0; i<updatedAssetObject.length; i++) {
-    const field = updatedAssetObject[i];
-    if (field in req.body) {
-      imagePassed = true;
-      tempImage[field] = req.body[field];
-    }
-  }
+//   const updatedAssetObject = ["title", "notes", "dateUploaded", "fileLocation", "drawerTitle"];
+//   for (let i=0; i<updatedAssetObject.length; i++) {
+//     const field = updatedAssetObject[i];
+//     if (field in req.body) {
+//       imagePassed = true;
+//       tempImage[field] = req.body[field];
+//     }
+//   }
 
-  if (!imagePassed) {
-    const message = 'Request is missing information.'
-    return res.status(400).send(message);
-  }
+//   if (!imagePassed) {
+//     const message = 'Request is missing information.'
+//     return res.status(400).send(message);
+//   }
 
-  return UserInfo.findById(
-    req.params._id)
-    .then(thisAsset => {
-    for ( let i=0; i < thisAsset.asset.length; i++ ) {
-      if (req.params.asset_id == thisAsset.asset[i].id) {
-       thisAsset.asset[i].title = req.body.title;
-       thisAsset.asset[i].notes = req.body.notes;
-       thisAsset.asset[i].dateUploaded = req.body.dateUploaded;
-       thisAsset.asset[i].fileLocation = req.body.fileLocation;
-       thisAsset.asset[i].drawerTitle = req.body.drawerTitle;
-      }
-    }
-     let update = {"$set": {}};
-     update["$set"]["asset."+ req.params.assetIndex] = {
-       title: req.body.title,
-       notes: req.body.notes, 
-       dateUploaded: req.body.dateUploaded, 
-       fileLocation: req.body.fileLocation, 
-       drawerTitle: req.body.drawerTitle
-     }
-  return UserInfo.findByIdAndUpdate(
-    req.params._id, update
-  ) 
-    .then(updatedAsset => {
-      return res.status(201).send(updatedAsset);
-    })
-  })
-});
+//   return UserInfo.findById(
+//     req.params._id)
+//     .then(thisUser => {
+//     const thisAsset = thisUser.asset[req.params.assetIndex]
+//        thisAsset.title = req.body.title;
+//        thisAsset.notes = req.body.notes;
+//        thisAsset.dateUploaded = req.body.dateUploaded;
+//        thisAsset.fileLocation = req.body.fileLocation;
+//        thisAsset.drawerTitle = req.body.drawerTitle;
+//      let update = {"$set": {}};
+//      update["$set"]["asset."+ req.params.assetIndex] = {
+//        title: req.body.title,
+//        notes: req.body.notes, 
+//        dateUploaded: req.body.dateUploaded, 
+//        fileLocation: req.body.fileLocation, 
+//        drawerTitle: req.body.drawerTitle
+//      }
+//   return UserInfo.findByIdAndUpdate(
+//     req.params._id, update
+//   ) 
+//     .then(updatedAsset => {
+//       return res.status(201).send(updatedAsset);
+//     })
+//   })
+// });
 
-app.delete('/api/account/:_id/uploads/:asset_id', (req, res) => {
-  UserInfo
-  .findOne({
-    "_id": req.params._id
-  })
-  .then(userinfo => {
-    for (let index = 0; index < userinfo.asset.length; index++) {
-      if(userinfo.asset[index].id === req.params.asset_id){
-        userinfo.asset.splice(index,1)
-      }      
-    }
-    userinfo.save()
-      res.status(204);
-      res.json(userinfo);
-    })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({ message: 'Internal server error' });
-  });
-});
+// app.delete('/api/account/:_id/uploads/:asset_id', (req, res) => {
+//   UserInfo
+//   .findOne({
+//     "_id": req.params._id
+//   })
+//   .then(userinfo => {
+//     for (let index = 0; index < userinfo.asset.length; index++) {
+//       if(userinfo.asset[index].id === req.params.asset_id){
+//         userinfo.asset.splice(index,1)
+//       }      
+//     }
+//     userinfo.save()
+//       res.status(204);
+//       res.json(userinfo);
+//     })
+//   .catch(err => {
+//     console.log(err);
+//     res.status(500).json({ message: 'Internal server error' });
+//   });
+// });
 
 app.use('*', (req, res) => {
   return res.status(404).json({ message: 'Not Found' });

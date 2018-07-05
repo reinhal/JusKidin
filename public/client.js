@@ -312,12 +312,12 @@ $(watchSubmit);
 
 ///////////// Account Functions ///////////////////////
 
-function createNewAccount(newUsername, password, firstName, lastName, email) {
-    console.log('Creating new Account: ' + newUsername + password + firstName + lastName + email);
+function createNewAccount(username, password, firstName, lastName, email) {
+    console.log('Creating new Account: ' + username + password + firstName + lastName + email);
     $.ajax({
       method: 'POST',
       url: ACCOUNT_URL,
-      data: JSON.stringify({newUsername, password, firstName, lastName, email}),
+      data: JSON.stringify({username, password, firstName, lastName, email}),
       success: function(data) {
         alert('New Account Created');
         //getAndDisplayAccount();
@@ -329,17 +329,17 @@ function createNewAccount(newUsername, password, firstName, lastName, email) {
 
 function handleAccountAdd() {
     $('.account-form').submit(function(e) {
-        var newUsername = $('#user-name').val();
+        var username = $('#new-user-name').val();
         var password = $('#password').val();
         var firstName = $('#first-name').val();
         var lastName = $('#last-name').val();
         var email =$('#account-email').val();
-        console.log("Account Info 276", newUsername, password, firstName, lastName, email)
+        console.log("Account Info 276", username, password, firstName, lastName, email)
         e.preventDefault();
-        if (newUsername == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
+        if (username == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
             alert('Missing Information')
         } else {
-            createNewAccount(newUsername, password, firstName, lastName, email);
+            createNewAccount(username, password, firstName, lastName, email);
         }
     });
 }
@@ -366,6 +366,8 @@ function handleLogOffUser() {
 
 function attemptLogOffUser() {
     localStorage.clear();
+    window.location.reload(true);
+    
 }
 
 function attemptLogInUser(username, password) {
@@ -381,6 +383,7 @@ function attemptLogInUser(username, password) {
             userID = JWT.user._id;
             localStorage.setItem('userID', userID);
             alert('You have successfully logged in!');
+            window.location.reload(true);
             $.ajax({
                 method: 'GET',
                 url: `/api/account/${userID}`,

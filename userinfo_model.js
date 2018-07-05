@@ -5,9 +5,6 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const userInfoSchema = mongoose.Schema({
-    // _id: {
-    //     type: Schema.Types.ObjectId
-    // },
     username: {
         type: String,
         required: true,
