@@ -4,12 +4,13 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const expect = chai.expect;
 
 const {UserInfo} = require('../userinfo_model');
 const {app, runServer, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config');
+const {JWT_SECRET, TEST_DATABASE_URL} = require('../config');
 
 let userID = '';
 
@@ -556,49 +557,88 @@ describe('UserInfo API resource', function() {
         });
       });
       describe('PUT endpoint', function() {
-        // it.only('should update the user', function() {
-        //   const updatedUser = generateUserInfoData();
-        //   return UserInfo
-        //     .findOne()
-        //     .then(function(userinfo) {
-        //       updatedUser._id = userinfo._id;
-        //       return chai.request(app)
-        //         .put(`/api/account/${userinfo._id}`)
-        //         .send(updatedUser);
-        //     })
-        //     .then(function(res) {
-        //       expect(res).to.have.status(204);
-        //       return UserInfo.findById(updatedUser._id);
-        //     })
-        //     .then(function(userinfo) {
-        //       expect(userinfo.firstName).to.equal(updatedUser.firstName);
-        //       expect(userinfo.lastName).to.equal(updatedUser.lastName);
-        //       expect(userinfo.email).to.equal(updatedUser.email);
-        //     });
-        // });
+        it('should update the user', function() {
+          const updatedUser = generateUserInfoData();
+          updatedUser._id = "00000000000000000000000000"
+          const {_id, username, firstName, lastName, email} = updatedUser
+          const token = jwt.sign(
+            {
+              user: {
+                _id,
+                username,
+                firstName,
+                lastName,
+                email
+              }
+            },
+            JWT_SECRET,
+            {
+              algorithm: 'HS256',
+              subject: username,
+              expiresIn: '7d'
+            }
+          );
+          return UserInfo
+            .findOne()
+            .then(function(userinfo) {
+              updatedUser._id = userinfo._id;
+              return chai.request(app)
+                .put(`/api/account/${userinfo._id}`)
+                .set('authorization', `Bearer ${token}`)
+                .send(updatedUser);
+            })
+            .then(function(res) {
+              expect(res).to.have.status(204);
+              return UserInfo.findById(updatedUser._id);
+            })
+            .then(function(userinfo) {
+              expect(userinfo.firstName).to.equal(updatedUser.firstName);
+              expect(userinfo.lastName).to.equal(updatedUser.lastName);
+              expect(userinfo.email).to.equal(updatedUser.email);
+            });
+        });
       });
     });
     describe('DELETE endpoint', function() {
-        
-        // it.only('should delete user info by id', function() {
-    
-        //   let userinfo;
-    
-        //   return UserInfo
-        //     .findOne()
-        //     .then(function(_userinfo) {
-        //       userinfo = _userinfo;
-        //       return chai.request(app).delete(`/api/account/${userinfo._id}`);
-        //     })
-        //     .then(function(res) {
-        //       expect(res).to.have.status(204);
-        //       return UserInfo.findById(userinfo._id);
-        //     })
-        //     .then(function(_userinfo) {
-        //       console.log('599', _userinfo);
-        //       expect(_userinfo).to.be.null;
-        //     });
-        // });
+        it('should delete user info by id', function() {   
+          let userinfo;
+          const updatedUser = generateUserInfoData();
+          updatedUser._id = "00000000000000000000000000"
+          const {_id, username, firstName, lastName, email} = updatedUser
+          const token = jwt.sign(
+            {
+              user: {
+                _id,
+                username,
+                firstName,
+                lastName,
+                email
+              }
+            },
+            JWT_SECRET,
+            {
+              algorithm: 'HS256',
+              subject: username,
+              expiresIn: '7d'
+            }
+          );   
+          return UserInfo
+            .findOne()
+            .then(function(_userinfo) {
+              userinfo = _userinfo;
+              return chai.request(app)
+              .delete(`/api/account/${userinfo._id}`)
+              .set('authorization', `Bearer ${token}`);
+            })
+            .then(function(res) {
+              expect(res).to.have.status(204);
+              return UserInfo.findById(userinfo._id);
+            })
+            .then(function(_userinfo) {
+              console.log('599', _userinfo);
+              expect(_userinfo).to.be.null;
+            });
+        });
     });
 });
 
@@ -621,29 +661,66 @@ describe('Child Profile API resource', function() {
     });
 
   describe('POST endpoint', function() {
-    // it.only('should add a new childProfile', function() {
-
-    //     const newChild = generateNewChild();
-
-    //     return chai.request(app)
-    //         .post(`/api/account/${userID}/childProfiles`)
-    //         .send(newChild)
-    //         .then(function(res) {
-    //             expect(res).to.have.status(201);
-    //             expect(res).to.be.json;
-    //             expect(res.body).to.be.a('object');
-    //             expect(res.body.childProfs[0]).to.include.keys('firstName', 'birthDate');
-    //             expect(res.body.id).to.not.be.null;
-    //             expect(res.body.childProfs[1].firstName).to.equal(newChild.firstName);
-    //             expect(res.body.childProfs[1].birthDate).to.equal(newChild.birthDate); 
-    //             return res.body;
-    //     })
-    // });
+    it('should add a new childProfile', function() {
+      const updatedUser = generateUserInfoData();
+        const newChild = generateNewChild();
+        updatedUser._id = "00000000000000000000000000"
+          const {_id, username, firstName, lastName, email} = updatedUser
+          const token = jwt.sign(
+            {
+              user: {
+                _id,
+                username,
+                firstName,
+                lastName,
+                email
+              }
+            },
+            JWT_SECRET,
+            {
+              algorithm: 'HS256',
+              subject: username,
+              expiresIn: '7d'
+            }
+          );
+        return chai.request(app)
+            .post(`/api/account/${userID}/childProfiles`)
+            .send(newChild)
+            .set('authorization', `Bearer ${token}`)
+            .then(function(res) {
+                expect(res).to.have.status(201);
+                expect(res).to.be.json;
+                expect(res.body).to.be.a('object');
+                expect(res.body.childProfs[0]).to.include.keys('firstName', 'birthDate');
+                expect(res.body.id).to.not.be.null;
+                expect(res.body.childProfs[1].firstName).to.equal(newChild.firstName);
+                expect(res.body.childProfs[1].birthDate).to.equal(newChild.birthDate); 
+                return res.body;
+        })
+    });
     // it.only('Should reject child profile with a duplicate name', function () {
-
+    //   const updatedUser = generateUserInfoData();
     //   const newChild = generateNewChild();
     //   newChild.firstName = "samename";
-
+    //   updatedUser._id = "00000000000000000000000000"
+    //       const {_id, username, firstName, lastName, email} = updatedUser
+    //       const token = jwt.sign(
+    //         {
+    //           user: {
+    //             _id,
+    //             username,
+    //             firstName,
+    //             lastName,
+    //             email
+    //           }
+    //         },
+    //         JWT_SECRET,
+    //         {
+    //           algorithm: 'HS256',
+    //           subject: username,
+    //           expiresIn: '7d'
+    //         }
+    //       );
     //   return chai .request(app)
     //   .post(`/api/account/${userID}/childProfiles`)
     //   .send( newChild )
@@ -651,6 +728,7 @@ describe('Child Profile API resource', function() {
     //       chai.request(app)
     //       .post(`/api/account/${userID}/childProfiles`)
     //       .send( newChild )
+    //       .set('authorization', `Bearer ${token}`)
     //     )
     //     .then((res) => {
     //       expect(res).to.have.status(422);
@@ -743,27 +821,46 @@ describe('Asset API resource', function() {
     });
 
   describe('POST endpoint', function() {
-    // it.only('should add a new digital asset', function() {
-
-    //     const newAsset = generateAssetData();
-
-    //     return chai.request(app)
-    //         .post(`/api/account/${userID}/uploads`)
-    //         .send(newAsset)
-    //         .then(function(res) {
-    //             expect(res).to.have.status(201);
-    //             expect(res).to.be.json;
-    //             expect(res.body).to.be.a('object');
-    //             expect(res.body.asset[1]).to.include.keys('title', 'notes', 'dateUploaded', 'fileLocation', 'drawerTitle');
-    //             expect(res.body.id).to.not.be.null;
-    //             expect(res.body.asset[1].title).to.equal(newAsset.title);
-    //             expect(res.body.asset[1].notes).to.equal(newAsset.notes);
-    //             expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
-    //             expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation);
-    //             expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle); 
-    //             return res.body;
-    //         })
-    // });
+    it('should add a new digital asset', function() {
+        const updatedUser = generateUserInfoData();
+        const newAsset = generateAssetData();
+        updatedUser._id = "00000000000000000000000000"
+          const {_id, username, firstName, lastName, email} = updatedUser
+          const token = jwt.sign(
+            {
+              user: {
+                _id,
+                username,
+                firstName,
+                lastName,
+                email
+              }
+            },
+            JWT_SECRET,
+            {
+              algorithm: 'HS256',
+              subject: username,
+              expiresIn: '7d'
+            }
+          );
+        return chai.request(app)
+            .post(`/api/account/${userID}/uploads`)
+            .send(newAsset)
+            .set('authorization', `Bearer ${token}`)
+            .then(function(res) {
+                expect(res).to.have.status(201);
+                expect(res).to.be.json;
+                expect(res.body).to.be.a('object');
+                expect(res.body.asset[1]).to.include.keys('title', 'notes', 'dateUploaded', 'fileLocation', 'drawerTitle');
+                expect(res.body.id).to.not.be.null;
+                expect(res.body.asset[1].title).to.equal(newAsset.title);
+                expect(res.body.asset[1].notes).to.equal(newAsset.notes);
+                expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
+                expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation);
+                expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle); 
+                return res.body;
+            })
+    });
   });
   // describe('PUT endpoint', function() {
   //   it('should update a digital asset', function() {
