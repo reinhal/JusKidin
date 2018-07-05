@@ -205,6 +205,14 @@ form {
     background-color: rgba(0,0,0,0.5);
 }
 
+.logoff {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
 .updateAccount {
     width: 100%;
     max-width: 1200px;
@@ -306,7 +314,7 @@ form {
     padding: 18px;
     font-size: 24px;
     text-transform: uppercase;
-    text-align: center;
+    text-align: left;
     color: whitesmoke;
 }
   
@@ -344,6 +352,60 @@ form {
 /*////////////Overlay Styling//////////*/
 
 #first-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#updated-first-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#updated-last-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#login-user-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#new-password {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#new-user-name {
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 18px;
+    border: 0px solid whitesmoke;
+    background-color: whitesmoke;
+    width: 400px;
+}
+
+#updated-email {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
@@ -526,6 +588,20 @@ select {
     cursor: pointer; 
 }
 
+#logoffoverlay {
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 2; 
+    cursor: pointer; 
+}
+
 #update-accountoverlay {
     position: fixed; 
     display: none;
@@ -651,6 +727,16 @@ select {
 }
 
 #loginForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 2;
+}
+
+#logoffForm{
     position: absolute;
     top: 50%;
     left: 50%;

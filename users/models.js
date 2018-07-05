@@ -1,5 +1,4 @@
 'use strict';
-
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -34,21 +33,11 @@ const userInfoSchema = mongoose.Schema({
     ]
 });
 
-userInfoSchema.methods.serialize = function() {
-    return {
-        _id: this._id || '',
-        username: this.username || '',
-        firstName: this.firstName || '',
-        lastName: this.lastName || '',
-        email: this.email || ''
-    };
-};
-
-userInfoSchema.methods.validatePassword = function(password) {
+UserSchema.methods.validatePassword = function(password) {
     return bcrypt.compare(password, this.password);
 };
   
-userInfoSchema.statics.hashPassword = function(password) {
+UserSchema.statics.hashPassword = function(password) {
     return bcrypt.hash(password, 10);
 };
 

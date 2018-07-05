@@ -8,243 +8,259 @@
 		<link href="https://fonts.googleapis.com/css?family=Overlock|Open+Sans:400,600" rel="stylesheet">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script src="simpleUpload.min.js"></script>
+		<script src="jwt-decode.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
 		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="app.js"></script>
+		<!-- <script type="text/javascript" src="app.js"></script> -->
 		<script type="text/javascript" src="client.js"></script>
 	</head>
-<body>
-	<div class="topnav" role="navigation" id="responsivetopnav">
-		<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
-		<div id="navAccount" class="dropdown">
-			<a onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
-				<div class="dropdown-content">
-					<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
-					<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
-					<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
-					<a onclick="deleteOn()" href="javascript:void(0)"><i class="fas fa-trash"></i> Delete Account</a>
-				</div>
-		</div>
-		<div class="dropdown">
-			<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
-				<div class="dropdown-content child-dropbtn">
-					<!-- <a href="#">Child 1</a>
-					<a href="#">Child 2</a> -->
-					<a onclick="childOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> New Child</a>
-				</div>
-		</div>
-		<div class="dropdown">
-			<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
-				<div class="dropdown-content asset-dropbtn">
-					<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
-					<a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a>
-				</div>
-		</div>
-		<div class="search-container">
-			<form action="/action_page.php">
-				<input type="text" placeholder="Search.." name="search">
-				<button type="submit"><i class="fa fa-search"></i></button>
-			</form>
-		</div>
-	</div>
-	<div id="header">
-		<header role="banner">
-			<h1>JusKidin</h1>
-			<h2>Support your children.  Keep all the memories.</h2>
-			<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
-		</header>
-	</div>
-	<section role="region">
-		<div id="deleteoverlay">
-			<div class="delete" id="deleteForm">
-				<form>
-					<ul class="flex-outer">
-						<p class="form-title">Are you sure?</p>
-						<li>
-							<label for="delete-name" id="delete-name">This action can not be undone.</label>
-						</li>
-						<li>
-							<button id="delete-overlaybutton" type="submit" onclick="deleteOff()">Delete Forever</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
-	<section role="region">
-		<div id="loginoverlay">
-			<div class="loginHere" id="loginForm">
-				<form class="login-form">
-					<ul class="flex-outer">
-						<p class="form-title">Login</p>
-						<li>
-							<label for="user-name">Username</label>
-							<input type="text" id="user-name" placeholder="Enter username">
-						</li>
-						<li>
-							<label for="password">Password</label>
-							<input type="text" id="password2" placeholder="Enter password">
-						</li>
-						<li>
-							<button id="login" type="submit" onclick="loginOff()">Login</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
-	<section role="region">
-		<div id="accountoverlay">
-			<div class="addAccount" id="addAccountForm">
-				<form class="account-form">
-					<ul class="flex-outer">
-						<p class="form-title">Create New Account</p>
-						<li>
-							<label for="first-name">First Name</label>
-							<input type="text" id="first-name" placeholder="Enter first name here">
-						</li>
-						<li>
-							<label for="last-name">Last Name</label>
-							<input type="text" id="last-name" placeholder="Enter last name here">
-						</li>
-						<li>
-							<label for="account-email">email</label>
-							<input type="text" class="email" id="account-email" placeholder="Enter email here">
-						</li>
-						<li>
-							<button id="accountoverlaybutton" type="submit" onclick="accountOff()">Create Account</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
-	<section role="region">
-		<div id="update-accountoverlay">
-			<div class="updateAccount" id="updateAccountForm">
-				<form class="update-account-form">
-					<ul class="flex-outer">
-						<p class="form-title">Update Account Information</p>
-						<li>
-							<label for="user-name">Username</label>
-							<input type="text" id="user-name" placeholder="Enter desired username">
-						</li>
-						<li>
-							<label for="password">Password</label>
-							<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
-						</li>
-						<li>
-							<label for="first-name">First Name</label>
-							<input type="text" id="first-name" placeholder="Enter first name here">
-						</li>
-						<li>
-							<label for="last-name">Last Name</label>
-							<input type="text" id="last-name" placeholder="Enter last name here">
-						</li>
-						<li>
-							<label for="account-email">email</label>
-							<input type="text" class="email" id="account-email" placeholder="Enter email here">
-						</li>
-						<li>
-							<button id="update-accountoverlaybutton" type="submit" onclick="updateAccountOff()">Update Account</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
-	<section role="region">
-		<div id="childoverlay">
-			<div class="addChild" id="addChildForm">
-				<form class="child-age-form">
-					<ul class="flex-outer">
-						<p class="form-title">Add New Child</p>
-						<li>
-						<label for="child-first-name">First Name</label>
-						<input type="text" id="child-first-name" placeholder="Enter child's first name here">
-						</li>
-						<li>
-						<label for="birth-date">Child's Birth Date</label>
-						<input type="text" class="child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
-						</li>
-						<li>
-						<button id="childoverlaybutton" type="submit" onclick="childOff()">Create</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
-	<section role="region">
-		<div id="assetoverlay">
-			<div class="uploadAsset" id="connectAssetForm">
-				<form>
-					<ul class="flex-outer">
-						<p class="form-title">Connect File</p>
-						<li>
-							<label for="title">Title</label>
-							<input type="text" id="title" placeholder="Title">
-						</li>
-						<li>
-							<label for="date-uploaded">Today's Date</label>
-							<input type="text" id="date-uploaded" placeholder="mm/dd/yyyy">
-						</li>
-						<li>
-							<label for="notes">Notes</label>
-							<input type="text" id="notes" placeholder="Notes">
-						</li>
-						<li>
-							<label for="drawer-title">Add To Drawer</label>
-							<select name="current-drawer-titles" id="drawer-title" class="drawer-title">
-								<!-- <option value=`${drawerTitle}`>Drawer 1</option>
-								<option value=`${drawerTitle}`>Drawer 2</option> -->
-							</select>
-						</li>
-						<li>
-							<label for="image-url">Image URL</label>
-							<input type="text" id="image-url" placeholder="http://imageurl.jpg">
-						</li>
-						<li>
-						<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Publish</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
-	<section role="region">
-		<div id="draweroverlay">
-			<div class="addDrawer" id="addDrawerForm">
-				<form class="drawer-age-form">
-					<ul class="flex-outer">
-						<p class="form-title">Create Drawer</p>
-						<li>
-						<label for="drawer-name">Drawer Name</label>
-						<input type="text" id="new-drawer-title" class="new-drawer-title" placeholder="Drawer Name">
-						</li>
-						<li>
-						<button id="draweroverlaybutton" type="submit" onclick="drawerOff()">Create</button>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</section>
-	<div id="body">
-		<main role="main">
-			<section role="region">
-				<div class="container">
-					<div class="grid">
-						<div class="cell"><img src="http://image.ibb.co/mrmVQJ/fox.jpg" class="responsive-image" alt="fox" border="0" size="500x400"></div>
-						<div class="cell"><img src="https://image.ibb.co/iXGTRm/lavendar.jpg" class="responsive-image" alt="lavendar" border="0" size="500x400"></div>
-						<div class="cell"><img src="https://image.ibb.co/cFzs5J/frog.jpg" alt="frog" class="responsive-image" border="0" size="500x400"></div>
-						<div class="cell"><img src="https://image.ibb.co/m8PTCy/antelopecanyon.jpg" alt="antelopecanyon" class="responsive-image" border="0" size="500x400"></div>
-						<div class="cell"><img src="https://image.ibb.co/cyVUKd/orchids.jpg" alt="orchids" class="responsive-image" border="0" size="500x400"></div>
-						<div class="cell"><img src="https://image.ibb.co/nHCFsy/bwca.jpg" alt="bwca" class="responsive-image" border="0" size="500x400"></div>
+	<body>
+		<div class="topnav" role="navigation" id="responsivetopnav">
+			<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
+			<div id="navAccount" class="dropdown">
+				<a id ="navAccountName" onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
+					<div class="dropdown-content">
+						<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
+						<a onclick="logoffOn()" href="javascript:void(0)"><i class="fas fa-sign-out-alt"></i> Logoff</a>
+						<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
+						<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
+						<a onclick="deleteOn()" href="javascript:void(0)"><i class="fas fa-trash"></i> Delete Account</a>
 					</div>
+			</div>
+			<div class="dropdown">
+				<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
+					<div class="dropdown-content child-dropbtn">
+						<!-- <a href="#">Child 1</a>
+						<a href="#">Child 2</a> -->
+						<a onclick="childOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> New Child</a>
+					</div>
+			</div>
+			<div class="dropdown">
+				<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
+					<div class="dropdown-content asset-dropbtn">
+						<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
+						<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
+					</div>
+			</div>
+			<div class="search-container">
+				<form action="/action_page.php">
+					<input type="text" placeholder="Search.." name="search">
+					<button type="submit"><i class="fa fa-search"></i></button>
+				</form>
+			</div>
+		</div>
+		<div id="header">
+			<header role="banner">
+				<h1>JusKidin</h1>
+				<h2>Support your children.  Keep all the memories.</h2>
+				<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
+			</header>
+		</div>
+		<section role="region">
+			<div id="deleteoverlay">
+				<div class="delete" id="deleteForm">
+					<form class="delete-form">
+						<ul class="flex-outer">
+							<p class="form-title">Are you sure?</p>
+							<li>
+								<label for="delete-name" id="delete-name">This action can not be undone.</label>
+							</li>
+							<li>
+								<button id="delete-overlaybutton" type="submit" onclick="deleteOff()">Delete Forever</button>
+							</li>
+						</ul>
+					</form>
 				</div>
-			</section>
-		</main>
-	</div>
-</body>
+			</div>
+		</section>
+		<section role="region">
+			<div id="logoffoverlay">
+				<div class="logoff" id="logoffForm">
+					<form class="logoff-form">
+						<ul class="flex-outer">
+							<li>
+								<button id="logoff-overlaybutton" type="submit" onclick="logoffOff()">Logoff</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="loginoverlay">
+				<div class="loginHere" id="loginForm">
+					<form class="login-form">
+						<ul class="flex-outer">
+							<p class="form-title">Login</p>
+							<li>
+								<label for="login-user-name">Username</label>
+								<input type="text" id="login-user-name" placeholder="Enter username">
+							</li>
+							<li>
+								<label for="password">Password</label>
+								<input type="text" id="password2" placeholder="Enter password">
+							</li>
+							<li>
+								<button id="login" type="submit" onclick="loginOff()">Login</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="accountoverlay">
+				<div class="addAccount" id="addAccountForm">
+					<form class="account-form">
+						<ul class="flex-outer">
+							<p class="form-title">Create New Account</p>
+							<li>
+								<label for="user-name">Username</label>
+								<input type="text" id="new-user-name" placeholder="Enter desired username">
+							</li>
+							<li>
+								<label for="password">Password</label>
+								<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
+							</li>
+							<li>
+								<label for="first-name">First Name</label>
+								<input type="text" id="first-name" placeholder="Enter first name here">
+							</li>
+							<li>
+								<label for="last-name">Last Name</label>
+								<input type="text" id="last-name" placeholder="Enter last name here">
+							</li>
+							<li>
+								<label for="account-email">email</label>
+								<input type="text" class="email" id="account-email" placeholder="Enter email here">
+							</li>
+							<li>
+								<button id="accountoverlaybutton" type="submit" onclick="accountOff()">Create Account</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="update-accountoverlay">
+				<div class="updateAccount" id="updateAccountForm">
+					<form class="update-account-form">
+						<ul class="flex-outer">
+							<p class="form-title">Update Account Information</p>
+							<li>
+								<label for="user-name">Username</label>
+								<input type="text" id="new-user-name" placeholder="Enter desired username">
+							</li>
+							<li>
+								<label for="first-name">First Name</label>
+								<input type="text" id="updated-first-name" placeholder="Enter first name here">
+							</li>
+							<li>
+								<label for="last-name">Last Name</label>
+								<input type="text" id="updated-last-name" placeholder="Enter last name here">
+							</li>
+							<li>
+								<label for="account-email">email</label>
+								<input type="text" class="email" id="updated-email" placeholder="Enter email here">
+							</li>
+							<li>
+								<button id="update-accountoverlaybutton" type="submit" onclick="updateAccountOff()">Update Account</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="childoverlay">
+				<div class="addChild" id="addChildForm">
+					<form class="child-age-form">
+						<ul class="flex-outer">
+							<p class="form-title">Add New Child</p>
+							<li>
+							<label for="child-first-name">First Name</label>
+							<input type="text" id="child-first-name" placeholder="Enter child's first name here">
+							</li>
+							<li>
+							<label for="birth-date">Child's Birth Date</label>
+							<input type="text" class="child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
+							</li>
+							<li>
+							<button id="childoverlaybutton" type="submit" onclick="childOff()">Create</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="assetoverlay">
+				<div class="uploadAsset" id="connectAssetForm">
+					<form>
+						<ul class="flex-outer">
+							<p class="form-title">Connect File</p>
+							<li>
+								<label for="title">Title</label>
+								<input type="text" id="title" placeholder="Title">
+							</li>
+							<li>
+								<label for="date-uploaded">Today's Date</label>
+								<input type="text" id="date-uploaded" placeholder="mm/dd/yyyy">
+							</li>
+							<li>
+								<label for="notes">Notes</label>
+								<input type="text" id="notes" placeholder="Notes">
+							</li>
+							<li>
+								<label for="drawer-title">Add To Drawer</label>
+								<input type="text" id="drawer-title" class="drawer-title" placeholder="Enter existing or new drawer name">
+							</li>
+							<li>
+								<label for="image-url">Image URL</label>
+								<input type="text" id="image-url" placeholder="http://imageurl.jpg">
+							</li>
+							<li>
+							<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Publish</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="draweroverlay">
+				<div class="addDrawer" id="addDrawerForm">
+					<form class="drawer-age-form">
+						<ul class="flex-outer">
+							<p class="form-title">Create Drawer</p>
+							<li>
+							<label for="drawer-name">Drawer Name</label>
+							<input type="text" id="new-drawer-title" class="new-drawer-title" placeholder="Drawer Name">
+							</li>
+							<li>
+							<button id="draweroverlaybutton" type="submit" onclick="drawerOff()">Create</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<div id="body">
+			<main role="main">
+				<section role="region">
+					<div class="container">
+						<div class="grid">
+							<div class="cell"><img src="http://image.ibb.co/mrmVQJ/fox.jpg" class="responsive-image" alt="fox" border="0" size="500x400"></div>
+							<div class="cell"><img src="https://image.ibb.co/iXGTRm/lavendar.jpg" class="responsive-image" alt="lavendar" border="0" size="500x400"></div>
+							<div class="cell"><img src="https://image.ibb.co/cFzs5J/frog.jpg" alt="frog" class="responsive-image" border="0" size="500x400"></div>
+							<div class="cell"><img src="https://image.ibb.co/m8PTCy/antelopecanyon.jpg" alt="antelopecanyon" class="responsive-image" border="0" size="500x400"></div>
+							<div class="cell"><img src="https://image.ibb.co/cyVUKd/orchids.jpg" alt="orchids" class="responsive-image" border="0" size="500x400"></div>
+							<div class="cell"><img src="https://image.ibb.co/nHCFsy/bwca.jpg" alt="bwca" class="responsive-image" border="0" size="500x400"></div>
+						</div>
+					</div>
+				</section>
+			</main>
+		</div>
+	</body>
 </html>
