@@ -63,16 +63,6 @@ app.post('/api/account', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password', 'firstName', 'lastName', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
   
-<<<<<<< HEAD
-  const newUser = ['firstName', 'lastName', 'email'];
-  
-  for (let i=0; i<newUser.length; i++) {
-    const field = newUser[i];
-    if (!(field in req.body)) {
-      const message = `Missing \`${field} \`in request body`
-      console.error(message);
-      return res.status(400).send(message);
-=======
   if (missingField) {
     return res.status(422).json({
       code: 422,
@@ -119,7 +109,6 @@ app.post('/api/account', jsonParser, (req, res) => {
       // bcrypt truncates after 72 characters, so let's not give the illusion
       // of security by storing extra (unused) info
       max: 72
->>>>>>> authentication
     }
   };
 
