@@ -766,124 +766,124 @@ describe('Asset API resource', function() {
             })
     });
   });
-  describe('PUT endpoint', function() {
-    it('should update a digital asset', function() {
+  // describe('PUT endpoint', function() {
+  //   it('should update a digital asset', function() {
     
-      const updatedAsset = ({
-          "title": "Yellow Jack",
-          "notes": "pillage line long boat avast dead men tell no tales case shot ho",
-          "dateUploaded": "05/28/17", 
-          "fileLocation": "https://picsum.photos/350/300/?random",
-          "drawerTitle": "Remote Beach",
-          "assetIndex": 0
-      });
+  //     const updatedAsset = ({
+  //         "title": "Yellow Jack",
+  //         "notes": "pillage line long boat avast dead men tell no tales case shot ho",
+  //         "dateUploaded": "05/28/17", 
+  //         "fileLocation": "https://picsum.photos/350/300/?random",
+  //         "drawerTitle": "Remote Beach",
+  //         "assetIndex": 0
+  //     });
 
-      return UserInfo.create({
-        "username": "Beelady",
-        "password": "queen2345",
-        "firstName": "Queen",
-        "lastName": "Lady",
-        "email": "qb@thehive.com",
-        "childProfs": [
-            {
-                "firstName": "Dina",
-                "birthDate": "04/22/15"
-            },
-            {
-                "firstName": "Nyle",
-                "birthDate": "03/12/14"
-            }
-        ],
-        "asset": [
-            {
-                "title": "Barbary Coast",
-                "notes": "lee swing the lead spike tackle Nelsons folly Privateer run a rig marooned",
-                "dateUploaded": "11/27/18", 
-                "fileLocation": "https://picsum.photos/350/300/?random",
-                "drawerTitle": "Pirate Ship"
-            },
-            {
-                "title": "Main Brethren",
-                "notes": "lateen sail man-of-war knave wherry rum",
-                "dateUploaded": "05/28/17", 
-                "fileLocation": "https://picsum.photos/350/300/?random",
-                "drawerTitle": "Pirate Ship"
-            }
-        ]
-  })
-        .then(function(userinfo) {
-          let userID = userinfo._id;
+  //     return UserInfo.create({
+  //       "username": "Beelady",
+  //       "password": "queen2345",
+  //       "firstName": "Queen",
+  //       "lastName": "Lady",
+  //       "email": "qb@thehive.com",
+  //       "childProfs": [
+  //           {
+  //               "firstName": "Dina",
+  //               "birthDate": "04/22/15"
+  //           },
+  //           {
+  //               "firstName": "Nyle",
+  //               "birthDate": "03/12/14"
+  //           }
+  //       ],
+  //       "asset": [
+  //           {
+  //               "title": "Barbary Coast",
+  //               "notes": "lee swing the lead spike tackle Nelsons folly Privateer run a rig marooned",
+  //               "dateUploaded": "11/27/18", 
+  //               "fileLocation": "https://picsum.photos/350/300/?random",
+  //               "drawerTitle": "Pirate Ship"
+  //           },
+  //           {
+  //               "title": "Main Brethren",
+  //               "notes": "lateen sail man-of-war knave wherry rum",
+  //               "dateUploaded": "05/28/17", 
+  //               "fileLocation": "https://picsum.photos/350/300/?random",
+  //               "drawerTitle": "Pirate Ship"
+  //           }
+  //       ]
+  // })
+  //       .then(function(userinfo) {
+  //         let userID = userinfo._id;
           
-          return chai.request(app)
-            .put(`/api/account/${userID}/uploads/0`)
-            .send(updatedAsset)
-            .then(function(res) {
+  //         return chai.request(app)
+  //           .put(`/api/account/${userID}/uploads/0`)
+  //           .send(updatedAsset)
+  //           .then(function(res) {
             
-              return UserInfo.findById(userID);
-            })
-            .then(function(userinfo) {
-              expect(userinfo.asset[0].title).to.equal(updatedAsset.title);
-              expect(userinfo.asset[0].notes).to.equal(updatedAsset.notes);
-              expect(userinfo.asset[0].dateUploaded).to.equal(updatedAsset.dateUploaded);
-              expect(userinfo.asset[0].fileLocation).to.equal(updatedAsset.fileLocation);
-              expect(userinfo.asset[0].drawerTitle).to.equal(updatedAsset.drawerTitle);
+  //             return UserInfo.findById(userID);
+  //           })
+  //           .then(function(userinfo) {
+  //             expect(userinfo.asset[0].title).to.equal(updatedAsset.title);
+  //             expect(userinfo.asset[0].notes).to.equal(updatedAsset.notes);
+  //             expect(userinfo.asset[0].dateUploaded).to.equal(updatedAsset.dateUploaded);
+  //             expect(userinfo.asset[0].fileLocation).to.equal(updatedAsset.fileLocation);
+  //             expect(userinfo.asset[0].drawerTitle).to.equal(updatedAsset.drawerTitle);
               
-            })
-        })  
-    });
-  });
-  describe('DELETE endpoint', function() {
-    it('should delete digital asset by id', function() {        
+  //           })
+  //       })  
+  //   });
+  // });
+  // describe('DELETE endpoint', function() {
+  //   it('should delete digital asset by id', function() {        
       
-     return UserInfo.create({
-                      "username": "Qlady",
-                      "password": "queen2345",
-                      "firstName": "Queen",
-                      "lastName": "Lady",
-                      "email": "qb@thehive.com",
-                      "childProfs": [
-                          {
-                              "firstName": "Dina",
-                              "birthDate": "04/22/15"
-                          },
-                          {
-                              "firstName": "Nyle",
-                              "birthDate": "03/12/14"
-                          }
-                      ],
-                      "asset": [
-                          {
-                              "title": "Barbary Coast",
-                              "notes": "lee swing the lead spike tackle Nelsons folly Privateer run a rig marooned",
-                              "dateUploaded": "11/27/18", 
-                              "fileLocation": "https://picsum.photos/350/300/?random",
-                              "drawerTitle": "Pirate Ship"
-                          },
-                          {
-                              "title": "Main Brethren",
-                              "notes": "lateen sail man-of-war knave wherry rum",
-                              "dateUploaded": "05/28/17", 
-                              "fileLocation": "https://picsum.photos/350/300/?random",
-                              "drawerTitle": "Pirate Ship"
-                          }
-                      ]
-                });
+  //    return UserInfo.create({
+  //                     "username": "Qlady",
+  //                     "password": "queen2345",
+  //                     "firstName": "Queen",
+  //                     "lastName": "Lady",
+  //                     "email": "qb@thehive.com",
+  //                     "childProfs": [
+  //                         {
+  //                             "firstName": "Dina",
+  //                             "birthDate": "04/22/15"
+  //                         },
+  //                         {
+  //                             "firstName": "Nyle",
+  //                             "birthDate": "03/12/14"
+  //                         }
+  //                     ],
+  //                     "asset": [
+  //                         {
+  //                             "title": "Barbary Coast",
+  //                             "notes": "lee swing the lead spike tackle Nelsons folly Privateer run a rig marooned",
+  //                             "dateUploaded": "11/27/18", 
+  //                             "fileLocation": "https://picsum.photos/350/300/?random",
+  //                             "drawerTitle": "Pirate Ship"
+  //                         },
+  //                         {
+  //                             "title": "Main Brethren",
+  //                             "notes": "lateen sail man-of-war knave wherry rum",
+  //                             "dateUploaded": "05/28/17", 
+  //                             "fileLocation": "https://picsum.photos/350/300/?random",
+  //                             "drawerTitle": "Pirate Ship"
+  //                         }
+  //                     ]
+  //               });
 
-      return UserInfo
-      .findOne()
-      .then(function(_asset) {
-        asset = _asset;
-        return chai.request(app)
-        .delete(`/api/account/${userID}/uploads/${assetID}`)
-        .send( UserInfo )
-      })
-      .then(function(res) {
-        expect(res).to.have.status(204);
-        return UserInfo.asset.findById(userinfo.asset._id);
-      })
-      .then(function(_asset) {
-        expect(UserInfo.asset).to.be.null;
-      });
-    });
-  });
+  //     return UserInfo
+  //     .findOne()
+  //     .then(function(_asset) {
+  //       asset = _asset;
+  //       return chai.request(app)
+  //       .delete(`/api/account/${userID}/uploads/${assetID}`)
+  //       .send( UserInfo )
+  //     })
+  //     .then(function(res) {
+  //       expect(res).to.have.status(204);
+  //       return UserInfo.asset.findById(userinfo.asset._id);
+  //     })
+  //     .then(function(_asset) {
+  //       expect(UserInfo.asset).to.be.null;
+  //     });
+  //   });
+  // });
 });

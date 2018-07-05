@@ -430,8 +430,26 @@ function editAccount(username, firstName, lastName, email) {
       });
 }
 
+function handleDeleteAccount() {
+    console.log('deleting account!');
+    $('.delete-form').submit(function(e) {
+        e.preventDefault();
+            deleteAccount();
+    })
+}
+
 function deleteAccount() {
-//delete account
+    $.ajax({
+        method: 'DELETE',
+        url: `/api/account/${userID}`,
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
+        success: alert('Account Deleted'),
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+    localStorage.clear();
+    window.location.reload(true);
+
 }
 
 ///////////// Drawer and Asset Functions ///////////////////////////
@@ -638,6 +656,7 @@ $(function() {
         getAndDisplayDrawer();
         handleLogOffUser();
     }
+    handleDeleteAccount();
     getAndDisplayDrawer();
     getAndDisplayChildProfile();
     updateNavUser(getUserID());  //navbar handles logged in state
