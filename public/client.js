@@ -72,13 +72,13 @@ function childOff() {
     document.getElementById("childoverlay").style.display = "none";
 }
 
-function editAssetOn() {
-    document.getElementById("edit-assetoverlay").style.display = "block";
-}
+// function editAssetOn() {
+//     document.getElementById("edit-assetoverlay").style.display = "block";
+// }
 
-function editAssetOff() {
-    document.getElementById("edit-assetoverlay").style.display = "none";
-}
+// function editAssetOff() {
+//     document.getElementById("edit-assetoverlay").style.display = "none";
+// }
 
 function assetOn() {
     document.getElementById("assetoverlay").style.display = "block";
@@ -320,7 +320,6 @@ function createNewAccount(username, password, firstName, lastName, email) {
       data: JSON.stringify({username, password, firstName, lastName, email}),
       success: function(data) {
         alert('New Account Created');
-        //getAndDisplayAccount();
       },
       dataType: 'json',
       contentType: 'application/json'
@@ -521,8 +520,6 @@ var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
                  <div>
                  <p class="asset-content"><strong>${title}</strong></p>
                  <p class="asset-content">${notes}</p>
-                 <p class="icon"><i class="fas fa-edit"></i>Edit</p>
-                 <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
              </div>
         </section>`
     )
@@ -581,8 +578,6 @@ function getAndDisplayUploads() {
                             <div>
                             <p class="asset-content"><strong>${item.title}</strong></p>
                             <p class="asset-content">${item.notes}</p>
-                            <a onclick="editAssetOn()" href="#" class="icon"><i class="fas fa-edit"></i></a>
-                            <a onclick="deleteOn()" href="#" class="icon"><i class="fas fa-trash-alt"></i></a>
                         </div>
                     </section>`
                 )
