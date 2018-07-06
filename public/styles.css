@@ -1020,6 +1020,10 @@ select {
         margin: 25px;
         font-size: 18px;
     }
+
+    .google-image {
+        max-width: 150px;
+    }
 }
 
 @media screen and (min-width: 600px) {

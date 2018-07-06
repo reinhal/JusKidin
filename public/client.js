@@ -270,7 +270,7 @@ function displayGoogleSearch(childName) {
             if (data.pagemap.cse_thumbnail) {
                 $(`#${childID}`).append(`<h2>${data.title} </h2>
                     <ul>
-                        <li class="google-image"><img src="${data.pagemap.cse_thumbnail[0].src}"></li>
+                        <li class="google-image"><img class="google-image" src="${data.pagemap.cse_thumbnail[0].src}"></li>
                         <li class="google"><a href="${data.link}">Click Here to Read Full Article</a></li>
                         <li class="google">${data.snippet}</li>
                     </ul>
