@@ -271,7 +271,7 @@ function displayGoogleSearch(childName) {
                 $(`#${childID}`).append(`<h2>${data.title} </h2>
                     <ul>
                         <li class="google-image"><img src="${data.pagemap.cse_thumbnail[0].src}"></li>
-                        <li class="google"><a href="${data.link}">${data.link}</a></li>
+                        <li class="google"><a href="${data.link}">Click Here to Read Full Article</a></li>
                         <li class="google">${data.snippet}</li>
                     </ul>
                     <style type="text/css">
@@ -286,7 +286,7 @@ function displayGoogleSearch(childName) {
             } else {
                 $(`#${childID}`).append(`<h2 #${childID}>${data.title} </h2>
                     <ul>
-                        <li class="google"><a href="${data.link}">${data.link}</a></li>
+                        <li class="google"><a href="${data.link}">Click Here to Read Full Aricle</a></li>
                         <li class="google">${data.snippet}</li>
                     </ul>
                     <style type="text/css">
