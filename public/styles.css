@@ -1007,6 +1007,20 @@ select {
 
 /*////////////Responsive Styling//////////*/
 
+@media screen and (min-width: 350px) {
+    .flex-outer {
+        display: block;
+    }
+
+    .form-title {
+        font-size: 28px;
+    }
+
+    h2 {
+        margin: 25px;
+    }
+}
+
 @media screen and (min-width: 600px) {
     .grid {
       display: flex;
