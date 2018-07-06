@@ -1018,6 +1018,11 @@ select {
 
     h2 {
         margin: 25px;
+        font-size: 18px;
+    }
+
+    img {
+        max-width: 150px;
     }
 }
 
