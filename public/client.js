@@ -93,9 +93,6 @@ function drawerOff() {
 }
 
 ///////////// Child(ren) Page Functions ///////////////////////
-// function editProf() {
-//     document.getElementById("profDropdown").classList.toggle("show");
-// }
 
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn-prof')) {
@@ -142,7 +139,6 @@ function openChild(evt, childName) {
 
 var childProfileTemplate = function (childName, birthDate) {
     var childID = childName.replace(/\s+/g, '-').toLowerCase();
-    // console.log(birthDate);
     $('.dropdown-prof').append(
         `<button class="tablinks dropbtn-prof" onclick="openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
     )
@@ -200,7 +196,6 @@ function handleChildProfileAdd() {
     $('.child-age-form').submit(function(e) {
         var childName = $('#child-first-name').val();
         var birthDate = $('.child-birth-date').val();
-        // console.log("Child Info", childName, birthDate, $('.child-birth-date'))
         e.preventDefault();
         window.location.reload(true);
         if (childName == '' || birthDate == '') {
@@ -210,6 +205,8 @@ function handleChildProfileAdd() {
         }
     });
 }
+
+////These functions will be fully implemented in future development////////////
 
 // function deleteChildProfile(userID, child_id) {
 //     console.log('Deleting child profile');
@@ -423,6 +420,74 @@ function editAccount(username, firstName, lastName, email) {
         dataType: 'json',
         contentType: 'application/json'
       });
+}
+
+// var currentAccountTemplate = function (username, firstName, lastName, email) {
+//    $('.updateAccount').append(`<form class="update-account-form">
+//         <ul class="flex-outer">
+//             <p class="form-title">Update Account Information</p>
+//             <li>
+//                 <label for="user-name">Username</label>
+//                 <input type="text" id="new-user-name" placeholder="Current username: ${username}">
+//             </li>
+//             <li>
+//                 <label for="first-name">First Name</label>
+//                 <input type="text" id="updated-first-name" placeholder="Current first name: ${firstName}">
+//             </li>
+//             <li>
+//                 <label for="last-name">Last Name</label>
+//                 <input type="text" id="updated-last-name" placeholder="Current last name: ${lastName}">
+//             </li>
+//             <li>
+//                 <label for="account-email">email</label>
+//                 <input type="text" class="email" id="updated-email" placeholder="Current email: ${email}">
+//             </li>
+//             <li>
+//                 <button id="update-accountoverlaybutton" type="submit">Update Account</button>
+//             </li>
+//         </ul>
+//     </form>`)
+// }
+
+function getAndDisplayCurrentAccountInfo() {
+    userID =  localStorage.getItem('userID');
+    var CURRENTACCOUNT_URL = `api/account/${userID}`;
+    console.log ('Getting current account information'+ username + firstName + lastName + email);
+    $.ajax({
+        method: 'GET',
+        url: CURRENTACCOUNT_URL,
+        headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
+        success: function(data) {
+            console.log('current account info here', data)
+            $('.updateAccount').append(
+                `<form class="update-account-form">
+                    <ul class="flex-outer">
+                        <p class="form-title">Update Account Information</p>
+                        <li>
+                            <label for="user-name">Username</label>
+                            <input type="text" id="new-user-name" placeholder="Current username: ${data.username}">
+                        </li>
+                        <li>
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="updated-first-name" placeholder="Current first name: ${data.firstName}">
+                        </li>
+                        <li>
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="updated-last-name" placeholder="Current last name: ${data.lastName}">
+                        </li>
+                        <li>
+                            <label for="account-email">email</label>
+                            <input type="text" class="email" id="updated-email" placeholder="Current email: ${data.email}">
+                        </li>
+                        <li>
+                            <button id="update-accountoverlaybutton" type="submit">Update Account</button>
+                        </li>
+                    </ul>
+            </form>`)
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
 }
 
 function handleDeleteAccount() {
@@ -661,7 +726,9 @@ $(function() {
         getAndDisplayUploads();
         getAndDisplayDrawer();
         handleLogOffUser();
+        getAndDisplayCurrentAccountInfo();
     }
+    getAndDisplayCurrentAccountInfo();
     handleDeleteAccount();
     getAndDisplayDrawer();
     getAndDisplayChildProfile();

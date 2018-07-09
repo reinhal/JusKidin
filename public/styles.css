@@ -343,6 +343,7 @@ form {
     letter-spacing: .09em;
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
+    cursor: pointer;
 }
 
 #delete-overlaybutton {
