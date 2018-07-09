@@ -57,7 +57,7 @@
 			</header>
 		</div>
 		<section role="region">
-			<div id="deleteoverlay">
+			<div id="deleteoverlay" onclick="deleteOff()">
 				<div class="delete" id="deleteForm">
 					<form class="delete-form">
 						<ul class="flex-outer">
@@ -66,7 +66,7 @@
 								<label for="delete-name" id="delete-name">This action can not be undone.</label>
 							</li>
 							<li>
-								<button id="delete-overlaybutton" type="submit" onclick="deleteOff()">Delete Forever</button>
+								<button id="delete-overlaybutton" type="submit">Delete Forever</button>
 							</li>
 						</ul>
 					</form>
@@ -74,12 +74,12 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="logoffoverlay">
+			<div id="logoffoverlay" onclick="logoffOff()">
 				<div class="logoff" id="logoffForm">
 					<form class="logoff-form">
 						<ul class="flex-outer">
 							<li>
-								<button id="logoff-overlaybutton" type="submit" onclick="logoffOff()">Logoff</button>
+								<button id="logoff-overlaybutton" type="submit">Logoff</button>
 							</li>
 						</ul>
 					</form>
@@ -87,7 +87,7 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="loginoverlay">
+			<div id="loginoverlay" onclick="loginOff()">
 				<div class="loginHere" id="loginForm">
 					<form class="login-form">
 						<ul class="flex-outer">
@@ -101,7 +101,7 @@
 								<input type="text" id="password2" placeholder="Enter password">
 							</li>
 							<li>
-								<button id="login" type="submit" onclick="loginOff()">Login</button>
+								<button id="login" type="submit">Login</button>
 							</li>
 						</ul>
 					</form>
@@ -109,7 +109,7 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="accountoverlay">
+			<div id="accountoverlay" onclick="accountOff()">
 				<div class="addAccount" id="addAccountForm">
 					<form class="account-form">
 						<ul class="flex-outer">
@@ -135,7 +135,7 @@
 								<input type="text" class="email" id="account-email" placeholder="Enter email here">
 							</li>
 							<li>
-								<button id="accountoverlaybutton" type="submit" onclick="accountOff()">Create Account</button>
+								<button id="accountoverlaybutton" type="submit">Create Account</button>
 							</li>
 						</ul>
 					</form>
@@ -143,7 +143,7 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="update-accountoverlay">
+			<div id="update-accountoverlay" onclick="updateAccountOff()">
 				<div class="updateAccount" id="updateAccountForm">
 					<form class="update-account-form">
 						<ul class="flex-outer">
@@ -165,7 +165,7 @@
 								<input type="text" class="email" id="updated-email" placeholder="Enter email here">
 							</li>
 							<li>
-								<button id="update-accountoverlaybutton" type="submit" onclick="updateAccountOff()">Update Account</button>
+								<button id="update-accountoverlaybutton" type="submit">Update Account</button>
 							</li>
 						</ul>
 					</form>
@@ -173,7 +173,7 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="childoverlay">
+			<div id="childoverlay" onclick="childOff()">
 				<div class="addChild" id="addChildForm">
 					<form class="child-age-form">
 						<ul class="flex-outer">
@@ -187,7 +187,7 @@
 							<input type="text" class="child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
 							</li>
 							<li>
-							<button id="childoverlaybutton" type="submit" onclick="childOff()">Create</button>
+							<button id="childoverlaybutton" type="submit">Create</button>
 							</li>
 						</ul>
 					</form>
@@ -195,7 +195,7 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="assetoverlay">
+			<div id="assetoverlay" onclick="assetOff()">
 				<div class="uploadAsset" id="connectAssetForm">
 					<form>
 						<ul class="flex-outer">
@@ -221,7 +221,7 @@
 								<input type="text" id="image-url" placeholder="http://imageurl.jpg">
 							</li>
 							<li>
-							<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Publish</button>
+							<button id="assetoverlaybutton" type="submit">Publish</button>
 							</li>
 						</ul>
 					</form>

@@ -76,14 +76,6 @@ function childOff() {
     document.getElementById("childoverlay").style.display = "none";
 }
 
-// function editAssetOn() {
-//     document.getElementById("edit-assetoverlay").style.display = "block";
-// }
-
-// function editAssetOff() {
-//     document.getElementById("edit-assetoverlay").style.display = "none";
-// }
-
 function assetOn() {
     document.getElementById("assetoverlay").style.display = "block";
 }
@@ -101,9 +93,9 @@ function drawerOff() {
 }
 
 ///////////// Child(ren) Page Functions ///////////////////////
-function editProf() {
-    document.getElementById("profDropdown").classList.toggle("show");
-}
+// function editProf() {
+//     document.getElementById("profDropdown").classList.toggle("show");
+// }
 
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn-prof')) {
