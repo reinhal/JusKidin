@@ -467,7 +467,7 @@ function getAndDisplayCurrentAccountInfo() {
         success: function(data) {
             console.log('current account info here', data)
             $('.updateAccount').append(
-                `<button class ="close-form" type="submit" onclick="updateAccountOff()"><i class="fas fa-times"></i></button>
+                `<button class ="close-form" data-a11y-dialog-hide aria-label="Close this dialog window" type="submit" onclick="updateAccountOff()"><i class="fas fa-times"></i></button>
                 <form class="update-account-form">
                     <ul class="flex-outer">
                         <p class="form-title">Update Account Information</p>

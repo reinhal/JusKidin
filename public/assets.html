@@ -37,7 +37,6 @@
 				<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-angle-down"></i></a>
 					<div class="dropdown-content asset-dropbtn">
 						<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
-						<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
 					</div>
 			</div>
 			<div class="search-container">
@@ -56,9 +55,9 @@
 			</header>
 		</div>	
 		<section role="region">
-			<div id="deleteoverlay">
-				<div class="delete" id="deleteForm">
-					<button class ="close-form" type="submit" onclick="deleteOff()"><i class="fas fa-times"></i></button>
+			<div id="deleteoverlay" tabindex="-1" data-a11y-dialog-hide>
+				<div class="delete" id="deleteForm" role="dialog">
+					<button class ="close-form" type="submit" data-a11y-dialog-hide aria-label="Close this dialog window" onclick="deleteOff()"><i class="fas fa-times"></i></button>
 					<form class="delete-form">
 						<ul class="flex-outer">
 							<p class="form-title">Are you sure?</p>
@@ -74,9 +73,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="logoffoverlay" onclick="logoffOff()">
-				<div class="logoff" id="logoffForm">
-					<button class ="close-form" type="submit" onclick="logoffOff()"><i class="fas fa-times"></i></button>
+			<div id="logoffoverlay" tabindex="-1" data-a11y-dialog-hide>
+				<div class="logoff" id="logoffForm" role="dialog">
+					<button class ="close-form" type="submit" data-a11y-dialog-hide aria-label="Close this dialog window" onclick="logoffOff()"><i class="fas fa-times"></i></button>
 					<form class="logoff-form">
 						<ul class="flex-outer">
 							<li>
@@ -88,9 +87,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="loginoverlay">
-				<div class="loginHere" id="loginForm">
-					<button class ="close-form" type="submit" onclick="loginOff()"><i class="fas fa-times"></i></button>
+			<div id="loginoverlay" tabindex="-1" data-a11y-dialog-hide>
+				<div class="loginHere" id="loginForm" role="dialog">
+					<button class ="close-form" type="submit" data-a11y-dialog-hide aria-label="Close this dialog window" onclick="loginOff()"><i class="fas fa-times"></i></button>
 					<form class="login-form">
 						<ul class="flex-outer">
 							<p class="form-title">Login</p>
@@ -113,9 +112,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="accountoverlay">
-				<div class="addAccount" id="addAccountForm">
-					<button class ="close-form" type="submit" onclick="accountOff()"><i class="fas fa-times"></i></button>
+			<div id="accountoverlay" tabindex="-1" data-a11y-dialog-hide>
+				<div class="addAccount" id="addAccountForm" role="dialog">
+					<button class ="close-form" type="submit" data-a11y-dialog-hide aria-label="Close this dialog window" onclick="accountOff()"><i class="fas fa-times"></i></button>
 					<form class="account-form">
 						<ul class="flex-outer">
 							<p class="form-title">Create New Account</p>
@@ -148,15 +147,15 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="update-accountoverlay">
-				<div class="updateAccount" id="updateAccountForm">
+			<div id="update-accountoverlay" tabindex="-1" data-a11y-dialog-hide>
+				<div class="updateAccount" id="updateAccountForm" role="dialog">
 				</div>
 			</div>
 		</section>
 		<section role="region">
-			<div id="childoverlay">
+			<div id="childoverlay" tabindex="-1" data-a11y-dialog-hide>
 				<div class="addChild" id="addChildForm">
-					<button class ="close-form" type="submit" onclick="childOff()"><i class="fas fa-times"></i></button>
+					<button class ="close-form" type="submit" data-a11y-dialog-hide aria-label="Close this dialog window" onclick="childOff()"><i class="fas fa-times"></i></button>
 					<form class="child-age-form">
 						<ul class="flex-outer">
 							<p class="form-title">Add New Child</p>
@@ -177,9 +176,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="assetoverlay">
-				<div class="uploadAsset" id="connectAssetForm">
-					<button class ="close-form" type="submit" onclick="assetOff()"><i class="fas fa-times"></i></button>
+			<div id="assetoverlay" tabindex="-1" data-a11y-dialog-hide>
+				<div class="uploadAsset" id="connectAssetForm" role="dialog">
+					<button class ="close-form" type="submit" data-a11y-dialog-hide aria-label="Close this dialog window" onclick="assetOff()"><i class="fas fa-times"></i></button>
 					<form>
 						<ul class="flex-outer">
 							<p class="form-title">Connect File</p>
