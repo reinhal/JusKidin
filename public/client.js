@@ -207,7 +207,7 @@ function handleChildProfileAdd() {
         e.preventDefault();
         window.location.reload(true);
         if (childName == '' || birthDate == '') {
-            alert('Missing Information')
+            alert('Missing Information!')
         } else {
             addChildProfile(childName, birthDate);
         }
@@ -382,7 +382,6 @@ function attemptLogInUser(username, password) {
             console.log('resData 316 is JWT.user._id', JWT.user._id);
             userID = JWT.user._id;
             localStorage.setItem('userID', userID);
-            alert('You have successfully logged in!');
             window.location.reload(true);
             $.ajax({
                 method: 'GET',
@@ -423,7 +422,7 @@ function editAccount(username, firstName, lastName, email) {
         data: JSON.stringify({username, firstName, lastName, email}),
         headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
         success: function(data) {
-          alert('Account Updated');
+          alert('Account Successfully Updated');
         },
         dataType: 'json',
         contentType: 'application/json'
@@ -702,8 +701,8 @@ function connectImage(title, notes, dateUploaded, fileLocation, drawerTitle) {
         headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
         data: JSON.stringify({title, notes, dateUploaded, fileLocation, drawerTitle}),
         success : function(data) {
-            alert('You have succesfully connected the image!')
             getAndDisplayUploads();
+            res.redirect("/assets.html");
         },
         dataType: 'json',
         contentType: 'application/json'
