@@ -835,7 +835,7 @@ select {
     z-index: 2;
 }
 
-#uploadAssetForm{
+#connectAssetForm{
     position: absolute;
     top: 50%;
     left: 50%;
