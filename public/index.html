@@ -28,18 +28,15 @@
 					</div>
 			</div>
 			<div class="dropdown">
-				<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
+				<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-angle-down"></i></a>
 					<div class="dropdown-content child-dropbtn">
-						<!-- <a href="#">Child 1</a>
-						<a href="#">Child 2</a> -->
 						<a onclick="childOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> New Child</a>
 					</div>
 			</div>
 			<div class="dropdown">
-				<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
+				<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-angle-down"></i></a>
 					<div class="dropdown-content asset-dropbtn">
-						<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
-						<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
+						<a onclick="assetOn()" href="#connectimage"><i class="fas fa-link"></i> Connect Images</a>
 					</div>
 			</div>
 			<div class="search-container">
@@ -54,11 +51,32 @@
 				<h1>JusKidin</h1>
 				<h2>Support your children.  Keep all the memories.</h2>
 				<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
+				<button onclick="directionsOn()" class="heres-how">Here's How</button>
 			</header>
 		</div>
 		<section role="region">
-			<div id="deleteoverlay" onclick="deleteOff()">
+			<div id="directionsoverlay">
+				<div class="directions" id="directionsForm">
+					<button class ="close-form" type="submit" onclick="directionsOff()"><i class="fas fa-times"></i></button>
+					<form class="directions-form">
+						<ul class="flex-outer">
+							<p class="form-title">Here's How To Use JusKidin</p>
+							 <p class="directions-heading">Web Resources for Your Children</p>
+							 <li class= "directions-item">Use the "Add Child" form to enter a name and birthdate for each child.</li>
+							 <li class= "directions-item">Visit the Child(ren) page, click on the child to see developmentally relevant web resources.</li>
+							 <p class="directions-heading">Organize Memories, School Work, Artwork into Drawers</p>
+							 <li class= "directions-item">Use the "Connect Image" form to bring the image into the website and place it into a drawer.</li>
+							 <li class= "directions-item">Go to the Drawers page, click on the drawer button to view all the connected images.</li>
+							 <p class="form-title">Enjoy!</p>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="deleteoverlay">
 				<div class="delete" id="deleteForm">
+					<button class ="close-form" type="submit" onclick="deleteOff()"><i class="fas fa-times"></i></button>
 					<form class="delete-form">
 						<ul class="flex-outer">
 							<p class="form-title">Are you sure?</p>
@@ -76,6 +94,7 @@
 		<section role="region">
 			<div id="logoffoverlay" onclick="logoffOff()">
 				<div class="logoff" id="logoffForm">
+					<button class ="close-form" type="submit" onclick="logoffOff()"><i class="fas fa-times"></i></button>
 					<form class="logoff-form">
 						<ul class="flex-outer">
 							<li>
@@ -87,8 +106,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="loginoverlay" onclick="loginOff()">
+			<div id="loginoverlay">
 				<div class="loginHere" id="loginForm">
+					<button class ="close-form" type="submit" onclick="loginOff()"><i class="fas fa-times"></i></button>
 					<form class="login-form">
 						<ul class="flex-outer">
 							<p class="form-title">Login</p>
@@ -109,8 +129,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="accountoverlay" onclick="accountOff()">
+			<div id="accountoverlay">
 				<div class="addAccount" id="addAccountForm">
+					<button class ="close-form" type="submit" onclick="accountOff()"><i class="fas fa-times"></i></button>
 					<form class="account-form">
 						<ul class="flex-outer">
 							<p class="form-title">Create New Account</p>
@@ -143,27 +164,28 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="update-accountoverlay" onclick="updateAccountOff()">
+			<div id="update-accountoverlay">
 				<div class="updateAccount" id="updateAccountForm">
 				</div>
 			</div>
 		</section>
 		<section role="region">
-			<div id="childoverlay" onclick="childOff()">
+			<div id="childoverlay">
 				<div class="addChild" id="addChildForm">
+					<button class ="close-form" type="submit" onclick="childOff()"><i class="fas fa-times"></i></button>
 					<form class="child-age-form">
 						<ul class="flex-outer">
 							<p class="form-title">Add New Child</p>
 							<li>
-							<label for="child-first-name">First Name</label>
-							<input type="text" id="child-first-name" placeholder="Enter child's first name here">
+								<label for="child-first-name">First Name</label>
+								<input type="text" id="child-first-name" placeholder="Enter child's first name here">
 							</li>
 							<li>
-							<label for="birth-date">Child's Birth Date</label>
-							<input type="text" class="child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
+								<label for="birth-date">Child's Birth Date</label>
+								<input type="text" class="child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
 							</li>
 							<li>
-							<button id="childoverlaybutton" type="submit">Create</button>
+								<button id="childoverlaybutton" type="submit">Create</button>
 							</li>
 						</ul>
 					</form>
@@ -171,8 +193,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="assetoverlay" onclick="assetOff()">
+			<div id="assetoverlay">
 				<div class="uploadAsset" id="connectAssetForm">
+					<button class ="close-form" type="submit" onclick="assetOff()"><i class="fas fa-times"></i></button>
 					<form>
 						<ul class="flex-outer">
 							<p class="form-title">Connect File</p>

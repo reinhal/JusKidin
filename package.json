@@ -4,6 +4,7 @@
   "description": "Node Capstone: A Web Tool For Parents",
   "main": "index.js",
   "dependencies": {
+    "a11y-dialog": "^5.1.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",

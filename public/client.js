@@ -28,6 +28,14 @@ function setUserID(id) {
 }
 
 ///////////// Overlay Form Functions ///////////////////////
+function directionsOn() {
+    document.getElementById("directionsoverlay").style.display = "block";
+}
+
+function directionsOff() {
+    document.getElementById("directionsoverlay").style.display = "none";
+}
+
 function deleteOn() {
     document.getElementById("deleteoverlay").style.display = "block";
 }
@@ -460,24 +468,25 @@ function getAndDisplayCurrentAccountInfo() {
         success: function(data) {
             console.log('current account info here', data)
             $('.updateAccount').append(
-                `<form class="update-account-form">
+                `<button class ="close-form" type="submit" onclick="updateAccountOff()"><i class="fas fa-times"></i></button>
+                <form class="update-account-form">
                     <ul class="flex-outer">
                         <p class="form-title">Update Account Information</p>
                         <li>
                             <label for="user-name">Username</label>
-                            <input type="text" id="new-user-name" placeholder="Current username: ${data.username}">
+                            <input type="text" id="new-user-name" value= "${data.username}">
                         </li>
                         <li>
                             <label for="first-name">First Name</label>
-                            <input type="text" id="updated-first-name" placeholder="Current first name: ${data.firstName}">
+                            <input type="text" id="updated-first-name" value= "${data.firstName}">
                         </li>
                         <li>
                             <label for="last-name">Last Name</label>
-                            <input type="text" id="updated-last-name" placeholder="Current last name: ${data.lastName}">
+                            <input type="text" id="updated-last-name" value= "${data.lastName}">
                         </li>
                         <li>
                             <label for="account-email">email</label>
-                            <input type="text" class="email" id="updated-email" placeholder="Current email: ${data.email}">
+                            <input type="text" class="email" id="updated-email" value= "${data.email}">
                         </li>
                         <li>
                             <button id="update-accountoverlaybutton" type="submit">Update Account</button>
@@ -716,6 +725,7 @@ function getAndDisplayImagesOnHomePage() {
 function updateNavUser(userID) {
     $('#navAccountName').text('Account Login'); 
     if (userID) {
+        $('.demo-credentials').addClass('.logged-in');
         $('#navAccountName').text('Account Logged In');
     }
 }

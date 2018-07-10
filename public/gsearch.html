@@ -28,13 +28,13 @@
 					</div>
 			</div>
 			<div class="dropdown">
-				<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-arrow-down"></i></a>
+				<a class="dropbtn" href="gsearch.html">Child(ren)  <i class="fas fa-angle-down"></i></a>
 					<div class="dropdown-content child-dropbtn">
 						<a onclick="childOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> New Child</a>
 					</div>
 			</div>
 			<div class="dropdown">
-				<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-arrow-down"></i></a>
+				<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-angle-down"></i></a>
 					<div class="dropdown-content asset-dropbtn">
 						<a onclick="assetOn()" href="#"><i class="fas fa-link"></i> Connect Images</a>
 						<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
@@ -54,8 +54,9 @@
 			</header>
 		</div>
 		<section role="region">
-			<div id="deleteoverlay" onclick="deleteOff()">
+			<div id="deleteoverlay">
 				<div class="delete" id="deleteForm">
+					<button class ="close-form" type="submit" onclick="deleteOff()"><i class="fas fa-times"></i></button>
 					<form class="delete-form">
 						<ul class="flex-outer">
 							<p class="form-title">Are you sure?</p>
@@ -71,10 +72,26 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="loginoverlay" onclick="loginOff()">
+			<div id="logoffoverlay" onclick="logoffOff()">
+				<div class="logoff" id="logoffForm">
+					<button class ="close-form" type="submit" onclick="logoffOff()"><i class="fas fa-times"></i></button>
+					<form class="logoff-form">
+						<ul class="flex-outer">
+							<li>
+								<button id="logoff-overlaybutton" type="submit">Logoff</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="loginoverlay">
 				<div class="loginHere" id="loginForm">
+					<button class ="close-form" type="submit" onclick="loginOff()"><i class="fas fa-times"></i></button>
 					<form class="login-form">
 						<ul class="flex-outer">
+							<p class="form-title">Login</p>
 							<li>
 								<label for="login-user-name">Username</label>
 								<input type="text" id="login-user-name" placeholder="Enter username">
@@ -92,28 +109,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="logoffoverlay" onclick="logoffOff()">
-				<div class="logoff" id="logoffForm">
-					<form class="logoff-form">
-						<ul class="flex-outer">
-							<p class="form-title">Logoff</p>
-							<li>
-								<button id="logoff-overlaybutton" type="submit">Logoff</button>
-							</li>
-						</ul>
-					</form>
-				</div>
-			</div>
-		</section>
-		<section role="region">
-			<div id="update-accountoverlay" onclick="updateAccountOff()">
-				<div class="updateAccount" id="updateAccountForm">
-				</div>
-			</div>
-		</section>
-		<section role="region">
-			<div id="accountoverlay" onclick="accountOff()">
+			<div id="accountoverlay">
 				<div class="addAccount" id="addAccountForm">
+					<button class ="close-form" type="submit" onclick="accountOff()"><i class="fas fa-times"></i></button>
 					<form class="account-form">
 						<ul class="flex-outer">
 							<p class="form-title">Create New Account</p>
@@ -126,20 +124,19 @@
 								<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
 							</li>
 							<li>
-							<li>
 								<label for="first-name">First Name</label>
 								<input type="text" id="first-name" placeholder="Enter first name here">
 							</li>
 							<li>
 								<label for="last-name">Last Name</label>
 								<input type="text" id="last-name" placeholder="Enter last name here">
-								</li>
+							</li>
 							<li>
 								<label for="account-email">email</label>
 								<input type="text" class="email" id="account-email" placeholder="Enter email here">
 							</li>
 							<li>
-							<button id="accountoverlaybutton" type="submit">Create Account</button>
+								<button id="accountoverlaybutton" type="submit">Create Account</button>
 							</li>
 						</ul>
 					</form>
@@ -147,13 +144,20 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="childoverlay" onclick="childOff()">
+			<div id="update-accountoverlay">
+				<div class="updateAccount" id="updateAccountForm">
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="childoverlay">
 				<div class="addChild" id="addChildForm">
+					<button class ="close-form" type="submit" onclick="childOff()"><i class="fas fa-times"></i></button>
 					<form class="child-age-form">
 						<ul class="flex-outer">
 							<p class="form-title">Add New Child</p>
 							<li>
-							<label for="first-name">First Name</label>
+							<label for="child-first-name">First Name</label>
 							<input type="text" id="child-first-name" placeholder="Enter child's first name here">
 							</li>
 							<li>
@@ -169,8 +173,9 @@
 			</div>
 		</section>
 		<section role="region">
-			<div id="assetoverlay" onclick="assetOff()">
+			<div id="assetoverlay">
 				<div class="uploadAsset" id="connectAssetForm">
+					<button class ="close-form" type="submit" onclick="assetOff()"><i class="fas fa-times"></i></button>
 					<form>
 						<ul class="flex-outer">
 							<p class="form-title">Connect File</p>
@@ -196,24 +201,6 @@
 							</li>
 							<li>
 							<button id="assetoverlaybutton" type="submit">Publish</button>
-							</li>
-						</ul>
-					</form>
-				</div>
-			</div>
-		</section>
-		<section role="region">
-			<div id="draweroverlay" onclick="drawerOff()">
-				<div class="addDrawer" id="addDrawerForm">
-					<form class="drawer-age-form">
-						<ul class="flex-outer">
-							<p class="form-title">Create Drawer</p>
-							<li>
-							<label for="drawer-name">Drawer Name</label>
-							<input type="text" id="new-drawer-title" class="new-drawer-title" placeholder="Drawer Name">
-							</li>
-							<li>
-							<button id="draweroverlaybutton" type="submit">Create</button>
 							</li>
 						</ul>
 					</form>
