@@ -701,8 +701,9 @@ function connectImage(title, notes, dateUploaded, fileLocation, drawerTitle) {
         headers: {"Authorization": 'Bearer ' + localStorage.getItem('token')},
         data: JSON.stringify({title, notes, dateUploaded, fileLocation, drawerTitle}),
         success : function(data) {
+            // alert('You have succesfully connected the image!')
+            res.redirect(assets.html);
             getAndDisplayUploads();
-            res.redirect("/assets.html");
         },
         dataType: 'json',
         contentType: 'application/json'

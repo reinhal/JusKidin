@@ -391,6 +391,11 @@ form {
     background: red; 
 }
 
+#delete-name {
+    max-width: 800px;
+    text-align: center;
+}
+
 /*////////////Overlay Styling//////////*/
 
 .directions-heading {
