@@ -17,14 +17,14 @@ let userID = '';
 chai.use(chaiHttp);
 
 function seedUserInfoData() {
-    const seedData = [];
+  const seedData = [];
   
-    for (let i=1; i<=10; i++) {
-      seedData.push(generateUserInfoData());
-    }
-    return UserInfo.insertMany(seedData).then(user => {
-      return userID = user[0]._id;
-    });
+  for (let i=1; i<=10; i++) {
+    seedData.push(generateUserInfoData());
+  }
+  return UserInfo.insertMany(seedData).then(user => {
+    return userID = user[0]._id;
+  });
 }
 
 function generateBirthDate() {
@@ -52,31 +52,31 @@ function generateDrawerTitle() {
 }
 
 function generateUserInfoData() {
-    return {
-        username: faker.internet.userName(),
-        password: faker.internet.password(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        email: faker.internet.email(),
-        childProfs: {
-          firstName: faker.name.firstName(),
-          birthDate: generateBirthDate(),
-        },
-        asset: {
-          title: generateTitle(),
-          notes: faker.lorem.sentence(),
-          dateUploaded: generateDateUploaded(),
-          fileLocation: faker.image.nature(),
-          drawerTitle: generateDrawerTitle()
-        }
+  return {
+    username: faker.internet.userName(),
+    password: faker.internet.password(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email(),
+    childProfs: {
+      firstName: faker.name.firstName(),
+      birthDate: generateBirthDate(),
+    },
+    asset: {
+      title: generateTitle(),
+      notes: faker.lorem.sentence(),
+      dateUploaded: generateDateUploaded(),
+      fileLocation: faker.image.nature(),
+      drawerTitle: generateDrawerTitle()
     }
+  };
 }
 
 function generateNewChild() {
   return {
-  firstName: faker.name.firstName(),
-  birthDate: generateBirthDate()
-  }
+    firstName: faker.name.firstName(),
+    birthDate: generateBirthDate()
+  };
 }
 
 function generateAssetData() {
@@ -86,617 +86,617 @@ function generateAssetData() {
     dateUploaded: generateDateUploaded(),
     fileLocation: faker.image.nature(),
     drawerTitle: generateDrawerTitle()
-  }
+  };
 }
 
 function tearDownDb() {
-    return mongoose.connection.dropDatabase();
+  return mongoose.connection.dropDatabase();
 }
 
 describe('UserInfo API resource', function() {
     
-      before(function() {
-        return runServer(TEST_DATABASE_URL);
-      });
+  before(function() {
+    return runServer(TEST_DATABASE_URL);
+  });
     
-      beforeEach(function() {
-        return seedUserInfoData();
-      });
+  beforeEach(function() {
+    return seedUserInfoData();
+  });
     
-      afterEach(function() {
-        return tearDownDb();
-      });
+  afterEach(function() {
+    return tearDownDb();
+  });
     
-      after(function() {
-        return closeServer();
-      });
+  after(function() {
+    return closeServer();
+  });
 
-    describe('GET endpoint', function() {
+  describe('GET endpoint', function() {
 
-        it('should return all existing accounts', function() {
-          let res;
-          return chai.request(app)
-            .get('/api/account')
-            .then(function(_res) {
-              res = _res;
-              expect(res).to.have.status(200);
-              expect(res.body).to.have.lengthOf.at.least(1);
-              return UserInfo.count();
-            })
-            .then(function(count) {
-              expect(res.body).to.have.lengthOf(count);
-            });
-        });
-        // console.log('res', res.body);
-        it('should return account info with the right fields', function() {
-          let resAccount;
-          return chai.request(app)
-            .get('/api/account')
-            .then(function(res) {
-              expect(res).to.have.status(200);
-              expect(res).to.be.json;
-              expect(res.body).to.be.a('array');
-              expect(res.body).to.have.lengthOf.at.least(1);
-
-              res.body.forEach(function(userinfo) {
-                expect(userinfo).to.be.a('object');
-                expect(userinfo).to.include.keys('firstName', 'lastName', 'email');
-              });
-              resAccount = res.body[0];
-              return UserInfo.findById(resAccount._id);
-            })
-            .then(function(userinfo) {
-              expect(resAccount.firstName).to.equal(userinfo.firstName);
-              expect(resAccount.lastName).to.equal(userinfo.lastName);
-              expect(resAccount.email).to.equal(userinfo.email);
-            });
+    it('should return all existing accounts', function() {
+      let res;
+      return chai.request(app)
+        .get('/api/account')
+        .then(function(_res) {
+          res = _res;
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.lengthOf.at.least(1);
+          return UserInfo.count();
+        })
+        .then(function(count) {
+          expect(res.body).to.have.lengthOf(count);
         });
     });
-    describe('/api/account', function () {
-      describe('POST endpoint', function() {
-        it('should add a new user', function() {
+    // console.log('res', res.body);
+    it('should return account info with the right fields', function() {
+      let resAccount;
+      return chai.request(app)
+        .get('/api/account')
+        .then(function(res) {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+          expect(res.body).to.be.a('array');
+          expect(res.body).to.have.lengthOf.at.least(1);
 
-            const newUser = generateUserInfoData();
-            delete newUser.childProfs;
-            delete newUser.asset;
-            console.log('new user 161', newUser);
-            return chai.request(app)
-                .post('/api/account')
-                .send(newUser)
-                .then(function(res) {
-                    // console.log('rse 166', res.body);
-                    expect(res).to.have.status(201);
-                    expect(res).to.be.json;
-                    expect(res.body).to.be.a('object');
-                    expect(res.body).to.include.keys(
-                      'username', 'firstName', 'lastName', 'email');
-                    expect(res.body.id).to.not.be.null;
-                    expect(res.body.username).to.equal(newUser.username);
-                    expect(res.body.firstName).to.equal(newUser.firstName);
-                    expect(res.body.lastName).to.equal(newUser.lastName);
-                    expect(res.body.email).to.equal(newUser.email); 
-                    return res.body;
-            })
+          res.body.forEach(function(userinfo) {
+            expect(userinfo).to.be.a('object');
+            expect(userinfo).to.include.keys('firstName', 'lastName', 'email');
+          });
+          resAccount = res.body[0];
+          return UserInfo.findById(resAccount._id);
+        })
+        .then(function(userinfo) {
+          expect(resAccount.firstName).to.equal(userinfo.firstName);
+          expect(resAccount.lastName).to.equal(userinfo.lastName);
+          expect(resAccount.email).to.equal(userinfo.email);
         });
-        it('Should reject users with missing username', function () {
+    });
+  });
+  describe('/api/account', function () {
+    describe('POST endpoint', function() {
+      it('should add a new user', function() {
 
-          const newUser = generateUserInfoData();
-          delete newUser.username;
+        const newUser = generateUserInfoData();
+        delete newUser.childProfs;
+        delete newUser.asset;
+        console.log('new user 161', newUser);
+        return chai.request(app)
+          .post('/api/account')
+          .send(newUser)
+          .then(function(res) {
+            // console.log('rse 166', res.body);
+            expect(res).to.have.status(201);
+            expect(res).to.be.json;
+            expect(res.body).to.be.a('object');
+            expect(res.body).to.include.keys(
+              'username', 'firstName', 'lastName', 'email');
+            expect(res.body.id).to.not.be.null;
+            expect(res.body.username).to.equal(newUser.username);
+            expect(res.body.firstName).to.equal(newUser.firstName);
+            expect(res.body.lastName).to.equal(newUser.lastName);
+            expect(res.body.email).to.equal(newUser.email); 
+            return res.body;
+          });
+      });
+      it('Should reject users with missing username', function () {
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal('Missing field');
-              expect(res.body.location).to.equal('username');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        const newUser = generateUserInfoData();
+        delete newUser.username;
+
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal('Missing field');
+            expect(res.body.location).to.equal('username');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with missing password', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with missing password', function () {
 
-          const newUser = generateUserInfoData();
-          delete newUser.password;
+        const newUser = generateUserInfoData();
+        delete newUser.password;
          
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal('Missing field');
-              expect(res.body.location).to.equal('password');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal('Missing field');
+            expect(res.body.location).to.equal('password');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with non-string username', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with non-string username', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.username = 1234;
+        const newUser = generateUserInfoData();
+        newUser.username = 1234;
          
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Incorrect field type: expected string'
-              );
-              expect(res.body.location).to.equal('username');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Incorrect field type: expected string'
+            );
+            expect(res.body.location).to.equal('username');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with non-string password', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with non-string password', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.password = 1234;
+        const newUser = generateUserInfoData();
+        newUser.password = 1234;
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Incorrect field type: expected string'
-              );
-              expect(res.body.location).to.equal('password');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Incorrect field type: expected string'
+            );
+            expect(res.body.location).to.equal('password');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with non-string first name', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with non-string first name', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.firstName = 1234;
+        const newUser = generateUserInfoData();
+        newUser.firstName = 1234;
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Incorrect field type: expected string'
-              );
-              expect(res.body.location).to.equal('firstName');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Incorrect field type: expected string'
+            );
+            expect(res.body.location).to.equal('firstName');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with non-string last name', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with non-string last name', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.lastName = 1234;
+        const newUser = generateUserInfoData();
+        newUser.lastName = 1234;
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Incorrect field type: expected string'
-              );
-              expect(res.body.location).to.equal('lastName');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Incorrect field type: expected string'
+            );
+            expect(res.body.location).to.equal('lastName');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with non-trimmed username', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with non-trimmed username', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.username = " username ";
+        const newUser = generateUserInfoData();
+        newUser.username = ' username ';
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Cannot start or end with whitespace'
-              );
-              expect(res.body.location).to.equal('username');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Cannot start or end with whitespace'
+            );
+            expect(res.body.location).to.equal('username');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with non-trimmed password', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with non-trimmed password', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.password = " password ";
+        const newUser = generateUserInfoData();
+        newUser.password = ' password ';
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Cannot start or end with whitespace'
-              );
-              expect(res.body.location).to.equal('password');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Cannot start or end with whitespace'
+            );
+            expect(res.body.location).to.equal('password');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with empty username', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with empty username', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.username = "";
+        const newUser = generateUserInfoData();
+        newUser.username = '';
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Must be at least 1 characters long'
-              );
-              expect(res.body.location).to.equal('username');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Must be at least 1 characters long'
+            );
+            expect(res.body.location).to.equal('username');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with password less than ten characters', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with password less than ten characters', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.password = '123456789';
+        const newUser = generateUserInfoData();
+        newUser.password = '123456789';
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Must be at least 10 characters long'
-              );
-              expect(res.body.location).to.equal('password');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Must be at least 10 characters long'
+            );
+            expect(res.body.location).to.equal('password');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject users with password greater than 72 characters', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject users with password greater than 72 characters', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.password = new Array(73).fill('a').join('');
+        const newUser = generateUserInfoData();
+        newUser.password = new Array(73).fill('a').join('');
 
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Must be at most 72 characters long'
-              );
-              expect(res.body.location).to.equal('password');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Must be at most 72 characters long'
+            );
+            expect(res.body.location).to.equal('password');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should reject user with a duplicate username', function () {
+            const res = err.response;
+          });
+      });
+      it('Should reject user with a duplicate username', function () {
 
-          const newUser = generateUserInfoData();
-          newUser.username = "sameuser";
+        const newUser = generateUserInfoData();
+        newUser.username = 'sameuser';
 
-          return chai 
+        return chai 
           .request(app)
           .post('/api/account')
           .send( newUser )
           .then(() =>
-              chai.request(app)
+            chai.request(app)
               .post('/api/account')
               .send( newUser )
-            )
-            .then((res) => {
-              expect(res).to.have.status(422);
-              expect(res.body.reason).to.equal('ValidationError');
-              expect(res.body.message).to.equal(
-                'Username already taken'
-              );
-              expect(res.body.location).to.equal('username');
-            })
-            .catch(err => {
-              if (err instanceof chai.AssertionError) {
-                throw err;
-              }
+          )
+          .then((res) => {
+            expect(res).to.have.status(422);
+            expect(res.body.reason).to.equal('ValidationError');
+            expect(res.body.message).to.equal(
+              'Username already taken'
+            );
+            expect(res.body.location).to.equal('username');
+          })
+          .catch(err => {
+            if (err instanceof chai.AssertionError) {
+              throw err;
+            }
   
-              const res = err.response;
-            });
-        });
-        it('Should create a new user', function () {
-
-          const newUser = generateUserInfoData();
-          delete newUser.childProfs;
-          delete newUser.asset;
-          console.log('486 newUser', newUser);
-
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then(res => {
-              console.log('493 res', res.body);
-              expect(res).to.have.status(201);
-              expect(res.body).to.be.an('object');
-              expect(res.body).to.have.keys(
-                '_id',
-                'username',
-                'firstName',
-                'lastName',
-                'email'
-              );
-              expect(res.body.username).to.equal(newUser.username);
-              expect(res.body.firstName).to.equal(newUser.firstName);
-              expect(res.body.lastName).to.equal(newUser.lastName);
-              expect(res.body.email).to.equal(newUser.email);
-              return UserInfo.findOne({
-                username: newUser.username
-              });
-            })
-            .then(user => {
-              expect(user).to.not.be.null;
-              expect(user.firstName).to.equal(newUser.firstName);
-              expect(user.lastName).to.equal(newUser.lastName);
-              expect(user.email).to.equal(newUser.email);
-              return user.validatePassword(newUser.password);
-            })
-            .then(passwordIsCorrect => {
-              expect(passwordIsCorrect).to.be.true;
-            });
-        });
-        it('Should trim firstName and lastName', function () {
-
-          const newUser = generateUserInfoData();
-          newUser.firstName = ` ${newUser.firstName} `,
-          newUser.lastName =  ` ${newUser.lastName} `
-
-          return chai
-            .request(app)
-            .post('/api/account')
-            .send( newUser )
-            .then(res => {
-              console.log('535 res', res.body);
-              expect(res).to.have.status(201);
-              expect(res.body).to.be.an('object');
-              expect(res.body).to.have.keys(
-                '_id',
-                'username',
-                'firstName',
-                'lastName',
-                "email"
-              );
-              expect(res.body.username).to.equal(newUser.username);
-              expect(res.body.firstName).to.equal(newUser.firstName.trim());
-              expect(res.body.lastName).to.equal(newUser.lastName.trim());
-              expect(res.body.email).to.equal(newUser.email);
-              return UserInfo.findOne({
-                username: newUser.username
-              });
-            })
-            .then(newUser => {
-              expect(newUser).to.not.be.null;
-              expect(newUser.firstName).to.equal(newUser.firstName.trim());
-              expect(newUser.lastName).to.equal(newUser.lastName.trim());
-            });
-        });
+            const res = err.response;
+          });
       });
-      describe('PUT endpoint', function() {
-        it('should update the user', function() {
-          const updatedUser = generateUserInfoData();
-          updatedUser._id = "00000000000000000000000000"
-          const {_id, username, firstName, lastName, email} = updatedUser
-          const token = jwt.sign(
-            {
-              user: {
-                _id,
-                username,
-                firstName,
-                lastName,
-                email
-              }
-            },
-            JWT_SECRET,
-            {
-              algorithm: 'HS256',
-              subject: username,
-              expiresIn: '7d'
-            }
-          );
-          return UserInfo
-            .findOne()
-            .then(function(userinfo) {
-              updatedUser._id = userinfo._id;
-              return chai.request(app)
-                .put(`/api/account/${userinfo._id}`)
-                .set('authorization', `Bearer ${token}`)
-                .send(updatedUser);
-            })
-            .then(function(res) {
-              expect(res).to.have.status(204);
-              return UserInfo.findById(updatedUser._id);
-            })
-            .then(function(userinfo) {
-              expect(userinfo.firstName).to.equal(updatedUser.firstName);
-              expect(userinfo.lastName).to.equal(updatedUser.lastName);
-              expect(userinfo.email).to.equal(updatedUser.email);
+      it('Should create a new user', function () {
+
+        const newUser = generateUserInfoData();
+        delete newUser.childProfs;
+        delete newUser.asset;
+        console.log('486 newUser', newUser);
+
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then(res => {
+            console.log('493 res', res.body);
+            expect(res).to.have.status(201);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.keys(
+              '_id',
+              'username',
+              'firstName',
+              'lastName',
+              'email'
+            );
+            expect(res.body.username).to.equal(newUser.username);
+            expect(res.body.firstName).to.equal(newUser.firstName);
+            expect(res.body.lastName).to.equal(newUser.lastName);
+            expect(res.body.email).to.equal(newUser.email);
+            return UserInfo.findOne({
+              username: newUser.username
             });
-        });
+          })
+          .then(user => {
+            expect(user).to.not.be.null;
+            expect(user.firstName).to.equal(newUser.firstName);
+            expect(user.lastName).to.equal(newUser.lastName);
+            expect(user.email).to.equal(newUser.email);
+            return user.validatePassword(newUser.password);
+          })
+          .then(passwordIsCorrect => {
+            expect(passwordIsCorrect).to.be.true;
+          });
+      });
+      it('Should trim firstName and lastName', function () {
+
+        const newUser = generateUserInfoData();
+        newUser.firstName = ` ${newUser.firstName} `,
+        newUser.lastName =  ` ${newUser.lastName} `;
+
+        return chai
+          .request(app)
+          .post('/api/account')
+          .send( newUser )
+          .then(res => {
+            console.log('535 res', res.body);
+            expect(res).to.have.status(201);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.keys(
+              '_id',
+              'username',
+              'firstName',
+              'lastName',
+              'email'
+            );
+            expect(res.body.username).to.equal(newUser.username);
+            expect(res.body.firstName).to.equal(newUser.firstName.trim());
+            expect(res.body.lastName).to.equal(newUser.lastName.trim());
+            expect(res.body.email).to.equal(newUser.email);
+            return UserInfo.findOne({
+              username: newUser.username
+            });
+          })
+          .then(newUser => {
+            expect(newUser).to.not.be.null;
+            expect(newUser.firstName).to.equal(newUser.firstName.trim());
+            expect(newUser.lastName).to.equal(newUser.lastName.trim());
+          });
       });
     });
-    describe('DELETE endpoint', function() {
-        it('should delete user info by id', function() {   
-          let userinfo;
-          const updatedUser = generateUserInfoData();
-          updatedUser._id = "00000000000000000000000000"
-          const {_id, username, firstName, lastName, email} = updatedUser
-          const token = jwt.sign(
-            {
-              user: {
-                _id,
-                username,
-                firstName,
-                lastName,
-                email
-              }
-            },
-            JWT_SECRET,
-            {
-              algorithm: 'HS256',
-              subject: username,
-              expiresIn: '7d'
+    describe('PUT endpoint', function() {
+      it('should update the user', function() {
+        const updatedUser = generateUserInfoData();
+        updatedUser._id = '00000000000000000000000000';
+        const {_id, username, firstName, lastName, email} = updatedUser;
+        const token = jwt.sign(
+          {
+            user: {
+              _id,
+              username,
+              firstName,
+              lastName,
+              email
             }
-          );   
-          return UserInfo
-            .findOne()
-            .then(function(_userinfo) {
-              userinfo = _userinfo;
-              return chai.request(app)
-              .delete(`/api/account/${userinfo._id}`)
-              .set('authorization', `Bearer ${token}`);
-            })
-            .then(function(res) {
-              expect(res).to.have.status(204);
-              return UserInfo.findById(userinfo._id);
-            })
-            .then(function(_userinfo) {
-              console.log('599', _userinfo);
-              expect(_userinfo).to.be.null;
-            });
+          },
+          JWT_SECRET,
+          {
+            algorithm: 'HS256',
+            subject: username,
+            expiresIn: '7d'
+          }
+        );
+        return UserInfo
+          .findOne()
+          .then(function(userinfo) {
+            updatedUser._id = userinfo._id;
+            return chai.request(app)
+              .put(`/api/account/${userinfo._id}`)
+              .set('authorization', `Bearer ${token}`)
+              .send(updatedUser);
+          })
+          .then(function(res) {
+            expect(res).to.have.status(204);
+            return UserInfo.findById(updatedUser._id);
+          })
+          .then(function(userinfo) {
+            expect(userinfo.firstName).to.equal(updatedUser.firstName);
+            expect(userinfo.lastName).to.equal(updatedUser.lastName);
+            expect(userinfo.email).to.equal(updatedUser.email);
+          });
+      });
+    });
+  });
+  describe('DELETE endpoint', function() {
+    it('should delete user info by id', function() {   
+      let userinfo;
+      const updatedUser = generateUserInfoData();
+      updatedUser._id = '00000000000000000000000000';
+      const {_id, username, firstName, lastName, email} = updatedUser;
+      const token = jwt.sign(
+        {
+          user: {
+            _id,
+            username,
+            firstName,
+            lastName,
+            email
+          }
+        },
+        JWT_SECRET,
+        {
+          algorithm: 'HS256',
+          subject: username,
+          expiresIn: '7d'
+        }
+      );   
+      return UserInfo
+        .findOne()
+        .then(function(_userinfo) {
+          userinfo = _userinfo;
+          return chai.request(app)
+            .delete(`/api/account/${userinfo._id}`)
+            .set('authorization', `Bearer ${token}`);
+        })
+        .then(function(res) {
+          expect(res).to.have.status(204);
+          return UserInfo.findById(userinfo._id);
+        })
+        .then(function(_userinfo) {
+          console.log('599', _userinfo);
+          expect(_userinfo).to.be.null;
         });
     });
+  });
 });
 
 describe('Child Profile API resource', function() {
     
   before(function() {
-      return runServer(TEST_DATABASE_URL);
-    });
+    return runServer(TEST_DATABASE_URL);
+  });
   
-    beforeEach(function() {
-      return seedUserInfoData();
-    });
+  beforeEach(function() {
+    return seedUserInfoData();
+  });
   
-    afterEach(function() {
-      return tearDownDb();
-    });
+  afterEach(function() {
+    return tearDownDb();
+  });
   
-    after(function() {
-      return closeServer();
-    });
+  after(function() {
+    return closeServer();
+  });
 
   describe('POST endpoint', function() {
     it('should add a new childProfile', function() {
       const updatedUser = generateUserInfoData();
-        const newChild = generateNewChild();
-        updatedUser._id = "00000000000000000000000000"
-          const {_id, username, firstName, lastName, email} = updatedUser
-          const token = jwt.sign(
-            {
-              user: {
-                _id,
-                username,
-                firstName,
-                lastName,
-                email
-              }
-            },
-            JWT_SECRET,
-            {
-              algorithm: 'HS256',
-              subject: username,
-              expiresIn: '7d'
-            }
-          );
-        return chai.request(app)
-            .post(`/api/account/${userID}/childProfiles`)
-            .send(newChild)
-            .set('authorization', `Bearer ${token}`)
-            .then(function(res) {
-                expect(res).to.have.status(201);
-                expect(res).to.be.json;
-                expect(res.body).to.be.a('object');
-                expect(res.body.childProfs[0]).to.include.keys('firstName', 'birthDate');
-                expect(res.body.id).to.not.be.null;
-                expect(res.body.childProfs[1].firstName).to.equal(newChild.firstName);
-                expect(res.body.childProfs[1].birthDate).to.equal(newChild.birthDate); 
-                return res.body;
-        })
+      const newChild = generateNewChild();
+      updatedUser._id = '00000000000000000000000000';
+      const {_id, username, firstName, lastName, email} = updatedUser;
+      const token = jwt.sign(
+        {
+          user: {
+            _id,
+            username,
+            firstName,
+            lastName,
+            email
+          }
+        },
+        JWT_SECRET,
+        {
+          algorithm: 'HS256',
+          subject: username,
+          expiresIn: '7d'
+        }
+      );
+      return chai.request(app)
+        .post(`/api/account/${userID}/childProfiles`)
+        .send(newChild)
+        .set('authorization', `Bearer ${token}`)
+        .then(function(res) {
+          expect(res).to.have.status(201);
+          expect(res).to.be.json;
+          expect(res.body).to.be.a('object');
+          expect(res.body.childProfs[0]).to.include.keys('firstName', 'birthDate');
+          expect(res.body.id).to.not.be.null;
+          expect(res.body.childProfs[1].firstName).to.equal(newChild.firstName);
+          expect(res.body.childProfs[1].birthDate).to.equal(newChild.birthDate); 
+          return res.body;
+        });
     });
     // it.only('Should reject child profile with a duplicate name', function () {
     //   const updatedUser = generateUserInfoData();
@@ -805,61 +805,61 @@ describe('Child Profile API resource', function() {
 describe('Asset API resource', function() {
     
   before(function() {
-      return runServer(TEST_DATABASE_URL);
-    });
+    return runServer(TEST_DATABASE_URL);
+  });
   
-    beforeEach(function() {
-      return seedUserInfoData();
-    });
+  beforeEach(function() {
+    return seedUserInfoData();
+  });
   
-    afterEach(function() {
-      return tearDownDb();
-    });
+  afterEach(function() {
+    return tearDownDb();
+  });
   
-    after(function() {
-      return closeServer();
-    });
+  after(function() {
+    return closeServer();
+  });
 
   describe('POST endpoint', function() {
     it('should add a new digital asset', function() {
-        const updatedUser = generateUserInfoData();
-        const newAsset = generateAssetData();
-        updatedUser._id = "00000000000000000000000000"
-          const {_id, username, firstName, lastName, email} = updatedUser
-          const token = jwt.sign(
-            {
-              user: {
-                _id,
-                username,
-                firstName,
-                lastName,
-                email
-              }
-            },
-            JWT_SECRET,
-            {
-              algorithm: 'HS256',
-              subject: username,
-              expiresIn: '7d'
-            }
-          );
-        return chai.request(app)
-            .post(`/api/account/${userID}/uploads`)
-            .send(newAsset)
-            .set('authorization', `Bearer ${token}`)
-            .then(function(res) {
-                expect(res).to.have.status(201);
-                expect(res).to.be.json;
-                expect(res.body).to.be.a('object');
-                expect(res.body.asset[1]).to.include.keys('title', 'notes', 'dateUploaded', 'fileLocation', 'drawerTitle');
-                expect(res.body.id).to.not.be.null;
-                expect(res.body.asset[1].title).to.equal(newAsset.title);
-                expect(res.body.asset[1].notes).to.equal(newAsset.notes);
-                expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
-                expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation);
-                expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle); 
-                return res.body;
-            })
+      const updatedUser = generateUserInfoData();
+      const newAsset = generateAssetData();
+      updatedUser._id = '00000000000000000000000000';
+      const {_id, username, firstName, lastName, email} = updatedUser;
+      const token = jwt.sign(
+        {
+          user: {
+            _id,
+            username,
+            firstName,
+            lastName,
+            email
+          }
+        },
+        JWT_SECRET,
+        {
+          algorithm: 'HS256',
+          subject: username,
+          expiresIn: '7d'
+        }
+      );
+      return chai.request(app)
+        .post(`/api/account/${userID}/uploads`)
+        .send(newAsset)
+        .set('authorization', `Bearer ${token}`)
+        .then(function(res) {
+          expect(res).to.have.status(201);
+          expect(res).to.be.json;
+          expect(res.body).to.be.a('object');
+          expect(res.body.asset[1]).to.include.keys('title', 'notes', 'dateUploaded', 'fileLocation', 'drawerTitle');
+          expect(res.body.id).to.not.be.null;
+          expect(res.body.asset[1].title).to.equal(newAsset.title);
+          expect(res.body.asset[1].notes).to.equal(newAsset.notes);
+          expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
+          expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation);
+          expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle); 
+          return res.body;
+        });
     });
   });
   // describe('PUT endpoint', function() {

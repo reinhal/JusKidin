@@ -18,12 +18,10 @@
 		<div class="topnav" role="navigation" id="responsivetopnav">
 			<a class="home" href="index.html">Home  <i class="fas fa-home"></i></a>
 			<div id="navAccount" class="dropdown">
-				<a id ="navAccountName" onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account">Account <i class="fas fa-user"></i></a>
+				<a id ="navAccountName" onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account"><i class="fas fa-user"></i> Account</a>
 					<div class="dropdown-content">
-						<a onclick="loginOn()" href="javascript:void(0)"><i class="fas fa-sign-in-alt"></i> Login</a>
 						<a onclick="logoffOn()" href="javascript:void(0)"><i class="fas fa-sign-out-alt"></i> Logoff</a>
 						<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
-						<a onclick="accountOn()" href="javascript:void(0)"><i class="fas fa-plus"></i> Create Account</a>
 						<a onclick="deleteOn()" href="javascript:void(0)"><i class="fas fa-trash"></i> Delete Account</a>
 					</div>
 			</div>
@@ -50,7 +48,7 @@
 			<header role="banner">
 				<h1>JusKidin</h1>
 				<h2>Support your children.  Keep all the memories.</h2>
-				<p>Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
+				<p class="homepage-text">Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
 				<button onclick="directionsOn()" class="heres-how">Here's How</button>
 			</header>
 		</div>
@@ -58,19 +56,17 @@
 			<div id="directionsoverlay">
 				<div class="directions" id="directionsForm">
 					<button class ="close-form" type="submit" onclick="directionsOff()"><i class="fas fa-times"></i></button>
-					<form class="directions-form">
-						<ul class="flex-outer">
-							<p class="form-title">Here's How To Use JusKidin</p>
-							 <p class="directions-heading">Web Resources for Your Children</p>
-							 <li class= "directions-item">Use the "Add Child" form to enter a name and birthdate for each child.</li>
-							 <li class= "directions-item">Visit the Child(ren) page, click on the child to see developmentally relevant web resources.</li>
-							 <p class="directions-heading">Organize Memories, School Work, Artwork into Drawers</p>
-							 <li class= "directions-item">Use the "Connect Image" form to bring the image into the website and place it into a drawer.</li>
-							 <li class= "directions-item">Think of drawers as topics and containers. They are simply an organization tool for your images.</li>
-							 <li class= "directions-item">Go to the Drawers page, click on the drawer button to view all the connected images.</li>
-							 <p class="form-title">Enjoy!</p>
-						</ul>
-					</form>
+					<ul class="flex-outer">
+						<p class="form-title">Here's How To Use JusKidin</p>
+							<p class="directions-heading">Web Resources for Your Children</p>
+							<li class= "directions-item">Simple use the "Add Child" form to enter a name and birthdate for each child.</li>
+							<li class= "directions-item">Visit the Child(ren) page, click on the child to see developmentally relevant web resources.</li>
+							<p class="directions-heading">Organize Memories, School Work, Artwork into Drawers</p>
+							<li class= "directions-item">Use the "Connect Image" form to bring the image into the website and place it into a drawer.</li>
+							<li class= "directions-item">Think of drawers as topics and containers. They are simply an organization tool for your images.</li>
+							<li class= "directions-item">Go to the Drawers page, click on the drawer button to view all the connected images.</li>
+							<p class="form-title">Enjoy!</p>
+					</ul>
 				</div>
 			</div>
 		</section>
@@ -126,6 +122,7 @@
 								<button id="login" type="submit">Login</button>
 							</li>
 						</ul>
+						<p class="feedback-messages"></p>
 					</form>
 				</div>
 			</div>
@@ -179,11 +176,11 @@
 						<ul class="flex-outer">
 							<p class="form-title">Add New Child</p>
 							<li>
-								<label for="child-first-name">First Name</label>
+								<label class="label" for="child-first-name">First Name</label>
 								<input type="text" id="child-first-name" placeholder="Enter child's first name here">
 							</li>
 							<li>
-								<label for="birth-date">Child's Birth Date</label>
+								<label class="label" for="birth-date">Child's Birth Date</label>
 								<input type="text" class="child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
 							</li>
 							<li>
@@ -242,6 +239,10 @@
 							<div class="cell"><img src="https://image.ibb.co/jqQEzy/IMG_7706.jpg" alt="soccer" class="responsive-image" border="0" size="500x400"></div>
 						</div>
 					</div>
+				</section>
+				<section class="account-section">
+					<button onclick="loginOn()" class="login-button">Login</button>
+					<p class="new-account">Need an account? <a onclick="accountOn()" href="javascript:void(0)">Sign Up</a></p>
 				</section>
 			</main>
 		</div>

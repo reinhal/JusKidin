@@ -27,7 +27,7 @@
     "mocha": "^5.2.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "test": "mocha --exit"
   },
   "repository": {

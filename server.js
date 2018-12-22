@@ -28,14 +28,13 @@ app.use(morgan('common'));
 
 // Account Info Endpoints//
 
-
 app.get('/api/account', (req, res) => {
   UserInfo
     .find()
     .select(req.query.select)
     .then(userinfo => {
-        res.json(userinfo);
-      })
+      res.json(userinfo);
+    })
     .catch(err => {
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
@@ -47,12 +46,12 @@ app.get('/api/account/:_id', jwtAuth, (req, res) => {
  
   UserInfo
     .findOne({
-      "_id": req.user._id
+      '_id': req.user._id
     })
     .select(req.query.select)
     .then(userinfo => {
-        res.json(userinfo);
-      })
+      res.json(userinfo);
+    })
     .catch(err => {
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
@@ -72,7 +71,7 @@ app.post('/api/account', jsonParser, (req, res) => {
     });
   }
 
-  const stringFields = ['username', 'password', 'firstName', 'lastName', "email"];
+  const stringFields = ['username', 'password', 'firstName', 'lastName', 'email'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -182,11 +181,11 @@ app.post('/api/account', jsonParser, (req, res) => {
       res.status(500).json({code: 500, message: 'Internal server error'});
     });
 
-    // probably safe to delete
-    // UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
-    // .then(function(newUser) {
-    //   res.status(201).json(newUser);
-    // });
+  // probably safe to delete
+  // UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
+  // .then(function(newUser) {
+  //   res.status(201).json(newUser);
+  // });
     
 });
 
@@ -212,7 +211,7 @@ app.put('/api/account/:_id', [jsonParser, jwtAuth],(req, res) => {
   }
 
   if (!passed) {
-    const message = 'Request is missing information.'
+    const message = 'Request is missing information.';
     return res.status(400).send(message);
   }
 
@@ -222,23 +221,23 @@ app.put('/api/account/:_id', [jsonParser, jwtAuth],(req, res) => {
     {new: true},
     (err, updatedUser) => {
       if(err) {
-        return res.status(500).send(err)
+        return res.status(500).send(err);
       } 
       res.status(204).send(updatedUser);
     }
-  )
+  );
 });
 
 app.delete('/api/account/:_id', jwtAuth, (req, res) => {
   UserInfo
-  .findByIdAndRemove(req.params._id)
-  .then(() => {
+    .findByIdAndRemove(req.params._id)
+    .then(() => {
       res.status(204).json({message: 'Success!!'});
-  })
-  .catch(err => {
+    })
+    .catch(err => {
       console.error(err);
       res.status(500).json({ error: 'There is an error'});
-  });
+    });
 });
 
 /////////// Child Profile Info Endpoints /////////////////////////////////////
@@ -249,48 +248,48 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
   for (let i=0; i<reqChildProfs.length; i++) {
     const field = reqChildProfs[i];
     if (field == undefined) {
-      const message = `Missing \`${field}\` in request body`
+      const message = `Missing \`${field}\` in request body`;
       return res.status(400).send(message);
     } 
   }
   // ifs statements for each data
   UserInfo
     .find({
-      "_id": req.params._id
+      '_id': req.params._id
     })
     .then( function (data) {
       const duplicateList = data[0].childProfs.filter( 
         o => o.firstName === req.body.firstName );
 
-        if (duplicateList.length > 1) {
-          return res.status(422).json({
-            code: 422,
-            reason: 'ValidationError',
-            message: 'Child name already taken',
-            location: 'firstName'
-          });
-        }
+      if (duplicateList.length > 1) {
+        return res.status(422).json({
+          code: 422,
+          reason: 'ValidationError',
+          message: 'Child name already taken',
+          location: 'firstName'
+        });
+      }
       return UserInfo
-      .findOneAndUpdate({
-        "_id": req.params._id
-      },
+        .findOneAndUpdate({
+          '_id': req.params._id
+        },
         { $addToSet:
           {
-            "childProfs": {
+            'childProfs': {
               firstName: req.body.firstName,
               birthDate: req.body.birthDate
             }
           }
         },
-      { new: true })
-      .then(userinfo => {
+        { new: true })
+        .then(userinfo => {
           res.status(201);
           res.json(userinfo);
         })
-      .catch(err => {
-        console.log('error', err);
-      });
-    })
+        .catch(err => {
+          console.log('error', err);
+        });
+    });
 });
 
 // app.put('/api/account/:_id/childProfs/:child_id', [jwtAuth, jsonParser], (req, res) => {
@@ -362,21 +361,21 @@ app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];
     if (field == undefined) {
-      const message = `Missing \`${field}\` in request body`
+      const message = `Missing \`${field}\` in request body`;
       return res.status(400).send(message);
     }
   }
   UserInfo
     .findOne({
-      "_id": req.params._id
+      '_id': req.params._id
     })
     .select(req.query.select)
     .then(userinfo => {
       userinfo.asset.push({title: req.body.title, notes: req.body.notes, dateUploaded: req.body.dateUploaded, fileLocation: req.body.fileLocation, drawerTitle: req.body.drawerTitle});
-      userinfo.save()
-        res.status(201);
-        res.json(userinfo);
-      })
+      userinfo.save();
+      res.status(201);
+      res.json(userinfo);
+    })
     .catch(err => {
       res.status(500).json({ message: 'Internal server error' });
     });
@@ -488,6 +487,6 @@ function closeServer() {
 
 if (require.main === module) {
   runServer(DATABASE_URL, PORT).catch(err => console.error(err));
-};
+}
 
 module.exports = {app, runServer, closeServer};
