@@ -20,7 +20,7 @@
 			<div id="navAccount" class="dropdown">
 				<a id ="navAccountName" onclick="newAccountOn()" href="javascript:void(0)" class="dropbtn" href="#account"><i class="fas fa-user"></i> Account</a>
 					<div class="dropdown-content">
-						<a onclick="logoffOn()" href="javascript:void(0)"><i class="fas fa-sign-out-alt"></i> Logoff</a>
+						<a class="logoff-link"><i class="fas fa-sign-out-alt"></i> Logoff</a>
 						<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
 						<a onclick="deleteOn()" href="javascript:void(0)"><i class="fas fa-trash"></i> Delete Account</a>
 					</div>
@@ -47,9 +47,11 @@
 		<div id="header">
 			<header role="banner">
 				<h1>JusKidin</h1>
-				<h2>Support your children.  Keep all the memories.</h2>
-				<p class="homepage-text">Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
-				<button onclick="directionsOn()" class="heres-how">Here's How</button>
+				<div id="home-title">
+					<h2>Support your children.  Keep all the memories.</h2>
+					<p class="homepage-text">Create profiles for each of your children. Connect to relevant web resources based on your child's age. </br> Upload pictures you take of your child's artwork, schoolwork, sporting events and other special memories.</p>
+					<button onclick="directionsOn()" class="heres-how">Here's How</button>
+				</div>
 			</header>
 		</div>
 		<section role="region">
@@ -228,7 +230,7 @@
 		</section>
 		<div id="body">
 			<main role="main">
-				<section role="region">
+				<section id="photo-grid" role="region">
 					<div class="container">
 						<div class="grid">
 							<div class="cell"><img src="https://image.ibb.co/mzfgey/IMG_7289.jpg" class="responsive-image" alt="spin-art" border="0" size="500x400"></div>
@@ -243,6 +245,13 @@
 				<section class="account-section">
 					<button onclick="loginOn()" class="login-button">Login</button>
 					<p class="new-account">Need an account? <a onclick="accountOn()" href="javascript:void(0)">Sign Up</a></p>
+				</section>
+				<section class="gsearch-section">
+					<div id="GsearchResults" class="displayTabcontent">
+						<button class ="close-gsearch" type="submit" onclick="gsearchOff(), headerOn(), photosOn()"><i class="fas fa-times"></i></button>
+						<button class ="close-gsearch" type="submit"><i class="fas fa-pencil-alt"></i></i></button>
+						<h2 class="gsearch-heading">Discover relevant child development resources for each child.</h2>
+					</div>
 				</section>
 			</main>
 		</div>

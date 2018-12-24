@@ -40,12 +40,12 @@
 						<!-- <a onclick="drawerOn()" href="#"><i class="fas fa-plus"></i>  New Drawer</a> -->
 					</div>
 			</div>
-			<div class="search-container">
+			<!-- <div class="search-container">
 				<form action="/action_page.php">
 					<input type="text" placeholder="Search.." name="search">
 					<button type="submit"><i class="fa fa-search"></i></button>
 				</form>
-			</div>
+			</div> -->
 		</div>
 		<div id="header">
 			<header role="banner">
@@ -212,7 +212,9 @@
 		<main role="main">
 			<div class="tab dropdown-prof"></div>	
 			<div id="dropbtn-prof"></div>
-			<div id="GsearchResults" class="displayTabcontent"></div>
+			<div id="GsearchResults" class="displayTabcontent">
+				<button class ="close-form" type="submit" onclick="gsearchOff()"><i class="fas fa-times"></i></button>
+			</div>
 		</main>	
 	</body>
 	

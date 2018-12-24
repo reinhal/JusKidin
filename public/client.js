@@ -101,9 +101,33 @@ function drawerOff() {
   document.getElementById('draweroverlay').style.display = 'none';
 }
 
-function showNav() {
-
+function gsearchOn() {
+  document.getElementById('GsearchResults').style.display = 'block';
 }
+
+function gsearchOff() {
+  document.getElementById('GsearchResults').style.display = 'none';
+}
+
+function headerOn() {
+  document.getElementById('home-title').style.display = 'block';
+}
+
+function headerOff() {
+  document.getElementById('home-title').style.display = 'none';
+}
+
+function photosOff() {
+  document.getElementById('photo-grid').style.display = 'none';
+}
+
+function photosOn() {
+  document.getElementById('photo-grid').style.display = 'block';
+}
+
+// function gsearchHeadingOn() {
+//   document.getElementById('photo-grid').style.display = 'block';
+// }
 
 ///////////// Child(ren) Page Functions ///////////////////////
 
@@ -152,8 +176,8 @@ function openChild(evt, childName) {
 
 var childProfileTemplate = function (childName, birthDate) {
   var childID = childName.replace(/\s+/g, '-').toLowerCase();
-  $('.dropdown-prof').append(
-    `<button class="tablinks dropbtn-prof" onclick="openChild(event, '${childID}')"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
+  $('.child-dropbtn').append(
+    `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${childID}'), gsearchOn(), headerOff(), photosOff()"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
   );
 
   $('#GsearchResults').append(
@@ -264,12 +288,16 @@ function googleSearch(childAge, callback) {
     `https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=${childAge}%20years%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A`,
     callback);
 }
-
+// somehow limit to 10 results
+// move title to the top
 function displayGoogleSearch(childName) {
   return function(gsearch) {
+    // $('#GsearchResults').append(`<button class ="close-gsearch" type="submit" onclick="gsearchOff(), headerOn(), photosOn()"><i class="fas fa-times"></i></button>
+    //     <button class ="close-gsearch" type="submit"><i class="fas fa-pencil-alt"></i></i></button>
+    //     <h2 class="gsearch-heading">Discover relevant child development resources.</h2>`)
     var childID = childName.replace(/\s+/g, '-').toLowerCase();
     console.log('gsearch', gsearch);
-    for ( let i = 0; i < gsearch.items.length; i ++) {
+    for (let i = 0; i < gsearch.items.length; i ++) {
       let data = gsearch.items[i];
       if (data.pagemap.cse_thumbnail) {
         $(`#${childID}`).append(`<h2>${data.title} </h2>
@@ -283,7 +311,7 @@ function displayGoogleSearch(childName) {
             background-color: white;
             color: 	#303030;
             padding: 12px 12px;
-            border: 5px solid #2980b9;
+            border: 5px solid darkturquoise;
             margin: 0 50px 50px 50px;
           }
           </style>`);
@@ -298,7 +326,7 @@ function displayGoogleSearch(childName) {
             background-color: white;
             color: 	#303030;
             padding: 12px 12px;
-            border: 5px solid #2980b9;
+            border: 5px solid darkturquoise;
             margin: 0 50px 50px 50px;
           }
           </style>`);
@@ -358,8 +386,8 @@ function handleLogInUser() {
     e.preventDefault();
     if (username === '' || password === '') {
       $('.feedback-messages').text('Missing Information'); 
-    // } else if () {
-    //   $('.login-messages').text('Incorrect Information'); 
+    // } else if (!res.ok) {
+    //   $('.login-messages').text('Invalid Login Information'); 
     } else {
       attemptLogInUser(username, password);
     }
@@ -367,7 +395,7 @@ function handleLogInUser() {
 }
 
 function handleLogOffUser() {
-  $('.logoff-form').submit(function(e) {
+  $('.logoff-link').onClick(function(e) {
     e.preventDefault();
     attemptLogOffUser();
     console.log('user logged off');

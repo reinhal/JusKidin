@@ -26,8 +26,16 @@ p {
     text-align: center;
 }
 
+#GsearchResults {
+    display: none;
+}
+
 ul li {
     list-style-type: none;
+}
+
+.google-results {
+    display: inline-block;
 }
 
 .heres-how {
@@ -240,6 +248,36 @@ ul li {
 /*////////////Form Styling//////////*/
 form {
     text-align: center;
+}
+
+.close-gsearch {
+    background-color: transparent;
+    color: darkturquoise;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    float: right;
+}
+
+.gsearch-heading {
+    text-align: center;
+    font-size: 24px;
+}
+/* 
+.google-image {
+    max-width: 150px;
+    width: 30%;
+    margin-right: 20px;
+    float: left;
+}
+
+.google {
+    width: 30%;
+    float: left;
+} */
+
+.close-form:hover {
+    color: #303030;
 }
 
 .close-form {
@@ -983,7 +1021,23 @@ select {
 .dropbtn-prof:hover, .dropbtn-prof:focus {
     background-color: #2980B9;
 } */
+.child-nav {
+    background-color:#303030;
+    color: whitesmoke;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+}
 
+.child-nav:hover {
+    background-color: whitesmoke;
+    color: #303030;
+    border: 2px solid darkturquoise;
+   
+}
 .dropdown-prof {
     position: relative;
     display: inline-block;
@@ -1210,10 +1264,6 @@ select {
 
     li {
         font-size: 14px;
-    }
-
-    .google-image {
-        max-width: 150px;
     }
 }
 
