@@ -125,10 +125,6 @@ function photosOn() {
   document.getElementById('photo-grid').style.display = 'block';
 }
 
-// function gsearchHeadingOn() {
-//   document.getElementById('photo-grid').style.display = 'block';
-// }
-
 ///////////// Child(ren) Page Functions ///////////////////////
 
 window.onclick = function(event) {
@@ -289,12 +285,9 @@ function googleSearch(childAge, callback) {
     callback);
 }
 // somehow limit to 10 results
-// move title to the top
+
 function displayGoogleSearch(childName) {
   return function(gsearch) {
-    // $('#GsearchResults').append(`<button class ="close-gsearch" type="submit" onclick="gsearchOff(), headerOn(), photosOn()"><i class="fas fa-times"></i></button>
-    //     <button class ="close-gsearch" type="submit"><i class="fas fa-pencil-alt"></i></i></button>
-    //     <h2 class="gsearch-heading">Discover relevant child development resources.</h2>`)
     var childID = childName.replace(/\s+/g, '-').toLowerCase();
     console.log('gsearch', gsearch);
     for (let i = 0; i < gsearch.items.length; i ++) {
@@ -395,7 +388,7 @@ function handleLogInUser() {
 }
 
 function handleLogOffUser() {
-  $('.logoff-link').onClick(function(e) {
+  $('.logoff-link').click(function(e) {
     e.preventDefault();
     attemptLogOffUser();
     console.log('user logged off');
