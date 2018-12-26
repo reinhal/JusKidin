@@ -150,9 +150,7 @@ window.onclick = function(event) {
 };
 
 function openChild(evt, childName) {
-  console.log('child name', childName);
   var childID = childName.replace(/\s+/g, '-').toLowerCase();
-  console.log('child id', childID);
   var i, currentChild, tablinks;
   var gsearchContainer = document.getElementsByClassName('gsearchContainer');
   for (i = 0; i < gsearchContainer.length; i++) {
@@ -162,10 +160,7 @@ function openChild(evt, childName) {
   }
 
   currentChild = document.getElementById(childID);
-  console.log('current child',currentChild.style.display);
   currentChild.style.display = 'block';
-  console.log('after current child',currentChild.style.display);
-
   tablinks = document.getElementsByClassName('tablinks');
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(' active', '');
@@ -181,24 +176,22 @@ function openChild(evt, childName) {
 var childProfileTemplate = function (childName, birthDate) {
   var childID = childName.replace(/\s+/g, '-').toLowerCase();
   $('.child-dropbtn').append(
-    `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${childID}'), gsearchOn(), headerOff(), photosOff()"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
+    `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${childID}'), gsearchOn(), headerOff(), photosOff(), drawerDisplayOff()"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
   );
 
   $('#GsearchResults').append(
-    `<div id="${childID}" class="gsearchContainer">You are currently viewing resources for <span class="drawer-title-display">${childName}</span>.</div>`
+    `<div id="${childID}" class="gsearchContainer">You are currently viewing resources for <span class="drawer-title-display">${getChildAge(birthDate)} year old ${childName}</span>.</div>`
   );
 };
 
 function addChildProfile(firstName, birthDate) {
   userID =  localStorage.getItem('userID');
-  console.log('Adding new child profile: ' + childName + birthDate);
   $.ajax({
     method: 'POST',
     url: `/api/account/${userID}/childProfiles`,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     data: JSON.stringify({firstName, birthDate}),
     success: function(data) {
-      console.log('148', 'Child Added');
       getAndDisplayChildProfile();
     },
     dataType: 'json',
@@ -209,13 +202,11 @@ function addChildProfile(firstName, birthDate) {
 function getAndDisplayChildProfile() {
   userID =  localStorage.getItem('userID');
   var CHILDPROFS_URL = `api/account/${userID}?select=childProfs`;
-  console.log('Retrieving child profile');
   $.ajax({
     method: 'GET',
     url: CHILDPROFS_URL,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
-      console.log('child profiles here!', data);
       var childProfileElements = data.childProfs.map(function(userInfoSchema) {
         var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ));
         element.attr('id', userInfoSchema.id);
@@ -239,7 +230,7 @@ function handleChildProfileAdd() {
     var birthDate = $('.child-birth-date').val();
     e.preventDefault();
     window.location.reload(true);
-    if (childName == '' || birthDate == '') {
+    if (childName === '' || birthDate === '') {
       alert('Missing Information!');
     } else {
       addChildProfile(childName, birthDate);
@@ -286,26 +277,34 @@ function handleChildProfileAdd() {
 ///////////// Google Search Functions ///////////////////////
 
 function googleSearch(childAge, callback) {
-  console.log('childAge', childAge);
-  // url = `https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=${childAge}%20years%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A`,
   $.getJSON(
     `https://content.googleapis.com/customsearch/v1?cx=013625144872242568916%3Alitmhr5z8f8&q=${childAge}%20years%20old%20developmental%20milestones&key=AIzaSyDFTLfTan551XimeNSNeKPxZcVgpfY-Z8A`,
     callback);
 }
 // somehow limit to 10 results
 
+{/* <ul>
+<li class="google-image"><img class="google-image" src="${data.pagemap.cse_thumbnail[0].src}"></li>
+<li class="google"><a href="${data.link}">Click Here to Read Full Article</a></li>
+<li class="google">${data.snippet}</li>
+</ul> */}
+
+{/* <img class="google-image" src="${data.pagemap.cse_thumbnail[0].src}"></img> */}
+
 function displayGoogleSearch(childName) {
   return function(gsearch) {
     var childID = childName.replace(/\s+/g, '-').toLowerCase();
-    console.log('gsearch', gsearch);
     for (let i = 0; i < gsearch.items.length; i ++) {
       let data = gsearch.items[i];
       if (data.pagemap.cse_thumbnail) {
-        $(`#${childID}`).append(`<h2>${data.title} </h2>
-          <ul>
-            <li class="google-image"><img class="google-image" src="${data.pagemap.cse_thumbnail[0].src}"></li>
-            <li class="google"><a href="${data.link}">Click Here to Read Full Article</a></li>
-            <li class="google">${data.snippet}</li>
+        $(`#${childID}`).append(`<ul class="gsearch-ul">
+            <li>
+              <div class="gsearch-result"><img class="google-image" src="${data.pagemap.cse_thumbnail[0].src}"><h2 class="gsearch-title">${data.title}</h2>
+                <p class="google-snippet">
+                  ${data.snippet}<br><a class="google-link" href="${data.link}">Click Here to Read Full Article</a>
+                </p>
+              </div>
+            </li>
           </ul>
           <style type="text/css">
           .displayTabcontent {
@@ -317,11 +316,15 @@ function displayGoogleSearch(childName) {
           }
           </style>`);
       } else {
-        $(`#${childID}`).append(`<h2 #${childID}>${data.title} </h2>
-          <ul>
-            <li class="google"><a href="${data.link}">Click Here to Read Full Aricle</a></li>
-            <li class="google">${data.snippet}</li>
-          </ul>
+        $(`#${childID}`).append(`<ul class="gsearch-ul">
+        <li>
+          <div class="gsearch-result"><h2 class="gsearch-title">${data.title}</h2>
+            <p class="google-snippet">
+              ${data.snippet}<br><a class="google-link" href="${data.link}">Click Here to Read Full Article</a>
+            </p>
+          </div>
+        </li>
+      </ul>
           <style type="text/css">
           .displayTabcontent {
             background-color: white;
@@ -350,7 +353,6 @@ $(watchSubmit);
 ///////////// Account Functions ///////////////////////
 
 function createNewAccount(username, password, firstName, lastName, email) {
-  console.log('Creating new Account: ' + username + password + firstName + lastName + email);
   $.ajax({
     method: 'POST',
     url: ACCOUNT_URL,
@@ -370,7 +372,6 @@ function handleAccountAdd() {
     var firstName = $('#first-name').val();
     var lastName = $('#last-name').val();
     var email =$('#account-email').val();
-    console.log('Account Info 276', username, password, firstName, lastName, email);
     e.preventDefault();
     if (username === '' || password === ''|| firstName === '' || lastName === '' || email === '') {
       alert('Missing Information');
@@ -409,7 +410,6 @@ function attemptLogOffUser() {
 }
 
 function attemptLogInUser(username, password) {
-  console.log('Logging in user:' + username + password);
   $.ajax({
     method: 'POST',
     url: '/api/auth/login',
@@ -417,7 +417,6 @@ function attemptLogInUser(username, password) {
     success: function(resData) {
       localStorage.setItem('token', resData.authToken);
       var JWT = jwt_decode(resData.authToken);
-      console.log('resData 316 is JWT.user._id', JWT.user._id);
       userID = JWT.user._id;
       localStorage.setItem('userID', userID);
       window.location.reload(true);
@@ -426,7 +425,6 @@ function attemptLogInUser(username, password) {
         url: `/api/account/${userID}`,
         headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
         success: function(data) {
-          console.log('you made it here!', data);
         }
       });
     },
@@ -441,9 +439,8 @@ function handleEditAccount(username, firstName, lastName, email) {
     var firstName = $('#updated-first-name').val();
     var lastName = $('#updated-last-name').val();
     var email =$('#updated-email').val();
-    console.log('Account Info 372', username, firstName, lastName, email);
     e.preventDefault();
-    if (username == '' || firstName == '' || lastName == '' || email == '') {
+    if (username === '' || firstName === '' || lastName === '' || email === '') {
       alert('Missing Information');
     } else {
       editAccount(username, firstName, lastName, email);
@@ -452,7 +449,6 @@ function handleEditAccount(username, firstName, lastName, email) {
 }
 
 function editAccount(username, firstName, lastName, email) {
-  console.log('Editing account: ' + username + firstName + lastName + email);
   userID =  localStorage.getItem('userID');
   $.ajax({
     method: 'PUT',
@@ -497,13 +493,11 @@ function editAccount(username, firstName, lastName, email) {
 function getAndDisplayCurrentAccountInfo() {
   userID =  localStorage.getItem('userID');
   var CURRENTACCOUNT_URL = `api/account/${userID}`;
-  console.log ('Getting current account information'+ username + firstName + lastName + email);
   $.ajax({
     method: 'GET',
     url: CURRENTACCOUNT_URL,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
-      console.log('current account info here', data);
       $('.updateAccount').append(
         `<button class ="close-form" data-a11y-dialog-hide aria-label="Close this dialog window" type="submit" onclick="updateAccountOff()"><i class="fas fa-times"></i></button>
             <form class="update-account-form">
@@ -537,7 +531,6 @@ function getAndDisplayCurrentAccountInfo() {
 }
 
 function handleDeleteAccount() {
-  console.log('deleting account!');
   $('.delete-form').submit(function(e) {
     e.preventDefault();
     deleteAccount();
@@ -579,9 +572,7 @@ window.onclick = function(event) {
 };
 
 function openDrawer(evt, drawerTitle) {
-  console.log('this drawer title', drawerTitle);
   var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
-  console.log('DrawerID', drawerID);
   var i, currentDrawer, tablinks;
   var uploadContainer = document.getElementsByClassName('uploadContainer');
   for (i=0; i < uploadContainer.length; i++ ) {
@@ -602,10 +593,9 @@ function openDrawer(evt, drawerTitle) {
 }
 
 var drawerTemplate = function(drawerTitle) {
-  console.log('Right Here', drawerTitle);
   var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
   $('.asset-dropbtn').append(
-    `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}'), headerOff(), photosOff(), drawerDisplayOn()"> ${drawerTitle}</button>`
+    `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}'), headerOff(), photosOff(), drawerDisplayOn(), gsearchOff()"> ${drawerTitle}</button>`
   );
 
   $('#Drawer1').append(
@@ -635,7 +625,6 @@ var uploadTemplate = function(drawerTitle, title, notes, fileLocation) {
 };
 
 function getAndDisplayDrawer() {
-  console.log('retrieving drawer');
   userID =  localStorage.getItem('userID');
   var ASSETS_URL = `api/account/${userID}?select=asset`;
   $.ajax({
@@ -643,7 +632,6 @@ function getAndDisplayDrawer() {
     url: ASSETS_URL,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
-      console.log('Rendering drawer', data);
       function uniqueDrawerTitles(input) {
         var output = [];
         for(var i=0; i < input.asset.length; i++) {
@@ -666,7 +654,6 @@ function getAndDisplayDrawer() {
 function handleDrawerAdd() {
   $('.drawer-age-form').submit(function(e) {
     var newDrawerTitle = $('#new-drawer-title').val();
-    console.log ('creating drawer 430: ', newDrawerTitle);
     e.preventDefault();
     //window.location.reload(true);
     if (newDrawerTitle == '') {
@@ -679,18 +666,13 @@ function handleDrawerAdd() {
 function getAndDisplayUploads() {
   userID =  localStorage.getItem('userID');
   var ASSETS_URL = `api/account/${userID}?select=asset`;
-  console.log('retrieving uploads');
   $.ajax({
     method: 'GET',
     url: ASSETS_URL,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
-      console.log('pictures here!', data);
-      console.log('Rendering Uploads', data);
       drawerUploads = data.asset;
-      console.log('drawer uploads', drawerUploads);
       drawerUploads.forEach(item => {
-        console.log('item', item.drawerTitle);
         const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
         $(`#${drawerID}`).append(
           `<section role="region"> 
@@ -720,10 +702,9 @@ function handleImageConnect() {
     var dateUploaded = $('#date-uploaded').val();
     var fileLocation = $('#image-url').val();
     var drawerTitle = $('#drawer-title').val();
-    console.log('asset info 486', title, notes, dateUploaded, fileLocation, drawerTitle);
     e.preventDefault();
     window.location.reload(true);
-    if (title === '' || notes === '' || fileLocation == '' || drawerTitle == '' || dateUploaded == '' ) {
+    if (title === '' || notes === '' || fileLocation === '' || drawerTitle === '' || dateUploaded === '' ) {
       alert('Missing Information');
     } else { 
       connectImage(title, notes, dateUploaded, fileLocation, drawerTitle);
@@ -732,7 +713,6 @@ function handleImageConnect() {
 }
 
 function connectImage(title, notes, dateUploaded, fileLocation, drawerTitle) {
-  console.log('connecting image: ' + title + notes + dateUploaded + fileLocation + drawerTitle);
   userID =  localStorage.getItem('userID');
   var ASSETS_URL = `api/account/${userID}?select=asset`;
   $.ajax({

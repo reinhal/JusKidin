@@ -14,12 +14,12 @@ h1 {
     font-size: 72px;
     text-shadow: 0px 8px 16px rgba(0,0,0,0.2);
 }
-
+/* 
 
 p {
     margin: 30px;
 }
-
+ */
 
 #header {
     display: grid;
@@ -38,12 +38,17 @@ ul li {
     display: inline-block;
 }
 
+.homepage-text {
+    width: 800px;
+    margin: 0 auto;
+}
+
 .heres-how {
     width: 50%;
     background-color: #303030;
     color: whitesmoke;
     font-size: 17px;
-    margin-bottom: 30px;
+    margin: 30px 0px 30px 0px;
     padding: 15px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     cursor: pointer;
@@ -267,6 +272,11 @@ form {
 }
 
 .gsearch-heading {
+    text-align: center;
+    font-size: 24px;
+}
+
+.asset-heading {
     text-align: center;
     font-size: 24px;
 }
@@ -947,7 +957,7 @@ select {
     z-index: 2;
 }
 
-/*////////////Child and Drawer Tabbed View//////////*/
+/*////////////Child and Drawer View//////////*/
 
 .tab {
     /* overflow: hidden; */
@@ -989,13 +999,12 @@ select {
 }
 
 .asset-section{
-    /* display: none; */
+    display: none;
     background-color: white;
     color: 	#303030;
-    /* margin-top: 30px; */
     padding: 12px 12px;
     border: 5px solid darkturquoise;
-    margin: 30px;
+    margin: 50px;
 }
 
 /* .dropdown-editAsset {
@@ -1015,12 +1024,41 @@ select {
 .drawer-title-display {
     font-size: 24px;
     font-style: bold;
+    text-decoration: underline;
+    text-decoration-color: darkturquoise;
 }
 
 .gsearchContainer {
     display: none;
     font-size: 18px;
     text-align: center;
+}
+
+.gsearch-result {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.gsearch-result::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.google-link {
+    color: darkturquoise;
+}
+
+.google-image {
+    float: left;
+    width: 170px;
+    height: 170px;
+    margin-bottom: 50px;
+}
+
+.google-snippet {
+    text-align: center;
+    margin: 10px;
 }
 
 .tabcontent h2 {
@@ -1243,6 +1281,252 @@ select {
 
 /*////////////Responsive Styling//////////*/
 
+@media screen and (min-width: 600px) {
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+    }
+    .cell {
+      width: 50%;
+    }
+}
+
+@media only screen and (min-width: 640px) {
+    .col-3 {
+      width: 25%;
+    }
+  
+    .col-4 {
+      width: 33.33333%;
+    }
+    
+    .col-6 {
+      width: 50%;
+    }
+    
+    .col-12 {
+      width: 100%;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .cell {
+        width: 25%;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .topnav .search-container {
+      float: none;
+    }
+    .topnav a, .topnav input[type=text], .topnav .search-container button {
+      float: none;
+      display: block;
+      text-align: left;
+      width: 100%;
+      margin: 0;
+    }
+    .topnav input[type=text] {
+      border: 1px solid aliceblue;  
+    }
+    .dropdown-content {
+        margin-top: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .homepage-text {
+        width: 600px;
+    }
+    h1 {
+        font-size: 54px;
+        margin: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .directions {
+        padding: 20px 20px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+
+    h1 {
+        width: 530px;
+    }
+
+    h2 {
+        width: 530px;
+        margin: auto;
+    }
+
+    .homepage-text {
+        width: 530px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    h1 {
+        width: 480px;
+    }
+
+    h2 {
+        width: 480px;
+        margin: auto;
+    }
+
+    .homepage-text {
+        width: 480px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    h1 {
+        width: 430px;
+    }
+
+    h2 {
+        width: 430px;
+        margin: auto;
+    }
+
+    .homepage-text {
+        width: 430px;
+    }
+}
+
+@media screen and (max-width: 414px) {
+
+    h1 {
+        width: 390px;
+    }
+
+    h2 {
+        width: 390px;
+        margin: auto;
+    }
+
+    .homepage-text {
+        width: 390px;
+    }
+
+    #GsearchResults {
+        margin: 0px 10px 0px 10px;
+    }
+
+    .gsearchContainer {
+        font-size: 14px;
+    }
+
+    .displayTabcontent {
+        width: 394px;
+    }
+
+    .close-gsearch {
+        font-size: 14px;
+    }
+
+    .drawer-title-display {
+       font-size: 14px;
+       font-weight: bolder;
+    }
+
+    .gsearch-ul {
+        padding: 0px;
+    }
+
+    .google-image {
+        height: 90px;
+        width: 90px;
+        float: none;
+        margin-bottom: 5px;
+    }
+
+    .gsearch-title {
+        font-size: 14px;
+        width: 350px;
+    }
+
+    .gsearch-heading {
+      font-size: 18px;
+    }
+
+    .google-snippet {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+
+    h1 {
+        width: 350px;
+    }
+
+    h2 {
+        width: 350px;
+        margin: auto;
+    }
+
+    .homepage-text {
+        width: 350px;
+        margin-top: 20px;
+    }
+
+    #GsearchResults {
+        margin: 0px 10px 0px 10px;
+    }
+
+    .gsearchContainer {
+        font-size: 14px;
+    }
+
+    .displayTabcontent {
+        width: 350px;
+    }
+
+    .close-gsearch {
+        font-size: 14px;
+    }
+
+    .drawer-title-display {
+       font-size: 14px;
+       font-weight: bolder;
+    }
+
+    .gsearch-ul {
+        padding: 0px;
+    }
+
+    .google-image {
+        height: 80px;
+        width: 80px;
+        float: none;
+        margin-bottom: 5px;
+    }
+
+    .gsearch-title {
+        font-size: 14px;
+        width: 300px;
+    }
+
+    .gsearch-heading {
+       display: none;
+    }
+
+    .google-snippet {
+        font-size: 14px;
+    }
+}
+
 @media screen and (max-width: 320px) {
     .flex-outer {
         display: block;
@@ -1262,14 +1546,36 @@ select {
         float: right;
     }
 
+    .child-dropbtn {
+        margin-top: 30px;
+    }
+
+    .asset-dropbtn {
+        margin-top: 30px;
+    }
+
     .topnav a {
         font-size: 14px;
         padding: 5px;
     }
 
+    h1 {
+        font-size: 36px;
+        width: 300px;
+        margin: 10px;
+    }
+
     h2 {
-        margin: 25px;
         font-size: 18px;
+        width: 300px;
+    }
+
+    .homepage-text {
+        width: 300px;
+    }
+
+    #home-title {
+        margin: 10px;
     }
 
     .flex-outer li label {
@@ -1321,67 +1627,49 @@ select {
     li {
         font-size: 14px;
     }
-}
 
-@media screen and (min-width: 600px) {
-    .grid {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-    }
-    .cell {
-      width: 50%;
-    }
-}
-
-@media only screen and (min-width: 640px) {
-    .col-3 {
-      width: 25%;
-    }
-  
-    .col-4 {
-      width: 33.33333%;
-    }
-    
-    .col-6 {
-      width: 50%;
-    }
-    
-    .col-12 {
-      width: 100%;
-    }
-}
-
-@media screen and (min-width: 900px) {
-    .cell {
-        width: 25%;
+    #GsearchResults {
+        margin: 0px 10px 0px 10px;
     }
 
-    h2 {
-        font-size: 24px;
+    .gsearchContainer {
+        font-size: 14px;
     }
-}
 
-@media screen and (max-width: 750px) {
-    .topnav .search-container {
-      float: none;
+    .displayTabcontent {
+        width: 300px;
     }
-    .topnav a, .topnav input[type=text], .topnav .search-container button {
-      float: none;
-      display: block;
-      text-align: left;
-      width: 100%;
-      margin: 0;
-      /* padding: 14px; */
+
+    .close-gsearch {
+        font-size: 14px;
     }
-    .topnav input[type=text] {
-      border: 1px solid aliceblue;  
+
+    .drawer-title-display {
+       font-size: 14px;
+       font-weight: bolder;
     }
-    .dropdown-content {
-        margin-top: 0;
+
+    .gsearch-ul {
+        padding: 0px;
     }
-    p {
-        padding-left: 15px;
-        padding-right: 15px;
+
+    .google-image {
+        height: 70px;
+        width: 70px;
+        float: none;
+        margin-bottom: 5px;
+    }
+
+    .gsearch-title {
+        font-size: 14px;
+        width: 280px;
+    }
+
+    .gsearch-heading {
+       display: none;
+    }
+
+    .google-snippet {
+        font-size: 14px;
     }
 }
