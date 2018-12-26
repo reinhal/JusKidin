@@ -34,14 +34,8 @@
 			<div class="dropdown">
 				<a class="dropbtn" href="assets.html">Drawers  <i class="fas fa-angle-down"></i></a>
 					<div class="dropdown-content asset-dropbtn">
-						<a onclick="assetOn()" href="#connectimage"><i class="fas fa-link"></i> Connect Images</a>
+						<a onclick="assetOn()" href="#connectimage"><i class="fas fa-upload"></i> Upload Item</a>
 					</div>
-			</div>
-			<div class="search-container">
-				<form action="/action_page.php">
-					<input type="text" placeholder="Search.." name="search">
-					<button type="submit"><i class="fa fa-search"></i></button>
-				</form>
 			</div>
 		</div>
 		<div id="header">
@@ -248,6 +242,14 @@
 						<button class ="close-gsearch" type="submit" onclick="gsearchOff(), headerOn(), photosOn()"><i class="fas fa-times"></i></button>
 						<button class ="close-gsearch" type="submit"><i class="fas fa-pencil-alt"></i></i></button>
 						<h2 class="gsearch-heading">Discover relevant child development resources for each child.</h2>
+					</div>
+				</section>
+				<section class="asset-section" id="asset-display">
+						<button class ="close-drawer" type="submit" onclick="drawerDisplayOff(), headerOn(), photosOn()"><i class="fas fa-times"></i></button>
+					<div class="tab dropdown-asset">
+						<div id="assetDropdown" class="dropdown-editAsset"></div>
+.							<h2>Create and use drawers to organize digital versions of your children's work, activities and art.</h2>
+						<div id="Drawer1" class="assettabcontent"></div>
 					</div>
 				</section>
 			</main>

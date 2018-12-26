@@ -125,6 +125,14 @@ function photosOn() {
   document.getElementById('photo-grid').style.display = 'block';
 }
 
+function drawerDisplayOff() {
+  document.getElementById('asset-display').style.display = 'none';
+}
+
+function drawerDisplayOn() {
+  document.getElementById('asset-display').style.display = 'block';
+}
+
 ///////////// Child(ren) Page Functions ///////////////////////
 
 window.onclick = function(event) {
@@ -177,7 +185,7 @@ var childProfileTemplate = function (childName, birthDate) {
   );
 
   $('#GsearchResults').append(
-    `<div id="${childID}" class="gsearchContainer"></div>`
+    `<div id="${childID}" class="gsearchContainer">You are currently viewing resources for <span class="drawer-title-display">${childName}</span>.</div>`
   );
 };
 
@@ -498,29 +506,29 @@ function getAndDisplayCurrentAccountInfo() {
       console.log('current account info here', data);
       $('.updateAccount').append(
         `<button class ="close-form" data-a11y-dialog-hide aria-label="Close this dialog window" type="submit" onclick="updateAccountOff()"><i class="fas fa-times"></i></button>
-                <form class="update-account-form">
-                    <ul class="flex-outer">
-                        <p class="form-title">Update Account Information</p>
-                        <li>
-                            <label for="user-name">Username</label>
-                            <input type="text" id="new-user-name" value= "${data.username}">
-                        </li>
-                        <li>
-                            <label for="first-name">First Name</label>
-                            <input type="text" id="updated-first-name" value= "${data.firstName}">
-                        </li>
-                        <li>
-                            <label for="last-name">Last Name</label>
-                            <input type="text" id="updated-last-name" value= "${data.lastName}">
-                        </li>
-                        <li>
-                            <label for="account-email">email</label>
-                            <input type="text" class="email" id="updated-email" value= "${data.email}">
-                        </li>
-                        <li>
-                            <button id="update-accountoverlaybutton" type="submit">Update Account</button>
-                        </li>
-                    </ul>
+            <form class="update-account-form">
+              <ul class="flex-outer">
+                <p class="form-title">Update Account Information</p>
+                <li>
+                  <label for="user-name">Username</label>
+                  <input type="text" id="new-user-name" value= "${data.username}">
+                </li>
+                <li>
+                  <label for="first-name">First Name</label>
+                  <input type="text" id="updated-first-name" value= "${data.firstName}">
+                </li>
+                <li>
+                  <label for="last-name">Last Name</label>
+                  <input type="text" id="updated-last-name" value= "${data.lastName}">
+                </li>
+                <li>
+                  <label for="account-email">email</label>
+                  <input type="text" class="email" id="updated-email" value= "${data.email}">
+                </li>
+                <li>
+                  <button id="update-accountoverlaybutton" type="submit">Update Account</button>
+                </li>
+              </ul>
             </form>`);
     },
     dataType: 'json',
@@ -596,12 +604,12 @@ function openDrawer(evt, drawerTitle) {
 var drawerTemplate = function(drawerTitle) {
   console.log('Right Here', drawerTitle);
   var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
-  $('.dropdown-asset').append(
-    `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}')"> ${drawerTitle}</button>`
+  $('.asset-dropbtn').append(
+    `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}'), headerOff(), photosOff(), drawerDisplayOn()"> ${drawerTitle}</button>`
   );
 
   $('#Drawer1').append(
-    `<div id="${drawerID}" class="uploadContainer"></div>`
+    `<div id="${drawerID}" class="uploadContainer">You are currently viewing the <span class="drawer-title-display">${drawerTitle}</span> drawer.</div>`
   );
 
   $('.drawer-title').append(
@@ -611,18 +619,18 @@ var drawerTemplate = function(drawerTitle) {
 
 var uploadTemplate = function(drawerTitle, title, notes, fileLocation) {
   var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
-  $(`#${drawerID}`).append(
+  $('.asset-section').append(
     `<section role="region">  
-            <div class='col-4'>
-                 <div class='asset'>
-                 <img class='asset-image' src="${fileLocation}" alt="${title}">
-                 <div>
-                 <p class="asset-content"><strong>${title}</strong></p>
-                 <p class="asset-content">${notes}</p>
-                 <p class="icon"><i class="fas fa-edit"></i>Edit</p>
-                 <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
-             </div>
-        </section>`
+        <div id="${drawerID}" class='col-4'>
+          <div class='asset'>
+          <img class='asset-image' src="${fileLocation}" alt="${title}">
+          <div>
+          <p class="asset-content"><strong>${title}</strong></p>
+          <p class="asset-content">${notes}</p>
+          <p class="icon"><i class="fas fa-edit"></i>Edit</p>
+          <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
+        </div>
+    </section>`
   );
 };
 
@@ -685,15 +693,17 @@ function getAndDisplayUploads() {
         console.log('item', item.drawerTitle);
         const drawerID = item.drawerTitle.replace(/\s+/g, '-').toLowerCase();
         $(`#${drawerID}`).append(
-          `<section role="region">  
-                        <div class='col-4'>
-                            <div class='asset'>
-                            <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
-                            <div>
-                            <p class="asset-content"><strong>${item.title}</strong></p>
-                            <p class="asset-content">${item.notes}</p>
-                        </div>
-                    </section>`
+          `<section role="region"> 
+            <div class='col-4'>
+              <div class='asset'>
+              <img class='asset-image' src="${item.fileLocation}" alt="${item.title}">
+              <div>
+              <p class="asset-content"><strong>${item.title}</strong></p>
+              <p class="asset-content">${item.notes}</p>
+              <p class="icon"><i class="fas fa-edit"></i>Edit</p>
+              <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
+            </div>
+          </section>`
         );
       });
 

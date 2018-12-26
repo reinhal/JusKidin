@@ -200,7 +200,6 @@ ul li {
 
 .dropdown .dropbtn {
     font-size: 16px; 
-    /* padding: 14px 16px; */
     background-color: inherit;
     font-family: inherit; 
     margin: 0;
@@ -213,7 +212,6 @@ ul li {
     position: absolute;
     background-color:	#303030;
     color: whitesmoke;
-    /* min-width: 160px; */
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -251,6 +249,15 @@ form {
 }
 
 .close-gsearch {
+    background-color: transparent;
+    color: darkturquoise;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    float: right;
+}
+
+.close-drawer {
     background-color: transparent;
     color: darkturquoise;
     border: none;
@@ -944,9 +951,9 @@ select {
 
 .tab {
     /* overflow: hidden; */
-    background-color: whitesmoke;
+    background-color: white;
     color: 	#303030;
-    margin: 60px; 
+    margin: 30px; 
     /* width: 80%; */
 }
 
@@ -981,22 +988,39 @@ select {
     border-top: none;
 }
 
-.assettabcontent {
+.asset-section{
     /* display: none; */
-    background-color: whitesmoke;
+    background-color: white;
     color: 	#303030;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     padding: 12px 12px;
-    border-top: none;
+    border: 5px solid darkturquoise;
+    margin: 30px;
 }
+
+/* .dropdown-editAsset {
+    background-color: white;
+    color: 	#303030;
+    padding: 12px 12px;
+    border: 5px solid darkturquoise;
+    margin: 0 50px 50px 50px;
+  } */
 
 .uploadContainer {
     display: none;
+    font-size: 18px;
+    text-align: center;
 }
 
+.drawer-title-display {
+    font-size: 24px;
+    font-style: bold;
+}
 
 .gsearchContainer {
     display: none;
+    font-size: 18px;
+    text-align: center;
 }
 
 .tabcontent h2 {
@@ -1007,6 +1031,8 @@ select {
     font-size: 36px;
     text-transform: uppercase;
 }
+
+
 /*////////////////Child and Asset DropDown Buttons//////////////////*/
 
 
@@ -1036,8 +1062,25 @@ select {
     background-color: whitesmoke;
     color: #303030;
     border: 2px solid darkturquoise;
-   
 }
+
+/* .dropbtn-asset {
+    background-color:#303030;
+    color: whitesmoke;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+} */
+
+/* .dropbtn-asset:hover {
+    background-color: whitesmoke;
+    color: #303030;
+    border: 2px solid darkturquoise;
+} */
+
 .dropdown-prof {
     position: relative;
     display: inline-block;
@@ -1066,16 +1109,24 @@ select {
 
 .dropbtn-asset {
     background-color:#303030;
-    color: white;
-    padding: 16px;
+    color: whitesmoke;
+    padding: 5px;
     font-size: 16px;
     border: none;
     cursor: pointer;
+    display: block;
+    width: 100%;
 }
 
-.dropbtn-asset:hover, .dropbtn-asset:focus {
-    background-color:#303030;
+.dropbtn-asset:hover {
+    background-color: whitesmoke;
+    color: #303030;
+    border: 2px solid darkturquoise;
 }
+
+/* .dropbtn-asset:hover, .dropbtn-asset:focus {
+    background-color:#303030;
+} */
 
 .dropdown-asset {
     position: relative;
@@ -1147,7 +1198,7 @@ select {
 }
   
 .asset-content {
-    padding-left: 25px;
+    /* padding-left: 25px; */
     margin: 15px;
 }
 
@@ -1179,8 +1230,13 @@ select {
 }
 
 .icon {
-    color: #ddd;
-    padding: 5px;
+    color: darkgray;
+    margin: 5px;
+    float: right;
+}
+
+.icon:hover {
+    color: darkturquoise;
 }
   
 /*////////////////Footer//////////////////*/
