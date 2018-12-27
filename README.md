@@ -8,7 +8,7 @@ A live version of the application can be found at: https://juskidin.herokuapp.co
 
 **Current live version:** 1.0
 
-![Juskidin_home](/Users/lisa/Desktop/Projects/JusKidin/ScreenShots/Juskidin_home.png)
+![Juskidin_home](/ScreenShots/Juskidin_home.png)
 
 
 
@@ -18,19 +18,19 @@ A live version of the application can be found at: https://juskidin.herokuapp.co
 
 Each user can create and maintain their own secure account.  
 
-![JusKidin_1](/Users/lisa/Desktop/Projects/JusKidin/ScreenShots/JusKidin_1.png)
+![JusKidin_1](/ScreenShots/JusKidin_1.png)
 
 ### Child Profiles
 
 Each user inputs a name and birthdate to have access to the results of a custom Google search engine that returns relevant web resources to that child's stage of development. 
 
-![JusKidin_2](/Users/lisa/Desktop/Projects/JusKidin/ScreenShots/JusKidin_2.png)
+![JusKidin_2](/ScreenShots/JusKidin_2.png)
 
 ### Drawers
 
 Each user is able to connect already hosted images to topic specifc drawers to organize digitzed versions of school work, artwork, and pictures from sport games and other activities. 
 
-![JusKidin_3](/Users/lisa/Desktop/Projects/JusKidin/ScreenShots/JusKidin_3.png)
+![JusKidin_3](/JusKidin_3.png)
 
 ## Technical Requirements
 
