@@ -13,13 +13,12 @@ h1 {
     font-family: 'Overlock', cursive;
     font-size: 72px;
     text-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    margin: 5px;
 }
-/* 
 
-p {
-    margin: 30px;
+button:hover {
+    border: 2px solid darkturquoise;
 }
- */
 
 #header {
     display: grid;
@@ -55,8 +54,7 @@ ul li {
 }
 
 .heres-how:hover {
-    background-color: whitesmoke;
-    color: #303030;
+    color: darkturquoise;
     border: 2px solid darkturquoise;
 }
 
@@ -76,8 +74,7 @@ ul li {
 }
 
 .login-button:hover {
-    background-color: whitesmoke;
-    color: #303030;
+    color: darkturquoise;
     border: 2px solid darkturquoise;
 }
 
@@ -140,9 +137,7 @@ ul li {
 }
   
 .topnav a {
-    /* display: block; */
     color:whitesmoke;
-    /* text-align: center; */
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
@@ -224,7 +219,7 @@ ul li {
 .dropdown-content a {
     background-color: #303030;
     color:whitesmoke;
-    padding: 12px 16px;
+    padding: 5px;
     text-decoration: none;
     border-color: whitesmoke;
     display: block;
@@ -248,53 +243,9 @@ ul li {
     float: right;
 }
 
-/*////////////Form Styling//////////*/
+/*////////////////////Form Styling///////////////////////*/
 form {
     text-align: center;
-}
-
-.close-gsearch {
-    background-color: transparent;
-    color: darkturquoise;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    float: right;
-}
-
-.close-drawer {
-    background-color: transparent;
-    color: darkturquoise;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    float: right;
-}
-
-.gsearch-heading {
-    text-align: center;
-    font-size: 24px;
-}
-
-.asset-heading {
-    text-align: center;
-    font-size: 24px;
-}
-/* 
-.google-image {
-    max-width: 150px;
-    width: 30%;
-    margin-right: 20px;
-    float: left;
-}
-
-.google {
-    width: 30%;
-    float: left;
-} */
-
-.close-form:hover {
-    color: #303030;
 }
 
 .close-form {
@@ -308,8 +259,8 @@ form {
 }
 
 .close-form:hover {
-    background-color: whitesmoke;
-    color: #303030;
+    color: darkturquoise;
+    border: none;
 }
 
 .directions {
@@ -322,6 +273,14 @@ form {
 
 
 .addChild {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.updateChild {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -415,6 +374,32 @@ form {
     padding: 50px 50px;
     background-color: rgba(0,0,0,0.5);
 }
+
+.delete-account-text {
+    color: whitesmoke;
+    font-size: 24px;
+}
+
+.delete-child-link {
+    color: darkturquoise;
+}
+
+.delete-child-link:hover {
+    color: red;
+}
+
+.delete-child-text {
+    color: whitesmoke;
+    font-size: 24px;
+}
+
+.delete-account-link {
+    color: darkturquoise;
+}
+
+.delete-account-link:hover {
+    color: red;
+}
   
 .addDrawer * {
     box-sizing: border-box;
@@ -478,16 +463,16 @@ form {
     cursor: pointer;
 }
 
-#delete-overlaybutton {
-    background: red; 
+#accountoverlaybutton:hover, 
+#childoverlaybutton:hover, 
+#login:hover, 
+#assertoverlaybutton:hover, 
+#update-accountoverlaybutton:hover {
+    color: darkturquoise;
+    border: 2px solid darkturquoise;
 }
 
-#delete-name {
-    max-width: 800px;
-    text-align: center;
-}
-
-/*////////////Overlay Styling//////////*/
+/*/////////////////////////Overlay Styling////////////////////*/
 
 .directions-heading {
     color: whitesmoke;
@@ -507,169 +492,29 @@ form {
     font-size: 18px;
 }
 
-#first-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#updated-first-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#updated-last-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#login-user-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#new-password {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#new-user-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#updated-email {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#user-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#password {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 14px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#password2 {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#child-first-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#title {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#last-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#account-email {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#birth-date { 
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#drawer-name {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#drawer-title {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#notes {
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#date-uploaded { 
+#first-name,
+#updated-first-name,
+#updated-last-name,
+#login-user-name,
+#new-password,
+#new-user-name,
+#updated-email,
+#user-name,
+#password,
+#password2,
+#child-first-name,
+#updated-child-first-name,
+#title,
+#last-name,
+#account-email,
+#birth-date,
+#updated-birth-date,
+#drawer-name,
+#drawer-title,
+#notes,
+#date-uploaded,
+#image-url,
+#current-drawer-titles {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
@@ -687,14 +532,6 @@ form {
     width: 400px;
 }
 
-#image-url { 
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 18px;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
 
 select { 
     padding: 10px;
@@ -706,143 +543,16 @@ select {
     width: 400px;
 }
 
-#current-drawer-titles { 
-    padding: 20px;
-    margin-top: 5px;
-    font-size: 18px;
-    color: gray;
-    border: 0px solid whitesmoke;
-    background-color: whitesmoke;
-    width: 400px;
-}
-
-#directionsoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
-
-#deleteoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
-#loginoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
-#logoffoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
-#update-accountoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
-#accountoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
-#childoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
-#edit-assetoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
-#assetoverlay {
-    position: fixed; 
-    display: none;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2; 
-    cursor: pointer; 
-}
-
+#directionsoverlay,
+#deleteoverlay,
+#loginoverlay,
+#logoffoverlay,
+#update-accountoverlay,
+#accountoverlay,
+#childoverlay,
+#update-childoverlay,
+#edit-assetoverlay,
+#assetoverlay,
 #draweroverlay {
     position: fixed; 
     display: none;
@@ -854,10 +564,19 @@ select {
     bottom: 0;
     background-color: rgba(0,0,0,0.5); 
     z-index: 2; 
-    cursor: pointer; 
 }
 
-#editAssetForm{
+#editAssetForm,
+#updateAccountForm,
+#directionsForm,
+#addAccountForm,
+#loginForm,
+#deleteForm,
+#logoffForm,
+#addChildForm,
+#updateChildForm,
+#connectAssetForm,
+#addDrawerForm {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -866,105 +585,12 @@ select {
     -ms-transform: translate(-50%,-50%);
     z-index: 2;
 }
-
-#updateAccountForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-#directionsForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-#addAccountForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-#deleteForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-#loginForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-#logoffForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-#addChildForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-#connectAssetForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
-#addDrawerForm{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    z-index: 2;
-}
-
 /*////////////Child and Drawer View//////////*/
 
 .tab {
-    /* overflow: hidden; */
     background-color: white;
     color: 	#303030;
     margin: 30px; 
-    /* width: 80%; */
 }
 
 .tab button {
@@ -998,6 +624,44 @@ select {
     border-top: none;
 }
 
+.close-gsearch {
+    background-color: transparent;
+    color: darkturquoise;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    float: right;
+}
+
+.close-gsearch:hover {
+    color: 	#303030;
+    border: none;
+}
+
+.close-drawer {
+    background-color: transparent;
+    color: darkturquoise;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    float: right;
+}
+
+.close-drawer:hover {
+    color: 	#303030;
+    border: none;
+}
+
+.gsearch-heading {
+    text-align: center;
+    font-size: 24px;
+}
+
+.asset-heading {
+    text-align: center;
+    font-size: 24px;
+}
+
 .asset-section{
     display: none;
     background-color: white;
@@ -1006,14 +670,6 @@ select {
     border: 5px solid darkturquoise;
     margin: 50px;
 }
-
-/* .dropdown-editAsset {
-    background-color: white;
-    color: 	#303030;
-    padding: 12px 12px;
-    border: 5px solid darkturquoise;
-    margin: 0 50px 50px 50px;
-  } */
 
 .uploadContainer {
     display: none;
@@ -1073,23 +729,12 @@ select {
 
 /*////////////////Child and Asset DropDown Buttons//////////////////*/
 
-
-/* .dropbtn-prof {
-    background-color: #3498DB;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-.dropbtn-prof:hover, .dropbtn-prof:focus {
-    background-color: #2980B9;
-} */
 .child-nav {
     background-color:#303030;
     color: whitesmoke;
     padding: 5px;
     font-size: 16px;
+    text-align: left;
     border: none;
     cursor: pointer;
     display: block;
@@ -1101,23 +746,6 @@ select {
     color: #303030;
     border: 2px solid darkturquoise;
 }
-
-/* .dropbtn-asset {
-    background-color:#303030;
-    color: whitesmoke;
-    padding: 5px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    display: block;
-    width: 100%;
-} */
-
-/* .dropbtn-asset:hover {
-    background-color: whitesmoke;
-    color: #303030;
-    border: 2px solid darkturquoise;
-} */
 
 .dropdown-prof {
     position: relative;
@@ -1154,6 +782,7 @@ select {
     cursor: pointer;
     display: block;
     width: 100%;
+    text-align: left;
 }
 
 .dropbtn-asset:hover {
@@ -1161,10 +790,6 @@ select {
     color: #303030;
     border: 2px solid darkturquoise;
 }
-
-/* .dropbtn-asset:hover, .dropbtn-asset:focus {
-    background-color:#303030;
-} */
 
 .dropdown-asset {
     position: relative;
@@ -1212,7 +837,6 @@ select {
 .dropdown-editAsset a:hover {
     background-color: #ddd
 }
-
 
 .show {
     display: block;
@@ -1268,16 +892,14 @@ select {
 }
 
 .icon {
-    color: darkgray;
+    color: darkturquoise;
     margin: 5px;
     float: right;
 }
 
 .icon:hover {
-    color: darkturquoise;
+    color: #303030;
 }
-  
-/*////////////////Footer//////////////////*/
 
 /*////////////Responsive Styling//////////*/
 

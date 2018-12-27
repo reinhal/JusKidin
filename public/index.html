@@ -22,7 +22,6 @@
 					<div class="dropdown-content">
 						<a class="logoff-link"><i class="fas fa-sign-out-alt"></i> Logoff</a>
 						<a onclick="updateAccountOn()" href="javascript:void(0)"><i class="fas fa-edit"></i> Edit Account</a>
-						<a onclick="deleteOn()" href="javascript:void(0)"><i class="fas fa-trash"></i> Delete Account</a>
 					</div>
 			</div>
 			<div class="dropdown">
@@ -60,38 +59,6 @@
 							<p class= "directions-item">Think of drawers as topics and containers. They are simply an organization tool for your images or digitized versions of your children's work, activities and creations. Go to the Drawers page, click on the drawer button to upload images and add notes.</p>
 							<p class="form-title">Enjoy!</p>
 					</ul>
-				</div>
-			</div>
-		</section>
-		<section role="region">
-			<div id="deleteoverlay">
-				<div class="delete" id="deleteForm">
-					<button class ="close-form" type="submit" onclick="deleteOff()"><i class="fas fa-times"></i></button>
-					<form class="delete-form">
-						<ul class="flex-outer">
-							<p class="form-title">Are you sure?</p>
-							<li>
-								<label for="delete-name" id="delete-name">This action can not be undone.</label>
-							</li>
-							<li>
-								<button id="delete-overlaybutton" type="submit">Delete Forever</button>
-							</li>
-						</ul>
-					</form>
-				</div>
-			</div>
-		</section>
-		<section role="region">
-			<div id="logoffoverlay" onclick="logoffOff()">
-				<div class="logoff" id="logoffForm">
-					<button class ="close-form" type="submit" onclick="logoffOff()"><i class="fas fa-times"></i></button>
-					<form class="logoff-form">
-						<ul class="flex-outer">
-							<li>
-								<button id="logoff-overlaybutton" type="submit">Logoff</button>
-							</li>
-						</ul>
-					</form>
 				</div>
 			</div>
 		</section>
@@ -180,6 +147,31 @@
 								<button id="childoverlaybutton" type="submit">Create</button>
 							</li>
 						</ul>
+						<p class="feedback-messages"></p>
+					</form>
+				</div>
+			</div>
+		</section>
+		<section role="region">
+			<div id="update-childoverlay">
+				<div class="updateChild" id="updateChildForm">
+					<button class ="close-form" type="submit" onclick="updateChildOff()"><i class="fas fa-times"></i></button>
+					<form class="update-child-age-form">
+						<ul class="flex-outer">
+							<p class="form-title">Edit Child Information</p>
+							<li>
+								<label class="label" for="updated-child-first-name">First Name</label>
+								<input type="text" id="updated-child-first-name" placeholder="Enter child's first name here">
+							</li>
+							<li>
+								<label class="label" for="updated-birth-date">Child's Birth Date</label>
+								<input type="text" class="updated-child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
+							</li>
+							<li>
+								<button id="childoverlaybutton" type="submit">Create</button>
+							</li>
+						</ul>
+						<p class="delete-child-text">Click here to <a class="delete-child-link" click="" href="javascript:void(0)">delete</a> this child profile.</p>
 					</form>
 				</div>
 			</div>
@@ -240,7 +232,7 @@
 				<section class="gsearch-section">
 					<div id="GsearchResults" class="displayTabcontent">
 						<button class ="close-gsearch" type="submit" onclick="gsearchOff(), headerOn(), photosOn()"><i class="fas fa-times"></i></button>
-						<button class ="close-gsearch" type="submit"><i class="fas fa-pencil-alt"></i></i></button>
+						<button class ="close-gsearch" type="submit" onclick="updateChildOn()"><i class="fas fa-pencil-alt"></i></button>
 						<h2 class="gsearch-heading">Discover relevant child development resources for each child.</h2>
 					</div>
 				</section>

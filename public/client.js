@@ -7,10 +7,8 @@ var password = '';
 var dateUploaded = '';
 var fileLocation = '';
 var firstName = '';
-var dateUploaded = '';
 var notes = '';
 var title = '';
-var fileLocation = '';
 var lastName = '';
 var email = '';
 var childName = '';
@@ -83,6 +81,14 @@ function childOn() {
 
 function childOff() {
   document.getElementById('childoverlay').style.display = 'none';
+}
+
+function updateChildOn() {
+  document.getElementById('update-childoverlay').style.display = 'block';
+}
+
+function updateChildOff() {
+  document.getElementById('update-childoverlay').style.display = 'none';
 }
 
 function assetOn() {
@@ -231,7 +237,8 @@ function handleChildProfileAdd() {
     e.preventDefault();
     window.location.reload(true);
     if (childName === '' || birthDate === '') {
-      alert('Missing Information!');
+      $('.feedback-messages').text('Missing Information'); 
+      // alert('Missing Information!');
     } else {
       addChildProfile(childName, birthDate);
     }
@@ -240,22 +247,21 @@ function handleChildProfileAdd() {
 
 ////These functions will be fully implemented in future development////////////
 
-// function deleteChildProfile(userID, child_id) {
-//     console.log('Deleting child profile');
-//     $.ajax({
-//       url: `/api/account/${userID}/childProfs/:child_id`,
-//       method: 'DELETE',
-//       success: getAndDisplayChildProfile
-//     });
-// }
+function deleteChildProfile(userID, childID) {
+  $.ajax({
+    url: `/api/account/${userID}/childProfs/:${childID}`,
+    method: 'DELETE',
+    success: getAndDisplayChildProfile
+  });
+}
 
-// function handleChildProfileDelete() {
-//     $('.dropdown-childProfile').on('click', '.child-profile-delete', function(e) {
-//       e.preventDefault();
-//       deleteChildProfile(
-//         $(e.currentTarget).closest('.dropbtn-prof').attr('id'));
-//     });
-// }
+function handleChildProfileDelete() {
+  $('.delete-child-link').on('click', '.child-profile-delete', function(e) {
+    e.preventDefault();
+    deleteChildProfile(
+      $(e.currentTarget).closest('.dropbtn-prof').attr('id'));
+  });
+}
 
 // function handleChildProfileUpdate() {
 //     $('.dropdown-childProfile').on('click', '.child-profile-edit', function(e) {
@@ -350,7 +356,7 @@ function watchSubmit() {
   
 $(watchSubmit);
 
-///////////// Account Functions ///////////////////////
+////////////////////////////////// Account Functions //////////////////////////////////
 
 function createNewAccount(username, password, firstName, lastName, email) {
   $.ajax({
@@ -373,8 +379,9 @@ function handleAccountAdd() {
     var lastName = $('#last-name').val();
     var email =$('#account-email').val();
     e.preventDefault();
-    if (username === '' || password === ''|| firstName === '' || lastName === '' || email === '') {
-      alert('Missing Information');
+    if (username == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
+      $('.feedback-messages').text('Missing Information'); 
+      // alert('Missing Information');
     } else {
       createNewAccount(username, password, firstName, lastName, email);
     }
@@ -400,7 +407,6 @@ function handleLogOffUser() {
   $('.logoff-link').click(function(e) {
     e.preventDefault();
     attemptLogOffUser();
-    console.log('user logged off');
   });
 }
 
@@ -434,14 +440,15 @@ function attemptLogInUser(username, password) {
 }
 
 function handleEditAccount(username, firstName, lastName, email) {
-  $('.update-account-form').submit(function(e) {
+  $('.updateAccountForm').submit(function(e) {
     var username = $('#new-user-name').val();
     var firstName = $('#updated-first-name').val();
     var lastName = $('#updated-last-name').val();
     var email =$('#updated-email').val();
     e.preventDefault();
-    if (username === '' || firstName === '' || lastName === '' || email === '') {
-      alert('Missing Information');
+    if (username == '' || firstName == '' || lastName == '' || email == '') {
+      $('.feedback-messages').text('Missing Information'); 
+      // alert('Missing Information');
     } else {
       editAccount(username, firstName, lastName, email);
     }
@@ -463,33 +470,6 @@ function editAccount(username, firstName, lastName, email) {
   });
 }
 
-// var currentAccountTemplate = function (username, firstName, lastName, email) {
-//    $('.updateAccount').append(`<form class="update-account-form">
-//         <ul class="flex-outer">
-//             <p class="form-title">Update Account Information</p>
-//             <li>
-//                 <label for="user-name">Username</label>
-//                 <input type="text" id="new-user-name" placeholder="Current username: ${username}">
-//             </li>
-//             <li>
-//                 <label for="first-name">First Name</label>
-//                 <input type="text" id="updated-first-name" placeholder="Current first name: ${firstName}">
-//             </li>
-//             <li>
-//                 <label for="last-name">Last Name</label>
-//                 <input type="text" id="updated-last-name" placeholder="Current last name: ${lastName}">
-//             </li>
-//             <li>
-//                 <label for="account-email">email</label>
-//                 <input type="text" class="email" id="updated-email" placeholder="Current email: ${email}">
-//             </li>
-//             <li>
-//                 <button id="update-accountoverlaybutton" type="submit">Update Account</button>
-//             </li>
-//         </ul>
-//     </form>`)
-// }
-
 function getAndDisplayCurrentAccountInfo() {
   userID =  localStorage.getItem('userID');
   var CURRENTACCOUNT_URL = `api/account/${userID}`;
@@ -500,9 +480,9 @@ function getAndDisplayCurrentAccountInfo() {
     success: function(data) {
       $('.updateAccount').append(
         `<button class ="close-form" data-a11y-dialog-hide aria-label="Close this dialog window" type="submit" onclick="updateAccountOff()"><i class="fas fa-times"></i></button>
-            <form class="update-account-form">
+            <form class="updateAccountForm">
               <ul class="flex-outer">
-                <p class="form-title">Update Account Information</p>
+                <p class="form-title">Edit Account Information</p>
                 <li>
                   <label for="user-name">Username</label>
                   <input type="text" id="new-user-name" value= "${data.username}">
@@ -523,6 +503,7 @@ function getAndDisplayCurrentAccountInfo() {
                   <button id="update-accountoverlaybutton" type="submit">Update Account</button>
                 </li>
               </ul>
+              <p class="delete-account-text">Click here to <a class="delete-account-link" click="handleDeleteAccount()" href="javascript:void(0)">delete account</a>.</p>
             </form>`);
     },
     dataType: 'json',
@@ -531,7 +512,7 @@ function getAndDisplayCurrentAccountInfo() {
 }
 
 function handleDeleteAccount() {
-  $('.delete-form').submit(function(e) {
+  $('.delete-account-link').submit(function(e) {
     e.preventDefault();
     deleteAccount();
   });
@@ -548,7 +529,6 @@ function deleteAccount() {
   });
   localStorage.clear();
   window.location.reload(true);
-
 }
 
 ///////////// Drawer and Asset Functions ///////////////////////////
@@ -617,7 +597,7 @@ var uploadTemplate = function(drawerTitle, title, notes, fileLocation) {
           <div>
           <p class="asset-content"><strong>${title}</strong></p>
           <p class="asset-content">${notes}</p>
-          <p class="icon"><i class="fas fa-edit"></i>Edit</p>
+          <p class="icon"><i class="fas fa-pencil-alt"></i>Edit</p>
           <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
         </div>
     </section>`
@@ -656,7 +636,7 @@ function handleDrawerAdd() {
     var newDrawerTitle = $('#new-drawer-title').val();
     e.preventDefault();
     //window.location.reload(true);
-    if (newDrawerTitle == '') {
+    if (newDrawerTitle === '') {
       alert('Missing Information');
     } else { drawerTemplate(newDrawerTitle);
     }
@@ -682,7 +662,7 @@ function getAndDisplayUploads() {
               <div>
               <p class="asset-content"><strong>${item.title}</strong></p>
               <p class="asset-content">${item.notes}</p>
-              <p class="icon"><i class="fas fa-edit"></i>Edit</p>
+              <p class="icon"><i class="fas fa-pencil-alt"></i>Edit</p>
               <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
             </div>
           </section>`
@@ -766,6 +746,7 @@ $(function() {
   handleLogInUser();
   handleLogOffUser();
   handleChildProfileAdd();
+  handleChildProfileDelete();
   handleImageConnect();
   handleAccountAdd();
   handleEditAccount();
