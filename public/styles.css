@@ -326,6 +326,13 @@ form {
     text-align: center;
     text-transform: uppercase;
 }
+
+.directions-title {
+    font-size: 36px;
+    color: whitesmoke;
+    text-align: center;
+    text-transform: uppercase;
+}
   
 .addChild * {
     box-sizing: border-box;
@@ -514,7 +521,11 @@ form {
 #notes,
 #date-uploaded,
 #image-url,
-#current-drawer-titles {
+#current-drawer-titles,
+#newUserName,
+#newFirstName,
+#newLastName,
+#newEmail {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
@@ -703,6 +714,10 @@ select {
 
 .google-link {
     color: darkturquoise;
+}
+
+.google-link:hover {
+    color: #303030;
 }
 
 .google-image {
@@ -1267,6 +1282,11 @@ select {
         padding: 10px;
     }
 
+    .directions-title {
+        font-size: 18px;
+        margin: 35px 0px 10px 0px;
+    }
+
     .directions-item {
         font-size: 14px;
         text-align: center;
@@ -1286,6 +1306,7 @@ select {
 
     #directionsForm {
         height: 90%;
+        width: 240px;
         overflow: scroll;
     }
 

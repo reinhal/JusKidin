@@ -364,7 +364,7 @@ function createNewAccount(username, password, firstName, lastName, email) {
     url: ACCOUNT_URL,
     data: JSON.stringify({username, password, firstName, lastName, email}),
     success: function(data) {
-      alert('New Account Created');
+      attemptLogInUser(username, password);
     },
     dataType: 'json',
     contentType: 'application/json'
@@ -395,8 +395,6 @@ function handleLogInUser() {
     e.preventDefault();
     if (username === '' || password === '') {
       $('.feedback-messages').text('Missing Information'); 
-    // } else if (!res.ok) {
-    //   $('.login-messages').text('Invalid Login Information'); 
     } else {
       attemptLogInUser(username, password);
     }
@@ -434,18 +432,23 @@ function attemptLogInUser(username, password) {
         }
       });
     },
+    error: function() {
+      $('.feedback-messages').text('Invalid Login Information'); 
+    },
     dataType: 'json',
     contentType: 'application/json'
   });
 }
 
 function handleEditAccount(username, firstName, lastName, email) {
-  $('.updateAccountForm').submit(function(e) {
-    var username = $('#new-user-name').val();
-    var firstName = $('#updated-first-name').val();
-    var lastName = $('#updated-last-name').val();
-    var email =$('#updated-email').val();
+  $('body').on('click', '.updateaccountoverlaybutton',function(e) {
+    var username = $('#newUserName').val();
+    var firstName = $('#newFirstName').val();
+    var lastName = $('#newLastName').val();
+    var email =$('#newEmail').val();
     e.preventDefault();
+    console.log(arguments, 'arguments');
+    console.log(username, 'username');
     if (username == '' || firstName == '' || lastName == '' || email == '') {
       $('.feedback-messages').text('Missing Information'); 
       // alert('Missing Information');
@@ -485,25 +488,26 @@ function getAndDisplayCurrentAccountInfo() {
                 <p class="form-title">Edit Account Information</p>
                 <li>
                   <label for="user-name">Username</label>
-                  <input type="text" id="new-user-name" value= "${data.username}">
+                  <input type="text" id="newUserName" value= "${data.username}">
                 </li>
                 <li>
                   <label for="first-name">First Name</label>
-                  <input type="text" id="updated-first-name" value= "${data.firstName}">
+                  <input type="text" id="newFirstName" value= "${data.firstName}">
                 </li>
                 <li>
                   <label for="last-name">Last Name</label>
-                  <input type="text" id="updated-last-name" value= "${data.lastName}">
+                  <input type="text" id="newLastName" value= "${data.lastName}">
                 </li>
                 <li>
                   <label for="account-email">email</label>
-                  <input type="text" class="email" id="updated-email" value= "${data.email}">
+                  <input type="text" class="email" id="newEmail" value= "${data.email}">
                 </li>
                 <li>
-                  <button id="update-accountoverlaybutton" type="submit">Update Account</button>
+                  <button class="updateaccountoverlaybutton">Update Account</button>
                 </li>
               </ul>
-              <p class="delete-account-text">Click here to <a class="delete-account-link" click="handleDeleteAccount()" href="javascript:void(0)">delete account</a>.</p>
+              <p class="delete-account-text">Click here to <a class="delete-account-link">delete account</a>.</p>
+              <p class="feedback-messages"></p>
             </form>`);
     },
     dataType: 'json',
@@ -512,8 +516,9 @@ function getAndDisplayCurrentAccountInfo() {
 }
 
 function handleDeleteAccount() {
-  $('.delete-account-link').submit(function(e) {
+  $('body').on('click', '.delete-account-link', function(e){
     e.preventDefault();
+    console.log('we made it here');
     deleteAccount();
   });
 }
@@ -523,12 +528,10 @@ function deleteAccount() {
     method: 'DELETE',
     url: `/api/account/${userID}`,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-    success: alert('Account Deleted'),
+    success: attemptLogOffUser,
     dataType: 'json',
     contentType: 'application/json'
   });
-  localStorage.clear();
-  window.location.reload(true);
 }
 
 ///////////// Drawer and Asset Functions ///////////////////////////
