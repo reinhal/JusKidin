@@ -2,6 +2,7 @@
 
 // var userID = '5b35886a2ba1910d14830eb7';
 var userID = '';
+var childID = '';
 var username = '';
 var password = '';
 var dateUploaded = '';
@@ -18,6 +19,8 @@ var drawerTitle = '';
 // var serverBase = '//localhost:8080/'; //remove this from all endpoints
 var ACCOUNT_URL = 'api/account';
 
+console.log(localStorage);
+
 function getUserID() {
   return userID;
 }
@@ -25,6 +28,181 @@ function getUserID() {
 function setUserID(id) {
   userID = id;
 }
+
+////////////////////////////////// Account Functions //////////////////////////////////
+
+function createNewAccount(username, password, firstName, lastName, email) {
+  $.ajax({
+    method: 'POST',
+    url: ACCOUNT_URL,
+    data: JSON.stringify({username, password, firstName, lastName, email}),
+    success: function() {
+      attemptLogInUser(username, password);
+    },
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
+
+function handleAccountAdd() {
+  $('.account-form').submit(function(e) {
+    var username = $('#new-user-name').val();
+    var password = $('#password').val();
+    var firstName = $('#first-name').val();
+    var lastName = $('#last-name').val();
+    var email =$('#account-email').val();
+    e.preventDefault();
+    if (username === '' || password === ''|| firstName == '' || lastName === '' || email === '') {
+      $('.feedback-messages').text('Missing Information'); 
+      // alert('Missing Information');
+    } else {
+      createNewAccount(username, password, firstName, lastName, email);
+    }
+  });
+}
+
+function handleLogInUser() {
+  $('.login-form').submit(function(e) {
+    var username = $('#login-user-name').val();
+    var password = $('#password2').val();
+    e.preventDefault();
+    if (username === '' || password === '') {
+      $('.feedback-messages').text('Missing Information'); 
+    } else {
+      attemptLogInUser(username, password);
+    }
+  });
+}
+
+function handleLogOffUser() {
+  $('.logoff-link').click(function(e) {
+    e.preventDefault();
+    attemptLogOffUser();
+  });
+}
+
+function attemptLogOffUser() {
+  localStorage.clear();
+  window.location.reload(true); 
+}
+
+function attemptLogInUser(username, password) {
+  $.ajax({
+    method: 'POST',
+    url: '/api/auth/login',
+    data: JSON.stringify({username, password}),
+    success: function(resData) {
+      localStorage.setItem('token', resData.authToken);
+      var JWT = jwt_decode(resData.authToken);
+      userID = JWT.user._id;
+      localStorage.setItem('userID', userID);
+      window.location.reload(true);
+      $.ajax({
+        method: 'GET',
+        url: `/api/account/${userID}`,
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+        success: function() {
+        }
+      });
+    },
+    error: function() {
+      $('.feedback-messages').text('Invalid Login Information'); 
+    },
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
+
+function handleEditAccount() {
+  $('body').on('click', '.updateaccountoverlaybutton',function(e) {
+    var username = $('#newUserName').val();
+    var firstName = $('#newFirstName').val();
+    var lastName = $('#newLastName').val();
+    var email =$('#newEmail').val();
+    e.preventDefault();
+    if (username == '' || firstName == '' || lastName == '' || email == '') {
+      $('.feedback-messages').text('Missing Information'); 
+    } else {
+      editAccount(username, firstName, lastName, email);
+    }
+  });
+}
+
+function editAccount(username, firstName, lastName, email) {
+  userID =  localStorage.getItem('userID');
+  $.ajax({
+    method: 'PUT',
+    url: `/api/account/${userID}`,
+    data: JSON.stringify({username, firstName, lastName, email}),
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+    success: function() {
+      $('.success-messages').text('Account Successfully Updated!');
+    },
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
+
+function getAndDisplayCurrentAccountInfo() {
+  userID =  localStorage.getItem('userID');
+  var CURRENTACCOUNT_URL = `api/account/${userID}`;
+  $.ajax({
+    method: 'GET',
+    url: CURRENTACCOUNT_URL,
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+    success: function(data) {
+      $('.updateAccount').append(
+        `<button class ="close-form" data-a11y-dialog-hide aria-label="Close this dialog window" type="submit" onclick="updateAccountOff()"><i class="fas fa-times"></i></button>
+            <form class="updateAccountForm">
+              <ul class="flex-outer">
+                <p class="form-title">Edit Account Information</p>
+                <li>
+                  <label for="user-name">Username</label>
+                  <input type="text" id="newUserName" value= "${data.username}">
+                </li>
+                <li>
+                  <label for="first-name">First Name</label>
+                  <input type="text" id="newFirstName" value= "${data.firstName}">
+                </li>
+                <li>
+                  <label for="last-name">Last Name</label>
+                  <input type="text" id="newLastName" value= "${data.lastName}">
+                </li>
+                <li>
+                  <label for="account-email">email</label>
+                  <input type="text" class="email" id="newEmail" value= "${data.email}">
+                </li>
+                <li>
+                  <button class="updateaccountoverlaybutton">Update Account</button>
+                </li>
+              </ul>
+              <p class="delete-account-text">Click here to <a class="delete-account-link">delete account</a>.</p>
+              <p class="feedback-messages"></p>
+            </form>`);
+    },
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
+
+function handleDeleteAccount() {
+  $('body').on('click', '.delete-account-link', function(e){
+    e.preventDefault();
+    deleteAccount();
+  });
+}
+
+function deleteAccount() {
+  $.ajax({
+    method: 'DELETE',
+    url: `/api/account/${userID}`,
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+    success: attemptLogOffUser,
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
+
 
 ///////////// Overlay Form Functions ///////////////////////
 function directionsOn() {
@@ -155,7 +333,7 @@ window.onclick = function(event) {
 };
 
 function openChild(evt, childName) {
-  var childID = childName.replace(/\s+/g, '-').toLowerCase();
+  var childNAME = childName.replace(/\s+/g, '-').toLowerCase();
   var i, currentChild, tablinks;
   var gsearchContainer = document.getElementsByClassName('gsearchContainer');
   for (i = 0; i < gsearchContainer.length; i++) {
@@ -164,28 +342,28 @@ function openChild(evt, childName) {
     }
   }
 
-  currentChild = document.getElementById(childID);
+  currentChild = document.getElementById(childNAME);
   currentChild.style.display = 'block';
   tablinks = document.getElementsByClassName('tablinks');
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(' active', '');
   }
 
-  document.getElementById(`${childID}`).style.display = 'block';
+  document.getElementById(`${childNAME}`).style.display = 'block';
   evt.currentTarget.className += ' active';
 
   var currentAge =  $(evt.target).text().match(/\d+/)[0];
-  googleSearch(currentAge, displayGoogleSearch(childID));
+  googleSearch(currentAge, displayGoogleSearch(childNAME));
 }
 
 var childProfileTemplate = function (childName, birthDate) {
-  var childID = childName.replace(/\s+/g, '-').toLowerCase();
+  var childNAME = childName.replace(/\s+/g, '-').toLowerCase();
   $('.child-dropbtn').append(
-    `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${childID}'), gsearchOn(), headerOff(), photosOff(), drawerDisplayOff()"> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
+    `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${childNAME}'), gsearchOn(), headerOff(), photosOff(), drawerDisplayOff()"${childID}> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
   );
 
   $('#GsearchResults').append(
-    `<div id="${childID}" class="gsearchContainer">You are currently viewing resources for <span class="drawer-title-display">${getChildAge(birthDate)} year old ${childName}</span>.</div>`
+    `<div id="${childNAME}" class="gsearchContainer">You are currently viewing resources for <span class="drawer-title-display">${getChildAge(birthDate)} year old ${childName}</span>.</div>`
   );
 };
 
@@ -204,7 +382,8 @@ function addChildProfile(firstName, birthDate) {
   });
 }
 
-function getAndDisplayChildProfile() {
+function getAndDisplayChildProfile(resData) {
+  console.log(resData);
   userID =  localStorage.getItem('userID');
   var CHILDPROFS_URL = `api/account/${userID}?select=childProfs`;
   $.ajax({
@@ -214,9 +393,7 @@ function getAndDisplayChildProfile() {
     success: function(data) {
       var childProfileElements = data.childProfs.map(function(userInfoSchema) {
         var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ));
-        element.attr('id', userInfoSchema.id);
-        console.log('data', data);
-        // return element;
+        return element;
       });
     },
     dataType: 'json',
@@ -247,7 +424,7 @@ function handleChildProfileAdd() {
 ////These functions will be fully implemented in future development////////////
 function handleChildProfileUpdate() {
   $('body').on('click', '.updatechildoverlaybutton', function(e) {
-    $(e.currentTarget).closest('.dropbtn-prof').attr('ChildID');
+    $(e.currentTarget).closest('.dropbtn-prof').attr('childNAME');
     var childName = $('#newChildName').val();
     var birthDate = $('#newBirthDate').val();
     e.preventDefault();
@@ -261,11 +438,11 @@ function handleChildProfileUpdate() {
   });
 }
 
-function editChildProfile(userID, childID, childName, birthDate) {
+function editChildProfile(userID, childNAME, childName, birthDate) {
   userID =  localStorage.getItem('userID');
   $.ajax({
     method: 'PUT',
-    url: `/api/account/${userID}/childProfs/${childID}`,
+    url: `/api/account/${userID}/childProfs/${childNAME}`,
     data: JSON.stringify({childName, birthDate}),
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
@@ -278,7 +455,7 @@ function editChildProfile(userID, childID, childName, birthDate) {
 
 function getAndDisplayCurrentChildInfo() {
   userID =  localStorage.getItem('userID');
-  var CURRENTCHILD_URL = `api/account/${userID}/childProfs/`;
+  var CURRENTCHILD_URL = `api/account/${userID}/childProfs`;
   $.ajax({
     method: 'GET',
     url: CURRENTCHILD_URL,
@@ -291,11 +468,11 @@ function getAndDisplayCurrentChildInfo() {
               <p class="form-title">Edit Child Information</p>
               <li>
                 <label class="label" for="newChildName">First Name</label>
-                <input type="text" id="newChildName" placeholder="Enter child's first name here">
+                <input type="text" id="newChildName" defaultValue="Enter child's first name here">
               </li>
               <li>
                 <label class="label" for="newBirthDate">Child's Birth Date</label>
-                <input type="text" class="newBirthDate" id="birth-date" placeholder="mm/dd/yyyy">
+                <input type="text" class="newBirthDate" id="birth-date" defaultValue="mm/dd/yyyy">
               </li>
               <li>
                 <button class="updatechildoverlaybutton">Update</button>
@@ -309,9 +486,9 @@ function getAndDisplayCurrentChildInfo() {
     contentType: 'application/json'
   });
 }
-function deleteChildProfile(userID, childID) {
+function deleteChildProfile(userID, childNAME) {
   $.ajax({
-    url: `/api/account/${userID}/childProfs/${childID}`,
+    url: `/api/account/${userID}/childProfs/${childNAME}`,
     method: 'DELETE',
     success: getAndDisplayChildProfile
   });
@@ -335,11 +512,11 @@ function googleSearch(childAge, callback) {
 
 function displayGoogleSearch(childName) {
   return function(gsearch) {
-    var childID = childName.replace(/\s+/g, '-').toLowerCase();
+    var childNAME = childName.replace(/\s+/g, '-').toLowerCase();
     for (let i = 0; i < gsearch.items.length; i ++) {
       let data = gsearch.items[i];
       if (data.pagemap.cse_thumbnail) {
-        $(`#${childID}`).append(`<ul class="gsearch-ul">
+        $(`#${childNAME}`).append(`<ul class="gsearch-ul">
             <li>
               <div class="gsearch-result"><img class="google-image" src="${data.pagemap.cse_thumbnail[0].src}"><h2 class="gsearch-title">${data.title}</h2>
                 <p class="google-snippet">
@@ -358,7 +535,7 @@ function displayGoogleSearch(childName) {
           }
           </style>`);
       } else {
-        $(`#${childID}`).append(`<ul class="gsearch-ul">
+        $(`#${childNAME}`).append(`<ul class="gsearch-ul">
         <li>
           <div class="gsearch-result"><h2 class="gsearch-title">${data.title}</h2>
             <p class="google-snippet">
@@ -391,180 +568,6 @@ function watchSubmit() {
 }
   
 $(watchSubmit);
-
-////////////////////////////////// Account Functions //////////////////////////////////
-
-function createNewAccount(username, password, firstName, lastName, email) {
-  $.ajax({
-    method: 'POST',
-    url: ACCOUNT_URL,
-    data: JSON.stringify({username, password, firstName, lastName, email}),
-    success: function(data) {
-      attemptLogInUser(username, password);
-    },
-    dataType: 'json',
-    contentType: 'application/json'
-  });
-}
-
-function handleAccountAdd() {
-  $('.account-form').submit(function(e) {
-    var username = $('#new-user-name').val();
-    var password = $('#password').val();
-    var firstName = $('#first-name').val();
-    var lastName = $('#last-name').val();
-    var email =$('#account-email').val();
-    e.preventDefault();
-    if (username == '' || password == ''|| firstName == '' || lastName == '' || email == '') {
-      $('.feedback-messages').text('Missing Information'); 
-      // alert('Missing Information');
-    } else {
-      createNewAccount(username, password, firstName, lastName, email);
-    }
-  });
-}
-
-function handleLogInUser() {
-  $('.login-form').submit(function(e) {
-    var username = $('#login-user-name').val();
-    var password = $('#password2').val();
-    e.preventDefault();
-    if (username === '' || password === '') {
-      $('.feedback-messages').text('Missing Information'); 
-    } else {
-      attemptLogInUser(username, password);
-    }
-  });
-}
-
-function handleLogOffUser() {
-  $('.logoff-link').click(function(e) {
-    e.preventDefault();
-    attemptLogOffUser();
-  });
-}
-
-function attemptLogOffUser() {
-  localStorage.clear();
-  window.location.reload(true); 
-}
-
-function attemptLogInUser(username, password) {
-  $.ajax({
-    method: 'POST',
-    url: '/api/auth/login',
-    data: JSON.stringify({username, password}),
-    success: function(resData) {
-      localStorage.setItem('token', resData.authToken);
-      var JWT = jwt_decode(resData.authToken);
-      userID = JWT.user._id;
-      localStorage.setItem('userID', userID);
-      window.location.reload(true);
-      $.ajax({
-        method: 'GET',
-        url: `/api/account/${userID}`,
-        headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-        success: function(data) {
-        }
-      });
-    },
-    error: function() {
-      $('.feedback-messages').text('Invalid Login Information'); 
-    },
-    dataType: 'json',
-    contentType: 'application/json'
-  });
-}
-
-function handleEditAccount(username, firstName, lastName, email) {
-  $('body').on('click', '.updateaccountoverlaybutton',function(e) {
-    var username = $('#newUserName').val();
-    var firstName = $('#newFirstName').val();
-    var lastName = $('#newLastName').val();
-    var email =$('#newEmail').val();
-    e.preventDefault();
-    if (username == '' || firstName == '' || lastName == '' || email == '') {
-      $('.feedback-messages').text('Missing Information'); 
-    } else {
-      editAccount(username, firstName, lastName, email);
-    }
-  });
-}
-
-function editAccount(username, firstName, lastName, email) {
-  userID =  localStorage.getItem('userID');
-  $.ajax({
-    method: 'PUT',
-    url: `/api/account/${userID}`,
-    data: JSON.stringify({username, firstName, lastName, email}),
-    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-    success: function(data) {
-      $('.success-messages').text('Account Successfully Updated!');
-    },
-    dataType: 'json',
-    contentType: 'application/json'
-  });
-}
-
-function getAndDisplayCurrentAccountInfo() {
-  userID =  localStorage.getItem('userID');
-  var CURRENTACCOUNT_URL = `api/account/${userID}`;
-  $.ajax({
-    method: 'GET',
-    url: CURRENTACCOUNT_URL,
-    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-    success: function(data) {
-      $('.updateAccount').append(
-        `<button class ="close-form" data-a11y-dialog-hide aria-label="Close this dialog window" type="submit" onclick="updateAccountOff()"><i class="fas fa-times"></i></button>
-            <form class="updateAccountForm">
-              <ul class="flex-outer">
-                <p class="form-title">Edit Account Information</p>
-                <li>
-                  <label for="user-name">Username</label>
-                  <input type="text" id="newUserName" value= "${data.username}">
-                </li>
-                <li>
-                  <label for="first-name">First Name</label>
-                  <input type="text" id="newFirstName" value= "${data.firstName}">
-                </li>
-                <li>
-                  <label for="last-name">Last Name</label>
-                  <input type="text" id="newLastName" value= "${data.lastName}">
-                </li>
-                <li>
-                  <label for="account-email">email</label>
-                  <input type="text" class="email" id="newEmail" value= "${data.email}">
-                </li>
-                <li>
-                  <button class="updateaccountoverlaybutton">Update Account</button>
-                </li>
-              </ul>
-              <p class="delete-account-text">Click here to <a class="delete-account-link">delete account</a>.</p>
-              <p class="feedback-messages"></p>
-            </form>`);
-    },
-    dataType: 'json',
-    contentType: 'application/json'
-  });
-}
-
-function handleDeleteAccount() {
-  $('body').on('click', '.delete-account-link', function(e){
-    e.preventDefault();
-    deleteAccount();
-  });
-}
-
-function deleteAccount() {
-  $.ajax({
-    method: 'DELETE',
-    url: `/api/account/${userID}`,
-    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-    success: attemptLogOffUser,
-    dataType: 'json',
-    contentType: 'application/json'
-  });
-}
 
 ///////////// Drawer and Asset Functions ///////////////////////////
 
@@ -711,7 +714,7 @@ function getAndDisplayUploads() {
 }
 
 function handleImageConnect() {
-  $('.connect-image-form').submit(function(e) {
+  $('.upload-image-form').submit(function(e) {
     var title = $('#title').val(); 
     var notes = $('#notes').val();
     var dateUploaded = $('#date-uploaded').val();

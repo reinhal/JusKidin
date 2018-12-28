@@ -7,11 +7,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
+// const upload = require('./image_upload');
 
-var aws = require('aws-sdk');
-var multer = require('multer');
-var multerS3 = require('multer-s3');
-// var s3 = new aws.s3({});
 
 mongoose.Promise = global.Promise;
 
@@ -252,7 +249,7 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
   const reqChildProfs = [req.body.firstName, req.body.birthDate];
   for (let i=0; i<reqChildProfs.length; i++) {
     const field = reqChildProfs[i];
-    if (field == undefined) {
+    if (field === undefined) {
       const message = `Missing \`${field}\` in request body`;
       return res.status(400).send(message);
     } 

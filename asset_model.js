@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const UploadSchema = mongoose.Schema({
+const AssetSchema = mongoose.Schema({
   title: {type: String},
   notes: {type: String},
   dateUploaded: {type: String},
@@ -10,6 +10,6 @@ const UploadSchema = mongoose.Schema({
   drawerTitle: {type: String}
 });
 
-const Upload = mongoose.model('Upload', UploadSchema);
+const Asset = mongoose.model('Asset', AssetSchema);
 
-module.exports = {Upload, UploadSchema};
+module.exports = {Asset, AssetSchema};

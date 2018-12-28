@@ -72,11 +72,11 @@
 							<p class= "directions-item"><span class="directions-heading">Demo Account Credentials: </span><span style="text-decoration: underline">Username:</span> <span style="font-size: 14px"> DemoUser </span><span style="text-decoration: underline"> Password:</span> <span style="font-size: 14px"> test123456 </span></p>
 							<li>
 								<label for="login-user-name">Username</label>
-								<input type="text" id="login-user-name" placeholder="Enter username">
+								<input type="text" id="login-user-name" defaultValue="Enter username">
 							</li>
 							<li>
 								<label for="password">Password</label>
-								<input type="text" id="password2" placeholder="Enter password">
+								<input type="text" id="password2" defaultValue="Enter password">
 							</li>
 							<li>
 								<button id="login" type="submit">Login</button>
@@ -96,23 +96,23 @@
 							<p class="form-title">Create New Account</p>
 							<li>
 								<label for="user-name">Username</label>
-								<input type="text" id="new-user-name" placeholder="Enter desired username">
+								<input type="text" id="new-user-name" defaultValue="Enter desired username">
 							</li>
 							<li>
 								<label for="password">Password</label>
-								<input type="text" id="password" placeholder="min 10 characters, letters and numbers">
+								<input type="text" id="password" defaultValue="min 10 characters, letters and numbers">
 							</li>
 							<li>
 								<label for="first-name">First Name</label>
-								<input type="text" id="first-name" placeholder="Enter first name here">
+								<input type="text" id="first-name" defaultValue="Enter first name here">
 							</li>
 							<li>
 								<label for="last-name">Last Name</label>
-								<input type="text" id="last-name" placeholder="Enter last name here">
+								<input type="text" id="last-name" defaultValue="Enter last name here">
 							</li>
 							<li>
 								<label for="account-email">email</label>
-								<input type="text" class="email" id="account-email" placeholder="Enter email here">
+								<input type="text" class="email" id="account-email" defaultValue="Enter email here">
 							</li>
 							<li>
 								<button id="accountoverlaybutton" type="submit">Create Account</button>
@@ -137,11 +137,11 @@
 							<p class="form-title">Add New Child</p>
 							<li>
 								<label class="label" for="child-first-name">First Name</label>
-								<input type="text" id="child-first-name" placeholder="Enter child's first name here">
+								<input type="text" id="child-first-name" defaultValue="Enter child's first name here">
 							</li>
 							<li>
 								<label class="label" for="birth-date">Child's Birth Date</label>
-								<input type="text" class="child-birth-date" id="birth-date" placeholder="mm/dd/yyyy">
+								<input type="text" class="child-birth-date" id="birth-date" defaultValue="mm/dd/yyyy">
 							</li>
 							<li>
 								<button id="childoverlaybutton" type="submit">Create</button>
@@ -160,33 +160,33 @@
 		</section>
 		<section role="region">
 			<div id="assetoverlay">
-				<div class="uploadAsset" id="connectAssetForm">
+				<div class="uploadAsset" id="uploadAssetForm">
 					<button class ="close-form" type="submit" onclick="assetOff()"><i class="fas fa-times"></i></button>
-					<form class="connect-image-form">
+					<form class="upload-image-form">
 						<ul class="flex-outer">
 							<p class="form-title">Connect File</p>
 							<li>
 								<label for="title">Title</label>
-								<input type="text" id="title" placeholder="Title">
+								<input type="text" id="title" defaultValue="Title">
 							</li>
 							<li>
 								<label for="date-uploaded">Today's Date</label>
-								<input type="text" id="date-uploaded" placeholder="mm/dd/yyyy">
+								<input type="text" id="date-uploaded" defaultValue="mm/dd/yyyy">
 							</li>
 							<li>
 								<label for="notes">Notes</label>
-								<input type="text" id="notes" placeholder="Notes">
+								<input type="text" id="notes" defaultValue="Notes">
 							</li>
 							<li>
 								<label for="drawer-title">Add To Drawer</label>
-								<input type="text" id="drawer-title" class="drawer-title" placeholder="Enter existing or new drawer name">
+								<input type="text" id="drawer-title" class="drawer-title" defaultValue="Enter existing or new drawer name">
 							</li>
 							<li>
-								<label for="image-url">Image URL</label>
-								<input type="text" id="image-url" placeholder="http://imageurl.jpg">
+								<label for="image-url">Image File</label>
+								<input type="text" id="image-url" defaultValue="http://imageurl.jpg">
 							</li>
 							<li>
-							<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Connect</button>
+							<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Upload</button>
 							</li>
 						</ul>
 					</form>
