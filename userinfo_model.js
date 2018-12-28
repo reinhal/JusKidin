@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const {ChildProfileSchema} = require('./child/model');
+const {ChildProfileSchema} = require('./childprof_model');
 const {UploadSchema} = require('./uploads/model');
 mongoose.Promise = global.Promise;
 
@@ -19,8 +19,8 @@ const userInfoSchema = mongoose.Schema({
   firstName: {type: String},  
   lastName: {type: String},
   email: {type: String},
-  childProfs: [{ChildProfileSchema}],
-  asset: [{UploadSchema}]
+  childProfs: [ChildProfileSchema],
+  asset: [UploadSchema]
 });
 
 userInfoSchema.methods.serialize = function() {

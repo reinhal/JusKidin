@@ -1,8 +1,8 @@
 'use strict';
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const {ChildProfileSchema} = require('./child/model');
-const {UploadSchema} = require('./uploads/model');
+const {ChildProfileSchema} = require('./childprof_model');
+const {UploadSchema} = require('./upload_model');
 mongoose.Promise = global.Promise;
 
 const userInfoSchema = mongoose.Schema({
@@ -18,8 +18,8 @@ const userInfoSchema = mongoose.Schema({
   firstName: {type: String},  
   lastName: {type: String},
   email: {type: String},
-  childProfs: [{ChildProfileSchema}],
-  asset: [{UploadSchema}]
+  childProfs: [ChildProfileSchema],
+  asset: [UploadSchema]
 });
 
 UserSchema.methods.validatePassword = function(password) {
