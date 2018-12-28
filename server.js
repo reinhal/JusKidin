@@ -332,25 +332,40 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
 //   })
 // });
 
+app.delete('/api/account/:_id/childProfs/child_id', (req, res) => {
+  UserInfo.findById(req.params.userID)
+    .then(userinfo => {
+
+      userinfo.childProfs.id(req.body.childID).remove();
+
+      userinfo.save(err => {
+        if(err) {
+          res.send(err);
+        }
+        res.json(userinfo.childprofs);
+      });
+    });
+});
+
 // app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
 //   UserInfo
-//   .findOne({
-//     "_id": req.params._id
-//   })
-//   .then(userinfo => {
-//     for (let index = 0; index < userinfo.childProfs.length; index++) {
-//       if(userinfo.childProfs[index].id === req.params.child_id){
-//         userinfo.childProfs.splice(index,1)
-//       }      
-//     }
-//     userinfo.save()
+//     .findOne({
+//       '_id': req.params._id
+//     })
+//     .then(userinfo => {
+//       for (let index = 0; index < userinfo.childProfs.length; index++) {
+//         if(userinfo.childProfs[index].id === req.params.child_id){
+//           userinfo.childProfs.splice(index,1);
+//         }      
+//       }
+//       userinfo.save();
 //       res.status(204);
 //       res.json(userinfo);
 //     })
-//   .catch(err => {
-//     console.log(err);
-//     res.status(500).json({ message: 'Internal server error' });
-//   });
+//     .catch(err => {
+//       console.log(err);
+//       res.status(500).json({ message: 'Internal server error' });
+//     });
 // });
 
 // // Digital Assets Endpoints//

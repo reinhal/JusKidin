@@ -496,6 +496,11 @@ form {
 
 .feedback-messages {
     background-color: red;
+    font-size: 24px;
+}
+
+.success-messages {
+    background-color: green;
     font-size: 18px;
 }
 

@@ -143,7 +143,6 @@ function drawerDisplayOn() {
 
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn-prof')) {
-
     var dropdowns = document.getElementsByClassName('dropdown-prof');
     var i;
     for (i = 0; i < dropdowns.length; i++) {
@@ -197,7 +196,7 @@ function addChildProfile(firstName, birthDate) {
     url: `/api/account/${userID}/childProfiles`,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     data: JSON.stringify({firstName, birthDate}),
-    success: function(data) {
+    success: function() {
       getAndDisplayChildProfile();
     },
     dataType: 'json',
@@ -231,14 +230,13 @@ function getChildAge(birthDate) {
 }
 
 function handleChildProfileAdd() {
-  $('.child-age-form').submit(function(e) {
+  $('#addChildForm').on('click', '#childoverlaybutton', function(e) {
     var childName = $('#child-first-name').val();
     var birthDate = $('.child-birth-date').val();
     e.preventDefault();
     window.location.reload(true);
     if (childName === '' || birthDate === '') {
       $('.feedback-messages').text('Missing Information'); 
-      // alert('Missing Information!');
     } else {
       addChildProfile(childName, birthDate);
     }
@@ -246,15 +244,77 @@ function handleChildProfileAdd() {
 }
 
 ////These functions will be fully implemented in future development////////////
+function handleChildProfileUpdate() {
+  $('body').on('click', '.updatechildoverlaybutton', function(e) {
+    $(e.currentTarget).closest('.dropbtn-prof').attr('ChildID');
+    var childName = $('#newChildName').val();
+    var birthDate = $('#newBirthDate').val();
+    e.preventDefault();
+    if (childName === '' || birthDate === '') {
+      $('.feedback-messages').text('Missing Information'); 
+    } else {
+      editChildProfile(childName, birthDate);
+    }
+    // editChildProfile(
+    //   $(e.currentTarget).closest('dropbtn-prof').attr('id'));
+  });
+}
 
+function editChildProfile(userID, childID, childName, birthDate) {
+  userID =  localStorage.getItem('userID');
+  $.ajax({
+    method: 'PUT',
+    url: `/api/account/${userID}/childProfs/${childID}`,
+    data: JSON.stringify({childName, birthDate}),
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+    success: function(data) {
+      $('.success-messages').text('Child Profile Successfully Updated!');
+    },
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
+
+function getAndDisplayCurrentChildInfo() {
+  userID =  localStorage.getItem('userID');
+  var CURRENTCHILD_URL = `api/account/${userID}/childProfs/`;
+  $.ajax({
+    method: 'GET',
+    url: CURRENTCHILD_URL,
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+    success: function(data) {
+      $('.updateChild').append(
+        `<button class ="close-form" type="submit" onclick="updateChildOff()"><i class="fas fa-times"></i></button>
+          <form class="update-child-age-form">
+            <ul class="flex-outer">
+              <p class="form-title">Edit Child Information</p>
+              <li>
+                <label class="label" for="newChildName">First Name</label>
+                <input type="text" id="newChildName" placeholder="Enter child's first name here">
+              </li>
+              <li>
+                <label class="label" for="newBirthDate">Child's Birth Date</label>
+                <input type="text" class="newBirthDate" id="birth-date" placeholder="mm/dd/yyyy">
+              </li>
+              <li>
+                <button class="updatechildoverlaybutton">Update</button>
+              </li>
+            </ul>
+            <p class="delete-child-text">Click here to <a class="delete-child-link" click="" href="javascript:void(0)">delete</a> this child profile.</p>
+            <p class="feedback-messages"></p>
+          </form>`);
+    },
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
 function deleteChildProfile(userID, childID) {
   $.ajax({
-    url: `/api/account/${userID}/childProfs/:${childID}`,
+    url: `/api/account/${userID}/childProfs/${childID}`,
     method: 'DELETE',
     success: getAndDisplayChildProfile
   });
 }
-
 function handleChildProfileDelete() {
   $('.delete-child-link').on('click', '.child-profile-delete', function(e) {
     e.preventDefault();
@@ -262,23 +322,6 @@ function handleChildProfileDelete() {
       $(e.currentTarget).closest('.dropbtn-prof').attr('id'));
   });
 }
-
-// function handleChildProfileUpdate() {
-//     $('.dropdown-childProfile').on('click', '.child-profile-edit', function(e) {
-//         e.preventDefault();
-//         editChildProfile(
-//             $(e.currentTarget).closest('dropbtn-prof').attr('id'));
-//     })
-// }
-
-// function editChildProfile(userID, child_id) {
-//     console.log('Editing child profile');
-//     $.ajax({
-//         url: `/api/account/${userID}/childProfs/:child_id`,
-//         method: 'PUT',
-//         success: getAndDisplayChildProfile
-//     });
-// }
 
 ///////////// Google Search Functions ///////////////////////
 
@@ -288,14 +331,6 @@ function googleSearch(childAge, callback) {
     callback);
 }
 // somehow limit to 10 results
-
-{/* <ul>
-<li class="google-image"><img class="google-image" src="${data.pagemap.cse_thumbnail[0].src}"></li>
-<li class="google"><a href="${data.link}">Click Here to Read Full Article</a></li>
-<li class="google">${data.snippet}</li>
-</ul> */}
-
-{/* <img class="google-image" src="${data.pagemap.cse_thumbnail[0].src}"></img> */}
 
 function displayGoogleSearch(childName) {
   return function(gsearch) {
@@ -447,11 +482,8 @@ function handleEditAccount(username, firstName, lastName, email) {
     var lastName = $('#newLastName').val();
     var email =$('#newEmail').val();
     e.preventDefault();
-    console.log(arguments, 'arguments');
-    console.log(username, 'username');
     if (username == '' || firstName == '' || lastName == '' || email == '') {
       $('.feedback-messages').text('Missing Information'); 
-      // alert('Missing Information');
     } else {
       editAccount(username, firstName, lastName, email);
     }
@@ -466,7 +498,7 @@ function editAccount(username, firstName, lastName, email) {
     data: JSON.stringify({username, firstName, lastName, email}),
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
-      alert('Account Successfully Updated');
+      $('.success-messages').text('Account Successfully Updated!');
     },
     dataType: 'json',
     contentType: 'application/json'
@@ -518,7 +550,6 @@ function getAndDisplayCurrentAccountInfo() {
 function handleDeleteAccount() {
   $('body').on('click', '.delete-account-link', function(e){
     e.preventDefault();
-    console.log('we made it here');
     deleteAccount();
   });
 }
@@ -748,8 +779,10 @@ $(function() {
   updateNavUser(getUserID());  //navbar handles logged in state
   handleLogInUser();
   handleLogOffUser();
+  getAndDisplayCurrentChildInfo();
   handleChildProfileAdd();
   handleChildProfileDelete();
+  handleChildProfileUpdate();
   handleImageConnect();
   handleAccountAdd();
   handleEditAccount();

@@ -364,8 +364,7 @@ function getGsearchInfo(callbackFn) {
 }
 
 function displayGsearchInfo(data) {
-  for (index in data.gsearchInfo) {
-  }
+  for (index in data.gsearchInfo) {}
 }
 
 function getAndDisplayGsearchInfo() {
