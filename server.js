@@ -287,6 +287,7 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
         .then(userinfo => {
           res.status(201);
           res.json(userinfo);
+          console.log('userinfo', userinfo);
         })
         .catch(err => {
           console.log('error', err);

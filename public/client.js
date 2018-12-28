@@ -19,8 +19,6 @@ var drawerTitle = '';
 // var serverBase = '//localhost:8080/'; //remove this from all endpoints
 var ACCOUNT_URL = 'api/account';
 
-console.log(localStorage);
-
 function getUserID() {
   return userID;
 }
@@ -382,8 +380,7 @@ function addChildProfile(firstName, birthDate) {
   });
 }
 
-function getAndDisplayChildProfile(resData) {
-  console.log(resData);
+function getAndDisplayChildProfile() {
   userID =  localStorage.getItem('userID');
   var CHILDPROFS_URL = `api/account/${userID}?select=childProfs`;
   $.ajax({
@@ -438,11 +435,11 @@ function handleChildProfileUpdate() {
   });
 }
 
-function editChildProfile(userID, childNAME, childName, birthDate) {
+function editChildProfile(userID, childID, childName, birthDate) {
   userID =  localStorage.getItem('userID');
   $.ajax({
     method: 'PUT',
-    url: `/api/account/${userID}/childProfs/${childNAME}`,
+    url: `/api/account/${userID}/childProfs/${childID}`,
     data: JSON.stringify({childName, birthDate}),
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
@@ -461,6 +458,7 @@ function getAndDisplayCurrentChildInfo() {
     url: CURRENTCHILD_URL,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
+      console.log('data', data);
       $('.updateChild').append(
         `<button class ="close-form" type="submit" onclick="updateChildOff()"><i class="fas fa-times"></i></button>
           <form class="update-child-age-form">
@@ -486,9 +484,10 @@ function getAndDisplayCurrentChildInfo() {
     contentType: 'application/json'
   });
 }
-function deleteChildProfile(userID, childNAME) {
+
+function deleteChildProfile(userID, childID) {
   $.ajax({
-    url: `/api/account/${userID}/childProfs/${childNAME}`,
+    url: `/api/account/${userID}/childProfs/:child_id`,
     method: 'DELETE',
     success: getAndDisplayChildProfile
   });
