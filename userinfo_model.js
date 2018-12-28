@@ -2,6 +2,8 @@
 
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const {ChildProfileSchema} = require('./child/model');
+const {UploadSchema} = require('./uploads/model');
 mongoose.Promise = global.Promise;
 
 const userInfoSchema = mongoose.Schema({
@@ -17,21 +19,8 @@ const userInfoSchema = mongoose.Schema({
   firstName: {type: String},  
   lastName: {type: String},
   email: {type: String},
-  childProfs: [
-    {
-      firstName: {type: String},  
-      birthDate: {type: String},
-    }
-  ],
-  asset: [
-    {
-      title: {type: String},
-      notes: {type: String},
-      dateUploaded: {type: String},
-      fileLocation: {type: String},
-      drawerTitle: {type: String}
-    }
-  ]
+  childProfs: [{ChildProfileSchema}],
+  asset: [{UploadSchema}]
 });
 
 userInfoSchema.methods.serialize = function() {
