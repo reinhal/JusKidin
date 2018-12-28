@@ -17,7 +17,7 @@ h1 {
 }
 
 button:hover {
-    border: 2px solid darkturquoise;
+    border: 2px solid #4F33FF;
 }
 
 #header {
@@ -54,8 +54,8 @@ ul li {
 }
 
 .heres-how:hover {
-    color: darkturquoise;
-    border: 2px solid darkturquoise;
+    color: #4F33FF;
+    border: 2px solid #4F33FF;
 }
 
 .account-section {
@@ -74,8 +74,8 @@ ul li {
 }
 
 .login-button:hover {
-    color: darkturquoise;
-    border: 2px solid darkturquoise;
+    color: #4F33FF;
+    border: 2px solid #4F33FF;
 }
 
 .container {
@@ -87,7 +87,7 @@ ul li {
 }
 
 .new-account a:hover {
-    color: darkturquoise;
+    color: #4F33FF;
     font-style: bold;
 }
 
@@ -150,7 +150,7 @@ ul li {
 .topnav a:hover {
     background-color:whitesmoke;
     color: 	#303030;
-    border: 2px solid darkturquoise;
+    border: 2px solid #4F33FF;
 }
   
 .topnav a.active {
@@ -186,7 +186,7 @@ ul li {
 .topnav .search-container button:hover {
     background:whitesmoke;
     color: 	#303030;
-    border: 2px solid darkturquoise;
+    border: 2px solid #4F33FF;
 }
 
 .dropdown {
@@ -229,7 +229,7 @@ ul li {
 
 .dropdown-content a:hover {
     background-color: whitesmoke;
-    border: 2px solid darkturquoise;
+    border: 2px solid #4F33FF;
     color: 	#303030;
     display: block;
 }
@@ -259,7 +259,7 @@ form {
 }
 
 .close-form:hover {
-    color: darkturquoise;
+    color: #4F33FF;
     border: none;
 }
 
@@ -388,7 +388,7 @@ form {
 }
 
 .delete-child-link {
-    color: darkturquoise;
+    color: #4F33FF;
 }
 
 .delete-child-link:hover {
@@ -401,7 +401,7 @@ form {
 }
 
 .delete-account-link {
-    color: darkturquoise;
+    color: #4F33FF;
 }
 
 .delete-account-link:hover {
@@ -475,8 +475,8 @@ form {
 #login:hover, 
 #assertoverlaybutton:hover, 
 #update-accountoverlaybutton:hover {
-    color: darkturquoise;
-    border: 2px solid darkturquoise;
+    color: #4F33FF;
+    border: 2px solid #4F33FF;
 }
 
 /*/////////////////////////Overlay Styling////////////////////*/
@@ -642,7 +642,7 @@ select {
 
 .close-gsearch {
     background-color: transparent;
-    color: darkturquoise;
+    color: #4F33FF;
     border: none;
     cursor: pointer;
     font-size: 18px;
@@ -656,7 +656,7 @@ select {
 
 .close-drawer {
     background-color: transparent;
-    color: darkturquoise;
+    color: #4F33FF;
     border: none;
     cursor: pointer;
     font-size: 18px;
@@ -683,7 +683,7 @@ select {
     background-color: white;
     color: 	#303030;
     padding: 12px 12px;
-    border: 5px solid darkturquoise;
+    border: 5px solid #4F33FF;
     margin: 50px;
 }
 
@@ -697,7 +697,7 @@ select {
     font-size: 24px;
     font-style: bold;
     text-decoration: underline;
-    text-decoration-color: darkturquoise;
+    text-decoration-color: #4F33FF;
 }
 
 .gsearchContainer {
@@ -718,7 +718,7 @@ select {
 }
 
 .google-link {
-    color: darkturquoise;
+    color: #4F33FF;
 }
 
 .google-link:hover {
@@ -764,7 +764,7 @@ select {
 .child-nav:hover {
     background-color: whitesmoke;
     color: #303030;
-    border: 2px solid darkturquoise;
+    border: 2px solid #4F33FF;
 }
 
 .dropdown-prof {
@@ -808,7 +808,7 @@ select {
 .dropbtn-asset:hover {
     background-color: whitesmoke;
     color: #303030;
-    border: 2px solid darkturquoise;
+    border: 2px solid #4F33FF;
 }
 
 .dropdown-asset {
@@ -912,13 +912,18 @@ select {
 }
 
 .icon {
-    color: darkturquoise;
+    color: #4F33FF;
     margin: 5px;
     float: right;
+    font-size: 14px;
 }
 
 .icon:hover {
     color: #303030;
+}
+
+svg {
+    margin-right: 3px;
 }
 
 /*////////////Responsive Styling//////////*/

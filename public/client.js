@@ -215,7 +215,8 @@ function getAndDisplayChildProfile() {
       var childProfileElements = data.childProfs.map(function(userInfoSchema) {
         var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ));
         element.attr('id', userInfoSchema.id);
-        return element;
+        console.log('data', data);
+        // return element;
       });
     },
     dataType: 'json',
@@ -238,7 +239,7 @@ function handleChildProfileAdd() {
     if (childName === '' || birthDate === '') {
       $('.feedback-messages').text('Missing Information'); 
     } else {
-      addChildProfile(childName, birthDate);
+      addChildProfile(childName, birthDate, $(e.currentTarget).closest('.dropbtn-prof').attr('child_id'));
     }
   });
 }
@@ -352,7 +353,7 @@ function displayGoogleSearch(childName) {
             background-color: white;
             color: 	#303030;
             padding: 12px 12px;
-            border: 5px solid darkturquoise;
+            border: 5px solid #4F33FF;
             margin: 0 50px 50px 50px;
           }
           </style>`);
@@ -371,7 +372,7 @@ function displayGoogleSearch(childName) {
             background-color: white;
             color: 	#303030;
             padding: 12px 12px;
-            border: 5px solid darkturquoise;
+            border: 5px solid #4F33FF;
             margin: 0 50px 50px 50px;
           }
           </style>`);
@@ -736,7 +737,7 @@ function connectImage(title, notes, dateUploaded, fileLocation, drawerTitle) {
     data: JSON.stringify({title, notes, dateUploaded, fileLocation, drawerTitle}),
     success : function(data) {
       // alert('You have succesfully connected the image!')
-      res.redirect(assets.html);
+      // res.redirect(assets.html);
       getAndDisplayUploads();
     },
     dataType: 'json',

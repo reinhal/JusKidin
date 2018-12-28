@@ -2,6 +2,7 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const {ChildProfileSchema} = require('./child/model');
+const {UploadSchema} = require('./uploads/model');
 mongoose.Promise = global.Promise;
 
 const userInfoSchema = mongoose.Schema({
@@ -18,21 +19,8 @@ const userInfoSchema = mongoose.Schema({
   lastName: {type: String},
   email: {type: String},
   childProfs: [{ChildProfileSchema}],
-  asset: [
-    {
-      title: {type: String},
-      notes: {type: String},
-      dateUploaded: {type: String},
-      fileLocation: {type: String},
-      drawerTitle: {type: String}
-    }
-  ]
+  asset: [{UploadSchema}]
 });
-
-//subdocuments mongoose
-//childProfs[Child model]
-//user.expenses.id(req.body.ChildID).remove()
-//res.json(user.expenses)
 
 UserSchema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password);
