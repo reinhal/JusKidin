@@ -19,23 +19,23 @@ Promise.all([
         });
     });
   }),
-  describe('asset page', function () {
-    it('should exist', function () {
-      return chai.request(app);
-      requester.get('/assets')
-        .then(function (res) {
-          expect(res).to.have.status(200);
-        });
-    });
-  }),
-  describe('google search page', function () {
-    it('should exist', function () {
-      return chai.request(app);
-      requester.get('/gsearch')
-        .then(function (res) {
-          expect(res).to.have.status(200);
-        });
-    });
-  })
+  // describe('asset page', function () {
+  //   it('should exist', function () {
+  //     return chai.request(app);
+  //     requester.get('/assets')
+  //       .then(function (res) {
+  //         expect(res).to.have.status(200);
+  //       });
+  //   });
+  // }),
+  // describe('google search page', function () {
+  //   it('should exist', function () {
+  //     return chai.request(app);
+  //     requester.get('/gsearch')
+  //       .then(function (res) {
+  //         expect(res).to.have.status(200);
+  //       });
+  //   });
+  // })
 ])
   .then(() => requester.close());
