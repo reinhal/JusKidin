@@ -8,6 +8,11 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+var aws = require('aws-sdk');
+var multer = require('multer');
+var multerS3 = require('multer-s3');
+car s3 = new aws.s3({});
+
 mongoose.Promise = global.Promise;
 
 app.use(express.static('public'));
