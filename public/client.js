@@ -260,6 +260,7 @@ function childOff() {
 }
 
 function updateChildOn() {
+  getAndDisplayCurrentChildInfo();
   document.getElementById('update-childoverlay').style.display = 'block';
 }
 
@@ -334,6 +335,7 @@ function openChild(evt, childName) {
   var childNAME = childName.replace(/\s+/g, '-').toLowerCase();
   var i, currentChild, tablinks;
   var gsearchContainer = document.getElementsByClassName('gsearchContainer');
+  // inject  child template here
   for (i = 0; i < gsearchContainer.length; i++) {
     if (gsearchContainer[i].style.display = 'block') {
       gsearchContainer[i].style.display = 'none';
@@ -354,8 +356,10 @@ function openChild(evt, childName) {
   googleSearch(currentAge, displayGoogleSearch(childNAME));
 }
 
-var childProfileTemplate = function (childName, birthDate) {
+var childProfileTemplate = function (childName, birthDate, childId) {
   var childNAME = childName.replace(/\s+/g, '-').toLowerCase();
+  var childID = childId;
+  console.log(childId, 'ChildID');
   $('.child-dropbtn').append(
     `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${childNAME}'), gsearchOn(), headerOff(), photosOff(), drawerDisplayOff()"${childID}> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
   );
@@ -389,7 +393,7 @@ function getAndDisplayChildProfile() {
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
       var childProfileElements = data.childProfs.map(function(userInfoSchema) {
-        var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema.id ));
+        var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema._id ));
         return element;
       });
     },
@@ -452,7 +456,7 @@ function editChildProfile(userID, childID, childName, birthDate) {
 
 function getAndDisplayCurrentChildInfo() {
   userID =  localStorage.getItem('userID');
-  var CURRENTCHILD_URL = `api/account/${userID}/childProfs`;
+  var CURRENTCHILD_URL = `api/account/${userID}/childProfs/${childID}`;
   $.ajax({
     method: 'GET',
     url: CURRENTCHILD_URL,

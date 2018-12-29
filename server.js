@@ -378,7 +378,7 @@ app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
   const updatedAssetObject = [req.body.title, req.body.notes, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];
-    if (field == undefined) {
+    if (field === undefined) {
       const message = `Missing \`${field}\` in request body`;
       return res.status(400).send(message);
     }
