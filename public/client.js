@@ -2,7 +2,7 @@
 
 // var userID = '5b35886a2ba1910d14830eb7';
 var userID = '';
-var CHILD = {}
+var CHILD = {};
 var childID = '';
 var username = '';
 var password = '';
@@ -53,7 +53,7 @@ function handleAccountAdd() {
     var lastName = $('#last-name').val();
     var email =$('#account-email').val();
     e.preventDefault();
-    if (username === '' || password === ''|| firstName == '' || lastName === '' || email === '') {
+    if (username === '' || password === ''|| firstName === '' || lastName === '' || email === '') {
       $('.feedback-messages').text('Missing Information'); 
       // alert('Missing Information');
     } else {
@@ -121,7 +121,7 @@ function handleEditAccount() {
     var lastName = $('#newLastName').val();
     var email =$('#newEmail').val();
     e.preventDefault();
-    if (username == '' || firstName == '' || lastName == '' || email == '') {
+    if (username === '' || firstName === '' || lastName === '' || email === '') {
       $('.feedback-messages').text('Missing Information'); 
     } else {
       editAccount(username, firstName, lastName, email);
@@ -336,9 +336,9 @@ window.onclick = function(event) {
 
 function openChild(evt, childName, childId) {
   var childNAME = childName.replace(/\s+/g, '-').toLowerCase();
-  console.log(childName, childId,'childName, childId')
-  childID = childId
-// create teampl inject 
+  console.log(childName, childId,'childName, childId');
+  childID = childId;
+
   var i, currentChild, tablinks;
   var gsearchContainer = document.getElementsByClassName('gsearchContainer');
   for (i = 0; i < gsearchContainer.length; i++) {
@@ -401,7 +401,7 @@ function getAndDisplayChildProfile(resData) {
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
       var childProfileElements = data.childProfs.map(function(userInfoSchema) {
-        console.log(userInfoSchema,'userInfoSchema')
+        console.log(userInfoSchema,'userInfoSchema');
         var element = $(childProfileTemplate(userInfoSchema));
         return element;
       });
@@ -484,7 +484,7 @@ function getAndDisplayCurrentChildInfo() {
             <button class="updatechildoverlaybutton">Update</button>
           </li>
         </ul>
-        <p class="delete-child-text">Click here to <a class="delete-child-link" >delete</a> this child profile.</p>
+        <p class="delete-child-text">Click here to <a class="delete-child-link">delete</a> this child profile.</p>
         <p class="feedback-messages"></p>
       </form>`);
 }
