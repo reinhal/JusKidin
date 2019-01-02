@@ -533,7 +533,8 @@ form {
 #newUserName,
 #newFirstName,
 #newLastName,
-#newEmail {
+#newEmail, 
+#newChildName {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;

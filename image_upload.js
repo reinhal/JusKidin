@@ -1,5 +1,6 @@
 'use strict';
-
+const express = require('express');
+const bodyParser = require('body-parser');
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
@@ -11,7 +12,10 @@ aws.config.update({
   region: 'us-east-1'
 });
 
-const s3 = new aws.s3();
+var app = express(),
+  s3 = new aws.s3();
+
+app.use(bodyParser.json());
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
@@ -33,6 +37,14 @@ const upload = multer({
       cb(null, Date.now().toString());
     }
   })
+});
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.post('/upload', upload.array('uploadFile', 1), function (req, res, next) {
+  res.send('File uploaded successfully to Amazon s3 server!');
 });
 
 module.exports = upload;

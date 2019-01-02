@@ -2,6 +2,7 @@
 
 // var userID = '5b35886a2ba1910d14830eb7';
 var userID = '';
+var CHILD = {}
 var childID = '';
 var username = '';
 var password = '';
@@ -18,6 +19,8 @@ var drawerUploads = [];
 var drawerTitle = '';
 // var serverBase = '//localhost:8080/'; //remove this from all endpoints
 var ACCOUNT_URL = 'api/account';
+
+console.log(localStorage);
 
 function getUserID() {
   return userID;
@@ -331,11 +334,13 @@ window.onclick = function(event) {
   }
 };
 
-function openChild(evt, childName) {
+function openChild(evt, childName, childId) {
   var childNAME = childName.replace(/\s+/g, '-').toLowerCase();
+  console.log(childName, childId,'childName, childId')
+  childID = childId
+// create teampl inject 
   var i, currentChild, tablinks;
   var gsearchContainer = document.getElementsByClassName('gsearchContainer');
-  // inject  child template here
   for (i = 0; i < gsearchContainer.length; i++) {
     if (gsearchContainer[i].style.display = 'block') {
       gsearchContainer[i].style.display = 'none';
@@ -356,16 +361,18 @@ function openChild(evt, childName) {
   googleSearch(currentAge, displayGoogleSearch(childNAME));
 }
 
-var childProfileTemplate = function (childName, birthDate, childId) {
-  var childNAME = childName.replace(/\s+/g, '-').toLowerCase();
-  var childID = childId;
-  console.log(childId, 'ChildID');
+var childProfileTemplate = function (child) {
+  console.log(child, 'childProfileTemplate');
+  CHILD[child._id] = child;
+  var childNAME = child.firstName.replace(/\s+/g, '-').toLowerCase();
+  console.log(childNAME);
+  
   $('.child-dropbtn').append(
-    `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${childNAME}'), gsearchOn(), headerOff(), photosOff(), drawerDisplayOff()"${childID}> ${childName} </br> ${getChildAge(birthDate)} years old</button>`
+    `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${child.firstName.replace(/\s+/g, '-').toLowerCase()}', '${child._id}'), gsearchOn(), headerOff(), photosOff(), drawerDisplayOff()"> ${child.firstName} </br> ${getChildAge(child.birthDate)} years old</button>`
   );
 
   $('#GsearchResults').append(
-    `<div id="${childNAME}" class="gsearchContainer">You are currently viewing resources for <span class="drawer-title-display">${getChildAge(birthDate)} year old ${childName}</span>.</div>`
+    `<div id="${child.firstName.replace(/\s+/g, '-').toLowerCase()}" class="gsearchContainer">You are currently viewing resources for <span class="drawer-title-display">${getChildAge(child.birthDate)} year old ${child.firstName}</span>.</div>`
   );
 };
 
@@ -384,7 +391,8 @@ function addChildProfile(firstName, birthDate) {
   });
 }
 
-function getAndDisplayChildProfile() {
+function getAndDisplayChildProfile(resData) {
+  console.log(resData);
   userID =  localStorage.getItem('userID');
   var CHILDPROFS_URL = `api/account/${userID}?select=childProfs`;
   $.ajax({
@@ -393,7 +401,8 @@ function getAndDisplayChildProfile() {
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
       var childProfileElements = data.childProfs.map(function(userInfoSchema) {
-        var element = $(childProfileTemplate(userInfoSchema.firstName, userInfoSchema.birthDate, userInfoSchema._id ));
+        console.log(userInfoSchema,'userInfoSchema')
+        var element = $(childProfileTemplate(userInfoSchema));
         return element;
       });
     },
@@ -439,11 +448,11 @@ function handleChildProfileUpdate() {
   });
 }
 
-function editChildProfile(userID, childID, childName, birthDate) {
+function editChildProfile(userID, childNAME, childName, birthDate) {
   userID =  localStorage.getItem('userID');
   $.ajax({
     method: 'PUT',
-    url: `/api/account/${userID}/childProfs/${childID}`,
+    url: `/api/account/${userID}/childProfs/${childNAME}`,
     data: JSON.stringify({childName, birthDate}),
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
@@ -456,42 +465,32 @@ function editChildProfile(userID, childID, childName, birthDate) {
 
 function getAndDisplayCurrentChildInfo() {
   userID =  localStorage.getItem('userID');
-  var CURRENTCHILD_URL = `api/account/${userID}/childProfs/${childID}`;
-  $.ajax({
-    method: 'GET',
-    url: CURRENTCHILD_URL,
-    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-    success: function(data) {
-      console.log('data', data);
-      $('.updateChild').append(
-        `<button class ="close-form" type="submit" onclick="updateChildOff()"><i class="fas fa-times"></i></button>
-          <form class="update-child-age-form">
-            <ul class="flex-outer">
-              <p class="form-title">Edit Child Information</p>
-              <li>
-                <label class="label" for="newChildName">First Name</label>
-                <input type="text" id="newChildName" defaultValue="Enter child's first name here">
-              </li>
-              <li>
-                <label class="label" for="newBirthDate">Child's Birth Date</label>
-                <input type="text" class="newBirthDate" id="birth-date" defaultValue="mm/dd/yyyy">
-              </li>
-              <li>
-                <button class="updatechildoverlaybutton">Update</button>
-              </li>
-            </ul>
-            <p class="delete-child-text">Click here to <a class="delete-child-link" click="" href="javascript:void(0)">delete</a> this child profile.</p>
-            <p class="feedback-messages"></p>
-          </form>`);
-    },
-    dataType: 'json',
-    contentType: 'application/json'
-  });
-}
 
-function deleteChildProfile(userID, childID) {
+  console.log(CHILD[childID],'CHILD');
+  $('.updateChild').html(
+    `<button class ="close-form" type="submit" onclick="updateChildOff()"><i class="fas fa-times"></i></button>
+      <form class="update-child-age-form">
+        <ul class="flex-outer">
+          <p class="form-title">Edit Child Information</p>
+          <li>
+            <label class="label" for="newChildName">First Name</label>
+            <input type="text" id="newChildName" value="${CHILD[childID].firstName}">
+          </li>
+          <li>
+            <label class="label" for="newBirthDate">Child's Birth Date</label>
+            <input type="text" class="newBirthDate" id="birth-date" value="${CHILD[childID].birthDate}">
+          </li>
+          <li>
+            <button class="updatechildoverlaybutton">Update</button>
+          </li>
+        </ul>
+        <p class="delete-child-text">Click here to <a class="delete-child-link" >delete</a> this child profile.</p>
+        <p class="feedback-messages"></p>
+      </form>`);
+}
+function deleteChildProfile(userID, childNAME) {
   $.ajax({
-    url: `/api/account/${userID}/childProfs/:child_id`,
+    url: `/api/account/${userID}/childProfs/${childNAME}`,
     method: 'DELETE',
     success: getAndDisplayChildProfile
   });
@@ -786,7 +785,7 @@ $(function() {
   updateNavUser(getUserID());  //navbar handles logged in state
   handleLogInUser();
   handleLogOffUser();
-  getAndDisplayCurrentChildInfo();
+  // getAndDisplayCurrentChildInfo();
   handleChildProfileAdd();
   handleChildProfileDelete();
   handleChildProfileUpdate();

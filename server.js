@@ -254,7 +254,7 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
       return res.status(400).send(message);
     } 
   }
-  // ifs statements for each data
+
   UserInfo
     .find({
       '_id': req.params._id
@@ -335,7 +335,8 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
 //   })
 // });
 
-app.delete('/api/account/:_id/childProfs/child_id', (req, res) => {
+app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
+  console.log(UserInfo);
   UserInfo.findById(req.params.userID)
     .then(userinfo => {
 
@@ -350,32 +351,12 @@ app.delete('/api/account/:_id/childProfs/child_id', (req, res) => {
     });
 });
 
-// app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
-//   UserInfo
-//     .findOne({
-//       '_id': req.params._id
-//     })
-//     .then(userinfo => {
-//       for (let index = 0; index < userinfo.childProfs.length; index++) {
-//         if(userinfo.childProfs[index].id === req.params.child_id){
-//           userinfo.childProfs.splice(index,1);
-//         }      
-//       }
-//       userinfo.save();
-//       res.status(204);
-//       res.json(userinfo);
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json({ message: 'Internal server error' });
-//     });
-// });
 
 // // Digital Assets Endpoints//
 
 app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
 
-  const updatedAssetObject = [req.body.title, req.body.notes, req.body.dateUploaded, req.body.fileLocation, req.body.drawerTitle];
+  const updatedAssetObject = [req.body.title, req.body.notes, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];
     if (field === undefined) {
@@ -389,7 +370,7 @@ app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
     })
     .select(req.query.select)
     .then(userinfo => {
-      userinfo.asset.push({title: req.body.title, notes: req.body.notes, dateUploaded: req.body.dateUploaded, fileLocation: req.body.fileLocation, drawerTitle: req.body.drawerTitle});
+      userinfo.asset.push({title: req.body.title, notes: req.body.notes, fileLocation: req.body.fileLocation, drawerTitle: req.body.drawerTitle});
       userinfo.save();
       res.status(201);
       res.json(userinfo);
