@@ -534,7 +534,8 @@ form {
 #newFirstName,
 #newLastName,
 #newEmail, 
-#newChildName {
+#newChildName, 
+#newBirthDate {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;

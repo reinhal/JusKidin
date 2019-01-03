@@ -431,43 +431,42 @@ function handleChildProfileAdd() {
   });
 }
 
-////These functions will be fully implemented in future development////////////
 function handleChildProfileUpdate() {
-  $('body').on('click', '.updatechildoverlaybutton', function(e) {
-    $(e.currentTarget).closest('.dropbtn-prof').attr('childNAME');
-    var childName = $('#newChildName').val();
+  $('#updateChildForm').on('click', '.updatechildoverlaybutton', function(e) {
+    // $(e.currentTarget).closest('.dropbtn-prof').attr('childNAME');
+    var firstName = $('#newChildName').val();
     var birthDate = $('#newBirthDate').val();
     e.preventDefault();
-    if (childName === '' || birthDate === '') {
+    if (firstName === '' || birthDate === '') {
       $('.feedback-messages').text('Missing Information'); 
     } else {
-      editChildProfile(childName, birthDate);
+      editChildProfile(firstName, birthDate, $(e.currentTarget).closest('.dropbtn-prof').attr('child_id'));
     }
-    // editChildProfile(
-    //   $(e.currentTarget).closest('dropbtn-prof').attr('id'));
+    editChildProfile(firstName, birthDate);
   });
 }
 
-function editChildProfile(userID, childNAME, childName, birthDate) {
+function editChildProfile(userID, childIDs, firstName, birthDate) {
   userID =  localStorage.getItem('userID');
   $.ajax({
     method: 'PUT',
-    url: `/api/account/${userID}/childProfs/${childNAME}`,
-    data: JSON.stringify({childName, birthDate}),
+    url: `/api/account/${userID}/childProfs/${childID}`,
+    data: JSON.stringify({firstName, birthDate}),
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-    success: function(data) {
-      $('.success-messages').text('Child Profile Successfully Updated!');
+    success: function() {
+      window.location.reload(true);
+      // $('.success-messages').text('Child Profile Successfully Updated!');
     },
     dataType: 'json',
     contentType: 'application/json'
   });
 }
 
+//${CHILD[childID].firstName}
+
 function getAndDisplayCurrentChildInfo() {
   userID =  localStorage.getItem('userID');
-
-  console.log(CHILD[childID],'CHILD');
-  $('.updateChild').html(
+  $('#updateChildForm').html(
     `<button class ="close-form" type="submit" onclick="updateChildOff()"><i class="fas fa-times"></i></button>
       <form class="update-child-age-form">
         <ul class="flex-outer">
@@ -478,7 +477,7 @@ function getAndDisplayCurrentChildInfo() {
           </li>
           <li>
             <label class="label" for="newBirthDate">Child's Birth Date</label>
-            <input type="text" class="newBirthDate" id="birth-date" value="${CHILD[childID].birthDate}">
+            <input type="text" class="newBirthDate" id="newBirthDate" value="${CHILD[childID].birthDate}">
           </li>
           <li>
             <button class="updatechildoverlaybutton">Update</button>
@@ -488,18 +487,20 @@ function getAndDisplayCurrentChildInfo() {
         <p class="feedback-messages"></p>
       </form>`);
 }
-function deleteChildProfile(userID, childNAME) {
+
+function deleteChildProfile() {
+  userID =  localStorage.getItem('userID');
   $.ajax({
-    url: `/api/account/${userID}/childProfs/${childNAME}`,
+    url: `/api/account/${userID}/childProfs/${childID}`,
     method: 'DELETE',
-    success: getAndDisplayChildProfile
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
   });
+  window.location.reload(true);
 }
 function handleChildProfileDelete() {
-  $('.delete-child-link').on('click', '.child-profile-delete', function(e) {
+  $('body').on('click', '.delete-child-link', function(e) {
     e.preventDefault();
-    deleteChildProfile(
-      $(e.currentTarget).closest('.dropbtn-prof').attr('id'));
+    deleteChildProfile();
   });
 }
 
@@ -643,6 +644,8 @@ var uploadTemplate = function(drawerTitle, title, notes, fileLocation) {
     </section>`
   );
 };
+
+//file location url 'aws.com/juskidin'
 
 function getAndDisplayDrawer() {
   userID =  localStorage.getItem('userID');

@@ -1,4 +1,8 @@
 'use strict';
+
+//move over to server.js
+//no model changes
+//make sure to get the file location on s3
 const express = require('express');
 const bodyParser = require('body-parser');
 const aws = require('aws-sdk');
@@ -17,13 +21,6 @@ var app = express(),
 
 app.use(bodyParser.json());
 
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
-    cb(null, true);
-  } else {
-    cb(new Error('Invalid file type, only JPEG and PNG is allowed'), false);
-  }
-};
 
 const upload = multer({
   storage: multerS3({
@@ -39,12 +36,16 @@ const upload = multer({
   })
 });
 
-app.get('/', function (req, res) {
+app.get(`api/account/${userID}?select=asset`, function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/upload', upload.array('uploadFile', 1), function (req, res, next) {
+app.post('/api/account/:_id/uploads', upload.array('uploadFile', 1), function (req, res, next) {
+  //var req.file show the file info to this location, save that ID
+  //test in postman
   res.send('File uploaded successfully to Amazon s3 server!');
 });
 
 module.exports = upload;
+
+//make sure you know the user id

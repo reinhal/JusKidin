@@ -182,13 +182,6 @@ app.post('/api/account', jsonParser, (req, res) => {
       }
       res.status(500).json({code: 500, message: 'Internal server error'});
     });
-
-  // probably safe to delete
-  // UserInfo.create({username: req.body.username, password: req.body.password, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
-  // .then(function(newUser) {
-  //   res.status(201).json(newUser);
-  // });
-    
 });
 
 // router.post ('/') has to merge with app.post('/api/account')
@@ -334,14 +327,26 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
 //     })
 //   })
 // });
-
-app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
-  console.log(UserInfo);
-  UserInfo.findById(req.params.userID)
+// postman code button in top right and choose JQuery
+app.put('/api/account/:_id/childProfs/:child_id', [jsonParser, jwtAuth], (req, res) => {
+  console.log('request', req.params, req.body);
+  UserInfo.findById(req.params._id)
     .then(userinfo => {
+      userinfo.childProfs.id(req.params.child_id).set(req.body);
+      userinfo.save(err => {
+        if(err) {
+          res.send(err);
+        }
+        res.json(userinfo.childprofs);
+      });
+    });
+});
 
-      userinfo.childProfs.id(req.body.childID).remove();
-
+app.delete('/api/account/:_id/childProfs/:child_id', jwtAuth, (req, res) => {
+  console.log('request.user', req.params);
+  UserInfo.findById(req.params._id)
+    .then(userinfo => {
+      userinfo.childProfs.id(req.params.child_id).remove();
       userinfo.save(err => {
         if(err) {
           res.send(err);
@@ -355,6 +360,7 @@ app.delete('/api/account/:_id/childProfs/:child_id', (req, res) => {
 // // Digital Assets Endpoints//
 
 app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
+  //console.log(req.file) put upload.array in the middleware after we authenticate
 
   const updatedAssetObject = [req.body.title, req.body.notes, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {
