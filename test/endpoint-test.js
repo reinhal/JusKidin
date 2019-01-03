@@ -851,11 +851,10 @@ describe('Asset API resource', function() {
           expect(res).to.have.status(201);
           expect(res).to.be.json;
           expect(res.body).to.be.a('object');
-          expect(res.body.asset[1]).to.include.keys('title', 'notes', 'dateUploaded', 'fileLocation', 'drawerTitle');
+          expect(res.body.asset[1]).to.include.keys('title', 'notes', 'fileLocation', 'drawerTitle');
           expect(res.body.id).to.not.be.null;
           expect(res.body.asset[1].title).to.equal(newAsset.title);
           expect(res.body.asset[1].notes).to.equal(newAsset.notes);
-          expect(res.body.asset[1].dateUploaded).to.equal(newAsset.dateUploaded);
           expect(res.body.asset[1].fileLocation).to.equal(newAsset.fileLocation);
           expect(res.body.asset[1].drawerTitle).to.equal(newAsset.drawerTitle); 
           return res.body;

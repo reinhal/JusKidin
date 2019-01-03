@@ -454,8 +454,7 @@ function editChildProfile(firstName, birthDate) {
     data: JSON.stringify({firstName, birthDate}),
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function() {
-      
-      // $('.success-messages').text('Child Profile Successfully Updated!');
+    
     },
     dataType: 'json',
     contentType: 'application/json'
@@ -498,6 +497,7 @@ function deleteChildProfile() {
   });
   window.location.reload(true);
 }
+
 function handleChildProfileDelete() {
   $('body').on('click', '.delete-child-link', function(e) {
     e.preventDefault();
