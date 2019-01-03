@@ -433,7 +433,7 @@ function handleChildProfileAdd() {
 
 function handleChildProfileUpdate() {
   $('#updateChildForm').on('click', '.updatechildoverlaybutton', function(e) {
-    // $(e.currentTarget).closest('.dropbtn-prof').attr('childNAME');
+    $(e.currentTarget).closest('.dropbtn-prof').attr('childNAME');
     var firstName = $('#newChildName').val();
     var birthDate = $('#newBirthDate').val();
     e.preventDefault();
@@ -446,7 +446,7 @@ function handleChildProfileUpdate() {
   });
 }
 
-function editChildProfile(userID, childIDs, firstName, birthDate) {
+function editChildProfile(firstName, birthDate) {
   userID =  localStorage.getItem('userID');
   $.ajax({
     method: 'PUT',
@@ -454,12 +454,13 @@ function editChildProfile(userID, childIDs, firstName, birthDate) {
     data: JSON.stringify({firstName, birthDate}),
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function() {
-      window.location.reload(true);
+      
       // $('.success-messages').text('Child Profile Successfully Updated!');
     },
     dataType: 'json',
     contentType: 'application/json'
   });
+  window.location.reload(true);
 }
 
 //${CHILD[childID].firstName}
