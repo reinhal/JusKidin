@@ -7,6 +7,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const config = require('./config');
 // const upload = require('./image_upload');
 
 
@@ -16,6 +20,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 const jsonParser = bodyParser.json();
+const urlParser = bodyParser.urlencoded({ extended: true });
 const {UserInfo} = require('./userinfo_model');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
@@ -184,12 +189,6 @@ app.post('/api/account', jsonParser, (req, res) => {
     });
 });
 
-// router.post ('/') has to merge with app.post('/api/account')
-// become one
-// what is the new name for the routes? (considering what depends on the route)
-// code needs to update to change the names
-// what parts of the program will be affected, so I can 
-
 app.put('/api/account/:_id', [jsonParser, jwtAuth],(req, res) => {
   console.log ('200', req.params.id, req.body.id);
   
@@ -288,46 +287,6 @@ app.post('/api/account/:_id/childProfiles', [jsonParser, jwtAuth], (req, res) =>
     });
 });
 
-// app.put('/api/account/:_id/childProfs/:child_id', [jwtAuth, jsonParser], (req, res) => {
-//   if (req.params._id == 'me') {
-//     req.params._id = req.user._id
-//   }
-
-//   if (req.params.childProfs !== req.body.childProfs) {
-//     const message = `Request path id (${req.params.childProf}) and request body id (${req.body.childProfs}) must match`;
-//     return res.status(400).send(message);
-//   }
-
-//   const updatedChildObject = ['firstName','birthDate'];
-//     for (let i=0; i<updatedChildObject.length; i++) {
-//       const field = updatedChildObject[i];
-//       if (!(field in req.body)) {
-//         const message = `Missing \`${field}\` in request body`
-//         return res.status(400).send(message);
-//       }
-//   }
-
-//   return UserInfo.findById(
-//     req.params._id)
-//     .then(thisUser => {
-//     for ( let i=0; i < thisUser.childProfs.length; i++ ) {
-//       if (req.params.child_id == thisUser.childProfs[i]._id) {
-//         thisUser.childProfs[i].firstName = req.body.firstName;
-//         thisUser.childProfs[i].birthDate = req.body.birthDate;
-//       }
-//     }
-
-//   return UserInfo.findByIdAndUpdate(
-//     req.params._id, {
-//       childProfs:thisUser.childProfs
-//     }
-//   ) 
-//     .then(updatedChild => {
-//       return res.status(201).send(updatedChild);
-//     })
-//   })
-// });
-// postman code button in top right and choose JQuery
 app.put('/api/account/:_id/childProfs/:child_id', [jsonParser, jwtAuth], (req, res) => {
   console.log('request', req.params, req.body);
   UserInfo.findById(req.params._id)
@@ -357,11 +316,36 @@ app.delete('/api/account/:_id/childProfs/:child_id', jwtAuth, (req, res) => {
 });
 
 
-// // Digital Assets Endpoints//
+///////////// Digital Assets Endpoints//////////////////////////////////
+// aws.config.update({
+//   secretAccessKey: config.SECRET_AWS_ACCESS_KEY,
+//   accessKeyId: config.AWS_ACCESS_KEYID,
+//   region: 'us-east-1'
+// });
 
-app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
+// var app = express(),
+//   s3 = new aws.s3();
+
+// app.use(bodyParser.json());
+
+
+// const upload = multer({
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: 'juskidinuploads',
+//     acl: 'public-read',
+//     metadata: function (req, file, cb) {
+//       cb(null, {fieldName: file.fieldname});
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, Date.now().toString());
+//     }
+//   })
+// });
+
+app.post('/api/account/:_id/uploads', [urlParser, jwtAuth], (req, res) => {
   //console.log(req.file) put upload.array in the middleware after we authenticate
-
+  console.log('made it here', req.body);
   const updatedAssetObject = [req.body.title, req.body.notes, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];
@@ -386,71 +370,33 @@ app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
     });
 });
 
-// app.put('/api/account/:_id/uploads/:assetIndex', [jsonParser, jwtAuth], (req, res) => {
+app.put('/api/account/:_id/asset/:upload_id', [jsonParser, jwtAuth], (req, res) => {
+  console.log('request', req.params, req.body);
+  UserInfo.findById(req.params._id)
+    .then(userinfo => {
+      userinfo.asset.id(req.params.upload_id).set(req.body);
+      userinfo.save(err => {
+        if(err) {
+          res.send(err);
+        }
+        res.json(userinfo.asset);
+      });
+    });
+});
 
-//   var imagePassed = false;
-//   var tempImage = {};
-
-//   const updatedAssetObject = ["title", "notes", "dateUploaded", "fileLocation", "drawerTitle"];
-//   for (let i=0; i<updatedAssetObject.length; i++) {
-//     const field = updatedAssetObject[i];
-//     if (field in req.body) {
-//       imagePassed = true;
-//       tempImage[field] = req.body[field];
-//     }
-//   }
-
-//   if (!imagePassed) {
-//     const message = 'Request is missing information.'
-//     return res.status(400).send(message);
-//   }
-
-//   return UserInfo.findById(
-//     req.params._id)
-//     .then(thisUser => {
-//     const thisAsset = thisUser.asset[req.params.assetIndex]
-//        thisAsset.title = req.body.title;
-//        thisAsset.notes = req.body.notes;
-//        thisAsset.dateUploaded = req.body.dateUploaded;
-//        thisAsset.fileLocation = req.body.fileLocation;
-//        thisAsset.drawerTitle = req.body.drawerTitle;
-//      let update = {"$set": {}};
-//      update["$set"]["asset."+ req.params.assetIndex] = {
-//        title: req.body.title,
-//        notes: req.body.notes, 
-//        dateUploaded: req.body.dateUploaded, 
-//        fileLocation: req.body.fileLocation, 
-//        drawerTitle: req.body.drawerTitle
-//      }
-//   return UserInfo.findByIdAndUpdate(
-//     req.params._id, update
-//   ) 
-//     .then(updatedAsset => {
-//       return res.status(201).send(updatedAsset);
-//     })
-//   })
-// });
-
-// app.delete('/api/account/:_id/uploads/:asset_id', (req, res) => {
-//   UserInfo
-//   .findOne({
-//     "_id": req.params._id
-//   })
-//   .then(userinfo => {
-//     for (let index = 0; index < userinfo.asset.length; index++) {
-//       if(userinfo.asset[index].id === req.params.asset_id){
-//         userinfo.asset.splice(index,1)
-//       }      
-//     }
-//     userinfo.save()
-//       res.status(204);
-//       res.json(userinfo);
-//     })
-//   .catch(err => {
-//     console.log(err);
-//     res.status(500).json({ message: 'Internal server error' });
-//   });
-// });
+app.delete('/api/account/:_id/asset/:upload_id', jwtAuth, (req, res) => {
+  console.log('request.user', req.params);
+  UserInfo.findById(req.params._id)
+    .then(userinfo => {
+      userinfo.asset.id(req.params.upload_id).remove();
+      userinfo.save(err => {
+        if(err) {
+          res.send(err);
+        }
+        res.json(userinfo.asset);
+      });
+    });
+});
 
 app.use('*', (req, res) => {
   return res.status(404).json({ message: 'Not Found' });

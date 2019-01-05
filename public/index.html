@@ -164,15 +164,11 @@
 					<button class ="close-form" type="submit" onclick="assetOff()"><i class="fas fa-times"></i></button>
 					<form class="upload-image-form" method="post" enctype="multipart/form-data" action="/upload">
 						<ul class="flex-outer">
-							<p class="form-title">Connect File</p>
+							<p class="form-title">Upload Image</p>
 							<li>
 								<label for="title">Title</label>
 								<input type="text" id="title" value="Enter a title for the image">
 							</li>
-							<!-- <li>
-								<label for="date-uploaded">Today's Date</label>
-								<input type="text" id="date-uploaded" defaultValue="mm/dd/yyyy">
-							</li> -->
 							<li>
 								<label for="notes">Notes</label>
 								<input type="text" id="notes" value="Write a short description.">
@@ -183,7 +179,7 @@
 							</li>
 							<li>
 								<label for="image-url">Image File</label>
-								<input type="file" id="image-url" value="http://imageurl.jpg">
+								<input type="file" id="image-url">
 							</li>
 							<li>
 							<button id="assetoverlaybutton" type="submit" onclick="assetOff()">Upload</button>

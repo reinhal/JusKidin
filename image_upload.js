@@ -21,7 +21,6 @@ var app = express(),
 
 app.use(bodyParser.json());
 
-
 const upload = multer({
   storage: multerS3({
     s3: s3,
@@ -40,7 +39,7 @@ app.get(`api/account/${userID}?select=asset`, function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/api/account/:_id/uploads', upload.array('uploadFile', 1), function (req, res, next) {
+app.post('/api/account/:_id/asset', upload.array('uploadFile', 1), function (req, res, next) {
   //var req.file show the file info to this location, save that ID
   //test in postman
   res.send('File uploaded successfully to Amazon s3 server!');
