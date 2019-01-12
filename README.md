@@ -51,7 +51,6 @@ Each user is able to connect already hosted images to topic specifc drawers to o
 
 - [ ] The ability to upload image files
 - [ ] Populate the images on home page from user account
-- [ ] Display username when user is logged in
 - [ ] Create custom queries to the Google Custom Search Engine
 - [ ] Allow the digital assets to also be audio, video and multi-page files
 - [ ] Search functionality for the uploaded image files
@@ -59,7 +58,7 @@ Each user is able to connect already hosted images to topic specifc drawers to o
 - [ ] Implement the ability to invite others to "follow" specified drawers
 - [ ] Add a calendar and todo functionality
 - [ ] Create a "time capsule" feature
-- [ ] Refactor for scalability
+- [ ] Refactor for scalability as a React application
 
 ## Technology Used
 
