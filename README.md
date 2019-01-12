@@ -18,19 +18,19 @@ A live version of the application can be found at: https://juskidin.herokuapp.co
 
 Each user can create and maintain their own secure account.  
 
-
+![juskidin_1](/ScreenShots/juskidin_1.png)
 
 ### Child Profiles
 
 Each user inputs a name and birthdate to have access to the results of a custom Google search engine that returns relevant web resources to that child's stage of development. 
 
-
+![juskidin_2](/ScreenShots/juskidin_2.png)
 
 ### Drawers
 
 Each user is able to connect already hosted images to topic specifc drawers to organize digitzed versions of school work, artwork, and pictures from sport games and other activities. 
 
-
+![juskidin_3](/ScreenShots/juskidin_3.png)
 
 ## Technical Requirements
 
