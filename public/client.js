@@ -400,7 +400,6 @@ function getAndDisplayChildProfile() {
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
       var childProfileElements = data.childProfs.map(function(userInfoSchema) {
-        // console.log(userInfoSchema,'userInfoSchema');
         var element = $(childProfileTemplate(userInfoSchema));
         return element;
       });
