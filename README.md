@@ -15,6 +15,8 @@ A live version of the application can be found at: https://juskidin.herokuapp.co
 JusKidin is an web application that serves as an all-in-one tool that supports different aspects of parenting. 
 It will provide child developmental information and resources.  It will provide an interface to track growth and developmental milestones.  The drawers will house multi-media files to organize the child's school work, art projects, sporting events, and other family/life events.
 
+Please read the Planned Development section to learn more. 
+
 ## Features
 
 ### User Created and Password Protected Account
