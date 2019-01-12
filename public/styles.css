@@ -20,11 +20,6 @@ button:hover {
     border: 2px solid #02BEC4;
 }
 
-button#assestoverlaybutton:hover {
-    border: 2px solid #02BEC4;
-    color: #02BEC4;
-}
-
 #header {
     display: grid;
     text-align: center;
@@ -143,7 +138,6 @@ ul li {
     color:whitesmoke;
     padding: 14px 16px;
     text-decoration: none;
-    /* font-size: 17px; */
 }
 
 .hideNav {
@@ -348,6 +342,15 @@ form {
     padding: 50px 50px;
     background-color: rgba(0,0,0,0.5);
 }
+
+.updateUpload {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 50px;
+    background-color: rgba(0,0,0,0.5);
+}
+  
   
 .uploadAsset * {
     box-sizing: border-box;
@@ -449,6 +452,7 @@ form {
 .flex-outer li p {
     flex: 1 0 220px;
     max-width: 320px;
+    padding-left: 0px;
 }
   
 .flex-outer > li > label + * {
@@ -476,8 +480,9 @@ form {
 #accountoverlaybutton:hover, 
 #childoverlaybutton:hover, 
 #login:hover, 
-#assertoverlaybutton:hover, 
-#update-accountoverlaybutton:hover {
+#assetoverlaybutton:hover, 
+#update-accountoverlaybutton:hover,
+#updateassetoverlaybutton:hover {
     color: #02BEC4;
     border: 2px solid #02BEC4;
 }
@@ -540,13 +545,16 @@ form {
 #newEmail, 
 #image-url,
 #newChildName, 
-#newBirthDate {
+#newBirthDate,
+#newTitle,
+#newNotes,
+#newDrawerTitle,
+#newFileLocation {
     padding: 10px;
     margin-top: 5px;
     font-size: 18px;
     border: 0px solid whitesmoke;
     background-color: whitesmoke;
-    width: 400px;
 }
 
 .new-drawer-title {
@@ -557,7 +565,6 @@ form {
     background-color: whitesmoke;
     width: 400px;
 }
-
 
 select { 
     padding: 10px;
@@ -577,6 +584,7 @@ select {
 #accountoverlay,
 #childoverlay,
 #update-childoverlay,
+#update-uploadoverlay,
 #edit-assetoverlay,
 #assetoverlay,
 #draweroverlay {
@@ -602,7 +610,8 @@ select {
 #addChildForm,
 #updateChildForm,
 #uploadAssetForm,
-#addDrawerForm {
+#addDrawerForm,
+#updateUploadForm {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1077,6 +1086,12 @@ svg {
         width: 390px;
     }
 
+    .directions {
+        height: 90%;
+        width: 80%;
+        overflow: scroll;
+    }
+
     #GsearchResults {
         margin: 0px 10px 0px 10px;
     }
@@ -1115,7 +1130,13 @@ svg {
     }
 
     .gsearch-heading {
-      font-size: 18px;
+        display: none;
+    }
+
+    .gsearch-current-title {
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 20px;
     }
 
     .google-snippet {
@@ -1132,8 +1153,7 @@ svg {
     }
 
     .asset-heading {
-        font-size: 16px;
-        width: 364px;
+        display: none;
     }
 
     .dropdown-asset {
@@ -1163,9 +1183,26 @@ svg {
         margin: auto;
     }
 
+    .form-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
     .homepage-text {
         width: 350px;
         margin-top: 20px;
+    }
+
+    .directions {
+        height: 90%;
+        width: 80%;
+        overflow: scroll;
+    }
+
+    .delete-child-text {
+        font-size: 18px;
     }
 
     #GsearchResults {
@@ -1232,6 +1269,10 @@ svg {
         width: 325px;
     }
 
+    .gsearch-current-title {
+        margin-top: 20px;
+    }
+
     .drawer-title-display {
         font-size: 16px;
         font-weight: bolder;
@@ -1240,6 +1281,17 @@ svg {
     .uploadContainer {
         width: 325px;
         font-size: 14px;
+    }
+
+    .flex-outer li label {
+        font-size: 18px;
+        padding: 5px;
+    }
+
+    #uploadAssetForm,
+    #updateUploadForm {
+        height: 90%;
+        overflow: scroll;
     }
 }
 
@@ -1273,6 +1325,14 @@ svg {
     .topnav a {
         font-size: 14px;
         padding: 5px;
+    }
+
+    .child-nav {
+        font-size: 14px;
+    }
+
+    .dropbtn-asset {
+        font-size: 14px;
     }
 
     h1 {
@@ -1338,12 +1398,15 @@ svg {
 
     #assetoverlay {
         padding-top: 25px;
-        /* width: 80%; */
         margin: 0 auto;
     }
 
     .uploadAsset {
         padding: 10px;
+    }
+
+    .updateUpload {
+        width: 90%;
     }
 
     li {
@@ -1369,6 +1432,10 @@ svg {
     .drawer-title-display {
        font-size: 14px;
        font-weight: bolder;
+    }
+
+    .delete-child-text {
+        font-size: 18px;
     }
 
     .gsearch-ul {
@@ -1412,6 +1479,10 @@ svg {
     .dropdown-asset {
         margin-left: 0px;
         width: 270px;
+    }
+
+    .gsearch-current-title {
+        margin-top: 20px;
     }
 
     .drawer-title-display {

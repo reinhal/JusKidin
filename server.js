@@ -7,12 +7,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const aws = require('aws-sdk');
+const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const config = require('./config');
-// const upload = require('./image_upload');
-
 
 mongoose.Promise = global.Promise;
 
@@ -317,35 +315,31 @@ app.delete('/api/account/:_id/childProfs/:child_id', jwtAuth, (req, res) => {
 
 
 ///////////// Digital Assets Endpoints//////////////////////////////////
-// aws.config.update({
-//   secretAccessKey: config.SECRET_AWS_ACCESS_KEY,
-//   accessKeyId: config.AWS_ACCESS_KEYID,
-//   region: 'us-east-1'
-// });
+AWS.config.update({
+  secretAccessKey: config.SECRET_AWS_ACCESS_KEY,
+  accessKeyId: config.AWS_ACCESS_KEYID,
+  region: 'us-east-1'
+});
 
-// var app = express(),
-//   s3 = new aws.s3();
+const s3 = new AWS.S3();
 
-// app.use(bodyParser.json());
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'juskidinuploads',
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString());
+    }
+  })
+});
 
-
-// const upload = multer({
-//   storage: multerS3({
-//     s3: s3,
-//     bucket: 'juskidinuploads',
-//     acl: 'public-read',
-//     metadata: function (req, file, cb) {
-//       cb(null, {fieldName: file.fieldname});
-//     },
-//     key: function (req, file, cb) {
-//       cb(null, Date.now().toString());
-//     }
-//   })
-// });
-
-app.post('/api/account/:_id/uploads', [urlParser, jwtAuth], (req, res) => {
+app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
   //console.log(req.file) put upload.array in the middleware after we authenticate
-  console.log('made it here', req.body);
+  console.log('made it here', req.body, req.file);
   const updatedAssetObject = [req.body.title, req.body.notes, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];
@@ -370,7 +364,7 @@ app.post('/api/account/:_id/uploads', [urlParser, jwtAuth], (req, res) => {
     });
 });
 
-app.put('/api/account/:_id/asset/:upload_id', [jsonParser, jwtAuth], (req, res) => {
+app.put('/api/account/:_id/asset/:upload_id', [jsonParser, jwtAuth ], (req, res) => {
   console.log('request', req.params, req.body);
   UserInfo.findById(req.params._id)
     .then(userinfo => {

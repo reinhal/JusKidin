@@ -26,10 +26,6 @@ function getUserID() {
   return userID;
 }
 
-function setUserID(id) {
-  userID = id;
-}
-
 ////////////////////////////////// Account Functions //////////////////////////////////
 
 function createNewAccount(username, password, firstName, lastName, email) {
@@ -55,7 +51,6 @@ function handleAccountAdd() {
     e.preventDefault();
     if (username === '' || password === ''|| firstName === '' || lastName === '' || email === '') {
       $('.feedback-messages').text('Missing Information'); 
-      // alert('Missing Information');
     } else {
       createNewAccount(username, password, firstName, lastName, email);
     }
@@ -319,6 +314,14 @@ function drawerDisplayOn() {
   document.getElementById('asset-display').style.display = 'block';
 }
 
+function updateAssetOn() {
+  document.getElementById('update-uploadoverlay').style.display = 'block';
+}
+
+function updateAssetOff() {
+  document.getElementById('update-uploadoverlay').style.display = 'none';
+}
+
 ///////////// Child(ren) Page Functions ///////////////////////
 
 window.onclick = function(event) {
@@ -362,15 +365,14 @@ function openChild(evt, childName, childId) {
 }
 
 var childProfileTemplate = function (child) {
-  console.log(child, 'childProfileTemplate');
   CHILD[child._id] = child;
-  
+
   $('.child-dropbtn').append(
     `<button class="tablinks dropbtn-prof child-nav" onclick="openChild(event, '${child.firstName.replace(/\s+/g, '-').toLowerCase()}', '${child._id}'), gsearchOn(), headerOff(), photosOff(), drawerDisplayOff()"> ${child.firstName} </br> ${getChildAge(child.birthDate)} years old</button>`
   );
 
   $('#GsearchResults').append(
-    `<div id="${child.firstName.replace(/\s+/g, '-').toLowerCase()}" class="gsearchContainer">You are currently viewing resources for <span class="drawer-title-display">${getChildAge(child.birthDate)} year old ${child.firstName}</span>.</div>`
+    `<div id="${child.firstName.replace(/\s+/g, '-').toLowerCase()}" class="gsearchContainer"><p class="gsearch-current-title">You are currently viewing resources for <span class="drawer-title-display">${getChildAge(child.birthDate)} year old ${child.firstName}</span>.</p></div>`
   );
 };
 
@@ -398,7 +400,7 @@ function getAndDisplayChildProfile() {
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
       var childProfileElements = data.childProfs.map(function(userInfoSchema) {
-        console.log(userInfoSchema,'userInfoSchema');
+        // console.log(userInfoSchema,'userInfoSchema');
         var element = $(childProfileTemplate(userInfoSchema));
         return element;
       });
@@ -450,9 +452,6 @@ function editChildProfile(firstName, birthDate) {
     url: `/api/account/${userID}/childProfs/${childID}`,
     data: JSON.stringify({firstName, birthDate}),
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-    success: function() {
-    
-    },
     dataType: 'json',
     contentType: 'application/json'
   });
@@ -614,6 +613,7 @@ function openDrawer(evt, drawerTitle, assetId) {
 
 var drawerTemplate = function(drawerTitle) {
   var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
+
   $('.asset-dropbtn').append(
     `<button class="tablinks dropbtn-asset" onclick="editAsset(); openDrawer(event, '${drawerTitle}'), headerOff(), photosOff(), drawerDisplayOn(), gsearchOff()"> ${drawerTitle}</button>`
   );
@@ -621,34 +621,12 @@ var drawerTemplate = function(drawerTitle) {
   $('#Drawer1').append(
     `<div id="${drawerID}" class="uploadContainer">You are currently viewing the <span class="drawer-title-display">${drawerTitle}</span> drawer.</div>`
   );
-
-  $('.drawer-title').append(
-    `<option value=${drawerTitle}>${drawerTitle}</option>`
-  );
-};
-
-var uploadTemplate = function(asset) {
-  var drawerID = drawerTitle.replace(/\s+/g, '-').toLowerCase();
-  $('.asset-section').append(
-    `<section role="region">  
-        <div id="${drawerID}" class='col-4'>
-          <div class='asset'>
-          <img class='asset-image' src="${asset.fileLocation}" alt="${asset.title}">
-          <div>
-          <p class="asset-content"><strong>${asset.title}</strong></p>
-          <p class="asset-content">${asset.notes}</p>
-          <p class="icon"><i class="fas fa-pencil-alt"></i>Edit</p>
-          <p class="icon"><i class="fas fa-trash-alt"></i>Delete</p>
-        </div>
-    </section>`
-  );
 };
 
 //file location url 'aws.com/juskidin'
 
 function getAndDisplayDrawer() {
   userID =  localStorage.getItem('userID');
-  console.log('ASSET Drawer', ASSET);
   var ASSETS_URL = `api/account/${userID}?select=asset`;
   $.ajax({
     method: 'GET',
@@ -656,7 +634,6 @@ function getAndDisplayDrawer() {
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
       function uniqueDrawerTitles(input) {
-        console.log('input', input.asset);
         var output = [];
         for(var i=0; i < input.asset.length; i++) {
           if(output.indexOf(input.asset[i].drawerTitle) === -1)
@@ -664,10 +641,9 @@ function getAndDisplayDrawer() {
         }
         return output;
       }
-      console.log('data', data);
+      // console.log('data', data);
       data = uniqueDrawerTitles(data);
       var drawerElement = data.map(function(item) {
-        console.log('item', item);
         var element = $(drawerTemplate(item));
         element.attr('_id', item);
         return element;
@@ -691,15 +667,13 @@ function handleDrawerAdd() {
 
 function getAndDisplayUploads() {
   userID =  localStorage.getItem('userID');
+
   var ASSETS_URL = `api/account/${userID}?select=asset`;
   $.ajax({
     method: 'GET',
     url: ASSETS_URL,
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
     success: function(data) {
-      console.log('data', data);
-      var asset = ASSET[data.asset._id];
-      console.log(asset, 'uploadTemplate');
       drawerUploads = data.asset;
       drawerUploads.forEach(asset => {
         const drawerID = asset.drawerTitle.replace(/\s+/g, '-').toLowerCase();
@@ -711,17 +685,12 @@ function getAndDisplayUploads() {
               <div>
               <p class="asset-content"><strong>${asset.title}</strong></p>
               <p class="asset-content">${asset.notes}</p>
-              <p class="icon"><i class="fas fa-pencil-alt"></i>Edit</p>
+              <p class="icon" onclick="updateAssetOn(), getAndDisplayCurrentUpload('${asset._id}')"><i class="fas fa-pencil-alt"></i>Edit</p>
               <p class="delete-upload-icon icon" delete_id="${asset._id}"><i class="fas fa-trash-alt"></i>Delete</p>
             </div>
           </section>`
         );
       });
-      // var uploadElements = data.asset.map(function(userInfoSchema){
-      //   console.log(userInfoSchema, 'UserInfoSchema assets');
-      //   var element = $(uploadTemplate(userInfoSchema));
-      //   return element;
-      // });
     },
     dataType: 'json',
     contentType: 'application/json'
@@ -729,11 +698,12 @@ function getAndDisplayUploads() {
 }
 
 function handleImageUpload() {
-  $('.upload-image-form').submit(function(e) {
+  $('#upload-image-form').on('submit',function(e) {
     var title = $('#title').val(); 
     var notes = $('#notes').val();
     var fileLocation = $('#image-url').val();
     var drawerTitle = $('#drawer-title').val();
+ 
     e.preventDefault();
     window.location.reload(true);
     if (title === '' || notes === '' || fileLocation === '' || drawerTitle === '') {
@@ -746,7 +716,6 @@ function handleImageUpload() {
 
 function uploadImage(title, notes, fileLocation, drawerTitle) {
   userID =  localStorage.getItem('userID');
-  var ASSETS_URL = `api/account/${userID}?select=asset`;
   $.ajax({
     method: 'POST',
     url: `/api/account/${userID}/uploads`,
@@ -760,8 +729,74 @@ function uploadImage(title, notes, fileLocation, drawerTitle) {
   });
 }
 
-function editUploads() {
-// edit title, notes or drawer location for a particular asset
+function handleUploadUpdate() {
+  $('body').on('click', '#updateassetoverlaybutton', function(e) {
+    $(e.currentTarget).attr('edit_id');
+    var title = $('#newTitle').val();
+    var notes = $('#newNotes').val();
+    var fileLocation = $('#newFileLocation').val();
+    var drawerTitle = $('#newDrawerTitle').val();
+    e.preventDefault();
+    if (title === '' || notes === '' || fileLocation === '' || drawerTitle === '') {
+      $('.feedback-messages').text('Missing Information'); 
+    } else {
+      editUploads(title, notes, fileLocation, drawerTitle, $(e.currentTarget).attr('edit_id'));
+    }
+    editUploads(title, notes, fileLocation, drawerTitle, $(e.currentTarget).attr('edit_id'));
+  });
+}
+
+function editUploads(title, notes, fileLocation, drawerTitle, assetID) {
+  userID =  localStorage.getItem('userID');
+  $.ajax({
+    method: 'PUT',
+    url: `/api/account/${userID}/asset/${assetID}`,
+    data: JSON.stringify({title, notes, fileLocation, drawerTitle}),
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+  window.location.reload(true);
+}
+
+function getAndDisplayCurrentUpload(asset_id) {
+  userID = localStorage.getItem('userID');
+  $.ajax({
+    url: `api/account/${userID}?select=asset`,
+    method: 'GET',
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+    success: function(data) {
+      for (let i = 0; i < data.asset.length; i++) {
+        ASSET[data.asset[i]._id] = `<button class ="close-form" type="submit" onclick="updateAssetOff()"><i class="fas fa-times"></i></button>
+        <form id="updateAssetForm">
+          <ul class="flex-outer">
+            <p class="form-title">Update Image Info</p>
+            <li>
+              <label for="title">Title</label>
+              <input type="text" id="newTitle" value="${data.asset[i].title}">
+            </li>
+            <li>
+              <label for="notes">Notes</label>
+              <input type="text" id="newNotes" value="${data.asset[i].notes}">
+            </li>
+            <li>
+              <label for="drawer-title">Add To Drawer</label>
+              <input type="text" id="newDrawerTitle" class="drawer-title" value="${data.asset[i].drawerTitle}">
+            </li>
+            <li>
+              <label for="image-url">Image URL</label>
+              <input type="text" id="newFileLocation" value="${data.asset[i].fileLocation}">
+            </li>
+            <li>
+            <button id="updateassetoverlaybutton" onclick="updateAssetOff()" edit_id="${data.asset[i]._id}">Update</button>
+            </li>
+          </ul>
+        </form>
+      </div>`;
+      }
+      $('#updateUploadForm').html(ASSET[asset_id]);
+    }
+  });
 }
 
 function deleteUpload(assetID) {
@@ -777,7 +812,6 @@ function deleteUpload(assetID) {
 function handleUploadDelete() {
   $('body').on('click', '.delete-upload-icon', function(e) {
     e.preventDefault();
-    console.log($(e.currentTarget).attr('delete_id'));
     deleteUpload($(e.currentTarget).attr('delete_id'));
   });
 }
@@ -812,6 +846,7 @@ $(function() {
   handleChildProfileAdd();
   handleChildProfileDelete();
   handleChildProfileUpdate();
+  handleUploadUpdate();
   handleImageUpload();
   handleUploadDelete();
   handleAccountAdd();
