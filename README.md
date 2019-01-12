@@ -2,15 +2,18 @@
 
 ## Introduction
 
-**JusKidin** is a moble-first web resource for parents.  JusKidin connects parents to relevant child development information.  It also allows parents to organize hosted images into topic specific groupings called drawers.
-
-
+**JusKidin** is a moble-first web resource for parents.  The current version of JusKidin connects parents to relevant child development information.  It also allows parents to organize hosted images into topic specific groupings called drawers.
 
 A live version of the application can be found at: https://juskidin.herokuapp.com/
 
 **Current live version:** 1.0
 
 ![Juskidin_home](/ScreenShots/Juskidin_home.png)
+
+## Vision
+
+JusKidin is an web application that serves as an all-in-one tool that supports different aspects of parenting. 
+It will provide child developmental information and resources.  It will provide an interface to track growth and developmental milestones.  The drawers will house multi-media files to organize the child's school work, art projects, sporting events, and other family/life events.
 
 ## Features
 
@@ -52,6 +55,7 @@ Each user is able to connect already hosted images to topic specifc drawers to o
 - [ ] The ability to upload image files
 - [ ] Populate the images on home page from user account
 - [ ] Create custom queries to the Google Custom Search Engine
+- [ ] Create a growth chart for each child
 - [ ] Allow the digital assets to also be audio, video and multi-page files
 - [ ] Search functionality for the uploaded image files
 - [ ] Implement different user roles (ex parent, teacher, child)
