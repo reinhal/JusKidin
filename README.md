@@ -52,7 +52,7 @@ Each user is able to connect already hosted images to topic specifc drawers to o
 3. Connect images by inputing info into Connect Images form found under Drawers link in navigation. 
 4. Update Account or Delete Account from the forms accessed through the dropdown menu through the Account Login/Logged In link on the right side of the navigation menu. 
 
-## Planned Development (planned-development)
+## Planned Development (#planned-development)
 
 - [ ] The ability to upload image files
 - [ ] Populate the images on home page from user account
