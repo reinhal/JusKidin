@@ -8,7 +8,7 @@ A live version of the application can be found at: https://juskidin.herokuapp.co
 
 **Current live version:** 1.0
 
-![Juskidin_home](/ScreenShots/JusKidin_Home.png)
+![JusKidin_Home](/ScreenShots/JusKidin_Home.png)
 
 
 
