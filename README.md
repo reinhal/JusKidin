@@ -49,11 +49,9 @@ Each user is able to connect already hosted images to topic specifc drawers to o
 
 ## Planned Development
 
-- [ ] The ability to edit and delete Child Profiles, Drawers and Images
+- [ ] The ability to upload image files
 - [ ] Populate the images on home page from user account
 - [ ] Display username when user is logged in
-- [ ] The ability for the user to upload image files
-- [ ] use a date picker or automatically attach the current date to new images connected
 - [ ] Create custom queries to the Google Custom Search Engine
 - [ ] Allow the digital assets to also be audio, video and multi-page files
 - [ ] Search functionality for the uploaded image files
