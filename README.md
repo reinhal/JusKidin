@@ -13,9 +13,9 @@ A live version of the application can be found at: https://juskidin.herokuapp.co
 ## Vision
 
 JusKidin is an web application that serves as an all-in-one tool that supports different aspects of parenting. 
-It will provide child developmental information and resources.  It will provide an interface to track growth and developmental milestones.  The drawers will house multi-media files to organize the child's school work, art projects, sporting events, and other family/life events.
+It links the user to child developmental information and resources.  It will include an interface to track growth and developmental milestones.  The drawers will house multi-media files to organize the child's school work, art projects, sporting events, and other family/life events.
 
-Please read the Planned Development section to learn more. 
+Please read the [Planned Development](#planned-development) section to learn more. 
 
 ## Features
 
@@ -52,7 +52,7 @@ Each user is able to connect already hosted images to topic specifc drawers to o
 3. Connect images by inputing info into Connect Images form found under Drawers link in navigation. 
 4. Update Account or Delete Account from the forms accessed through the dropdown menu through the Account Login/Logged In link on the right side of the navigation menu. 
 
-## Planned Development
+## Planned Development (planned-development)
 
 - [ ] The ability to upload image files
 - [ ] Populate the images on home page from user account
@@ -62,7 +62,7 @@ Each user is able to connect already hosted images to topic specifc drawers to o
 - [ ] Search functionality for the uploaded image files
 - [ ] Implement different user roles (ex parent, teacher, child)
 - [ ] Implement the ability to invite others to "follow" specified drawers
-- [ ] Add a calendar and todo functionality
+- [ ] Add a calendar and ToDo functionality
 - [ ] Create a "time capsule" feature
 - [ ] Refactor for scalability as a React application
 
