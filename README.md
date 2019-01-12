@@ -2,15 +2,15 @@
 
 ## Introduction
 
-**JusKidin** is a moble-first web resource for parents.  JusKidin connects parents to relevant child development information.  It also allows parents to organize hosted images into topic specific groupings called drawers. 
+**JusKidin** is a moble-first web resource for parents.  JusKidin connects parents to relevant child development information.  It also allows parents to organize hosted images into topic specific groupings called drawers.
+
+
 
 A live version of the application can be found at: https://juskidin.herokuapp.com/
 
 **Current live version:** 1.0
 
 ![JusKidin_Home](/ScreenShots/JusKidin_Home.png)
-
-
 
 ## Features
 
