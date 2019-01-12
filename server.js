@@ -7,10 +7,6 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const AWS = require('aws-sdk');
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const config = require('./config');
 
 mongoose.Promise = global.Promise;
 
@@ -18,7 +14,6 @@ app.use(express.static('public'));
 app.use(express.json());
 
 const jsonParser = bodyParser.json();
-const urlParser = bodyParser.urlencoded({ extended: true });
 const {UserInfo} = require('./userinfo_model');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
@@ -315,31 +310,54 @@ app.delete('/api/account/:_id/childProfs/:child_id', jwtAuth, (req, res) => {
 
 
 ///////////// Digital Assets Endpoints//////////////////////////////////
-AWS.config.update({
-  secretAccessKey: config.SECRET_AWS_ACCESS_KEY,
-  accessKeyId: config.AWS_ACCESS_KEYID,
-  region: 'us-east-1'
-});
+// AWS.config.update({
+//   secretAccessKey: config.SECRET_AWS_ACCESS_KEY,
+//   accessKeyId: config.AWS_ACCESS_KEYID,
+//   region: 'us-east-1'
+// });
 
-const s3 = new AWS.S3();
+// const s3 = new AWS.S3();
 
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'juskidinuploads',
-    acl: 'public-read',
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString());
-    }
-  })
-});
+// const upload = multer({
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: 'juskidinuploads',
+//     acl: 'public-read',
+//     metadata: function (req, file, cb) {
+//       cb(null, {fieldName: file.fieldname});
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, Date.now().toString());
+//     }
+//   })
+// });
+
+// cloudinary.config({
+//   cloud_name: process.env.CLOUD_NAME,
+//   api_key: process.env.API_KEY,
+//   api_secret: process.env.API_SECRET
+// });
+
+// const storage = cloudinaryStorage({
+//   cloudinary: cloudinary,
+//   folder: 'JusKidin'
+// });
+
+// const parser = multer({ storage: storage });
+
+// app.post('/api/images', parser.single('image'), (req, res) => {
+//   console.log(req.file);
+//   // to see what is returned to you
+//   const image = {};
+//   image.url = req.file.url;
+//   image.id = req.file.public_id;
+
+//   Image.create(image) // save image information in database
+//     .then(newImage => res.json(newImage))
+//     .catch(err => console.log(err));
+// });
 
 app.post('/api/account/:_id/uploads', [jsonParser, jwtAuth], (req, res) => {
-  //console.log(req.file) put upload.array in the middleware after we authenticate
-  console.log('made it here', req.body, req.file);
   const updatedAssetObject = [req.body.title, req.body.notes, req.body.fileLocation, req.body.drawerTitle];
   for (let i=0; i<updatedAssetObject.length; i++) {
     const field = updatedAssetObject[i];

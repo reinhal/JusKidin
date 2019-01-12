@@ -697,7 +697,7 @@ function getAndDisplayUploads() {
 }
 
 function handleImageUpload() {
-  $('#upload-image-form').on('submit',function(e) {
+  $('#upload-image-form').on('submit', '#assetoverlaybutton', function(e) {
     var title = $('#title').val(); 
     var notes = $('#notes').val();
     var fileLocation = $('#image-url').val();
