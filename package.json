@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "a11y-dialog": "^5.1.2",
-    "aws-sdk": "^2.384.0",
+    "aws-sdk": "^2.814.0",
     "bcryptjs": "^2.4.3",
     "blueimp-file-upload": "^9.28.0",
     "cloudinary": "^1.13.2",
